@@ -646,7 +646,7 @@ const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.js
         if(data[(py*oc.width+px)*4]>128){const ll=[lon,lat];dots.push({ll,k:(lon>73&&lon<135&&lat>18&&lat<54&&d3.geoContains(cn,ll))?1:0})}}}
   }).catch(()=>{});
   const arcs=DEST.map(d=>({d,ip:d3.geoInterpolate(ORIGIN,d.c)}));
-  function aimAt(i){const m=d3.geoInterpolate(ORIGIN,DEST[i].c)(.5);target=[-m[0],-m[1]*.6]}
+  function aimAt(i){const k=DEST[i].km>9000?.72:.5,m=d3.geoInterpolate(ORIGIN,DEST[i].c)(k);target=[-m[0],-Math.max(-40,Math.min(50,m[1]))*.7]}
   const lerpAng=(a,b,k)=>{let d=((b-a+540)%360)-180;return a+d*k};
   function frame(now){
     requestAnimationFrame(frame);
