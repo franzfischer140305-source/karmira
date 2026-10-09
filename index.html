@@ -107,7 +107,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 #lbtn:hover{border-color:rgba(255,255,255,.35)}
 #lbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
 #lbtn svg.chev{width:12px;height:12px;opacity:.6}
-#llist{display:none;position:absolute;right:0;top:calc(100% + 8px);width:340px;max-height:70vh;overflow:auto;list-style:none;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:6px;grid-template-columns:1fr 1fr;gap:2px;box-shadow:0 20px 50px -10px rgba(0,0,0,.7);z-index:80}
+#llist{display:none;position:absolute;right:0;top:calc(100% + 8px);width:360px;max-height:70vh;overflow:auto;list-style:none;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:6px;grid-template-columns:1fr 1fr;gap:2px;box-shadow:0 20px 50px -10px rgba(0,0,0,.7);z-index:80}
 #llist.open{display:grid}
 #llist li{padding:8px 10px;border-radius:6px;cursor:pointer;font-size:.86rem;display:flex;justify-content:space-between;gap:8px}
 #llist li small{color:var(--muted);font-size:.7rem;text-transform:uppercase}
@@ -714,8 +714,8 @@ const EN={
 'Verpackung':'Packaging','Bürobedarf':'Office supplies','Haustierbedarf':'Pet supplies','Baby & Kind':'Baby & kids','Beauty-Zubehör':'Beauty accessories','Gastronomiebedarf':'Catering supplies','Werbeartikel':'Promotional items','Private Label':'Private label'
 };
 let LANG='de';
-const LANGS=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia']];
-function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(b.startsWith('zh'))return 'zh-CN';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
+const LANGS=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['he','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
+function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(b.startsWith('zh'))return 'zh-CN';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
 let UI_LANG='de',LANG_AUTO=true;
 try{const l=localStorage.getItem('k-lang');if(l&&LANGS.some(x=>x[0]===l)){UI_LANG=l;LANG_AUTO=false}else UI_LANG=detectLang()}catch(e){UI_LANG=detectLang()}
 LANG=UI_LANG==='de'?'de':'en';
@@ -724,7 +724,7 @@ function gtCookie(v){const h=location.hostname,parts=h.split('.'),doms=['',h,'.'
 const GT_ACTIVE=UI_LANG!=='de'&&UI_LANG!=='en';
 if(GT_ACTIVE){gtCookie('/en/'+UI_LANG);window.gtInit=()=>{try{new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'gt_el')}catch(e){}};
   const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=gtInit';sc.async=true;document.head.appendChild(sc);
-  if(['ar','fa'].includes(UI_LANG))document.documentElement.dir='rtl'}
+  if(['ar','fa','he','ur'].includes(UI_LANG))document.documentElement.dir='rtl'}
 else if(/googtrans=/.test(document.cookie))gtCookie('');
 const t=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
 let I18N_NODES=null;
