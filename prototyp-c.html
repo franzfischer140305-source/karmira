@@ -495,22 +495,22 @@ const REGIONS=[
 const ORIGIN=[114.06,22.54],RAIL_ORIGIN=[106.55,29.56];
 const DEST=[
  {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
- {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
- {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
- {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'},
  {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
- {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
- {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
- {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
- {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
  {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
- {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
  {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
- {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
- {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
- {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
  {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
- {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'}
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
 ];
 const TIMES={EU:{sea:'30–40',rail:'15–20',air:'3–7'},ME:{sea:'18–25',air:'3–5'},NA:{sea:'20–35',air:'4–7'},SA:{sea:'30–45',air:'5–10'},AF:{sea:'25–40',air:'4–8'},AS:{sea:'7–15',air:'2–4'},OC:{sea:'15–25',air:'3–6'}};
 const dname=d=>LANG==='en'?d.en:d.de;
@@ -665,7 +665,7 @@ const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.js
     arcs.forEach((a,i)=>{const on=i===di,N=60;ctx.beginPath();let pen=false;
       for(let j=0;j<=N;j++){const t=j/N,p=a.ip(t),h=Math.sin(Math.PI*t)*(on?.22:.12);const v=vis(p)||h>.06;
         if(!v){pen=false;continue}const xy=proj(p),x=S/2+(xy[0]-S/2)*(1+h),y=S/2+(xy[1]-S/2)*(1+h);pen?ctx.lineTo(x,y):ctx.moveTo(x,y);pen=true}
-      ctx.strokeStyle=on?goldL:gold;ctx.globalAlpha=on?.95:.18;ctx.lineWidth=on?1.7:1;ctx.setLineDash(on?[6,6]:[]);ctx.lineDashOffset=-now/40;ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+      ctx.strokeStyle=on?goldL:gold;ctx.globalAlpha=on?.95:.35;ctx.lineWidth=on?1.7:1;ctx.setLineDash(on?[6,6]:[]);ctx.lineDashOffset=-now/40;ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
       if(vis(a.d.c)){const s=proj(a.d.c);ctx.fillStyle=on?cream:text;ctx.globalAlpha=on?1:.5;ctx.beginPath();ctx.arc(s[0],s[1],on?4:2,0,7);ctx.fill();ctx.globalAlpha=1;
         if(on){ctx.strokeStyle=goldL;ctx.beginPath();ctx.arc(s[0],s[1],8+Math.sin(now/250)*2,0,7);ctx.stroke();
           ctx.font=`600 ${Math.max(10,S/46)}px Manrope, sans-serif`;ctx.fillStyle=text;ctx.textAlign='left';ctx.fillText(a.d.city.toUpperCase(),s[0]+12,s[1]-8)}}});
@@ -676,7 +676,7 @@ const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.js
   sel.onchange=()=>{auto=false;setDest(+sel.value)};
   addEventListener('langchange',()=>setDest(di));
   setDest(di);rot[0]=target[0];rot[1]=target[1];
-  setInterval(()=>{if(auto&&performance.now()>hold)setDest((di+1)%DEST.length)},4200);
+  setInterval(()=>{if(auto&&performance.now()>hold)setDest((di+1)%DEST.length)},3500);
   cv.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
   cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();
     if(drag){const k=80/R;rot[0]+=(e.clientX-lx)*k;rot[1]=Math.max(-60,Math.min(60,rot[1]-(e.clientY-ly)*k));lx=e.clientX;ly=e.clientY}
