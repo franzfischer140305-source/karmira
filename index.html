@@ -113,6 +113,9 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 #llist li small{color:var(--muted);font-size:.7rem;text-transform:uppercase}
 #llist li:hover{background:rgba(255,255,255,.07)}
 #llist li.on{background:rgba(255,255,255,.12);font-weight:600}
+#llist li.ls{grid-column:1/-1;cursor:default;background:var(--bg2);padding:4px;position:sticky;top:-6px;z-index:1}
+#lfind{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--text);font:inherit;font-size:.86rem;padding:8px 10px;outline:none}
+#lfind:focus{border-color:rgba(255,255,255,.4)}
 #llist li.hd{grid-column:1/-1;cursor:default;background:none;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px 4px}
 #llist li.auto{grid-column:1/-1;color:var(--gold-l)}
 /* hide Google Translate UI */
@@ -714,8 +717,14 @@ const EN={
 'Verpackung':'Packaging','Bürobedarf':'Office supplies','Haustierbedarf':'Pet supplies','Baby & Kind':'Baby & kids','Beauty-Zubehör':'Beauty accessories','Gastronomiebedarf':'Catering supplies','Werbeartikel':'Promotional items','Private Label':'Private label'
 };
 let LANG='de';
-const LANGS=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['he','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
-function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(b.startsWith('zh'))return 'zh-CN';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
+const LANGS_TOP=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['iw','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
+const GT_ALL='af sq am ar hy as ay az bm eu be bn bho bs bg ca ceb ny zh-CN zh-TW co hr cs da dv doi nl en eo et ee tl fi fr fy gl ka de el gn gu ht ha haw iw hi hmn hu is ig ilo id ga it ja jw kn kk km rw gom ko kri ku ckb ky lo la lv ln lt lg lb mk mai mg ms ml mt mi mr mni-Mtei lus mn my ne no or om ps fa pl pt pa qu ro ru sm sa gd nso sr st sn sd si sk sl so es su sw sv tg ta tt te th ti ts tr tk ak uk ur ug uz vi cy xh yi yo zu'.split(' ');
+const ISO={iw:'he',jw:'jv','mni-Mtei':'mni',tl:'fil'};
+const natName=c=>{const iso=ISO[c]||c;try{const n=new Intl.DisplayNames([iso],{type:'language'}).of(iso);return n&&n!==iso?n.charAt(0).toUpperCase()+n.slice(1):c}catch(e){return c}};
+const LANGS=[...LANGS_TOP,...GT_ALL.filter(c=>!LANGS_TOP.some(x=>x[0]===c||(c==='iw'&&x[0]==='he'))).map(c=>[c,natName(c)]).sort((a,b)=>a[1].localeCompare(b[1]))];
+const langIn=(c,l)=>{const iso=ISO[c]||c;try{return new Intl.DisplayNames([l],{type:'language'}).of(iso)||''}catch(e){return ''}};
+const RTL=['ar','fa','he','iw','ur','ps','sd','ug','yi','ckb','dv'];
+function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(/^zh-(tw|hk|mo|hant)/.test(b))return 'zh-TW';if(b.startsWith('zh'))return 'zh-CN';if(b.startsWith('he'))return 'iw';if(b.startsWith('jv'))return 'jw';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
 let UI_LANG='de',LANG_AUTO=true;
 try{const l=localStorage.getItem('k-lang');if(l&&LANGS.some(x=>x[0]===l)){UI_LANG=l;LANG_AUTO=false}else UI_LANG=detectLang()}catch(e){UI_LANG=detectLang()}
 LANG=UI_LANG==='de'?'de':'en';
@@ -724,7 +733,7 @@ function gtCookie(v){const h=location.hostname,parts=h.split('.'),doms=['',h,'.'
 const GT_ACTIVE=UI_LANG!=='de'&&UI_LANG!=='en';
 if(GT_ACTIVE){gtCookie('/en/'+UI_LANG);window.gtInit=()=>{try{new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'gt_el')}catch(e){}};
   const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=gtInit';sc.async=true;document.head.appendChild(sc);
-  if(['ar','fa','he','ur'].includes(UI_LANG))document.documentElement.dir='rtl'}
+  if(RTL.includes(UI_LANG))document.documentElement.dir='rtl'}
 else if(/googtrans=/.test(document.cookie))gtCookie('');
 const t=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
 let I18N_NODES=null;
@@ -740,14 +749,19 @@ function applyLang(){
   dispatchEvent(new Event('langchange'));
 }
 const llist=document.getElementById('llist');
-function renderLangs(){llist.innerHTML=`<li class="hd">${LANG==='de'?'Sprache':'Language'}</li>`+LANGS.map(([c,n])=>`<li data-l="${c}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
-  `<li class="auto" data-l="auto">${LANG==='de'?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`}
+function renderLangs(){const de=LANG==='de',top=LANGS_TOP.length;
+  llist.innerHTML=`<li class="ls"><input id="lfind" placeholder="${de?'Sprache suchen …':'Search language …'}" autocomplete="off"></li><li class="hd">${de?'Häufig':'Popular'}</li>`+
+  LANGS.map(([c,n],k)=>(k===top?`<li class="hd">${de?'Alle Sprachen':'All languages'} (Google Translate)</li>`:'')+`<li data-l="${c}" data-n="${(n+' '+c+' '+langIn(c,'de')+' '+langIn(c,'en')).toLowerCase()}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
+  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`;
+  const f=document.getElementById('lfind');f.addEventListener('click',e=>e.stopPropagation());
+  f.addEventListener('input',()=>{const q=nrm(f.value.trim());llist.querySelectorAll('li[data-l]:not(.auto)').forEach(li=>li.style.display=!q||nrm(li.dataset.n).includes(q)?'':'none');
+    llist.querySelectorAll('li.hd').forEach(h=>h.style.display=q?'none':'')})}
 function setUiLang(code){const auto=code==='auto';if(auto)code=detectLang();
   try{auto?localStorage.removeItem('k-lang'):localStorage.setItem('k-lang',code)}catch(e){}
   const was=GT_ACTIVE,need=code!=='de'&&code!=='en';LANG_AUTO=auto;
   if(!was&&!need){UI_LANG=code;LANG=code;llist.classList.remove('open');applyLang();return}
   gtCookie(need?'/en/'+code:'');location.reload()}
-document.getElementById('lbtn').addEventListener('click',e=>{e.stopPropagation();llist.classList.toggle('open')});
+document.getElementById('lbtn').addEventListener('click',e=>{e.stopPropagation();llist.classList.toggle('open');if(llist.classList.contains('open'))setTimeout(()=>document.getElementById('lfind')?.focus(),50)});
 llist.addEventListener('click',e=>{const li=e.target.closest('li[data-l]');if(li)setUiLang(li.dataset.l)});
 document.addEventListener('click',e=>{if(!e.target.closest('#lsel'))llist.classList.remove('open')});
 addEventListener('keydown',e=>{if(e.key==='Escape')llist.classList.remove('open')});
