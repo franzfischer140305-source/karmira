@@ -93,6 +93,21 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:7
 .rinfo b{font-weight:600;font-size:.98rem;color:var(--text);transition:opacity .3s}
 @media (max-width:1000px){.rinfo .wide{display:none}}
 @media (max-width:560px){.modes button{padding:8px 10px;font-size:.66rem}.modes button svg{display:none}}
+.rpanel{display:grid;grid-template-columns:auto auto 1fr;gap:16px 26px;align-items:end}
+.dsel small,.rinfo small{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.dsel select{background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:9px 12px;font:inherit;font-size:.9rem;font-weight:500;min-width:190px;cursor:pointer}
+.rinfo{justify-content:flex-end}
+.modes button:disabled{opacity:.3;cursor:not-allowed}
+.maphint{position:absolute;top:6px;right:4px;font-size:.72rem;color:var(--muted)}
+#rmap{cursor:pointer}
+@media (max-width:1100px){.rpanel{grid-template-columns:1fr 1fr}.rinfo{justify-content:flex-start}}
+@media (max-width:560px){.rpanel{grid-template-columns:1fr}.maphint{display:none}}
+
+.rpanel{grid-template-columns:minmax(180px,1fr) auto}
+.modes button{white-space:nowrap}
+.rinfo{grid-column:1/-1;justify-content:flex-start;gap:40px;border-top:1px solid var(--line2);padding-top:12px}
+.rinfo b{white-space:nowrap}
+@media (max-width:1100px){.rpanel{grid-template-columns:1fr}}
 
 /* SORTIMENT */
 .sortiment{background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.04),transparent 70%),repeating-linear-gradient(115deg,transparent 0 22px,var(--line2) 22px 23px),var(--bg2)}
@@ -277,23 +292,24 @@ footer a:hover{color:var(--gold-l)}
   <div class="hwrap">
     <div class="htext">
       <div class="kicker"><img src="logo-small.jpg" alt=""><span class="eyebrow">KARMIRA · Global Sourcing</span></div>
-      <h1>Die Produkte der Welt.<br><em class="gold">Direkt zu Ihnen.</em></h1>
+      <h1>Aus China in die ganze Welt.</h1>
       <p class="lead">Über 100.000 Produkte direkt von Herstellern aus China – für Unternehmen und Privatkunden. Wir kümmern uns um alles auf dem Weg.</p>
       <div class="ctas"><a href="#kontakt" class="btn btn-solid">Anfrage stellen</a><a href="#sortiment" class="btn">Sortiment entdecken</a></div>
-      <div class="hstats"><div><b>100.000+</b><small>Produkte</small></div><div><b>B2B · B2C</b><small>Kunden</small></div><div><b>1</b><small>Ansprechpartner</small></div></div>
+      <div class="hstats"><div><b>100.000+</b><small>Produkte</small></div><div><b>B2B · B2C</b><small>Kunden</small></div><div><b>Weltweit</b><small>Versand</small></div></div>
     </div>
     <div class="routebox">
       <canvas id="rmap"></canvas>
+      <div class="maphint">Ziel auf der Karte anklicken</div>
       <div class="rpanel">
+        <label class="dsel"><small>Lieferziel</small><select id="dest"></select></label>
         <div class="modes" id="modes">
           <button data-m="sea" class="on"><svg viewBox="0 0 24 24"><path d="M3 18c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0M5 15l-1-4h16l-2 4M8 11V6h6l3 5"/></svg>Seefracht</button>
           <button data-m="rail"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="13" rx="3"/><path d="M6 10h12M9 20l-2 2M15 20l2 2M9 13h.01M15 13h.01"/></svg>Bahn</button>
           <button data-m="air"><svg viewBox="0 0 24 24"><path d="M10 14l-7-2 1-2 7 1 4-7h2l-1 8 5 1 1 2-6 1-3 6h-2l1-6z"/></svg>Luftfracht</button>
         </div>
         <div class="rinfo">
-          <div><small>Dauer</small><b id="rDur">ca. 30–40 Tage</b></div>
-          <div><small>Strecke</small><b id="rKm">–</b></div>
-          <div class="wide"><small>Ideal für</small><b id="rFor">Große Mengen & Container</b></div>
+          <div><small>Dauer</small><b id="rDur">–</b></div>
+          <div><small>Entfernung</small><b id="rKm">–</b></div>
         </div>
       </div>
     </div>
@@ -346,7 +362,7 @@ footer a:hover{color:var(--gold-l)}
   <div class="wrap three">
     <div class="reveal"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h4>Qualitätskontrolle</h4><p>Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.</p></div>
     <div class="reveal"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><h4>EU-Konformität</h4><p>Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.</p></div>
-    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h4>Zoll & Logistik</h4><p>Versand, Verzollung und Import aus einer Hand – bis an Ihre Tür oder Ihr Lager.</p></div>
+    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h4>Zoll & Logistik</h4><p>Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.</p></div>
   </div>
 </section>
 
@@ -355,7 +371,7 @@ footer a:hover{color:var(--gold-l)}
     <div class="reveal">
       <div class="eyebrow">Unsere Haltung</div>
       <h2 style="margin-top:14px">Nähe trotz Distanz.</h2>
-      <p class="big">KARMIRA verbindet Unternehmen und Privatkunden in Deutschland direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.</p>
+      <p class="big">KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.</p>
     </div>
     <div class="reveal">
       <div class="eyebrow" style="margin-bottom:20px">Unsere Prinzipien</div>
@@ -505,6 +521,36 @@ const REGIONS=[
  {loc:'Chongqing',nm:'Fahrzeug-Cluster',ty:'Auto · Motorrad · Teile',det:'Chongqing ist einer der größten Standorte für Fahrzeug- und Zubehörproduktion.',c:[106.55,29.56],o:[-50,24]}
 ];
 
+/* WORLDWIDE DESTINATIONS */
+const ORIGIN=[114.06,22.54],RAIL_ORIGIN=[106.55,29.56];
+const DEST=[
+ {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'},
+ {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'}
+];
+const TIMES={EU:{sea:'30–40',rail:'15–20',air:'3–7'},ME:{sea:'18–25',air:'3–5'},NA:{sea:'20–35',air:'4–7'},SA:{sea:'30–45',air:'5–10'},AF:{sea:'25–40',air:'4–8'},AS:{sea:'7–15',air:'2–4'},OC:{sea:'15–25',air:'3–6'}};
+const dname=d=>LANG==='en'?d.en:d.de;
+const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
+const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
+DEST.forEach(d=>d.km=Math.round(d3.geoDistance(ORIGIN,d.c)*6371/100)*100);
+function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
+  const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
+function destOptions(sel){return DEST.map((d,i)=>`<option value="${i}"${i===sel?' selected':''}>${dname(d)} · ${d.city}</option>`).join('')}
+
 const root=document.documentElement;
 const links=document.getElementById('links');
 document.getElementById('menuBtn').onclick=()=>links.classList.toggle('open');
@@ -513,8 +559,8 @@ document.getElementById('y').textContent=new Date().getFullYear();
 const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
 /* ---------- I18N ---------- */
 const EN={
-'Sortiment':'Products','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
-'100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – wir bringen die Produkte der Welt zu Ihnen.':'From farm equipment to kitchenware and car accessories – we bring the world’s products to you.',
+'Sortiment':'Products','Weltweiter Versand':'Worldwide shipping','Weltweit':'Worldwide','Versand':'Shipping','Lieferziel':'Destination','Entfernung':'Distance','Nur Europa & Zentralasien':'Europe & Central Asia only','Ziel auf der Karte anklicken':'Click a destination on the map','Luftlinie':'as the crow flies','Weltweite Lieferung':'Worldwide delivery','Aus China in die ganze Welt.':'From China to the world.','Direkt aus China – geliefert, wohin Sie wollen.':'Direct from China – delivered wherever you are.','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
+'100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – direkt aus China, geliefert in die ganze Welt.':'From farm equipment to kitchenware and car accessories – direct from China, delivered worldwide.',
 'Sortiment entdecken':'Explore products','Globus drehen':'Drag to rotate','Unser Sortiment':'Our range','Über':'Over','Produkte.':'products.','Finden Sie Ihres.':'Find yours.','Anfragen':'Inquire',
 'Agrar & Garten':'Farm & Garden','Geräte, Maschinen und Zubehör für Landwirtschaft und Garten.':'Tools, machinery and accessories for farming and gardening.','Beispiele ansehen':'See examples',
 'Küche & Haushalt':'Kitchen & Household','Utensilien, Geschirr und clevere Helfer für jeden Haushalt.':'Utensils, tableware and clever helpers for every home.',
@@ -534,9 +580,9 @@ const EN={
 'Produkte':'Products','Regionen':'Regions','Kunden':'Customers','Ansprechpartner':'Contact person','Kategorien':'Categories',
 'Qualität & Import-Sicherheit':'Quality & import assurance','Qualitätskontrolle':'Quality control','Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.':'Samples, inspection and approval before anything is produced or shipped.',
 'EU-Konformität':'EU compliance','Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.':'We take care of CE marking, labelling requirements and complete documentation.',
-'Zoll & Logistik':'Customs & logistics','Versand, Verzollung und Import aus einer Hand – bis an Ihre Tür oder Ihr Lager.':'Shipping, customs clearance and import from a single source – to your door or warehouse.',
+'Zoll & Logistik':'Customs & logistics','Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.':'Shipping, customs clearance and import from a single source – to your door or warehouse.',
 'Unsere Haltung':'Our approach','Nähe trotz Distanz.':'Close, despite the distance.',
-'KARMIRA verbindet Unternehmen und Privatkunden in Deutschland direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.':'KARMIRA connects businesses and private customers in Germany directly with manufacturers in China. No unnecessary middlemen, with personal support in German and English – from the first idea to delivery.',
+'KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.':'KARMIRA connects businesses and private customers worldwide directly with manufacturers in China. No unnecessary middlemen, with personal support in German and English – from the first idea to delivery.',
 'Unsere Prinzipien':'Our principles','Wir kennen die Regionen und ihre Hersteller.':'We know the regions and their manufacturers.','Qualität':'Quality','Geprüft, bevor es auf die Reise geht.':'Inspected before it travels.',
 'Transparenz':'Transparency','Klare Preise, klare Abläufe, keine Überraschungen.':'Clear prices, clear processes, no surprises.','Partnerschaft':'Partnership','Ein fester Ansprechpartner – langfristig.':'One dedicated contact – for the long term.',
 'Lösungen':'Solutions','Für Unternehmen.':'For businesses.','Für Sie.':'For you.','Geschäftskunden':'Business customers','Beschaffung im großen Stil':'Sourcing at scale',
@@ -565,7 +611,7 @@ const EN={
 'Seefracht':'Sea freight','Bahn':'Rail','Luftfracht':'Air freight','Dauer':'Duration','Strecke':'Distance','Ideal für':'Ideal for',
 'ca. 30–40 Tage':'approx. 30–40 days','ca. 15–20 Tage':'approx. 15–20 days','ca. 3–7 Tage':'approx. 3–7 days','Große Mengen & Container':'Large volumes & containers','Mittlere Mengen, schneller als See':'Medium volumes, faster than sea','Eilsendungen & Muster':'Urgent shipments & samples',
 'Ein Partner.':'One partner.','100.000 Möglichkeiten.':'100,000 possibilities.','Von Agrargeräten bis zum Kissen – wir beschaffen direkt bei Herstellern in China. Für Ihr Unternehmen oder Ihr Zuhause.':'From farm equipment to cushions – we source directly from manufacturers in China. For your business or your home.',
-'Kategorie wählen':'Choose a category','Global Sourcing.':'Global sourcing.','Neu gedacht.':'Reimagined.','Wir verbinden Sie direkt mit Herstellern in China – über 100.000 Produkte, ein Ansprechpartner, persönlich und auf Deutsch.':'We connect you directly with manufacturers in China – over 100,000 products, one contact, personal and in your language.',
+'Kategorie wählen':'Choose a category','Global Sourcing.':'Global sourcing.','Neu gedacht.':'Reimagined.','Wir verbinden Sie direkt mit Herstellern in China – über 100.000 Produkte, ein Ansprechpartner, Lieferung weltweit.':'We connect you directly with manufacturers in China – over 100,000 products, one contact, delivered worldwide.',
 'Aktive Route':'Active route','km Luftlinie':'km as the crow flies',
 /* example products */
 'Bewässerungssysteme':'Irrigation systems','Gartenschlauch':'Garden hose','Motorhacke':'Tiller','Rasenmäher':'Lawn mower','Sprühgerät':'Sprayer','Gewächshaus':'Greenhouse','Pflanzgefäße':'Planters','Gartenwerkzeug-Set':'Garden tool set','Tierbedarf':'Livestock supplies','Weidezaun':'Pasture fence','Saatgutschalen':'Seed trays','Schubkarre':'Wheelbarrow',
@@ -611,68 +657,72 @@ function topoFeatures(topo,name){
 const WORLD_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
 const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json';
 
-/* HERO A: Routenkarte */
+/* HERO A: Weltkarte mit Lieferzielen */
 (function(){
-  const cv=document.getElementById('rmap'),ctx=cv.getContext('2d');
-  const L0=-14,L1=160,B0=-4,B1=64; // lon/lat window
-  let W,H,dots=[],t0=performance.now(),mode='sea',auto=true;
-  const X=lon=>(lon-L0)/(L1-L0)*W, Y=lat=>(B1-lat)/(B1-B0)*H;
-  const ROUTES={
-    sea:{pts:[[114.06,22.54],[112,17],[106,8],[103.8,1.3],[97,5.5],[88,5.8],[80.5,5.6],[70,10],[58,13.5],[45,12.2],[42,15],[38.5,20],[34,27],[32.5,30.2],[30,32.2],[24,34],[15,36.5],[8,37.6],[-1,36.3],[-6,35.9],[-9.6,38],[-9.8,43],[-5,47.8],[1,50.2],[4.5,52.4],[8.3,54],[9.95,53.55],[13.4,52.52]],dur:'ca. 30–40 Tage',for:'Große Mengen & Container',from:'Shenzhen',speed:.055},
-    rail:{pts:[[106.55,29.56],[108.9,34.3],[103.8,36.1],[94,40.2],[87.6,43.8],[80.3,44.2],[76.9,43.25],[71.4,51.2],[61.4,55.2],[49.1,55.8],[37.6,55.75],[27.6,53.9],[23.7,52.1],[21,52.2],[13.4,52.52]],dur:'ca. 15–20 Tage',for:'Mittlere Mengen, schneller als See',from:'Chongqing',speed:.075},
-    air:{pts:null,dur:'ca. 3–7 Tage',for:'Eilsendungen & Muster',from:'Shanghai',speed:.11}
-  };
-  {const ip=d3.geoInterpolate([121.47,31.23],[13.4,52.52]);ROUTES.air.pts=d3.range(0,1.0001,1/40).map(ip)}
-  Object.values(ROUTES).forEach(r=>r.km=Math.round(d3.geoLength({type:'LineString',coordinates:r.pts})*6371/100)*100);
-  const CITIES=[['Shenzhen',114.06,22.54,1],['Shanghai',121.47,31.23,1],['Chongqing',106.55,29.56,0],['Berlin',13.4,52.52,0]];
-  function size(){const d=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)}
-  addEventListener('resize',size);size();
+  const cv=document.getElementById('rmap'),ctx=cv.getContext('2d'),sel=document.getElementById('dest');
+  const L0=-25,L1=335,B0=-50,B1=74; // China im Zentrum, Amerika rechts
+  let W,H,dotsCanvas=null,dots=[],di=defaultDest(),mode='sea',t0=performance.now(),auto=true;
+  const wrap=lon=>lon<L0?lon+360:lon;
+  const X=lon=>(wrap(lon)-L0)/(L1-L0)*W, Y=lat=>(B1-lat)/(B1-B0)*H;
+  function size(){const d=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);renderDots()}
+  function renderDots(){if(!dots.length||!W)return;const d=Math.min(2,devicePixelRatio||1);dotsCanvas=document.createElement('canvas');dotsCanvas.width=W*d;dotsCanvas.height=H*d;
+    const o=dotsCanvas.getContext('2d');o.setTransform(d,0,0,d,0,0);const r=Math.max(.8,W/640);
+    dots.forEach(p=>{o.fillStyle=p.k?css('--gold'):css('--text');o.globalAlpha=p.k?.55:.14;o.beginPath();o.arc(X(p.lon),Y(p.lat),r,0,7);o.fill()})}
+  addEventListener('resize',size);
   fetch(WORLD_URL).then(r=>r.json()).then(t=>{
-    const f=topoFeatures(t,'countries'),de=f.find(x=>x.id==='276'),cn=f.find(x=>x.id==='156');
-    const S=1.25,res=4,oc=document.createElement('canvas');oc.width=360*res;oc.height=180*res;
+    const f=topoFeatures(t,'countries'),cn=f.find(x=>x.id==='156');
+    const S=1.5,res=4,oc=document.createElement('canvas');oc.width=360*res;oc.height=180*res;
     const o=oc.getContext('2d'),p=d3.geoEquirectangular().scale(res*180/Math.PI).translate([180*res,90*res]),gp=d3.geoPath(p,o);
     o.fillStyle='#fff';o.beginPath();f.forEach(x=>gp(x));o.fill();
     const data=o.getImageData(0,0,oc.width,oc.height).data;
-    for(let lat=B1;lat>=B0;lat-=S)for(let lon=L0;lon<=L1;lon+=S){
-      const px=Math.round((lon+180)*res),py=Math.round((90-lat)*res);
-      if(data[(py*oc.width+px)*4]>128){const ll=[lon,lat];dots.push({lon,lat,k:d3.geoContains(de,ll)?2:d3.geoContains(cn,ll)?1:0})}
-    }
+    for(let lat=B1;lat>=B0;lat-=S)for(let lon=L0;lon<L1;lon+=S){const ln=lon>180?lon-360:lon;
+      const px=Math.round((ln+180)*res),py=Math.round((90-lat)*res);
+      if(data[(py*oc.width+px)*4]>128)dots.push({lon:ln,lat,k:(ln>73&&ln<135&&lat>18&&lat<54&&d3.geoContains(cn,[ln,lat]))?1:0})}
+    renderDots();
   }).catch(()=>{});
-  function pathPts(r){return r.pts.map(p=>[X(p[0]),Y(p[1])])}
-  function segLen(pp){let L=[0];for(let i=1;i<pp.length;i++)L.push(L[i-1]+Math.hypot(pp[i][0]-pp[i-1][0],pp[i][1]-pp[i-1][1]));return L}
-  function at(pp,L,d){let i=1;while(i<L.length-1&&L[i]<d)i++;const k=(d-L[i-1])/((L[i]-L[i-1])||1);return [pp[i-1][0]+(pp[i][0]-pp[i-1][0])*k,pp[i-1][1]+(pp[i][1]-pp[i-1][1])*k]}
-  function smooth(pp){ctx.beginPath();ctx.moveTo(pp[0][0],pp[0][1]);for(let i=1;i<pp.length-1;i++){const mx=(pp[i][0]+pp[i+1][0])/2,my=(pp[i][1]+pp[i+1][1])/2;ctx.quadraticCurveTo(pp[i][0],pp[i][1],mx,my)}ctx.lineTo(pp[pp.length-1][0],pp[pp.length-1][1])}
+  size();
+  function ctrl(a,b,h){const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],L=Math.hypot(dx,b[1]-a[1])||1;return [mx,my-h*L]}
+  function bez(a,c,b,t){const u=1-t;return [u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]}
+  const LIFT={sea:.12,rail:.18,air:.3};
   function frame(now){
     requestAnimationFrame(frame);
     const gold=css('--gold'),goldL=css('--gold-l'),cream=css('--cream'),text=css('--text');
-    ctx.clearRect(0,0,W,H);
-    const r=Math.max(1,W/520);
-    dots.forEach(d=>{ctx.fillStyle=d.k===2?cream:d.k===1?gold:text;ctx.globalAlpha=d.k===2?.95:d.k===1?.55:.13;ctx.beginPath();ctx.arc(X(d.lon),Y(d.lat),d.k?r*1.15:r,0,7);ctx.fill()});
+    ctx.clearRect(0,0,W,H);if(dotsCanvas)ctx.drawImage(dotsCanvas,0,0,W,H);
+    const og=mode==='rail'?RAIL_ORIGIN:ORIGIN,o=[X(og[0]),Y(og[1])];
+    DEST.forEach((d,i)=>{const b=[X(d.c[0]),Y(d.c[1])],c=ctrl(o,b,.18);
+      if(i!==di){ctx.globalAlpha=.12;ctx.strokeStyle=gold;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(o[0],o[1]);ctx.quadraticCurveTo(c[0],c[1],b[0],b[1]);ctx.stroke()}
+      ctx.globalAlpha=i===di?1:.55;ctx.fillStyle=i===di?cream:text;ctx.beginPath();ctx.arc(b[0],b[1],i===di?4:2.6,0,7);ctx.fill()});
     ctx.globalAlpha=1;
-    const R=ROUTES[mode],pp=pathPts(R),L=segLen(pp),tot=L[L.length-1];
-    smooth(pp);ctx.strokeStyle=gold;ctx.globalAlpha=.35;ctx.lineWidth=1.2;ctx.setLineDash([3,5]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
-    const prog=Math.min(1,(now-t0)/1400);
-    ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();
-    smooth(pp);ctx.strokeStyle=goldL;ctx.lineWidth=1.6;ctx.setLineDash([tot*prog,tot]);ctx.stroke();ctx.setLineDash([]);ctx.restore();
-    if(prog>=1){const k=((now-t0-1400)/1000*R.speed)%1,pt=at(pp,L,k*tot);
-      const g=ctx.createRadialGradient(pt[0],pt[1],0,pt[0],pt[1],16);g.addColorStop(0,goldL);g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(pt[0],pt[1],16,0,7);ctx.fill();ctx.fillStyle=cream;ctx.beginPath();ctx.arc(pt[0],pt[1],3,0,7);ctx.fill()}
-    ctx.font=`500 ${Math.max(10,W/70)}px Jost, sans-serif`;
-    CITIES.forEach(c=>{const active=c[0]===R.from||c[0]==='Berlin';const x=X(c[1]),y=Y(c[2]);
-      ctx.globalAlpha=active?1:.35;ctx.fillStyle=cream;ctx.beginPath();ctx.arc(x,y,active?4:2.5,0,7);ctx.fill();
-      if(active){ctx.strokeStyle=gold;ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,8+Math.sin(now/300)*2,0,7);ctx.stroke()}
-      ctx.fillStyle=text;ctx.textAlign=c[3]?'left':'right';ctx.fillText(c[0].toUpperCase(),x+(c[3]?12:-12),y+(c[0]==='Shanghai'?-8:c[0]==='Shenzhen'?14:c[0]==='Chongqing'?14:4))});
-    ctx.globalAlpha=1;
+    const d=DEST[di],b=[X(d.c[0]),Y(d.c[1])],c=ctrl(o,b,LIFT[mode]),prog=Math.min(1,(now-t0)/1100);
+    ctx.strokeStyle=goldL;ctx.lineWidth=1.8;ctx.setLineDash(mode==='sea'?[6,5]:mode==='rail'?[2,4]:[]);ctx.beginPath();
+    const N=80;for(let i=0;i<=N*prog;i++){const q=bez(o,c,b,i/N);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])}ctx.stroke();ctx.setLineDash([]);
+    if(prog>=1){const k=((now-t0-1100)/({sea:5200,rail:3800,air:2400}[mode]))%1,q=bez(o,c,b,k);
+      const g=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],14);g.addColorStop(0,goldL);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(q[0],q[1],14,0,7);ctx.fill();
+      ctx.fillStyle=cream;ctx.beginPath();ctx.arc(q[0],q[1],2.6,0,7);ctx.fill()}
+    ctx.fillStyle=gold;ctx.beginPath();ctx.arc(o[0],o[1],4,0,7);ctx.fill();ctx.strokeStyle=gold;ctx.lineWidth=1;ctx.beginPath();ctx.arc(o[0],o[1],9+Math.sin(now/300)*2,0,7);ctx.stroke();
+    ctx.font=`600 ${Math.max(10,W/66)}px Manrope, sans-serif`;ctx.fillStyle=text;
+    ctx.textAlign='left';ctx.fillText(mode==='rail'?'CHONGQING':'SHENZHEN',o[0]+12,o[1]+16);
+    const right=b[0]>W*.82;ctx.textAlign=right?'right':'left';ctx.fillText(d.city.toUpperCase(),b[0]+(right?-10:10),b[1]-8);
   }
   requestAnimationFrame(frame);
   const btns=[...document.querySelectorAll('#modes button')];
-  function setMode(m){mode=m;t0=performance.now();btns.forEach(b=>b.classList.toggle('on',b.dataset.m===m));
-    const R=ROUTES[m];['rDur','rKm','rFor'].forEach(id=>document.getElementById(id).style.opacity=0);
-    setTimeout(()=>{document.getElementById('rDur').textContent=t(R.dur);document.getElementById('rKm').textContent='≈ '+R.km.toLocaleString('de-DE')+' km';document.getElementById('rFor').textContent=t(R.for);
-      ['rDur','rKm','rFor'].forEach(id=>document.getElementById(id).style.opacity=1)},250)}
+  function update(){const d=DEST[di],T=TIMES[d.r];
+    if(!T[mode])mode='sea';
+    btns.forEach(b=>{b.disabled=!T[b.dataset.m];b.title=b.disabled?t('Nur Europa & Zentralasien'):'';b.classList.toggle('on',b.dataset.m===mode)});
+    document.getElementById('rDur').textContent=daysTxt(T[mode]);
+    document.getElementById('rKm').textContent=kmTxt(d.km);
+    sel.innerHTML=destOptions(di)}
+  function setDest(i){di=i;t0=performance.now();update()}
+  function setMode(m){mode=m;t0=performance.now();update()}
   btns.forEach(b=>b.onclick=()=>{auto=false;setMode(b.dataset.m)});
-  setMode('sea');addEventListener('langchange',()=>{const R=ROUTES[mode];document.getElementById('rDur').textContent=t(R.dur);document.getElementById('rFor').textContent=t(R.for)});
-  const order=['sea','rail','air'];setInterval(()=>{if(auto)setMode(order[(order.indexOf(mode)+1)%3])},7000);
+  sel.onchange=()=>{auto=false;setDest(+sel.value)};
+  const near=e=>{const r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;let best=-1,bd=1e9;
+    DEST.forEach((d,i)=>{const dd=Math.hypot(X(d.c[0])-x,Y(d.c[1])-y);if(dd<bd){bd=dd;best=i}});return bd<40?best:-1};
+  cv.addEventListener('click',e=>{const i=near(e);if(i>=0){auto=false;setDest(i)}});
+  cv.addEventListener('mousemove',e=>cv.style.cursor=near(e)>=0?'pointer':'default');
+  addEventListener('langchange',update);
+  setDest(di);
+  setInterval(()=>{if(auto)setDest((di+1)%DEST.length)},5000);
 })();
 
 /* SORTIMENT */

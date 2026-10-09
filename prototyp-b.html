@@ -341,7 +341,7 @@ footer a:hover{color:var(--gold-l)}
   <div class="wrap three">
     <div class="reveal"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h4>Qualitätskontrolle</h4><p>Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.</p></div>
     <div class="reveal"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><h4>EU-Konformität</h4><p>Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.</p></div>
-    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h4>Zoll & Logistik</h4><p>Versand, Verzollung und Import aus einer Hand – bis an Ihre Tür oder Ihr Lager.</p></div>
+    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h4>Zoll & Logistik</h4><p>Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.</p></div>
   </div>
 </section>
 
@@ -350,7 +350,7 @@ footer a:hover{color:var(--gold-l)}
     <div class="reveal">
       <div class="eyebrow">Unsere Haltung</div>
       <h2 style="margin-top:14px">Nähe trotz Distanz.</h2>
-      <p class="big">KARMIRA verbindet Unternehmen und Privatkunden in Deutschland direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.</p>
+      <p class="big">KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.</p>
     </div>
     <div class="reveal">
       <div class="eyebrow" style="margin-bottom:20px">Unsere Prinzipien</div>
@@ -500,6 +500,36 @@ const REGIONS=[
  {loc:'Chongqing',nm:'Fahrzeug-Cluster',ty:'Auto · Motorrad · Teile',det:'Chongqing ist einer der größten Standorte für Fahrzeug- und Zubehörproduktion.',c:[106.55,29.56],o:[-50,24]}
 ];
 
+/* WORLDWIDE DESTINATIONS */
+const ORIGIN=[114.06,22.54],RAIL_ORIGIN=[106.55,29.56];
+const DEST=[
+ {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'},
+ {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'}
+];
+const TIMES={EU:{sea:'30–40',rail:'15–20',air:'3–7'},ME:{sea:'18–25',air:'3–5'},NA:{sea:'20–35',air:'4–7'},SA:{sea:'30–45',air:'5–10'},AF:{sea:'25–40',air:'4–8'},AS:{sea:'7–15',air:'2–4'},OC:{sea:'15–25',air:'3–6'}};
+const dname=d=>LANG==='en'?d.en:d.de;
+const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
+const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
+DEST.forEach(d=>d.km=Math.round(d3.geoDistance(ORIGIN,d.c)*6371/100)*100);
+function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
+  const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
+function destOptions(sel){return DEST.map((d,i)=>`<option value="${i}"${i===sel?' selected':''}>${dname(d)} · ${d.city}</option>`).join('')}
+
 const root=document.documentElement;
 const links=document.getElementById('links');
 document.getElementById('menuBtn').onclick=()=>links.classList.toggle('open');
@@ -508,8 +538,8 @@ document.getElementById('y').textContent=new Date().getFullYear();
 const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
 /* ---------- I18N ---------- */
 const EN={
-'Sortiment':'Products','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
-'100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – wir bringen die Produkte der Welt zu Ihnen.':'From farm equipment to kitchenware and car accessories – we bring the world’s products to you.',
+'Sortiment':'Products','Weltweiter Versand':'Worldwide shipping','Weltweit':'Worldwide','Versand':'Shipping','Lieferziel':'Destination','Entfernung':'Distance','Nur Europa & Zentralasien':'Europe & Central Asia only','Ziel auf der Karte anklicken':'Click a destination on the map','Luftlinie':'as the crow flies','Weltweite Lieferung':'Worldwide delivery','Aus China in die ganze Welt.':'From China to the world.','Direkt aus China – geliefert, wohin Sie wollen.':'Direct from China – delivered wherever you are.','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
+'100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – direkt aus China, geliefert in die ganze Welt.':'From farm equipment to kitchenware and car accessories – direct from China, delivered worldwide.',
 'Sortiment entdecken':'Explore products','Globus drehen':'Drag to rotate','Unser Sortiment':'Our range','Über':'Over','Produkte.':'products.','Finden Sie Ihres.':'Find yours.','Anfragen':'Inquire',
 'Agrar & Garten':'Farm & Garden','Geräte, Maschinen und Zubehör für Landwirtschaft und Garten.':'Tools, machinery and accessories for farming and gardening.','Beispiele ansehen':'See examples',
 'Küche & Haushalt':'Kitchen & Household','Utensilien, Geschirr und clevere Helfer für jeden Haushalt.':'Utensils, tableware and clever helpers for every home.',
@@ -529,9 +559,9 @@ const EN={
 'Produkte':'Products','Regionen':'Regions','Kunden':'Customers','Ansprechpartner':'Contact person','Kategorien':'Categories',
 'Qualität & Import-Sicherheit':'Quality & import assurance','Qualitätskontrolle':'Quality control','Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.':'Samples, inspection and approval before anything is produced or shipped.',
 'EU-Konformität':'EU compliance','Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.':'We take care of CE marking, labelling requirements and complete documentation.',
-'Zoll & Logistik':'Customs & logistics','Versand, Verzollung und Import aus einer Hand – bis an Ihre Tür oder Ihr Lager.':'Shipping, customs clearance and import from a single source – to your door or warehouse.',
+'Zoll & Logistik':'Customs & logistics','Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.':'Shipping, customs clearance and import from a single source – to your door or warehouse.',
 'Unsere Haltung':'Our approach','Nähe trotz Distanz.':'Close, despite the distance.',
-'KARMIRA verbindet Unternehmen und Privatkunden in Deutschland direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.':'KARMIRA connects businesses and private customers in Germany directly with manufacturers in China. No unnecessary middlemen, with personal support in German and English – from the first idea to delivery.',
+'KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.':'KARMIRA connects businesses and private customers worldwide directly with manufacturers in China. No unnecessary middlemen, with personal support in German and English – from the first idea to delivery.',
 'Unsere Prinzipien':'Our principles','Wir kennen die Regionen und ihre Hersteller.':'We know the regions and their manufacturers.','Qualität':'Quality','Geprüft, bevor es auf die Reise geht.':'Inspected before it travels.',
 'Transparenz':'Transparency','Klare Preise, klare Abläufe, keine Überraschungen.':'Clear prices, clear processes, no surprises.','Partnerschaft':'Partnership','Ein fester Ansprechpartner – langfristig.':'One dedicated contact – for the long term.',
 'Lösungen':'Solutions','Für Unternehmen.':'For businesses.','Für Sie.':'For you.','Geschäftskunden':'Business customers','Beschaffung im großen Stil':'Sourcing at scale',
@@ -560,7 +590,7 @@ const EN={
 'Seefracht':'Sea freight','Bahn':'Rail','Luftfracht':'Air freight','Dauer':'Duration','Strecke':'Distance','Ideal für':'Ideal for',
 'ca. 30–40 Tage':'approx. 30–40 days','ca. 15–20 Tage':'approx. 15–20 days','ca. 3–7 Tage':'approx. 3–7 days','Große Mengen & Container':'Large volumes & containers','Mittlere Mengen, schneller als See':'Medium volumes, faster than sea','Eilsendungen & Muster':'Urgent shipments & samples',
 'Ein Partner.':'One partner.','100.000 Möglichkeiten.':'100,000 possibilities.','Von Agrargeräten bis zum Kissen – wir beschaffen direkt bei Herstellern in China. Für Ihr Unternehmen oder Ihr Zuhause.':'From farm equipment to cushions – we source directly from manufacturers in China. For your business or your home.',
-'Kategorie wählen':'Choose a category','Global Sourcing.':'Global sourcing.','Neu gedacht.':'Reimagined.','Wir verbinden Sie direkt mit Herstellern in China – über 100.000 Produkte, ein Ansprechpartner, persönlich und auf Deutsch.':'We connect you directly with manufacturers in China – over 100,000 products, one contact, personal and in your language.',
+'Kategorie wählen':'Choose a category','Global Sourcing.':'Global sourcing.','Neu gedacht.':'Reimagined.','Wir verbinden Sie direkt mit Herstellern in China – über 100.000 Produkte, ein Ansprechpartner, Lieferung weltweit.':'We connect you directly with manufacturers in China – over 100,000 products, one contact, delivered worldwide.',
 'Aktive Route':'Active route','km Luftlinie':'km as the crow flies',
 /* example products */
 'Bewässerungssysteme':'Irrigation systems','Gartenschlauch':'Garden hose','Motorhacke':'Tiller','Rasenmäher':'Lawn mower','Sprühgerät':'Sprayer','Gewächshaus':'Greenhouse','Pflanzgefäße':'Planters','Gartenwerkzeug-Set':'Garden tool set','Tierbedarf':'Livestock supplies','Weidezaun':'Pasture fence','Saatgutschalen':'Seed trays','Schubkarre':'Wheelbarrow',
