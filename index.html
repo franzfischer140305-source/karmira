@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KARMIRA – Produkte direkt aus China für Unternehmen & Privatkunden</title>
+<meta name="description" content="KARMIRA – über 100.000 Produkte direkt aus China. Beschaffung für Unternehmen (B2B) und Privatkunden (B2C): von Agrargeräten über Küche & Haushalt bis Auto-Zubehör.">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0b; --bg2:#121212; --card:#161514; --line:rgba(201,169,110,.22);
+  --gold:#c9a96e; --gold-l:#ecd9b0; --gold-d:#9a7a48;
+  --text:#e9e4da; --muted:#9d968a;
+  --grad:linear-gradient(100deg,#9a7a48 0%,#ecd9b0 45%,#c9a96e 70%,#9a7a48 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.serif{font-family:'Cormorant Garamond',serif}
+.gold{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-size:.78rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold)}
+.rule{width:90px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:22px 0}
+.center .rule{margin:22px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.center{text-align:center}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(11,11,11,.86);backdrop-filter:blur(12px);border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;mix-blend-mode:screen}
+.brand span{font-family:'Cormorant Garamond',serif;font-size:1.35rem;letter-spacing:.45em;font-weight:500}
+.links{display:flex;gap:34px;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase}
+.links a{color:var(--muted);transition:.2s}
+.links a:hover{color:var(--gold-l)}
+.menu-btn{display:none;background:none;border:0;color:var(--gold);font-size:1.6rem;cursor:pointer}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:15px 34px;font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;border:1px solid var(--gold);transition:.3s;cursor:pointer;font-family:'Jost',sans-serif}
+.btn-solid{background:var(--grad);color:#111;border-color:transparent;font-weight:500}
+.btn-solid:hover{filter:brightness(1.08);box-shadow:0 0 40px rgba(201,169,110,.25)}
+.btn-ghost{color:var(--gold-l);background:transparent}
+.btn-ghost:hover{background:rgba(201,169,110,.08)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:120px 0 80px;
+  background:radial-gradient(ellipse 70% 60% at 70% 45%,rgba(201,169,110,.10),transparent 70%),
+             radial-gradient(ellipse 50% 50% at 10% 90%,rgba(201,169,110,.05),transparent 70%),var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2.6rem,5.6vw,4.6rem);line-height:1.08;letter-spacing:.01em}
+.hero p.lead{color:var(--muted);font-size:1.12rem;max-width:520px;margin-bottom:38px}
+.hero .ctas{display:flex;gap:16px;flex-wrap:wrap}
+.hero-logo{position:relative;display:flex;justify-content:center}
+.hero-logo img{width:min(440px,100%);mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(circle,#000 52%,transparent 72%);mask-image:radial-gradient(circle,#000 52%,transparent 72%);
+  animation:float 7s ease-in-out infinite}
+.hero-logo::before{content:"";position:absolute;inset:8%;border:1px solid var(--line);border-radius:50%;animation:spin 60s linear infinite}
+.hero-logo::after{content:"";position:absolute;inset:-2%;border:1px dashed rgba(201,169,110,.12);border-radius:50%;animation:spin 90s linear infinite reverse}
+@keyframes float{50%{transform:translateY(-12px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:.7rem;letter-spacing:.4em;color:var(--muted);text-transform:uppercase}
+
+/* STATS */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:44px 20px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:2.8rem;line-height:1}
+.stat small{display:block;margin-top:10px;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+
+/* SECTIONS */
+section{padding:120px 0}
+h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2rem,4vw,3.2rem);line-height:1.15}
+.sub{color:var(--muted);max-width:620px;font-size:1.05rem}
+.center .sub{margin:0 auto}
+
+/* CATEGORIES */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px}
+.cat{background:var(--bg);padding:38px 28px;transition:.35s;position:relative;overflow:hidden}
+.cat::after{content:"";position:absolute;inset:auto 0 0 0;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:.4s}
+.cat:hover{background:var(--card)}
+.cat:hover::after{transform:scaleX(1)}
+.cat svg{width:34px;height:34px;stroke:var(--gold);fill:none;stroke-width:1.2;margin-bottom:22px}
+.cat h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.45rem;margin-bottom:6px}
+.cat p{font-size:.9rem;color:var(--muted)}
+
+/* B2B / B2C */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:64px}
+.panel{border:1px solid var(--line);padding:54px 46px;background:linear-gradient(160deg,#171615,#0e0e0e);position:relative}
+.panel .tag{position:absolute;top:-1px;right:40px;background:var(--grad);color:#111;font-size:.72rem;letter-spacing:.3em;padding:8px 16px;font-weight:500}
+.panel h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:2.1rem;margin-bottom:14px}
+.panel ul{list-style:none;margin:26px 0 34px}
+.panel li{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:14px;color:#cfc8bb}
+.panel li::before{content:"✦";color:var(--gold);font-size:.8rem;padding-top:3px}
+
+/* PROCESS */
+.process{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:70px;counter-reset:s}
+.step{position:relative;padding-top:28px;border-top:1px solid var(--line)}
+.step::before{counter-increment:s;content:"0" counter(s);position:absolute;top:-17px;left:0;background:var(--bg2);padding-right:14px;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold)}
+.step h4{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.4rem;margin-bottom:8px}
+.step p{color:var(--muted);font-size:.93rem}
+
+/* WHY */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:50px;margin-top:64px}
+.why div h4{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.45rem;margin:12px 0 8px}
+.why div p{color:var(--muted);font-size:.95rem}
+.why .num{font-size:.75rem;letter-spacing:.3em;color:var(--gold)}
+
+/* CONTACT */
+.contact .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.contact-info p{color:var(--muted);margin-bottom:30px}
+.contact-info .line{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:.98rem}
+.contact-info .line span:first-child{color:var(--gold);width:90px;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;padding-top:4px}
+form{border:1px solid var(--line);padding:46px;background:var(--card)}
+.toggle{display:flex;border:1px solid var(--line);margin-bottom:26px}
+.toggle label{flex:1;text-align:center;padding:12px;cursor:pointer;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);transition:.25s}
+.toggle input{display:none}
+.toggle input:checked+label{background:var(--grad);color:#111;font-weight:500}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field input,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(201,169,110,.35);color:var(--text);padding:10px 0;font:inherit;font-size:1rem;outline:none;transition:.2s}
+.field input:focus,.field textarea:focus{border-color:var(--gold-l)}
+.field textarea{resize:vertical;min-height:100px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.company{transition:.3s}
+.company.hidden{display:none}
+form .btn{width:100%;margin-top:14px}
+.note{font-size:.78rem;color:var(--muted);margin-top:14px;text-align:center}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:50px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer .flinks{display:flex;gap:28px}
+footer a:hover{color:var(--gold-l)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media (max-width:960px){
+  .hero .wrap,.contact .wrap,.split{grid-template-columns:1fr}
+  .hero-logo{order:-1;width:270px;aspect-ratio:1;margin:0 auto}.hero-logo img{width:100%}
+  .stat{min-width:0;padding:30px 10px}.stat b{font-size:2.1rem}.stat small{letter-spacing:.15em;font-size:.66rem}
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .why{grid-template-columns:1fr}
+  .stats .wrap{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media (max-width:760px){
+  .links{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:rgba(11,11,11,.97);border-bottom:1px solid var(--line)}
+  .links.open{display:flex}
+  .links a{padding:18px 24px;border-top:1px solid rgba(255,255,255,.05)}
+  .menu-btn{display:block}
+  section{padding:84px 0}
+  .cats,.steps,.row{grid-template-columns:1fr}
+  .panel,form{padding:34px 24px}
+  .brand span{font-size:1.1rem;letter-spacing:.35em}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><img src="logo-small.jpg" alt="KARMIRA Logo"><span class="gold">KARMIRA</span></a>
+    <div class="links" id="links">
+      <a href="#sortiment">Sortiment</a>
+      <a href="#loesungen">B2B & B2C</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menü">☰</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Global Sourcing · Direkt aus China</div>
+      <div class="rule"></div>
+      <h1>Über <span class="gold">100.000 Produkte</span>.<br>Ein Partner.</h1>
+      <p class="lead" style="margin-top:26px">Von Agrargeräten über Küche & Haushalt bis zu Auto-Zubehör: KARMIRA verbindet Sie direkt mit geprüften Herstellern in China – für Unternehmen und Privatkunden.</p>
+      <div class="ctas">
+        <a href="#kontakt" class="btn btn-solid">Anfrage stellen</a>
+        <a href="#sortiment" class="btn btn-ghost">Sortiment entdecken</a>
+      </div>
+    </div>
+    <div class="hero-logo reveal"><img src="logo.jpg" alt="KARMIRA Monogramm"></div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><b class="gold">100.000+</b><small>Produkte</small></div>
+    <div class="stat reveal"><b class="gold">B2B</b><small>Großhandel</small></div>
+    <div class="stat reveal"><b class="gold">B2C</b><small>Privatkunden</small></div>
+    <div class="stat reveal"><b class="gold">1</b><small>Ansprechpartner</small></div>
+  </div>
+</div>
+
+<section id="sortiment">
+  <div class="wrap center">
+    <div class="eyebrow reveal">Sortiment</div>
+    <div class="rule"></div>
+    <h2 class="reveal">Alles, was Sie brauchen –<br><span class="gold">aus einer Hand</span></h2>
+    <p class="sub reveal" style="margin-top:20px">Ein Auszug aus unseren Kategorien. Sie suchen etwas Bestimmtes? Wir finden es für Sie.</p>
+  </div>
+  <div class="wrap">
+    <div class="cats">
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M3 17h2m14 0h2M5 17a2 2 0 104 0 2 2 0 00-4 0zm10 0a3 3 0 106 0 3 3 0 00-6 0zM9 17h6M7 15V8h6l3 4h3v3"/></svg><h3>Agrar & Garten</h3><p>Geräte, Werkzeuge, Bewässerung</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M4 10h16v3a6 6 0 01-6 6h-4a6 6 0 01-6-6v-3zM8 6c0-1 1-1 1-2M12 6c0-1 1-1 1-2M16 6c0-1 1-1 1-2"/></svg><h3>Küche & Haushalt</h3><p>Utensilien, Geschirr, Helfer</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M3 9a3 3 0 013-3h12a3 3 0 013 3v6a3 3 0 01-3 3H6a3 3 0 01-3-3V9zM7 12h10"/></svg><h3>Wohnen & Textil</h3><p>Kissen, Decken, Dekoration</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M5 16l1.5-5A2 2 0 018.4 9.5h7.2a2 2 0 011.9 1.5L19 16M4 16h16v3H4zM7 19v1M17 19v1"/></svg><h3>Auto & Zubehör</h3><p>Pflege, Ausstattung, Teile</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6l9-9zM12 6l6 6"/></svg><h3>Werkzeug & Technik</h3><p>Handwerk, Elektro, Industrie</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/></svg><h3>Elektronik</h3><p>Gadgets, Zubehör, Smart Home</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg><h3>Freizeit & Sport</h3><p>Outdoor, Fitness, Camping</p></div>
+      <div class="cat reveal"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="9"/></svg><h3>Und vieles mehr</h3><p>Über 100.000 Artikel auf Anfrage</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="loesungen" style="padding-top:0">
+  <div class="wrap center">
+    <div class="eyebrow reveal">Lösungen</div>
+    <div class="rule"></div>
+    <h2 class="reveal">Für Unternehmen. <span class="gold">Für Sie.</span></h2>
+  </div>
+  <div class="wrap split">
+    <div class="panel reveal">
+      <span class="tag">B2B</span>
+      <div class="eyebrow">Geschäftskunden</div>
+      <h3 style="margin-top:12px">Beschaffung im großen Stil</h3>
+      <p class="sub">Für Händler, Gastronomie, Landwirtschaft und Industrie – wir übernehmen die Beschaffung von der Suche bis zur Lieferung.</p>
+      <ul>
+        <li>Großhandelspreise direkt ab Hersteller</li>
+        <li>Lieferantensuche & Qualitätsprüfung</li>
+        <li>Individuelle Produkte & Private Label</li>
+        <li>Logistik, Zoll & Import aus einer Hand</li>
+      </ul>
+      <a href="#kontakt" class="btn btn-solid" data-type="b2b">B2B-Anfrage</a>
+    </div>
+    <div class="panel reveal">
+      <span class="tag">B2C</span>
+      <div class="eyebrow">Privatkunden</div>
+      <h3 style="margin-top:12px">Ausgewählte Produkte für Zuhause</h3>
+      <p class="sub">Hochwertige Produkte zu fairen Preisen – sorgfältig ausgewählt und direkt zu Ihnen nach Hause geliefert.</p>
+      <ul>
+        <li>Faire Preise ohne Zwischenhändler</li>
+        <li>Geprüfte Qualität</li>
+        <li>Persönliche Beratung auf Deutsch</li>
+        <li>Lieferung bis an die Haustür</li>
+      </ul>
+      <a href="#kontakt" class="btn btn-ghost" data-type="b2c">Privat anfragen</a>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="ablauf">
+  <div class="wrap">
+    <div class="eyebrow reveal">Ablauf</div>
+    <div class="rule"></div>
+    <h2 class="reveal">In vier Schritten zu <span class="gold">Ihrem Produkt</span></h2>
+    <div class="steps">
+      <div class="step reveal"><h4>Anfrage</h4><p>Sie sagen uns, was Sie suchen – Produkt, Menge, Wunschpreis.</p></div>
+      <div class="step reveal"><h4>Angebot</h4><p>Wir finden passende Hersteller und senden Ihnen ein transparentes Angebot.</p></div>
+      <div class="step reveal"><h4>Qualität</h4><p>Muster, Prüfung und Abstimmung, bevor produziert oder versendet wird.</p></div>
+      <div class="step reveal"><h4>Lieferung</h4><p>Wir kümmern uns um Versand, Zoll und Import – bis zu Ihnen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <div class="eyebrow reveal">Warum KARMIRA</div>
+    <div class="rule"></div>
+    <h2 class="reveal">Vertrauen, das <span class="gold">verbindet</span></h2>
+  </div>
+  <div class="wrap why">
+    <div class="reveal"><span class="num">— 01</span><h4>Direkter Zugang</h4><p>Ohne Umwege zu den Herstellern – das spart Kosten, die wir an Sie weitergeben.</p></div>
+    <div class="reveal"><span class="num">— 02</span><h4>Riesige Auswahl</h4><p>Über 100.000 Produkte aus nahezu jeder Branche – und was fehlt, finden wir.</p></div>
+    <div class="reveal"><span class="num">— 03</span><h4>Ein Ansprechpartner</h4><p>Deutschsprachiger Service von der ersten Anfrage bis zur Lieferung.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="kontakt" style="background:var(--bg2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="contact-info reveal">
+      <div class="eyebrow">Kontakt</div>
+      <div class="rule"></div>
+      <h2>Lassen Sie uns <span class="gold">sprechen</span></h2>
+      <p style="margin-top:20px">Erzählen Sie uns, was Sie suchen. Wir melden uns in der Regel innerhalb von 24 Stunden mit einem Angebot.</p>
+      <div class="line"><span>E-Mail</span><a href="mailto:info@karmira.de">info@karmira.de</a></div>
+      <div class="line"><span>Telefon</span><span>+49 [TELEFON]</span></div>
+      <div class="line"><span>Instagram</span><span>@[INSTAGRAM]</span></div>
+    </div>
+    <form id="form" class="reveal">
+      <div class="toggle">
+        <input type="radio" name="type" id="t-b2b" value="B2B" checked><label for="t-b2b">Unternehmen</label>
+        <input type="radio" name="type" id="t-b2c" value="B2C"><label for="t-b2c">Privat</label>
+      </div>
+      <div class="row">
+        <div class="field"><label>Name</label><input name="name" required></div>
+        <div class="field company" id="companyField"><label>Firma</label><input name="company"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>E-Mail</label><input type="email" name="email" required></div>
+        <div class="field"><label>Telefon</label><input name="phone"></div>
+      </div>
+      <div class="field"><label>Was suchen Sie?</label><textarea name="message" required placeholder="Produkt, Menge, Wunschtermin …"></textarea></div>
+      <button class="btn btn-solid" type="submit">Anfrage senden</button>
+      <p class="note">Unverbindlich & kostenlos.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><img src="logo-small.jpg" alt=""><span class="gold">KARMIRA</span></div>
+    <div>© <span id="y"></span> KARMIRA · karmira.de</div>
+    <div class="flinks"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+const links=document.getElementById('links');
+document.getElementById('menuBtn').onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cf=document.getElementById('companyField');
+const setType=t=>{document.getElementById(t==='b2c'?'t-b2c':'t-b2b').checked=true;cf.classList.toggle('hidden',t==='b2c')};
+document.querySelectorAll('input[name=type]').forEach(r=>r.onchange=()=>setType(r.value.toLowerCase()));
+document.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>setType(b.dataset.type)));
+document.getElementById('form').onsubmit=e=>{
+  e.preventDefault();const f=new FormData(e.target);
+  const body=`Art: ${f.get('type')}\nName: ${f.get('name')}\nFirma: ${f.get('company')||'-'}\nE-Mail: ${f.get('email')}\nTelefon: ${f.get('phone')||'-'}\n\n${f.get('message')}`;
+  location.href=`mailto:info@karmira.de?subject=${encodeURIComponent('Anfrage ('+f.get('type')+') – '+f.get('name'))}&body=${encodeURIComponent(body)}`;
+};
+</script>
+</body>
+</html>
