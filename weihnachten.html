@@ -160,7 +160,7 @@ body.nosnow #snow{display:none}
 .pcard{border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:var(--bg2);display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
 .pcard:hover{border-color:var(--line);transform:translateY(-3px)}
 .pcard.sel{border-color:var(--gold)}
-.pimg{aspect-ratio:1;background-size:500% 300%;background-color:#111;background-repeat:no-repeat;cursor:zoom-in}
+.pimg{aspect-ratio:1;background-size:contain;background-position:center;background-color:#0c0c0e;background-repeat:no-repeat;cursor:zoom-in}
 .pbody{padding:13px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
 .pcode{font-size:.7rem;color:var(--gold);letter-spacing:.06em;font-weight:600}
 .ptitle{font-weight:600;font-size:.94rem;line-height:1.3}
@@ -1041,7 +1041,7 @@ const KGROUPS=[["lichter","Lichterketten","String lights"],["motive","2D-Motive 
   try{sel=JSON.parse(localStorage.getItem('k-sel')||'[]')}catch(e){}
   const de=()=>LANG==='de';
   const T=p=>de()?p[5]:p[6], SZ=p=>de()?p[7]:p[8], D=p=>(KDESC[p[4]]||['',''])[de()?0:1];
-  const img=p=>`background-image:url(kat${String(p[1]).padStart(2,'0')}.jpg);background-position:${(p[2]%5)*25}% ${Math.floor(p[2]/5)*50}%`;
+  const img=p=>`background-image:url(p/${p[0]}.jpg)`;
   const ruler='<svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>';
   const list=()=>{const qq=nrm(query.trim());return KAT.filter(p=>(grp==='all'||p[3]===grp)&&(!qq||nrm(p[0]+' '+p[5]+' '+p[6]+' '+p[7]+' '+(KGROUPS.find(g=>g[0]===p[3])||[]).slice(1).join(' ')).includes(qq)))};
   const save=()=>{try{localStorage.setItem('k-sel',JSON.stringify(sel))}catch(e){}};
