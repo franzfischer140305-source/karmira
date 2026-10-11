@@ -303,9 +303,8 @@ footer a:hover{color:var(--gold-l)}
       <div class="rpanel">
         <label class="dsel"><small>Lieferziel</small><select id="dest"></select></label>
         <div class="modes" id="modes">
-          <button data-m="sea" class="on"><svg viewBox="0 0 24 24"><path d="M3 18c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0M5 15l-1-4h16l-2 4M8 11V6h6l3 5"/></svg>Seefracht</button>
           <button data-m="rail"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="13" rx="3"/><path d="M6 10h12M9 20l-2 2M15 20l2 2M9 13h.01M15 13h.01"/></svg>Bahn</button>
-          <button data-m="air"><svg viewBox="0 0 24 24"><path d="M10 14l-7-2 1-2 7 1 4-7h2l-1 8 5 1 1 2-6 1-3 6h-2l1-6z"/></svg>Luftfracht</button>
+          <button data-m="air" class="on"><svg viewBox="0 0 24 24"><path d="M10 14l-7-2 1-2 7 1 4-7h2l-1 8 5 1 1 2-6 1-3 6h-2l1-6z"/></svg>Luftfracht</button>
         </div>
         <div class="rinfo">
           <div><small>Dauer</small><b id="rDur">–</b></div>
@@ -542,7 +541,7 @@ const DEST=[
  {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
  {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
 ];
-const TIMES={EU:{sea:'34–44',rail:'19–24',air:'7–11'},ME:{sea:'22–29',air:'7–9'},NA:{sea:'24–39',air:'8–11'},SA:{sea:'34–49',air:'9–14'},AF:{sea:'29–44',air:'8–12'},AS:{sea:'11–19',air:'6–8'},OC:{sea:'19–29',air:'7–10'}};
+const TIMES={EU:{rail:'19–24',air:'7–11'},ME:{air:'7–9'},NA:{air:'8–11'},SA:{air:'9–14'},AF:{air:'8–12'},AS:{air:'6–8'},OC:{air:'7–10'}};
 const dname=d=>LANG==='en'?d.en:d.de;
 const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
 const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
@@ -625,7 +624,7 @@ CL:'Santiago de Chile,-33.45,-70.67;Valparaíso,-33.05,-71.62',CO:'Bogotá,4.71,
 PE:'Lima,-12.05,-77.04;Arequipa,-16.41,-71.54',VE:'Caracas,10.48,-66.90',EC:'Quito,-0.18,-78.47;Guayaquil,-2.17,-79.92',
 BO:'La Paz,-16.50,-68.15;Santa Cruz,-17.81,-63.18',PY:'Asunción,-25.26,-57.58',UY:'Montevideo,-34.90,-56.16'
 };
-TIMES.CA={sea:'29–39',rail:'16–22',air:'7–10'};
+TIMES.CA={rail:'16–22',air:'7–10'};
 const CITIES=[];Object.entries(CITY_RAW).forEach(([cc,s])=>s.split(';').forEach(e=>{const [n,la,lo]=e.split(',');CITIES.push({name:n,cc,c:[+lo,+la]})}));
 const DN={};function cname(cc,l){l=l||LANG;try{DN[l]=DN[l]||new Intl.DisplayNames([l],{type:'region'});return DN[l].of(cc)}catch(e){return cc}}
 const flag=cc=>/^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))):'';
@@ -784,7 +783,7 @@ const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.js
 (function(){
   const cv=document.getElementById('rmap'),ctx=cv.getContext('2d'),sel=document.getElementById('dest');
   const L0=-25,L1=335,B0=-50,B1=74; // China im Zentrum, Amerika rechts
-  let W,H,dotsCanvas=null,dots=[],di=defaultDest(),mode='sea',t0=performance.now(),auto=true;
+  let W,H,dotsCanvas=null,dots=[],di=defaultDest(),mode='air',t0=performance.now(),auto=true;
   const wrap=lon=>lon<L0?lon+360:lon;
   const X=lon=>(wrap(lon)-L0)/(L1-L0)*W, Y=lat=>(B1-lat)/(B1-B0)*H;
   function size(){const d=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);renderDots()}
@@ -830,7 +829,7 @@ const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.js
   requestAnimationFrame(frame);
   const btns=[...document.querySelectorAll('#modes button')];
   function update(){const d=DEST[di],T=TIMES[d.r];
-    if(!T[mode])mode='sea';
+    if(!T[mode])mode='air';
     btns.forEach(b=>{b.disabled=!T[b.dataset.m];b.title=b.disabled?t('Nur Europa & Zentralasien'):'';b.classList.toggle('on',b.dataset.m===mode)});
     document.getElementById('rDur').textContent=daysTxt(T[mode]);
     document.getElementById('rKm').textContent=kmTxt(d.km);

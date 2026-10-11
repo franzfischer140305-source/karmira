@@ -521,7 +521,7 @@ const DEST=[
  {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
  {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
 ];
-const TIMES={EU:{sea:'34–44',rail:'19–24',air:'7–11'},ME:{sea:'22–29',air:'7–9'},NA:{sea:'24–39',air:'8–11'},SA:{sea:'34–49',air:'9–14'},AF:{sea:'29–44',air:'8–12'},AS:{sea:'11–19',air:'6–8'},OC:{sea:'19–29',air:'7–10'}};
+const TIMES={EU:{rail:'19–24',air:'7–11'},ME:{air:'7–9'},NA:{air:'8–11'},SA:{air:'9–14'},AF:{air:'8–12'},AS:{air:'6–8'},OC:{air:'7–10'}};
 const dname=d=>LANG==='en'?d.en:d.de;
 const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
 const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
@@ -604,7 +604,7 @@ CL:'Santiago de Chile,-33.45,-70.67;Valparaíso,-33.05,-71.62',CO:'Bogotá,4.71,
 PE:'Lima,-12.05,-77.04;Arequipa,-16.41,-71.54',VE:'Caracas,10.48,-66.90',EC:'Quito,-0.18,-78.47;Guayaquil,-2.17,-79.92',
 BO:'La Paz,-16.50,-68.15;Santa Cruz,-17.81,-63.18',PY:'Asunción,-25.26,-57.58',UY:'Montevideo,-34.90,-56.16'
 };
-TIMES.CA={sea:'29–39',rail:'16–22',air:'7–10'};
+TIMES.CA={rail:'16–22',air:'7–10'};
 const CITIES=[];Object.entries(CITY_RAW).forEach(([cc,s])=>s.split(';').forEach(e=>{const [n,la,lo]=e.split(',');CITIES.push({name:n,cc,c:[+lo,+la]})}));
 const DN={};function cname(cc,l){l=l||LANG;try{DN[l]=DN[l]||new Intl.DisplayNames([l],{type:'region'});return DN[l].of(cc)}catch(e){return cc}}
 const flag=cc=>/^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))):'';
