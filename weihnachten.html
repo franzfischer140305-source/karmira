@@ -1041,7 +1041,7 @@ const KGROUPS=[["lichter","Lichterketten","String lights"],["motive","2D-Motive 
   try{sel=JSON.parse(localStorage.getItem('k-sel')||'[]')}catch(e){}
   const de=()=>LANG==='de';
   const T=p=>de()?p[5]:p[6], SZ=p=>de()?p[7]:p[8], D=p=>(KDESC[p[4]]||['',''])[de()?0:1];
-  const img=p=>`background-image:url(p/${p[0]}.jpg)`;
+  const img=p=>`background-image:url(p/${p[0]}.jpg?v=2)`;
   const ruler='<svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>';
   const list=()=>{const qq=nrm(query.trim());return KAT.filter(p=>(grp==='all'||p[3]===grp)&&(!qq||nrm(p[0]+' '+p[5]+' '+p[6]+' '+p[7]+' '+(KGROUPS.find(g=>g[0]===p[3])||[]).slice(1).join(' ')).includes(qq)))};
   const save=()=>{try{localStorage.setItem('k-sel',JSON.stringify(sel))}catch(e){}};
