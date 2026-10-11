@@ -435,7 +435,7 @@ footer a:hover{color:var(--gold-l)}
 <div class="modal" id="pmodal"><div class="modal-box">
   <button class="icon-btn x" id="pmClose" aria-label="Schließen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <div class="pimg" id="pmImg"></div>
-  <div><div class="pcode" id="pmCode"></div><h3 id="pmTitle"></h3><div class="psize" id="pmSize"></div><p id="pmDesc"></p>
+  <div><div class="pcode notranslate" translate="no" id="pmCode"></div><h3 id="pmTitle"></h3><div class="psize" id="pmSize"></div><p id="pmDesc"></p>
   <p class="kopts">Farbe, Größe und Design anpassbar · Für innen und außen · Preis auf Anfrage</p>
   <button class="padd" id="pmAdd"></button></div>
 </div></div>
@@ -1047,7 +1047,7 @@ const KGROUPS=[["lichter","Lichterketten","String lights"],["motive","2D-Motive 
   const save=()=>{try{localStorage.setItem('k-sel',JSON.stringify(sel))}catch(e){}};
   function renderChips(){const cnt=g=>KAT.filter(p=>p[3]===g).length;
     chips.innerHTML=`<button class="kchip${grp==='all'?' on':''}" data-g="all">${de()?'Alle':'All'}<small>${KAT.length}</small></button>`+KGROUPS.map(([g,d,e])=>`<button class="kchip${grp===g?' on':''}" data-g="${g}">${de()?d:e}<small>${cnt(g)}</small></button>`).join('')}
-  function card(p){const on=sel.includes(p[0]);return `<div class="pcard${on?' sel':''}" data-id="${p[0]}"><div class="pimg" style="${img(p)}" role="img" aria-label="${kesc(T(p))}"></div><div class="pbody"><span class="pcode">${p[0]}</span><span class="ptitle">${kesc(T(p))}</span><span class="psize">${ruler}${SZ(p)}</span><span class="pdesc">${D(p)}</span><button class="padd">${on?(de()?'✓ In der Anfrage':'✓ In inquiry'):(de()?'+ Zur Anfrage':'+ Add to inquiry')}</button></div></div>`}
+  function card(p){const on=sel.includes(p[0]);return `<div class="pcard${on?' sel':''}" data-id="${p[0]}"><div class="pimg" style="${img(p)}" role="img" aria-label="${kesc(T(p))}"></div><div class="pbody"><span class="pcode notranslate" translate="no">${p[0]}</span><span class="ptitle">${kesc(T(p))}</span><span class="psize">${ruler}${SZ(p)}</span><span class="pdesc">${D(p)}</span><button class="padd">${on?(de()?'✓ In der Anfrage':'✓ In inquiry'):(de()?'+ Zur Anfrage':'+ Add to inquiry')}</button></div></div>`}
   function render(){const L=list();grid.innerHTML=L.slice(0,shown).map(card).join('');
     info.textContent=de()?`${L.length} Produkte`:`${L.length} products`;more.style.display=L.length>shown?'':'none';
     more.textContent=de()?`Mehr anzeigen (${L.length-shown})`:`Show more (${L.length-shown})`;updBar()}
