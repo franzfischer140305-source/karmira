@@ -155,7 +155,11 @@ body.nosnow #snow{display:none}
 .kchip{border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:.84rem;color:var(--muted);transition:.2s}
 .kchip:hover{color:var(--text);border-color:rgba(255,255,255,.35)}
 .kchip.on{background:#f2f1ee;color:#0b0b0c;border-color:#f2f1ee;font-weight:600}
+.kreset{margin-left:12px;font:inherit;font-size:.82rem;color:var(--gold-l,#d8c08a);border-bottom:1px solid currentColor;padding:0;cursor:pointer}
+.kempty{grid-column:1/-1;color:var(--muted);padding:40px 0;text-align:center}
 .kchip small{opacity:.6;margin-left:5px;font-weight:400}
+.kchip .kx{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin:-2px -4px -2px 8px;border-radius:50%;background:rgba(0,0,0,.12);font-size:13px;line-height:1;font-weight:700}
+.kchip.on:not([data-g=all]):hover .kx{background:rgba(0,0,0,.25)}
 .kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
 .pcard{border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:var(--bg2);display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
 .pcard:hover{border-color:var(--line);transform:translateY(-3px)}
@@ -423,7 +427,7 @@ footer a:hover{color:var(--gold-l)}
     <h2 class="reveal" style="margin-top:14px">640 Leuchtmotive für <span class="gold">Ihre Saison.</span></h2>
     <p class="sub reveal" style="margin-top:12px">Profi-Weihnachtsbeleuchtung für Städte, Einkaufszentren, Hotels und Events. Farbe, Größe und Design sind anpassbar – Preise auf Anfrage.</p>
     <div class="ktools">
-      <label class="ksearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="kq" placeholder="Im Katalog suchen, z. B. Rentier, Stern, Tunnel …" autocomplete="off"></label>
+      <label class="ksearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="kq" type="search" placeholder="Im Katalog suchen, z. B. Rentier, Stern, Tunnel …" autocomplete="off"></label>
       <span class="kinfo" id="kinfo"></span>
     </div>
     <div class="kchips" id="kchips"></div>
@@ -1046,10 +1050,10 @@ const KGROUPS=[["lichter","Lichterketten","String lights"],["motive","2D-Motive 
   const list=()=>{const qq=nrm(query.trim());return KAT.filter(p=>(grp==='all'||p[3]===grp)&&(!qq||nrm(p[0]+' '+p[5]+' '+p[6]+' '+p[7]+' '+(KGROUPS.find(g=>g[0]===p[3])||[]).slice(1).join(' ')).includes(qq)))};
   const save=()=>{try{localStorage.setItem('k-sel',JSON.stringify(sel))}catch(e){}};
   function renderChips(){const cnt=g=>KAT.filter(p=>p[3]===g).length;
-    chips.innerHTML=`<button class="kchip${grp==='all'?' on':''}" data-g="all">${de()?'Alle':'All'}<small>${KAT.length}</small></button>`+KGROUPS.map(([g,d,e])=>`<button class="kchip${grp===g?' on':''}" data-g="${g}">${de()?d:e}<small>${cnt(g)}</small></button>`).join('')}
+    chips.innerHTML=`<button class="kchip${grp==='all'?' on':''}" data-g="all">${de()?'Alle':'All'}<small>${KAT.length}</small></button>`+KGROUPS.map(([g,d,e])=>`<button class="kchip${grp===g?' on':''}" data-g="${g}" title="${grp===g?(de()?'Filter entfernen':'Remove filter'):''}">${de()?d:e}<small>${cnt(g)}</small>${grp===g?'<span class="kx notranslate" translate="no" aria-label="'+(de()?'Filter entfernen':'Remove filter')+'">×</span>':''}</button>`).join('')}
   function card(p){const on=sel.includes(p[0]);return `<div class="pcard${on?' sel':''}" data-id="${p[0]}"><div class="pimg" style="${img(p)}" role="img" aria-label="${kesc(T(p))}"></div><div class="pbody"><span class="pcode notranslate" translate="no">${p[0]}</span><span class="ptitle">${kesc(T(p))}</span><span class="psize">${ruler}${SZ(p)}</span><span class="pdesc">${D(p)}</span><button class="padd">${on?(de()?'✓ In der Anfrage':'✓ In inquiry'):(de()?'+ Zur Anfrage':'+ Add to inquiry')}</button></div></div>`}
   function render(){const L=list();grid.innerHTML=L.slice(0,shown).map(card).join('');
-    info.textContent=de()?`${L.length} Produkte`:`${L.length} products`;more.style.display=L.length>shown?'':'none';
+    const act=grp!=='all'||query.trim();info.innerHTML=(de()?`${L.length} Produkte`:`${L.length} products`)+(act?` <button class="kreset">${de()?'× Filter zurücksetzen':'× Reset filters'}</button>`:'');if(!L.length)grid.innerHTML=`<p class="kempty">${de()?'Keine Produkte gefunden.':'No products found.'}</p>`;more.style.display=L.length>shown?'':'none';
     more.textContent=de()?`Mehr anzeigen (${L.length-shown})`:`Show more (${L.length-shown})`;updBar()}
   function updBar(){bar.classList.toggle('on',sel.length>0);document.getElementById('kbarTxt').textContent=de()?`${sel.length} Produkt${sel.length===1?'':'e'} ausgewählt`:`${sel.length} product${sel.length===1?'':'s'} selected`;
     document.getElementById('kbarGo').textContent=de()?'Anfrage senden →':'Send inquiry →';document.getElementById('kbarClr').textContent=de()?'Leeren':'Clear'}
@@ -1060,7 +1064,8 @@ const KGROUPS=[["lichter","Lichterketten","String lights"],["motive","2D-Motive 
     document.getElementById('pmTitle').textContent=T(p);document.getElementById('pmSize').innerHTML=ruler+SZ(p);document.getElementById('pmDesc').textContent=D(p);
     const on=sel.includes(id);const b=document.getElementById('pmAdd');b.textContent=on?(de()?'✓ In der Anfrage – entfernen':'✓ In inquiry – remove'):(de()?'+ Zur Anfrage hinzufügen':'+ Add to inquiry');
     pm.classList.add('open')}
-  chips.addEventListener('click',e=>{const b=e.target.closest('.kchip');if(!b)return;grp=b.dataset.g;shown=24;renderChips();render()});
+  info.addEventListener('click',e=>{if(!e.target.closest('.kreset'))return;grp='all';query='';q.value='';shown=24;renderChips();render()});
+  chips.addEventListener('click',e=>{const b=e.target.closest('.kchip');if(!b)return;grp=(b.dataset.g===grp?'all':b.dataset.g);shown=24;renderChips();render()});
   let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>{query=q.value;shown=24;render()},150)});
   more.onclick=()=>{shown+=24;render()};
   grid.addEventListener('click',e=>{const c=e.target.closest('.pcard');if(!c)return;if(e.target.closest('.padd'))toggle(c.dataset.id);else openP(c.dataset.id)});
