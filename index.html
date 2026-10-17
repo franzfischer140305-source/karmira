@@ -340,7 +340,7 @@ footer a:hover{color:var(--gold-l)}
 .hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px 20px;background:repeating-linear-gradient(115deg,transparent 0 18px,rgba(255,255,255,.03) 18px 19px)}
 .hubph .fb b{font-size:2rem;letter-spacing:.06em;line-height:1}
 .hubph .fb span{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--gold-l);margin-top:6px}
-.hubph .cr{position:absolute;right:8px;bottom:6px;font-size:.62rem;color:rgba(255,255,255,.7);background:rgba(0,0,0,.45);padding:2px 6px;border-radius:4px}
+.hubph .cr{text-decoration:none;position:absolute;right:8px;bottom:6px;font-size:.62rem;color:rgba(255,255,255,.7);background:rgba(0,0,0,.45);padding:2px 6px;border-radius:4px}
 .hubbody{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
 .hubbody .loc{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .hubbody h3{font-size:1.5rem;font-weight:600;line-height:1.2}
@@ -1013,14 +1013,14 @@ const HUBS=[
  {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
 ];
 /* Fotos: Datei regions/<id>.jpg ablegen und hier Bildnachweis eintragen */
-const HUB_PHOTO={};
+const HUB_PHOTO={"weifang": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg", "page": "https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg", "credit": "Foto: Ngguls · CC BY-SA 4.0 · Wikimedia Commons"}, "changzhou": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg", "page": "https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg", "credit": "Foto: A Chinese user · CC BY-SA 4.0 · Wikimedia Commons"}, "anji": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Anji_bamboo_forest_128.jpg/960px-Anji_bamboo_forest_128.jpg", "page": "https://commons.wikimedia.org/wiki/File:Anji_bamboo_forest_128.jpg", "credit": "Foto: Clerkwheel · CC BY-SA 3.0 · Wikimedia Commons"}, "ningbo": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg", "page": "https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg", "credit": "Foto: Nbfreeh · CC BY-SA 4.0 · Wikimedia Commons"}, "yongkang": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg", "page": "https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg", "credit": "Foto: Tyj1982338 · CC BY 2.0 · Wikimedia Commons"}, "foshan": {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg", "page": "https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg", "credit": "Foto: Lau Hau Yatyue Tiger · CC0 · Wikimedia Commons"}};
 (function(){
   const svg=d3.select('#hubsvg'),g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
   if(!g.node())return;
   let proj=null,cur=-1,K=1;
   const fmt=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
   function renderCard(i){const h=HUBS[i];const ph=HUB_PHOTO[h.id];
-    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${t(h.city)}" loading="lazy"><span class="cr">${ph.credit}</span>`:`<img src="regions/${h.id}.jpg" alt="${t(h.city)}" onerror="this.remove()"><div class="fb"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmt(h.c)}</span></div>`}</div>
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${t(h.city)}" loading="lazy"><a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${ph.credit}</a>`:`<img src="regions/${h.id}.jpg" alt="${t(h.city)}" onerror="this.remove()"><div class="fb"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmt(h.c)}</span></div>`}</div>
       <div class="hubbody"><div class="loc">${h.prov} · ${t(h.focus)}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${t(h.txt)}</p><div class="tg">${h.tags.map(x=>`<span>${t(x)}</span>`).join('')}</div>
       <a href="#kontakt" class="btn btn-solid" id="hubCta">${t('Produkte aus dieser Region anfragen')}</a></div>`;
     card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade');
