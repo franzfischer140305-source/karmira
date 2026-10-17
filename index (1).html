@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KARMIRA – Agrar, Garten & Outdoor direkt aus China</title>
+<meta name="description" content="KARMIRA – Landtechnik, Gartengeräte und Outdoor-Möbel direkt vom Hersteller aus China. Für Betriebe, Händler und Privatkunden, mit Lieferung weltweit.">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090a; --bg2:#0e0f10; --bg3:#121314; --card:rgba(14,14,15,.82);
+  --line:rgba(255,255,255,.14); --line2:rgba(255,255,255,.07);
+  --gold:#c9a96e; --gold-l:#ecd9b0; --gold-d:#9a7a48; --cream:#efe4d0;
+  --text:#f2f1ee; --muted:#8e8c88;
+  --land:#17181a; --land-stroke:rgba(255,255,255,.08); --sphere:#0b0c0e; --glow:rgba(255,255,255,.05);
+  --grad:linear-gradient(100deg,#9a7a48 0%,#ecd9b0 45%,#c9a96e 70%,#9a7a48 100%);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s,color .5s}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.gold{color:var(--muted)}
+.eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.rule{width:40px;height:2px;background:var(--gold);opacity:.9;margin:22px 0}
+.center{text-align:center}.center .rule{margin:22px auto}
+h2{font-family:'Manrope',sans-serif;font-weight:600;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.15;letter-spacing:-.025em}
+.sub{color:var(--muted);max-width:620px;font-size:1.05rem}
+.center .sub{margin:0 auto}
+section{padding:130px 0;position:relative}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line2);transition:background .5s}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1240px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.brand img{mix-blend-mode:screen}
+.brand span{font-size:1.02rem;letter-spacing:.22em;font-weight:600}
+.links{display:flex;gap:32px;font-size:.88rem;font-weight:500}
+.links a{opacity:.85;transition:.2s}.links a:hover{opacity:1;color:var(--gold-l)}
+.nav-r{display:flex;align-items:center;gap:18px}
+.nav-cta{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:#0b0b0c;background:#f2f1ee;padding:9px 16px;border-radius:6px;transition:.25s}
+.nav-cta:hover{background:#fff}
+.nav-cta:after{content:"→";transition:transform .3s}
+.nav-cta:hover:after{transform:translateX(4px)}
+.lang{display:flex;border:1px solid var(--line);border-radius:6px;padding:3px}
+.lang button{font-size:.68rem;letter-spacing:.12em;padding:5px 10px;border-radius:6px;color:var(--muted);transition:.25s}
+.lang button.on{background:rgba(255,255,255,.12);color:#fff;font-weight:600}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;transition:.2s}
+.icon-btn:hover{background:var(--line2)}
+.icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.4}
+.menu-btn{display:none}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:6px;font-size:.8rem;letter-spacing:.01em;font-size:.9rem;border:1px solid var(--line);transition:.3s;font-weight:500;color:var(--text)}
+.btn:after{content:"→";transition:transform .3s}
+.btn:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.btn:hover:after{transform:translateX(4px)}
+.btn-solid{background:#f2f1ee;color:#0b0b0c;border-color:#f2f1ee;font-weight:600}
+.btn-solid:hover{color:#0b0b0c;background:#fff;box-shadow:0 10px 30px -12px rgba(255,255,255,.25)}
+
+/* HERO */
+.hero{height:100vh;min-height:680px;position:relative;overflow:hidden;background:var(--bg)}
+#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+#globe.drag{cursor:grabbing}
+.hero-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 24px 40px;pointer-events:none}
+.hero-c>*{pointer-events:auto;position:relative}
+.hero-c:before{content:"";position:absolute;left:50%;top:60%;width:min(760px,96vw);height:440px;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,color-mix(in srgb,var(--bg) 78%,transparent) 0%,transparent 68%);pointer-events:none}
+.hero-logo{width:96px;height:96px;border-radius:50%;object-fit:cover;margin-bottom:18px;-webkit-mask-image:radial-gradient(circle,#000 55%,transparent 72%);mask-image:radial-gradient(circle,#000 55%,transparent 72%)}
+.hero-logo{mix-blend-mode:screen}
+.est{font-size:.72rem;letter-spacing:.4em;font-weight:500;border-bottom:1px solid var(--line);padding-bottom:4px}
+.hero h1{font-weight:600;font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:.2em;margin:14px 0 6px;padding-left:.2em;line-height:1.2}
+.motto{display:flex;align-items:center;gap:16px;font-family:'Manrope',sans-serif;font-weight:500;font-size:clamp(1.2rem,2vw,1.5rem);letter-spacing:.02em;color:var(--muted)}
+.motto:before,.motto:after{content:"";width:40px;height:1px;background:var(--line)}
+.tags{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;opacity:.85}
+.tags b{font-weight:300;color:var(--gold);margin:0 12px}
+.hero p.lead{margin:20px 0 32px;font-size:1.06rem;opacity:.9;max-width:520px}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.hint{position:absolute;bottom:26px;right:40px;font-size:.64rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.hint svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.3}
+
+.gdest{position:absolute;left:40px;bottom:26px;z-index:3;border:1px solid var(--line);border-radius:8px;background:var(--card);backdrop-filter:blur(8px);padding:14px 18px;min-width:220px}
+.gdest small{display:block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.gdest select{display:block;background:transparent;color:var(--text);border:0;border-bottom:1px solid var(--line);padding:5px 0;margin:3px 0 5px;font:inherit;font-weight:600;cursor:pointer}
+.gdest select option{background:var(--bg2)}
+.gdest span{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--gold-l)}
+.gdest{min-width:300px}
+.dsearch{position:relative;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);margin:4px 0 7px}
+.dsearch svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.6;flex:none}
+.dsearch input{flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--text);font:inherit;font-weight:600;font-size:1rem;padding:7px 0}
+.dsearch input::placeholder{color:var(--muted);font-weight:400}
+#hList{display:none;position:absolute;left:-19px;right:-19px;bottom:calc(100% + 30px);max-height:330px;overflow:auto;list-style:none;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:6px;box-shadow:0 20px 50px -10px rgba(0,0,0,.7)}
+#hList.open{display:block}
+#hList li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 12px;border-radius:6px;cursor:pointer;font-size:.92rem}
+#hList li span{color:var(--muted);font-family:'Manrope',sans-serif;font-size:.8rem;white-space:nowrap}
+#hList li.act,#hList li:hover{background:rgba(255,255,255,.07)}
+#hList li.hd{cursor:default;background:none;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:10px 12px 4px}
+#hList li.ft{cursor:default;background:none;font-size:.68rem;color:var(--muted);justify-content:flex-end}
+#hList li.empty{cursor:default;background:none;color:var(--muted)}
+@media (max-width:820px){.gdest{left:16px;right:16px;bottom:14px;min-width:0}}
+.lsel{position:relative}
+#lbtn{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:.8rem;font-weight:600;letter-spacing:.04em;transition:.2s}
+#lbtn:hover{border-color:rgba(255,255,255,.35)}
+#lbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+#lbtn svg.chev{width:12px;height:12px;opacity:.6}
+#llist{display:none;position:absolute;right:0;top:calc(100% + 8px);width:360px;max-height:70vh;overflow:auto;list-style:none;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:6px;grid-template-columns:1fr 1fr;gap:2px;box-shadow:0 20px 50px -10px rgba(0,0,0,.7);z-index:80}
+#llist.open{display:grid}
+#llist li{padding:8px 10px;border-radius:6px;cursor:pointer;font-size:.86rem;display:flex;justify-content:space-between;gap:8px}
+#llist li small{color:var(--muted);font-size:.7rem;text-transform:uppercase}
+#llist li:hover{background:rgba(255,255,255,.07)}
+#llist li.on{background:rgba(255,255,255,.12);font-weight:600}
+#llist li.ls{grid-column:1/-1;cursor:default;background:var(--bg2);padding:4px;position:sticky;top:-6px;z-index:1}
+#lfind{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--text);font:inherit;font-size:.86rem;padding:8px 10px;outline:none}
+#lfind:focus{border-color:rgba(255,255,255,.4)}
+#llist li.hd{grid-column:1/-1;cursor:default;background:none;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px 4px}
+#llist li.auto{grid-column:1/-1;color:var(--gold-l)}
+/* hide Google Translate UI */
+iframe.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog-te-balloon-frame,.VIpgJd-ZVi9od-ORHb-OEVmcd,.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none!important}
+body{top:0!important}
+font[style]{background:none!important;box-shadow:none!important}
+@media (max-width:560px){#llist{width:min(340px,calc(100vw - 32px));right:-50px}}
+/* SORTIMENT */
+.sortiment{background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.04),transparent 70%),repeating-linear-gradient(115deg,transparent 0 22px,var(--line2) 22px 23px),var(--bg2)}
+.search{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:6px 6px 6px 22px;max-width:620px;margin:44px auto 0}
+.search svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;flex:none}
+.search input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--text);font:inherit;font-size:1rem;padding:10px 0}
+.search input::placeholder{color:var(--muted)}
+.search .btn{padding:11px 18px;font-size:.7rem}
+.results{max-width:820px;margin:20px auto 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:10px}
+.chip{border:1px solid var(--line);border-radius:6px;padding:6px 14px;font-size:.84rem;background:var(--card);transition:.2s;cursor:pointer}
+.chip:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.chip small{color:var(--muted);margin-left:6px;font-size:.72rem}
+.noresult{color:var(--muted);font-size:.95rem}
+.noresult a{color:var(--gold-l);border-bottom:1px solid var(--gold)}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:56px}
+.cat{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:30px 28px;min-height:250px;display:flex;flex-direction:column;cursor:pointer;transition:.35s;position:relative;text-align:left}
+.cat:hover,.cat.match{transform:translateY(-4px);border-color:rgba(255,255,255,.35);box-shadow:0 20px 50px -20px rgba(0,0,0,.5)}
+.cat.dim{opacity:.3}
+.cat h3{font-weight:600;font-size:1.25rem;display:flex;align-items:center;gap:12px;margin-bottom:12px;line-height:1.3}
+.cat h3 svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.3;flex:none}
+.cat p{font-size:.9rem;opacity:.8;flex:1}
+.cat .more{font-size:.85rem;margin-top:20px;display:flex;align-items:center;gap:8px;font-weight:600;color:var(--gold-l)}
+.cat .more:after{content:"→";transition:.25s}.cat:hover .more:after{transform:translateX(5px)}
+
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}
+.modal.open{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0}}
+.modal-box{background:var(--bg2);border:1px solid var(--line);border-radius:8px;max-width:620px;width:100%;padding:46px;position:relative;max-height:90vh;overflow:auto}
+.modal-box .x{position:absolute;top:16px;right:16px}
+.modal-box h3{font-family:'Manrope',sans-serif;font-weight:600;font-size:2rem;letter-spacing:-.02em;margin:10px 0}
+.modal-box .list{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 30px}
+
+/* REGIONS */
+.regions .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:60px;align-items:center}
+.rlist{margin-top:30px;border-top:1px solid var(--line2)}
+.ritem{display:grid;grid-template-columns:34px 1fr 20px;padding:18px 0;border-bottom:1px solid var(--line2);cursor:pointer;transition:.25s}
+.ritem .n{font-size:.7rem;color:var(--muted);padding-top:3px}
+.ritem .loc{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+.ritem .nm{font-size:1.2rem;margin:2px 0}
+.ritem .ty{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.ritem .ar{opacity:.4;transition:.25s}
+.ritem .det{grid-column:2;max-height:0;overflow:hidden;transition:max-height .4s,margin .4s;font-size:.92rem;color:var(--muted)}
+.ritem.on{padding-left:10px;background:linear-gradient(90deg,var(--line2),transparent)}
+.ritem.on .nm{color:#fff;font-weight:600}
+.ritem.on .ar{opacity:1;transform:rotate(45deg)}
+.ritem.on .det{max-height:120px;margin-top:8px}
+#china{width:100%;height:auto;overflow:visible}
+#china .land{fill:var(--land);stroke:var(--gold);stroke-opacity:.45;stroke-width:.8}
+#china .dot{fill:var(--cream);transition:.3s;cursor:pointer}
+#china .pulse{fill:none;stroke:var(--gold);opacity:0}
+#china g.on .dot{fill:var(--gold-l)}
+#china g.on .pulse{animation:pulse 1.6s infinite}
+@keyframes pulse{0%{r:6;opacity:.9}100%{r:26;opacity:0}}
+#china .lbl{font-family:ui-monospace,monospace;font-size:15px;fill:var(--text);font-weight:600}
+#china .lead{stroke:var(--text);stroke-opacity:.4;stroke-width:.8}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:80px}
+.kpis div{border:1px solid var(--line2);border-radius:8px;padding:26px 22px;background:rgba(255,255,255,.02)}
+.kpis b{display:block;font-family:'Manrope',sans-serif;font-weight:600;font-size:2rem;line-height:1.1;letter-spacing:-.02em;color:var(--text)}
+.kpis small{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:820px){.kpis{grid-template-columns:1fr 1fr}}
+
+.assure{background:#030303}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:46px;margin-top:70px}
+.three div{border:1px solid var(--line2);border-radius:8px;padding:30px 26px;background:rgba(255,255,255,.02)}
+.three svg{width:30px;height:30px;stroke:var(--gold);fill:none;stroke-width:1.2;margin-bottom:16px}
+.three h4{font-weight:500;font-size:1.2rem;margin-bottom:10px}
+.three p{font-size:.95rem;opacity:.8}
+.ornament{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);width:68px;height:68px;border-radius:50%;object-fit:cover;z-index:2;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 72%);mask-image:radial-gradient(circle,#000 58%,transparent 72%)}
+
+.story .grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.story p.big{font-size:1.08rem;opacity:.85;margin-top:22px}
+.princ{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pc{border:1px solid var(--line2);border-radius:8px;background:var(--bg2);padding:26px 22px;transition:.35s}
+.pc:hover{border-color:var(--line);transform:translateY(-3px)}
+.pc .n{font-family:ui-monospace,monospace;font-size:.66rem;color:var(--muted)}
+.pc h4{font-weight:400;font-size:1.15rem;margin:6px 0}
+.pc p{font-size:.86rem;opacity:.75}
+.pc:before{content:"";display:block;width:26px;height:1px;background:var(--gold);margin-bottom:16px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:64px}
+.panel{border:1px solid var(--line);border-radius:8px;overflow:hidden;padding:50px 44px;background:var(--bg2);position:relative;transition:.35s}
+.panel:hover{border-color:rgba(255,255,255,.3)}
+.panel .tag{position:absolute;top:22px;right:24px;border-radius:4px;background:transparent;border:1px solid var(--gold);color:var(--gold-l);font-size:.7rem;letter-spacing:.3em;padding:8px 16px;font-weight:500}
+.panel h3{font-family:'Manrope',sans-serif;font-weight:600;font-size:1.7rem;letter-spacing:-.02em;margin:12px 0 10px;line-height:1.15}
+.panel ul{list-style:none;margin:24px 0 32px}
+.panel li{padding:10px 0;border-bottom:1px solid var(--line2);display:flex;gap:14px;font-size:.96rem}
+.panel li:before{content:"✦";color:var(--gold);font-size:.75rem;padding-top:4px}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:90px;counter-reset:s}
+.step{position:relative;padding-top:28px;border-top:1px solid var(--line)}
+.step:before{counter-increment:s;content:"0" counter(s);position:absolute;top:-12px;left:0;background:var(--bg);padding-right:14px;font-family:'Manrope',sans-serif;font-weight:600;font-size:1.1rem;color:var(--gold)}
+.step h4{font-weight:400;font-size:1.2rem;margin-bottom:6px}
+.step p{opacity:.75;font-size:.93rem}
+
+.contact{background:var(--bg2);border-top:1px solid var(--line2)}
+.contact .grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:start}
+.cinfo .line{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line2);font-size:.98rem}
+.cinfo .line span:first-child{color:var(--gold);width:96px;flex:none;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;padding-top:5px}
+.wiz{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:42px;min-height:480px;display:flex;flex-direction:column}
+.prog{display:flex;gap:6px;margin-bottom:30px}
+.prog i{flex:1;height:2px;background:var(--line2);transition:.4s}
+.prog i.on{background:var(--gold)}
+.wstep{display:none;flex:1;flex-direction:column;animation:slide .45s}
+.wstep.on{display:flex}
+@keyframes slide{from{opacity:0;transform:translateX(20px)}}
+.wstep h3{font-family:'Manrope',sans-serif;font-weight:600;font-size:1.6rem;letter-spacing:-.02em;margin:8px 0 22px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{border:1px solid var(--line);border-radius:8px;padding:20px;text-align:left;transition:.25s}
+.opt:hover{border-color:var(--gold)}
+.opt.on{border-color:#fff;background:rgba(255,255,255,.06)}
+.opt b{display:block;font-weight:400;font-size:1.05rem}
+.opt small{color:var(--muted);font-size:.82rem}
+.opts.small{grid-template-columns:repeat(3,1fr)}
+.opts.small .opt{padding:14px;font-size:.9rem;line-height:1.35}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--text);padding:9px 0;font:inherit;font-size:1rem;outline:none}
+.field select option{background:var(--bg2)}
+.field input:focus,.field textarea:focus{border-color:var(--gold-l)}
+.field textarea{resize:vertical;min-height:80px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.wnav{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:24px}
+.back{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.back:hover{color:var(--text)}
+.sum{border:1px solid var(--line2);border-radius:8px;padding:16px 20px;font-size:.92rem;line-height:1.9;margin-bottom:10px}
+.sum b{font-weight:600;color:#fff}
+.err{color:#d98b6b;font-size:.82rem;min-height:1.2em}
+
+footer{border-top:1px solid var(--line2);padding:46px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer .fl{display:flex;gap:26px}
+footer a:hover{color:var(--gold-l)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 1s ease,transform 1s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .regions .grid,.story .grid,.contact .grid,.split{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .three{grid-template-columns:1fr;gap:30px}
+}
+@media (max-width:820px){
+  .links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .links.open{display:flex}
+  .links a{padding:18px 24px;border-top:1px solid var(--line2)}
+  .menu-btn{display:grid}
+  .nav-cta{display:none}
+  section{padding:90px 0}
+  .cats,.steps,.row2,.princ{grid-template-columns:1fr}
+  .cat{min-height:0}
+  .opts.small{grid-template-columns:1fr 1fr}
+  .panel,.wiz,.modal-box{padding:32px 22px}
+  .hint{display:none}
+  .tags b{margin:0 6px}
+  .motto:before,.motto:after{width:20px}
+  .search .btn{display:none}
+}
+/* REDESIGN */
+.benefits{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);background:var(--bg2)}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr)}
+.bi{display:flex;align-items:center;gap:14px;padding:26px 22px;border-left:1px solid var(--line2)}
+.bi:first-child{border-left:0}
+.bi svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.4;flex:none}
+.bi b{display:block;font-weight:600;font-size:.98rem}
+.bi span{font-size:.82rem;color:var(--muted)}
+.sh{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end;margin-bottom:10px}
+.sh h2{margin:0}
+.sh p{color:var(--muted);font-size:1rem;max-width:460px;justify-self:end}
+.sh p a{color:var(--gold-l);border-bottom:1px solid var(--gold)}
+.b2 .split{margin-top:44px}
+.flowsec{background:var(--bg2);border-top:1px solid var(--line2)}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;position:relative}
+.flow:before{content:"";position:absolute;left:12%;right:12%;top:32px;border-top:1px dashed var(--line)}
+.fs{position:relative;text-align:center;padding:0 10px}
+.fs i{width:64px;height:64px;border-radius:50%;border:1px solid var(--gold);background:var(--bg2);display:grid;place-items:center;margin:0 auto 18px;position:relative}
+.fs i svg{width:26px;height:26px;stroke:var(--gold-l);fill:none;stroke-width:1.4}
+.fs h4{font-weight:600;font-size:1.12rem;margin-bottom:6px}
+.fs p{font-size:.92rem;color:var(--muted);max-width:280px;margin:0 auto}
+.fgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+.fgrid .sh{grid-template-columns:1fr;align-items:start}
+.fgrid .sh p{justify-self:start}
+.faq details{border-bottom:1px solid var(--line2);padding:4px 0}
+.faq details:first-child{border-top:1px solid var(--line2)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;font-weight:600;font-size:1.02rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--gold);font-size:1.4rem;font-weight:300;transition:.25s}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{color:var(--muted);padding:0 0 18px;max-width:620px}
+@media (max-width:1000px){.bgrid{grid-template-columns:1fr 1fr}.bi:nth-child(3){border-left:0}.bi:nth-child(n+3){border-top:1px solid var(--line2)}.sh,.fgrid{grid-template-columns:1fr;gap:16px}.sh p{justify-self:start}}
+@media (max-width:820px){.flow{grid-template-columns:1fr;gap:34px}.flow:before{left:50%;right:auto;top:30px;bottom:30px;border-top:0;border-left:1px dashed var(--line)}.fs{background:var(--bg2);padding:6px 0}}
+@media (max-width:820px){.panel .tag{position:static;display:inline-block;margin-bottom:6px}}
+@media (max-width:520px){.bgrid{grid-template-columns:1fr}.bi{border-left:0!important;border-top:1px solid var(--line2)}.bi:first-child{border-top:0}.bi{padding:16px 6px}}
+/* MOBILE FIXES */
+@media (max-width:440px){.opts.small{grid-template-columns:1fr!important}.opts.small .opt{padding:12px 14px!important}}
+@media (max-width:820px){.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;max-width:340px;margin-left:auto;margin-right:auto}.tags b{font-size:0;margin:0;width:0;overflow:hidden}}
+@media (max-width:820px){
+  .hero{height:auto;min-height:100vh;min-height:100svh}
+  .hero-c{position:relative;inset:auto;min-height:100vh;min-height:100svh;justify-content:flex-start;padding:104px 20px 210px}
+  .hero-c:before{top:45%}
+  .wiz{min-height:0;padding:26px 20px}
+  .contact .line{gap:14px}
+  .opts,.opts.small{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .opt,.opts.small .opt{min-width:0;padding:13px 10px;font-size:.86rem;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+  .opt b{font-size:.98rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="brand notranslate"><img src="logo-small.jpg" alt="KARMIRA"><span>KARMIRA</span></a>
+    <div class="links" id="links">
+      <a href="#sortiment">Sortiment</a>
+      <a href="#loesungen">B2B & B2C</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <div class="nav-r">
+      <a href="#kontakt" class="nav-cta">Anfrage stellen</a>
+      <div class="lsel notranslate" id="lsel"><button id="lbtn" aria-label="Sprache wählen" aria-haspopup="listbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.8 3.8 5.8 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-5.8-3.8-9s1.3-6.2 3.8-9z"/></svg><span id="lcur">DE</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><ul id="llist" role="listbox"></ul></div><div id="gt_el" style="display:none"></div>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menü"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+
+<header class="hero" id="top">
+  <canvas id="globe"></canvas>
+  <div class="hero-c">
+    <img class="hero-logo" src="logo.jpg" alt="KARMIRA Monogramm">
+    <div class="est">AGRAR · GARTEN · OUTDOOR</div>
+    <h1 class="notranslate">KARMIRA</h1>
+    <div class="motto">Direkt aus China</div>
+    <div class="tags">Landtechnik<b>·</b>Gartengeräte<b>·</b>Outdoor-Möbel<b>·</b>Weltweiter Versand</div>
+    <p class="lead">Kleintraktoren, Bewässerung, Gartengeräte und Outdoor-Möbel – direkt vom Hersteller für Betriebe, Händler und Ihren eigenen Garten.</p>
+    <div class="ctas">
+      <a href="#kontakt" class="btn btn-solid">Anfrage stellen</a>
+      <a href="#sortiment" class="btn">Sortiment ansehen</a>
+    </div>
+  </div>
+  <div class="gdest"><small>Lieferziel</small><div class="dsearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="hQ" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land suchen …" aria-label="Lieferziel suchen"><ul id="hList" role="listbox"></ul></div><span id="hKm"></span></div>
+  <div class="hint"><svg viewBox="0 0 24 24"><path d="M8 13V5a2 2 0 014 0v6m0-1a2 2 0 014 0v2m0-1a2 2 0 014 0v4a6 6 0 01-6 6h-2a6 6 0 01-5-3l-3-5a2 2 0 013-2l1 1"/></svg>Globus drehen</div>
+</header>
+
+<div class="benefits">
+  <div class="wrap bgrid">
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg><div><b>Direkt ab Werk</b><span>Ohne Zwischenhändler</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div><b>Muster & Prüfung</b><span>Vor der Bestellung</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><b>Zoll & Lieferung</b><span>Aus einer Hand</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><div><b>Beratung auf Deutsch</b><span>Ein fester Ansprechpartner</span></div></div>
+  </div>
+</div>
+
+<section class="sortiment" id="sortiment">
+  <div class="wrap">
+    <div class="sh reveal"><h2>Alles für Hof, Garten <span class="gold">und Terrasse</span></h2><p>Unser Schwerpunkt liegt auf Landtechnik, Gartengeräten und Outdoor-Möbeln. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.</p></div>
+  </div>
+  <div class="wrap center">
+    <div class="search reveal">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" placeholder="z. B. Motorhacke, Lounge-Set, Regner …" autocomplete="off">
+      <a href="#kontakt" class="btn btn-solid" id="qBtn">Anfragen</a>
+    </div>
+    <div class="results" id="results"></div>
+  </div>
+  <div class="wrap"><div class="cats" id="cats"></div></div>
+</section>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="icon-btn x" id="mClose" aria-label="Schließen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="eyebrow">Kategorie</div>
+    <h3 id="mTitle"></h3>
+    <p class="sub" id="mText"></p>
+    <div class="list" id="mList"></div>
+    <a href="#kontakt" class="btn btn-solid" id="mCta">Diese Kategorie anfragen</a>
+  </div>
+</div>
+
+<section class="b2" id="loesungen">
+  <div class="wrap">
+    <div class="sh reveal"><h2>Für Betriebe <span class="gold">und für Zuhause</span></h2><p>Ob Landwirtschaftsbetrieb, Gartencenter oder der eigene Garten – wir passen Beschaffung und Lieferung an Ihren Bedarf an.</p></div>
+  </div>
+  <div class="wrap split">
+    <div class="panel reveal">
+      <span class="tag">B2B</span>
+      <h3>Für Betriebe & Händler</h3>
+      <p class="sub">Landwirtschaft, Gartenbau, Gartencenter, Gastronomie und Handel.</p>
+      <ul><li>Großhandelspreise direkt ab Hersteller</li><li>Lieferantensuche & Qualitätsprüfung</li><li>Individuelle Produkte & Private Label</li><li>Logistik, Zoll & Import aus einer Hand</li></ul>
+      <a href="#kontakt" class="btn btn-solid" data-type="B2B">B2B-Anfrage</a>
+    </div>
+    <div class="panel reveal">
+      <span class="tag">B2C</span>
+      <h3>Für Ihren Garten</h3>
+      <p class="sub">Gartengeräte, Outdoor-Möbel und mehr zu fairen Preisen.</p>
+      <ul><li>Faire Preise ohne Zwischenhändler</li><li>Geprüfte Qualität</li><li>Persönliche Beratung auf Deutsch</li><li>Lieferung bis an die Haustür</li></ul>
+      <a href="#kontakt" class="btn" data-type="B2C">Privat anfragen</a>
+    </div>
+  </div>
+</section>
+
+<section class="flowsec" id="ablauf">
+  <div class="wrap">
+    <div class="sh reveal"><h2>So einfach <span class="gold">bestellen Sie</span></h2><p>Von der ersten Nachricht bis zur Lieferung haben Sie einen Ansprechpartner.</p></div>
+    <div class="flow">
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></i><h4>Anfrage senden</h4><p>Produkt, Menge und Lieferziel – über das Formular oder per E-Mail.</p></div>
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></i><h4>Angebot & Muster</h4><p>Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.</p></div>
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></i><h4>Lieferung</h4><p>Wir organisieren Prüfung, Versand und Zoll – bis zu Ihnen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faqsec" id="faq">
+  <div class="wrap fgrid">
+    <div class="sh reveal"><h2>Häufige <span class="gold">Fragen</span></h2><p>Ihre Frage ist nicht dabei? Schreiben Sie uns an <a href="mailto:info@karmira.de">info@karmira.de</a>.</p></div>
+    <div class="faq">
+      <details class="reveal"><summary>Gibt es Mindestbestellmengen?</summary><p>Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.</p></details>
+      <details class="reveal"><summary>Was kostet ein Produkt?</summary><p>Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.</p></details>
+      <details class="reveal"><summary>Kann ich vorher ein Muster bekommen?</summary><p>Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.</p></details>
+      <details class="reveal"><summary>Wie lange dauert die Lieferung?</summary><p>Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.</p></details>
+      <details class="reveal"><summary>Kümmert ihr euch um Zoll und Einfuhr?</summary><p>Ja. Versand, Verzollung und Import organisieren wir aus einer Hand – bis an Ihre Tür oder Ihr Lager.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="kontakt">
+  <div class="wrap grid">
+    <div class="cinfo reveal">
+      <h2>Jetzt <span class="gold">anfragen</span></h2>
+      <p class="sub" style="margin:18px 0 30px">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
+      <div class="line"><span>E-Mail</span><a href="mailto:info@karmira.de">info@karmira.de</a></div>
+                </div>
+    <div class="wiz reveal" id="wiz">
+      <div class="prog"><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="wstep on">
+        <div class="eyebrow">Schritt 1 von 4</div>
+        <h3>Wer sind Sie?</h3>
+        <div class="opts" data-key="type">
+          <button class="opt" data-v="B2B"><b>Unternehmen</b><small>Großhandel, Händler, Gewerbe</small></button>
+          <button class="opt" data-v="B2C"><b>Privatperson</b><small>Für mich oder mein Zuhause</small></button>
+        </div>
+      </div>
+      <div class="wstep">
+        <div class="eyebrow">Schritt 2 von 4</div>
+        <h3>Welcher Bereich?</h3>
+        <div class="opts small" data-key="cat" id="wCats"></div>
+        <div class="wnav"><button class="back">← Zurück</button><span></span></div>
+      </div>
+      <div class="wstep">
+        <div class="eyebrow">Schritt 3 von 4</div>
+        <h3>Was genau suchen Sie?</h3>
+        <div class="field"><label>Produkt</label><input id="fProd" placeholder="z. B. Gartenschlauch 50 m"></div>
+        <div class="row2">
+          <div class="field"><label>Menge</label><select id="fQty"><option>1–10 Stück</option><option>10–100 Stück</option><option>100–1.000 Stück</option><option>1.000+ Stück</option><option>Container</option></select></div>
+          <div class="field"><label>Zeitrahmen</label><select id="fTime"><option>So schnell wie möglich</option><option>In 1–3 Monaten</option><option>Flexibel</option></select></div>
+        </div>
+        <div class="field"><label>Details (optional)</label><textarea id="fMsg" placeholder="Farbe, Material, Zielpreis, Link zu einem Beispiel …"></textarea></div>
+        <div class="err" id="err2"></div>
+        <div class="wnav"><button class="back">← Zurück</button><button class="btn btn-solid next">Weiter</button></div>
+      </div>
+      <div class="wstep">
+        <div class="eyebrow">Schritt 4 von 4</div>
+        <h3>Wie erreichen wir Sie?</h3>
+        <div class="row2">
+          <div class="field"><label>Name</label><input id="fName"></div>
+          <div class="field" id="compF"><label>Firma</label><input id="fComp"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>E-Mail</label><input id="fMail" type="email"></div>
+          <div class="field"><label>Telefon (optional)</label><input id="fTel"></div>
+        </div>
+        <div class="sum" id="sum"></div>
+        <div class="err" id="err3"></div>
+        <div class="wnav"><button class="back">← Zurück</button><button class="btn btn-solid" id="send">Anfrage senden</button></div>
+      </div>
+      <div class="wstep">
+        <div class="eyebrow">Fast geschafft</div>
+        <h3>Vielen Dank!</h3>
+        <p class="sub">Ihr E-Mail-Programm hat sich mit Ihrer Anfrage geöffnet – bitte dort nur noch auf „Senden“ klicken. Wir melden uns schnellstmöglich.</p>
+        <div class="wnav"><button class="back" id="restart">Neue Anfrage</button><span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand notranslate"><img src="logo-small.jpg" alt=""><span>KARMIRA</span></div>
+    <div>© <span id="y"></span> KARMIRA · karmira.de</div>
+    <div class="fl"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+  </div>
+</footer>
+
+<script src="d3.min.js"></script>
+<script>
+const ICONS={
+ agrar:'<path d="M3 17h2m14 0h2M5 17a2 2 0 104 0 2 2 0 00-4 0zm10 0a3 3 0 106 0 3 3 0 00-6 0zM9 17h6M7 15V8h6l3 4h3v3"/>',
+ wasser:'<path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/><path d="M9 14a3 3 0 003 3"/>',
+ garten:'<path d="M12 21V9M12 9c0-3 2-6 6-6 0 4-3 6-6 6zM12 13c0-3-2-5-6-5 0 4 3 5 6 5z"/><path d="M7 21h10"/>',
+ moebel:'<path d="M5 10h14M6 10l-1 9M18 10l1 9M8 14h8M7 10V6a2 2 0 012-2h6a2 2 0 012 2v4"/>',
+ gewaechs:'<path d="M3 20V10l9-6 9 6v10zM12 4v16M3 14h18"/>',
+ pavillon:'<path d="M3 10L12 4l9 6zM5 10v10M19 10v10M3 20h18"/>',
+ grill:'<path d="M4 10h16a8 8 0 01-16 0zM8 18l-2 3M16 18l2 3M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/>',
+ mehr:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'
+};
+const CATS=[
+ {id:'agrar',name:'Landtechnik',text:'Kleintraktoren, Bodenbearbeitung, Anhänger und Zubehör für Hof und Feld.',items:['Kleintraktor','Motorhacke','Bodenfräse','Anhänger','Sämaschine','Mulcher','Weidezaun','Tierbedarf','Futtertröge','Ersatzteile']},
+ {id:'wasser',name:'Bewässerung & Pumpen',text:'Tropfbewässerung, Regner, Pumpen und Wassertanks.',items:['Tropfbewässerung','Regner','Gartenschlauch','Tauchpumpe','Solarpumpe','Wassertank','Bewässerungscomputer']},
+ {id:'garten',name:'Gartengeräte',text:'Motor- und Handgeräte für Rasen, Hecke und Beet.',items:['Rasenmäher','Heckenschere','Freischneider','Kettensäge','Laubbläser','Schubkarre','Gartenwerkzeug-Set','Sprühgerät']},
+ {id:'moebel',name:'Outdoor-Möbel',text:'Lounge, Rattan, Tische und Liegen für Terrasse und Garten.',items:['Lounge-Set','Rattan-Möbel','Gartentisch','Gartenstühle','Sonnenliege','Hollywoodschaukel','Auflagen & Kissen','Gartenbank']},
+ {id:'gewaechs',name:'Gewächshaus & Hochbeet',text:'Gewächshäuser, Frühbeete, Hochbeete und Pflanzgefäße.',items:['Gewächshaus','Frühbeet','Hochbeet','Pflanzgefäße','Saatgutschalen','Rankhilfen','Komposter']},
+ {id:'pavillon',name:'Pavillon & Sonnenschutz',text:'Pavillons, Pergolen, Sonnenschirme und Gartenhäuser.',items:['Pavillon','Pergola','Sonnenschirm','Sonnensegel','Markise','Gartenhaus','Geräteschuppen']},
+ {id:'grill',name:'Grill & Outdoor-Küche',text:'Grills, Feuerstellen und alles für draußen.',items:['Grill','Feuerschale','Pizzaofen','Outdoor-Küche','Kühlbox','Solarleuchten','Gartenbeleuchtung']},
+ {id:'mehr',name:'Weitere Bereiche',text:'Auch außerhalb von Garten und Landwirtschaft beschaffen wir für Sie – über 100.000 Produkte.',items:['Haushalt & Küche','Wohnen & Textil','Auto & Zubehör','Werkzeug','Elektronik','Camping & Freizeit','Private Label']}
+];
+
+
+/* WORLDWIDE DESTINATIONS */
+const ORIGIN=[114.06,22.54],RAIL_ORIGIN=[106.55,29.56];
+const DEST=[
+ {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
+ {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
+ {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
+ {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
+ {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
+];
+const TIMES={EU:{rail:'19–24',air:'7–11'},ME:{air:'7–9'},NA:{air:'8–11'},SA:{air:'9–14'},AF:{air:'8–12'},AS:{air:'6–8'},OC:{air:'7–10'}};
+const dname=d=>LANG==='en'?d.en:d.de;
+const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
+const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
+DEST.forEach(d=>d.km=Math.round(d3.geoDistance(ORIGIN,d.c)*6371/100)*100);
+function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
+  const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
+function destOptions(sel){return DEST.map((d,i)=>`<option value="${i}"${i===sel?' selected':''}>${dname(d)} · ${d.city}</option>`).join('')}
+/* CITY SEARCH DATA (approx. coordinates lat,lon) */
+const CITY_RAW={
+DE:'Berlin,52.52,13.40;Hamburg,53.55,9.99;München,48.14,11.58;Köln,50.94,6.96;Frankfurt am Main,50.11,8.68;Stuttgart,48.78,9.18;Düsseldorf,51.23,6.78;Leipzig,51.34,12.37;Dresden,51.05,13.74;Hannover,52.37,9.73;Nürnberg,49.45,11.08;Bremen,53.08,8.80',
+AT:'Wien,48.21,16.37;Graz,47.07,15.44;Linz,48.31,14.29;Salzburg,47.81,13.04;Innsbruck,47.27,11.40',
+CH:'Zürich,47.38,8.54;Genf,46.20,6.14;Basel,47.56,7.59;Bern,46.95,7.45;Lausanne,46.52,6.63',
+FR:'Paris,48.86,2.35;Marseille,43.30,5.37;Lyon,45.76,4.84;Toulouse,43.60,1.44;Nizza,43.70,7.27;Bordeaux,44.84,-0.58;Lille,50.63,3.06;Straßburg,48.57,7.75;Nantes,47.22,-1.55',
+GB:'London,51.51,-0.13;Manchester,53.48,-2.24;Birmingham,52.49,-1.89;Glasgow,55.86,-4.25;Liverpool,53.41,-2.98;Edinburgh,55.95,-3.19;Leeds,53.80,-1.55;Bristol,51.45,-2.59',
+IE:'Dublin,53.35,-6.26;Cork,51.90,-8.47',
+NL:'Amsterdam,52.37,4.90;Rotterdam,51.92,4.48;Den Haag,52.07,4.30;Utrecht,52.09,5.12;Eindhoven,51.44,5.47',
+BE:'Brüssel,50.85,4.35;Antwerpen,51.22,4.40;Gent,51.05,3.72;Lüttich,50.63,5.57',
+LU:'Luxemburg,49.61,6.13',
+ES:'Madrid,40.42,-3.70;Barcelona,41.39,2.17;Valencia,39.47,-0.38;Sevilla,37.39,-5.98;Málaga,36.72,-4.42;Bilbao,43.26,-2.93;Saragossa,41.65,-0.89;Palma,39.57,2.65',
+PT:'Lissabon,38.72,-9.14;Porto,41.15,-8.61;Faro,37.02,-7.93',
+IT:'Rom,41.90,12.50;Mailand,45.46,9.19;Neapel,40.85,14.27;Turin,45.07,7.69;Florenz,43.77,11.26;Bologna,44.49,11.34;Venedig,45.44,12.32;Palermo,38.12,13.36;Genua,44.41,8.93',
+GR:'Athen,37.98,23.73;Thessaloniki,40.64,22.94',
+PL:'Warschau,52.23,21.01;Krakau,50.06,19.94;Breslau,51.11,17.04;Danzig,54.35,18.65;Posen,52.41,16.93;Łódź,51.76,19.46',
+CZ:'Prag,50.08,14.44;Brünn,49.20,16.61;Ostrava,49.82,18.26',
+SK:'Bratislava,48.15,17.11;Košice,48.72,21.26',
+HU:'Budapest,47.50,19.04;Debrecen,47.53,21.63',
+RO:'Bukarest,44.43,26.10;Cluj-Napoca,46.77,23.60;Timișoara,45.75,21.23;Iași,47.16,27.59',
+BG:'Sofia,42.70,23.32;Plowdiw,42.14,24.75;Warna,43.21,27.91',
+HR:'Zagreb,45.81,15.98;Split,43.51,16.44',SI:'Ljubljana,46.06,14.51',RS:'Belgrad,44.79,20.45;Novi Sad,45.27,19.83',
+BA:'Sarajevo,43.86,18.41',AL:'Tirana,41.33,19.82',MK:'Skopje,42.00,21.43',ME:'Podgorica,42.44,19.26',
+DK:'Kopenhagen,55.68,12.57;Aarhus,56.16,10.20;Odense,55.40,10.39',
+SE:'Stockholm,59.33,18.07;Göteborg,57.71,11.97;Malmö,55.60,13.00;Uppsala,59.86,17.64',
+NO:'Oslo,59.91,10.75;Bergen,60.39,5.32;Trondheim,63.43,10.40;Stavanger,58.97,5.73',
+FI:'Helsinki,60.17,24.94;Tampere,61.50,23.76;Turku,60.45,22.27',IS:'Reykjavík,64.15,-21.94',
+EE:'Tallinn,59.44,24.75',LV:'Riga,56.95,24.11',LT:'Vilnius,54.69,25.28;Kaunas,54.90,23.90',
+UA:'Kyjiw,50.45,30.52;Charkiw,49.99,36.23;Odessa,46.48,30.72;Lwiw,49.84,24.03;Dnipro,48.46,35.05',
+MD:'Chișinău,47.01,28.86',BY:'Minsk,53.90,27.56',
+RU:'Moskau,55.76,37.62;Sankt Petersburg,59.93,30.34;Nowosibirsk,55.03,82.92;Jekaterinburg,56.84,60.61;Kasan,55.79,49.12;Wladiwostok,43.12,131.89',
+TR:'Istanbul,41.01,28.98;Ankara,39.93,32.86;Izmir,38.42,27.14;Antalya,36.90,30.70;Bursa,40.19,29.06',
+CY:'Nikosia,35.17,33.36;Limassol,34.68,33.04',MT:'Valletta,35.90,14.51',
+GE:'Tiflis,41.72,44.79',AM:'Jerewan,40.18,44.51',AZ:'Baku,40.41,49.87',
+KZ:'Almaty,43.24,76.89;Astana,51.17,71.45;Schymkent,42.32,69.60',UZ:'Taschkent,41.30,69.24;Samarkand,39.65,66.96',
+KG:'Bischkek,42.87,74.59',TJ:'Duschanbe,38.56,68.77',TM:'Aşgabat,37.96,58.33',MN:'Ulaanbaatar,47.89,106.91',
+AE:'Dubai,25.20,55.27;Abu Dhabi,24.45,54.38;Sharjah,25.35,55.42',
+SA:'Riad,24.71,46.68;Dschidda,21.49,39.19;Dammam,26.43,50.10;Mekka,21.42,39.83',
+QA:'Doha,25.29,51.53',KW:'Kuwait-Stadt,29.38,47.99',BH:'Manama,26.23,50.59',OM:'Maskat,23.59,58.41',
+IL:'Tel Aviv,32.09,34.78;Jerusalem,31.77,35.21;Haifa,32.79,34.99',JO:'Amman,31.95,35.93',LB:'Beirut,33.89,35.50',
+IQ:'Bagdad,33.31,44.36;Erbil,36.19,44.01',IR:'Teheran,35.69,51.39;Maschhad,36.30,59.60;Isfahan,32.65,51.67',
+EG:'Kairo,30.04,31.24;Alexandria,31.20,29.92;Gizeh,30.01,31.21',
+MA:'Casablanca,33.57,-7.59;Rabat,34.02,-6.84;Marrakesch,31.63,-8.01;Tanger,35.76,-5.83',
+DZ:'Algier,36.75,3.06;Oran,35.70,-0.63',TN:'Tunis,36.81,10.18',LY:'Tripolis,32.89,13.19',
+NG:'Lagos,6.52,3.38;Abuja,9.08,7.40;Kano,12.00,8.52;Ibadan,7.38,3.95;Port Harcourt,4.82,7.03',
+GH:'Accra,5.60,-0.19;Kumasi,6.69,-1.62',CI:'Abidjan,5.36,-4.01',SN:'Dakar,14.72,-17.47',CM:'Douala,4.05,9.77;Yaoundé,3.87,11.52',
+KE:'Nairobi,-1.29,36.82;Mombasa,-4.04,39.67',TZ:'Daressalam,-6.79,39.21;Dodoma,-6.16,35.75',UG:'Kampala,0.35,32.58',RW:'Kigali,-1.95,30.06',
+ET:'Addis Abeba,9.03,38.74',SD:'Khartum,15.50,32.56',CD:'Kinshasa,-4.44,15.27',
+ZA:'Johannesburg,-26.20,28.04;Kapstadt,-33.92,18.42;Durban,-29.86,31.02;Pretoria,-25.75,28.19;Port Elizabeth,-33.96,25.60',
+AO:'Luanda,-8.84,13.23',MZ:'Maputo,-25.97,32.57',ZM:'Lusaka,-15.39,28.32',ZW:'Harare,-17.83,31.05',NA:'Windhoek,-22.56,17.08',BW:'Gaborone,-24.63,25.92',
+MG:'Antananarivo,-18.88,47.51',MU:'Port Louis,-20.16,57.50',
+IN:'Mumbai,19.08,72.88;Delhi,28.61,77.21;Bangalore,12.97,77.59;Chennai,13.08,80.27;Kolkata,22.57,88.36;Hyderabad,17.39,78.49;Ahmedabad,23.02,72.57;Pune,18.52,73.86',
+PK:'Karatschi,24.86,67.01;Lahore,31.55,74.34;Islamabad,33.68,73.05',BD:'Dhaka,23.81,90.41;Chittagong,22.36,91.78',
+LK:'Colombo,6.93,79.85',NP:'Kathmandu,27.72,85.32',
+CN:'Shanghai,31.23,121.47;Peking,39.90,116.40;Shenzhen,22.54,114.06;Guangzhou,23.13,113.26;Chengdu,30.57,104.07;Chongqing,29.56,106.55;Wuhan,30.59,114.31;Hangzhou,30.27,120.16;Yiwu,29.31,120.07',
+HK:'Hongkong,22.32,114.17',MO:'Macau,22.20,113.54',TW:'Taipeh,25.03,121.57;Kaohsiung,22.63,120.30',
+JP:'Tokio,35.69,139.69;Osaka,34.69,135.50;Yokohama,35.44,139.64;Nagoya,35.18,136.91;Fukuoka,33.59,130.40;Sapporo,43.06,141.35;Kyoto,35.01,135.77',
+KR:'Seoul,37.57,126.98;Busan,35.18,129.08;Incheon,37.46,126.71;Daegu,35.87,128.60',
+TH:'Bangkok,13.76,100.50;Chiang Mai,18.79,98.99;Phuket,7.88,98.39',VN:'Ho-Chi-Minh-Stadt,10.82,106.63;Hanoi,21.03,105.85;Da Nang,16.05,108.22',
+MY:'Kuala Lumpur,3.14,101.69;Penang,5.41,100.33;Johor Bahru,1.49,103.74',SG:'Singapur,1.35,103.82',
+ID:'Jakarta,-6.21,106.85;Surabaya,-7.25,112.75;Bandung,-6.91,107.61;Medan,3.60,98.67;Denpasar,-8.65,115.22',
+PH:'Manila,14.60,120.98;Cebu,10.32,123.89;Davao,7.19,125.46',KH:'Phnom Penh,11.56,104.92',MM:'Rangun,16.87,96.20',LA:'Vientiane,17.97,102.63',
+AU:'Sydney,-33.87,151.21;Melbourne,-37.81,144.96;Brisbane,-27.47,153.03;Perth,-31.95,115.86;Adelaide,-34.93,138.60;Canberra,-35.28,149.13',
+NZ:'Auckland,-36.85,174.76;Wellington,-41.29,174.78;Christchurch,-43.53,172.64',
+US:'New York,40.71,-74.01;Los Angeles,34.05,-118.24;Chicago,41.88,-87.63;Houston,29.76,-95.37;Miami,25.76,-80.19;San Francisco,37.77,-122.42;Seattle,47.61,-122.33;Dallas,32.78,-96.80;Atlanta,33.75,-84.39;Boston,42.36,-71.06;Washington,38.91,-77.04;Las Vegas,36.17,-115.14;Phoenix,33.45,-112.07;Denver,39.74,-104.99',
+CA:'Toronto,43.65,-79.38;Vancouver,49.28,-123.12;Montreal,45.50,-73.57;Calgary,51.05,-114.07;Ottawa,45.42,-75.70;Edmonton,53.55,-113.49',
+MX:'Mexiko-Stadt,19.43,-99.13;Guadalajara,20.66,-103.35;Monterrey,25.69,-100.32;Cancún,21.16,-86.85;Tijuana,32.51,-117.04',
+GT:'Guatemala-Stadt,14.63,-90.51',CR:'San José,9.93,-84.08',PA:'Panama-Stadt,8.98,-79.52',CU:'Havanna,23.11,-82.37',DO:'Santo Domingo,18.49,-69.93',
+JM:'Kingston,17.97,-76.79',PR:'San Juan,18.47,-66.11',HN:'Tegucigalpa,14.07,-87.19',SV:'San Salvador,13.69,-89.22',NI:'Managua,12.11,-86.24',
+BR:'São Paulo,-23.55,-46.63;Rio de Janeiro,-22.91,-43.17;Brasília,-15.79,-47.88;Salvador,-12.97,-38.50;Fortaleza,-3.73,-38.53;Belo Horizonte,-19.92,-43.94;Manaus,-3.12,-60.02;Curitiba,-25.43,-49.27;Porto Alegre,-30.03,-51.23;Recife,-8.05,-34.88',
+AR:'Buenos Aires,-34.60,-58.38;Córdoba,-31.42,-64.18;Rosario,-32.94,-60.65;Mendoza,-32.89,-68.83',
+CL:'Santiago de Chile,-33.45,-70.67;Valparaíso,-33.05,-71.62',CO:'Bogotá,4.71,-74.07;Medellín,6.24,-75.58;Cali,3.45,-76.53;Barranquilla,10.96,-74.80',
+PE:'Lima,-12.05,-77.04;Arequipa,-16.41,-71.54',VE:'Caracas,10.48,-66.90',EC:'Quito,-0.18,-78.47;Guayaquil,-2.17,-79.92',
+BO:'La Paz,-16.50,-68.15;Santa Cruz,-17.81,-63.18',PY:'Asunción,-25.26,-57.58',UY:'Montevideo,-34.90,-56.16'
+};
+TIMES.CA={rail:'16–22',air:'7–10'};
+const CITIES=[];Object.entries(CITY_RAW).forEach(([cc,s])=>s.split(';').forEach(e=>{const [n,la,lo]=e.split(',');CITIES.push({name:n,cc,c:[+lo,+la]})}));
+const DN={};function cname(cc,l){l=l||LANG;try{DN[l]=DN[l]||new Intl.DisplayNames([l],{type:'region'});return DN[l].of(cc)}catch(e){return cc}}
+const flag=cc=>/^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))):'';
+const nrm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss');
+function regionOf([lon,lat]){
+  if(lon<-30)return lat>=25?'NA':'SA';
+  if(lon>160||(lon>110&&lat<-10))return 'OC';
+  if(lat>=36&&lon>=-25&&lon<45)return 'EU';
+  if(lat>=12&&lat<42&&lon>=34&&lon<63)return 'ME';
+  if(lat<37&&lon>=-20&&lon<52)return 'AF';
+  if((lat>=35&&lon>=45&&lon<90)||(lat>=50&&lon>=90))return 'CA';
+  return 'AS';
+}
+function cityDest(name,cc,c){return {id:cc+':'+name,de:cname(cc,'de'),en:cname(cc,'en'),city:name,c,r:regionOf(c),km:Math.round(d3.geoDistance(ORIGIN,c)*6371/100)*100}}
+
+const root=document.documentElement;
+const links=document.getElementById('links');
+document.getElementById('menuBtn').onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+document.getElementById('y').textContent=new Date().getFullYear();
+const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
+/* ---------- I18N ---------- */
+const EN={
+'Sortiment':'Products','AGRAR · GARTEN · OUTDOOR':'FARM · GARDEN · OUTDOOR','Landtechnik':'Farm machinery','Gartengeräte':'Garden tools','Outdoor-Möbel':'Outdoor furniture','Weltweiter Versand':'Worldwide shipping',
+'Kleintraktoren, Bewässerung, Gartengeräte und Outdoor-Möbel – direkt vom Hersteller für Betriebe, Händler und Ihren eigenen Garten.':'Compact tractors, irrigation, garden tools and outdoor furniture – direct from the manufacturer for farms, retailers and your own garden.',
+'Sortiment ansehen':'View products','Direkt ab Werk':'Factory direct','Ohne Zwischenhändler':'No middlemen','Muster & Prüfung':'Samples & inspection','Vor der Bestellung':'Before you order','Zoll & Lieferung':'Customs & delivery','Aus einer Hand':'All from one source','Beratung auf Deutsch':'Personal advice','Ein fester Ansprechpartner':'One dedicated contact',
+'Alles für Hof, Garten':'Everything for farm, garden','und Terrasse':'and terrace','Unser Schwerpunkt liegt auf Landtechnik, Gartengeräten und Outdoor-Möbeln. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.':'Our focus is farm machinery, garden tools and outdoor furniture. Beyond that we can source almost any product from China – just ask.',
+'z. B. Motorhacke, Lounge-Set, Regner …':'e.g. tiller, lounge set, sprinkler …',
+'Für Betriebe':'For businesses','und für Zuhause':'and for your home','Ob Landwirtschaftsbetrieb, Gartencenter oder der eigene Garten – wir passen Beschaffung und Lieferung an Ihren Bedarf an.':'Whether a farm, a garden centre or your own garden – we tailor sourcing and delivery to your needs.',
+'Für Betriebe & Händler':'For businesses & retailers','Landwirtschaft, Gartenbau, Gartencenter, Gastronomie und Handel.':'Agriculture, horticulture, garden centres, hospitality and retail.','Für Ihren Garten':'For your garden','Gartengeräte, Outdoor-Möbel und mehr zu fairen Preisen.':'Garden tools, outdoor furniture and more at fair prices.',
+'So einfach':'Ordering','bestellen Sie':'made simple','Von der ersten Nachricht bis zur Lieferung haben Sie einen Ansprechpartner.':'One contact from your first message to delivery.','Anfrage senden':'Send inquiry','Produkt, Menge und Lieferziel – über das Formular oder per E-Mail.':'Product, quantity and destination – via the form or by email.','Angebot & Muster':'Quote & samples','Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.':'You receive a quote from suitable manufacturers, with samples on request.','Lieferung':'Delivery','Wir organisieren Prüfung, Versand und Zoll – bis zu Ihnen.':'We handle inspection, shipping and customs – all the way to you.',
+'Häufige':'Frequently asked','Fragen':'questions','Ihre Frage ist nicht dabei? Schreiben Sie uns an':'Question not listed? Write to us at',
+'Gibt es Mindestbestellmengen?':'Is there a minimum order quantity?','Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.':'It depends on the product and manufacturer. We state the minimum quantity directly in our quote.',
+'Was kostet ein Produkt?':'What does a product cost?','Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.':'The price depends on quantity, specification and shipping. After your inquiry you receive an individual quote.',
+'Kann ich vorher ein Muster bekommen?':'Can I get a sample first?','Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.':'Yes, on request we arrange a sample before you order so you can check quality and finish.',
+'Wie lange dauert die Lieferung?':'How long does delivery take?','Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.':'It depends on destination and shipping method. The destination search at the top of the page gives a first estimate; the exact time is in the quote.',
+'Kümmert ihr euch um Zoll und Einfuhr?':'Do you handle customs and import?','Ja. Versand, Verzollung und Import organisieren wir aus einer Hand – bis an Ihre Tür oder Ihr Lager.':'Yes. We handle shipping, customs clearance and import from one source – to your door or warehouse.',
+'Ablauf':'Process','FAQ':'FAQ','Jetzt':'Send an','anfragen':'inquiry','KARMIRA – Agrar, Garten & Outdoor direkt aus China':'KARMIRA – Farm, garden & outdoor direct from China',
+'Kleintraktoren, Bodenbearbeitung, Anhänger und Zubehör für Hof und Feld.':'Compact tractors, tillage, trailers and accessories for farm and field.','Bewässerung & Pumpen':'Irrigation & pumps','Tropfbewässerung, Regner, Pumpen und Wassertanks.':'Drip irrigation, sprinklers, pumps and water tanks.','Motor- und Handgeräte für Rasen, Hecke und Beet.':'Powered and hand tools for lawn, hedge and bed.','Lounge, Rattan, Tische und Liegen für Terrasse und Garten.':'Lounge, rattan, tables and loungers for terrace and garden.','Gewächshaus & Hochbeet':'Greenhouse & raised beds','Gewächshäuser, Frühbeete, Hochbeete und Pflanzgefäße.':'Greenhouses, cold frames, raised beds and planters.','Pavillon & Sonnenschutz':'Gazebos & shade','Pavillons, Pergolen, Sonnenschirme und Gartenhäuser.':'Gazebos, pergolas, parasols and garden sheds.','Grill & Outdoor-Küche':'Grill & outdoor kitchen','Grills, Feuerstellen und alles für draußen.':'Grills, fire pits and everything for outdoors.','Weitere Bereiche':'Other areas','Auch außerhalb von Garten und Landwirtschaft beschaffen wir für Sie – über 100.000 Produkte.':'Beyond garden and agriculture we source for you too – over 100,000 products.',
+'Kleintraktor':'Compact tractor','Bodenfräse':'Rotary tiller','Anhänger':'Trailer','Sämaschine':'Seeder','Mulcher':'Mulcher','Futtertröge':'Feed troughs','Tropfbewässerung':'Drip irrigation','Regner':'Sprinkler','Tauchpumpe':'Submersible pump','Solarpumpe':'Solar pump','Wassertank':'Water tank','Bewässerungscomputer':'Irrigation timer','Heckenschere':'Hedge trimmer','Freischneider':'Brush cutter','Kettensäge':'Chainsaw','Laubbläser':'Leaf blower','Lounge-Set':'Lounge set','Rattan-Möbel':'Rattan furniture','Gartentisch':'Garden table','Gartenstühle':'Garden chairs','Sonnenliege':'Sun lounger','Hollywoodschaukel':'Swing seat','Auflagen & Kissen':'Cushions & pads','Gartenbank':'Garden bench','Frühbeet':'Cold frame','Hochbeet':'Raised bed','Rankhilfen':'Trellises','Komposter':'Composter','Pavillon':'Gazebo','Pergola':'Pergola','Sonnenschirm':'Parasol','Sonnensegel':'Shade sail','Markise':'Awning','Gartenhaus':'Garden shed','Geräteschuppen':'Tool shed','Feuerschale':'Fire pit','Pizzaofen':'Pizza oven','Outdoor-Küche':'Outdoor kitchen','Solarleuchten':'Solar lights','Gartenbeleuchtung':'Garden lighting','Haushalt & Küche':'Household & kitchen','Wohnen & Textil':'Home & textiles','Auto & Zubehör':'Auto & accessories','Werkzeug':'Tools','Elektronik':'Electronics','Camping & Freizeit':'Camping & leisure',
+'Stadt oder Land suchen …':'Search city or country …','Lieferziel suchen':'Search destination','Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search','Weltweiter Versand':'Worldwide shipping','Weltweit':'Worldwide','Versand':'Shipping','Lieferziel':'Destination','Entfernung':'Distance','Nur Europa & Zentralasien':'Europe & Central Asia only','Ziel auf der Karte anklicken':'Click a destination on the map','Luftlinie':'as the crow flies','Weltweite Lieferung':'Worldwide delivery','Aus China in die ganze Welt.':'From China to the world.','Direkt aus China – geliefert, wohin Sie wollen.':'Direct from China – delivered wherever you are.','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
+'100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – direkt aus China, geliefert in die ganze Welt.':'From farm equipment to kitchenware and car accessories – direct from China, delivered worldwide.',
+'Sortiment entdecken':'Explore products','Globus drehen':'Drag to rotate','Unser Sortiment':'Our range','Über':'Over','Produkte.':'products.','Finden Sie Ihres.':'Find yours.','Anfragen':'Inquire',
+'Agrar & Garten':'Farm & Garden','Geräte, Maschinen und Zubehör für Landwirtschaft und Garten.':'Tools, machinery and accessories for farming and gardening.','Beispiele ansehen':'See examples',
+'Küche & Haushalt':'Kitchen & Household','Utensilien, Geschirr und clevere Helfer für jeden Haushalt.':'Utensils, tableware and clever helpers for every home.',
+'Wohnen & Textil':'Home & Textiles','Kissen, Decken, Deko und alles für ein schönes Zuhause.':'Cushions, blankets, décor and everything for a beautiful home.',
+'Auto & Zubehör':'Auto & Accessories','Pflege, Ausstattung und Ersatzteile rund ums Fahrzeug.':'Care products, equipment and spare parts for your vehicle.',
+'Werkzeug & Technik':'Tools & Hardware','Handwerkzeug, Elektrowerkzeug und Industriebedarf.':'Hand tools, power tools and industrial supplies.',
+'Elektronik':'Electronics','Gadgets, Zubehör und Smart-Home-Lösungen.':'Gadgets, accessories and smart-home solutions.',
+'Freizeit & Sport':'Leisure & Sports','Outdoor, Fitness, Camping und Spiel.':'Outdoor, fitness, camping and play.',
+'Und vieles mehr':'And much more','Über 100.000 Artikel – was Sie hier nicht sehen, finden wir für Sie.':'Over 100,000 items – if you don’t see it here, we’ll find it for you.',
+'Kategorie':'Category','Diese Kategorie anfragen':'Inquire about this category','… und viele mehr':'… and many more',
+'Wo Ihre Produkte entstehen.':'Where your products are made.','Jede Region hat ihre Spezialität. Wir beschaffen dort, wo die Kompetenz zu Hause ist.':'Every region has its specialty. We source where the expertise is.',
+'Guangdong · Shenzhen':'Guangdong · Shenzhen','Elektronik-Zentrum':'Electronics hub','Elektronik · Beleuchtung':'Electronics · Lighting','Das Perlflussdelta ist die Werkbank der Welt für Elektronik, LED und Haushaltsgeräte.':'The Pearl River Delta is the world’s workshop for electronics, LED and home appliances.',
+'Markt der kleinen Waren':'Market of small goods','Haushalt · Deko · Kleinwaren':'Household · Décor · Small goods','Yiwu beherbergt einen der größten Großhandelsmärkte der Welt für Alltagsprodukte.':'Yiwu is home to one of the world’s largest wholesale markets for everyday products.',
+'Heimtextil-Region':'Home textiles region','Kissen · Bettwaren · Textil':'Cushions · Bedding · Textiles','Nantong gilt als Zentrum für Heimtextilien – von Kissen bis Bettwäsche.':'Nantong is known as a centre for home textiles – from cushions to bed linen.',
+'Agrartechnik':'Agricultural machinery','Landmaschinen · Garten':'Farm machinery · Garden','Shandong ist führend bei Landmaschinen, Agrargeräten und Bewässerung.':'Shandong leads in farm machinery, agricultural equipment and irrigation.',
+'Fahrzeug-Cluster':'Automotive cluster','Auto · Motorrad · Teile':'Cars · Motorcycles · Parts','Chongqing ist einer der größten Standorte für Fahrzeug- und Zubehörproduktion.':'Chongqing is one of the largest locations for vehicle and parts manufacturing.',
+'Produkte':'Products','Regionen':'Regions','Kunden':'Customers','Ansprechpartner':'Contact person','Kategorien':'Categories',
+'Qualität & Import-Sicherheit':'Quality & import assurance','Qualitätskontrolle':'Quality control','Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.':'Samples, inspection and approval before anything is produced or shipped.',
+'EU-Konformität':'EU compliance','Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.':'We take care of CE marking, labelling requirements and complete documentation.',
+'Zoll & Logistik':'Customs & logistics','Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.':'Shipping, customs clearance and import from a single source – to your door or warehouse.',
+'Unsere Haltung':'Our approach','Nähe trotz Distanz.':'Close, despite the distance.',
+'KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.':'KARMIRA connects businesses and private customers worldwide directly with manufacturers in China. No unnecessary middlemen, with personal support in German and English – from the first idea to delivery.',
+'Unsere Prinzipien':'Our principles','Wir kennen die Regionen und ihre Hersteller.':'We know the regions and their manufacturers.','Qualität':'Quality','Geprüft, bevor es auf die Reise geht.':'Inspected before it travels.',
+'Transparenz':'Transparency','Klare Preise, klare Abläufe, keine Überraschungen.':'Clear prices, clear processes, no surprises.','Partnerschaft':'Partnership','Ein fester Ansprechpartner – langfristig.':'One dedicated contact – for the long term.',
+'Lösungen':'Solutions','Für Unternehmen.':'For businesses.','Für Sie.':'For you.','Geschäftskunden':'Business customers','Beschaffung im großen Stil':'Sourcing at scale',
+'Für Händler, Gastronomie, Landwirtschaft und Industrie.':'For retailers, hospitality, agriculture and industry.','Großhandelspreise direkt ab Hersteller':'Wholesale prices direct from the manufacturer',
+'Lieferantensuche & Qualitätsprüfung':'Supplier search & quality inspection','Individuelle Produkte & Private Label':'Custom products & private label','Logistik, Zoll & Import aus einer Hand':'Logistics, customs & import from one source',
+'B2B-Anfrage':'B2B inquiry','Privatkunden':'Private customers','Ausgewählt für Zuhause':'Selected for your home','Hochwertige Produkte zu fairen Preisen.':'High-quality products at fair prices.',
+'Faire Preise ohne Zwischenhändler':'Fair prices without middlemen','Geprüfte Qualität':'Inspected quality','Persönliche Beratung auf Deutsch':'Personal advice in German & English','Lieferung bis an die Haustür':'Delivery to your door','Privat anfragen':'Private inquiry',
+'Anfrage':'Inquiry','Sie sagen uns, was Sie suchen – Produkt, Menge, Wunschpreis.':'Tell us what you need – product, quantity, target price.','Angebot':'Quote',
+'Wir finden passende Hersteller und senden ein transparentes Angebot.':'We find suitable manufacturers and send a transparent quote.','Muster, Prüfung und Abstimmung vor Produktion und Versand.':'Samples, inspection and sign-off before production and shipping.',
+'Lieferung':'Delivery','Versand, Zoll und Import – bis zu Ihnen.':'Shipping, customs and import – all the way to you.',
+'Lassen Sie uns':'Let’s','sprechen.':'talk.','In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.':'Your inquiry in a few steps. We usually reply within 24 hours.',
+'E-Mail':'Email','Telefon':'Phone','Schritt 1 von 4':'Step 1 of 4','Wer sind Sie?':'Who are you?','Unternehmen':'Business','Großhandel, Händler, Gewerbe':'Wholesale, retail, trade',
+'Privatperson':'Private person','Für mich oder mein Zuhause':'For me or my home','Schritt 2 von 4':'Step 2 of 4','Welcher Bereich?':'Which category?','← Zurück':'← Back',
+'Schritt 3 von 4':'Step 3 of 4','Was genau suchen Sie?':'What exactly are you looking for?','Produkt':'Product','Menge':'Quantity','1–10 Stück':'1–10 pcs','10–100 Stück':'10–100 pcs','100–1.000 Stück':'100–1,000 pcs','1.000+ Stück':'1,000+ pcs',
+'Zeitrahmen':'Timeframe','So schnell wie möglich':'As soon as possible','In 1–3 Monaten':'Within 1–3 months','Flexibel':'Flexible','Details (optional)':'Details (optional)','Weiter':'Next',
+'Schritt 4 von 4':'Step 4 of 4','Wie erreichen wir Sie?':'How can we reach you?','Firma':'Company','Telefon (optional)':'Phone (optional)','Anfrage senden':'Send inquiry',
+'Fast geschafft':'Almost done','Vielen Dank!':'Thank you!','Ihr E-Mail-Programm hat sich mit Ihrer Anfrage geöffnet – bitte dort nur noch auf „Senden“ klicken. Wir melden uns schnellstmöglich.':'Your email app has opened with your inquiry – just click “Send” there. We’ll get back to you as soon as possible.',
+'Neue Anfrage':'New inquiry','Impressum':'Legal notice','Datenschutz':'Privacy','Menü':'Menu','KARMIRA Monogramm':'KARMIRA monogram',
+'z. B. Bewässerung, Kissen, Pfanne, Dachbox …':'e.g. irrigation, cushion, pan, roof box …','Schließen':'Close','Karte der Produktionsregionen in China':'Map of manufacturing regions in China',
+'z. B. Gartenschlauch 50 m':'e.g. garden hose 50 m','Farbe, Material, Zielpreis, Link zu einem Beispiel …':'Colour, material, target price, link to an example …',
+'KARMIRA – Global Sourcing direkt aus China':'KARMIRA – Global sourcing direct from China',
+'Bitte geben Sie kurz an, was Sie suchen.':'Please briefly describe what you are looking for.','Bitte Name und eine gültige E-Mail angeben.':'Please enter your name and a valid email.',
+'Privat':'Private','ist nicht in dieser Auswahl – aber sehr wahrscheinlich unter unseren 100.000+ Produkten.':'isn’t in this selection – but very likely among our 100,000+ products.','Jetzt anfragen →':'Inquire now →',
+/* prototypes */
+'Die Produkte der Welt.':'The world’s products.','Direkt zu Ihnen.':'Delivered to you.','Über 100.000 Produkte direkt von Herstellern aus China – für Unternehmen und Privatkunden. Wir kümmern uns um alles auf dem Weg.':'Over 100,000 products direct from manufacturers in China – for businesses and private customers. We handle everything along the way.',
+'Seefracht':'Sea freight','Bahn':'Rail','Luftfracht':'Air freight','Dauer':'Duration','Strecke':'Distance','Ideal für':'Ideal for',
+'ca. 30–40 Tage':'approx. 30–40 days','ca. 15–20 Tage':'approx. 15–20 days','ca. 3–7 Tage':'approx. 3–7 days','Große Mengen & Container':'Large volumes & containers','Mittlere Mengen, schneller als See':'Medium volumes, faster than sea','Eilsendungen & Muster':'Urgent shipments & samples',
+'Ein Partner.':'One partner.','100.000 Möglichkeiten.':'100,000 possibilities.','Von Agrargeräten bis zum Kissen – wir beschaffen direkt bei Herstellern in China. Für Ihr Unternehmen oder Ihr Zuhause.':'From farm equipment to cushions – we source directly from manufacturers in China. For your business or your home.',
+'Kategorie wählen':'Choose a category','Global Sourcing.':'Global sourcing.','Neu gedacht.':'Reimagined.','Wir verbinden Sie direkt mit Herstellern in China – über 100.000 Produkte, ein Ansprechpartner, Lieferung weltweit.':'We connect you directly with manufacturers in China – over 100,000 products, one contact, delivered worldwide.',
+'Aktive Route':'Active route','km Luftlinie':'km as the crow flies',
+/* example products */
+'Bewässerungssysteme':'Irrigation systems','Gartenschlauch':'Garden hose','Motorhacke':'Tiller','Rasenmäher':'Lawn mower','Sprühgerät':'Sprayer','Gewächshaus':'Greenhouse','Pflanzgefäße':'Planters','Gartenwerkzeug-Set':'Garden tool set','Tierbedarf':'Livestock supplies','Weidezaun':'Pasture fence','Saatgutschalen':'Seed trays','Schubkarre':'Wheelbarrow',
+'Pfanne':'Pan','Topf-Set':'Pot set','Messerset':'Knife set','Schneidebrett':'Cutting board','Küchenhelfer':'Kitchen gadgets','Aufbewahrungsboxen':'Storage boxes','Geschirr':'Tableware','Besteck':'Cutlery','Gewürzregal':'Spice rack','Thermoskanne':'Vacuum flask','Backformen':'Baking tins','Reinigungsbedarf':'Cleaning supplies',
+'Kissen':'Cushions','Kissenbezüge':'Cushion covers','Decken':'Blankets','Bettwäsche':'Bed linen','Handtücher':'Towels','Vorhänge':'Curtains','Teppiche':'Rugs','Dekoration':'Décor','Lampen':'Lamps','Bilderrahmen':'Picture frames','Vasen':'Vases','Kerzen':'Candles',
+'Fußmatten':'Floor mats','Sitzbezüge':'Seat covers','Dachbox':'Roof box','Handyhalterung':'Phone mount','Autopflege-Set':'Car care kit','Dashcam':'Dashcam','LED-Beleuchtung':'LED lighting','Ersatzteile':'Spare parts','Felgen':'Rims','Kofferraum-Organizer':'Trunk organizer','Starthilfe':'Jump starter','Reifenfüller':'Tyre inflator',
+'Akkuschrauber':'Cordless drill','Werkzeugkoffer':'Tool case','Bohrmaschine':'Drill','Schraubensets':'Screw sets','Leitern':'Ladders','Arbeitsschutz':'Safety gear','Messgeräte':'Measuring tools','Schweißgerät':'Welder','Kompressor':'Compressor','Regalsysteme':'Shelving systems',
+'Ladegeräte':'Chargers','Kabel':'Cables','Powerbank':'Power bank','Kopfhörer':'Headphones','Lautsprecher':'Speakers','Smart-Home':'Smart home','Überwachungskamera':'Security camera','Solarpanel':'Solar panel','LED-Streifen':'LED strips','Smartwatch':'Smartwatch',
+'Campingzelt':'Camping tent','Fitnessgeräte':'Fitness equipment','Yogamatte':'Yoga mat','Fahrradzubehör':'Bike accessories','Rucksäcke':'Backpacks','Angelzubehör':'Fishing gear','Spielzeug':'Toys','Grill':'Grill','Kühlbox':'Cooler','Hängematte':'Hammock',
+'Verpackung':'Packaging','Bürobedarf':'Office supplies','Haustierbedarf':'Pet supplies','Baby & Kind':'Baby & kids','Beauty-Zubehör':'Beauty accessories','Gastronomiebedarf':'Catering supplies','Werbeartikel':'Promotional items','Private Label':'Private label'
+};
+let LANG='de';
+const LANGS_TOP=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['iw','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
+const GT_ALL='af sq am ar hy as ay az bm eu be bn bho bs bg ca ceb ny zh-CN zh-TW co hr cs da dv doi nl en eo et ee tl fi fr fy gl ka de el gn gu ht ha haw iw hi hmn hu is ig ilo id ga it ja jw kn kk km rw gom ko kri ku ckb ky lo la lv ln lt lg lb mk mai mg ms ml mt mi mr mni-Mtei lus mn my ne no or om ps fa pl pt pa qu ro ru sm sa gd nso sr st sn sd si sk sl so es su sw sv tg ta tt te th ti ts tr tk ak uk ur ug uz vi cy xh yi yo zu'.split(' ');
+const ISO={iw:'he',jw:'jv','mni-Mtei':'mni',tl:'fil'};
+const natName=c=>{const iso=ISO[c]||c;try{const n=new Intl.DisplayNames([iso],{type:'language'}).of(iso);return n&&n!==iso?n.charAt(0).toUpperCase()+n.slice(1):c}catch(e){return c}};
+const LANGS=[...LANGS_TOP,...GT_ALL.filter(c=>!LANGS_TOP.some(x=>x[0]===c||(c==='iw'&&x[0]==='he'))).map(c=>[c,natName(c)]).sort((a,b)=>a[1].localeCompare(b[1]))];
+const langIn=(c,l)=>{const iso=ISO[c]||c;try{return new Intl.DisplayNames([l],{type:'language'}).of(iso)||''}catch(e){return ''}};
+const RTL=['ar','fa','he','iw','ur','ps','sd','ug','yi','ckb','dv'];
+function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(/^zh-(tw|hk|mo|hant)/.test(b))return 'zh-TW';if(b.startsWith('zh'))return 'zh-CN';if(b.startsWith('he'))return 'iw';if(b.startsWith('jv'))return 'jw';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
+let UI_LANG='de',LANG_AUTO=true;
+try{const l=localStorage.getItem('k-lang');if(l&&LANGS.some(x=>x[0]===l)){UI_LANG=l;LANG_AUTO=false}else UI_LANG=detectLang()}catch(e){UI_LANG=detectLang()}
+LANG=UI_LANG==='de'?'de':'en';
+function gtCookie(v){const h=location.hostname,parts=h.split('.'),doms=['',h,'.'+h];if(parts.length>2)doms.push('.'+parts.slice(-2).join('.'));
+  doms.forEach(d=>document.cookie='googtrans='+(v||'')+';path=/'+(d?';domain='+d:'')+(v?'':';expires=Thu, 01 Jan 1970 00:00:00 GMT'))}
+const GT_ACTIVE=UI_LANG!=='de'&&UI_LANG!=='en';
+if(GT_ACTIVE){gtCookie('/en/'+UI_LANG);window.gtInit=()=>{try{new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'gt_el')}catch(e){}};
+  const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=gtInit';sc.async=true;document.head.appendChild(sc);
+  if(RTL.includes(UI_LANG))document.documentElement.dir='rtl'}
+else if(/googtrans=/.test(document.cookie))gtCookie('');
+const t=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
+let I18N_NODES=null;
+function applyLang(){
+  if(!I18N_NODES){I18N_NODES=[];const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+    while(n=w.nextNode()){if(n.parentElement.closest('script,style'))continue;const tr=n.nodeValue.trim();if(tr&&EN[tr]!==undefined)I18N_NODES.push([n,n.nodeValue,tr])}
+    document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(e=>['placeholder','aria-label','alt'].forEach(a=>{const v=e.getAttribute(a);if(v&&EN[v]!==undefined)I18N_NODES.push([e,v,v,a])}));
+    I18N_NODES.title=document.title}
+  I18N_NODES.forEach(([n,orig,tr,attr])=>{const v=LANG==='en'?orig.replace(tr,EN[tr]):orig;attr?n.setAttribute(attr,v):n.nodeValue=v});
+  document.title=LANG==='en'?I18N_NODES.title.replace('KARMIRA – Agrar, Garten & Outdoor direkt aus China',EN['KARMIRA – Agrar, Garten & Outdoor direkt aus China']):I18N_NODES.title;
+  document.documentElement.lang=LANG;
+  document.getElementById('lcur').textContent=UI_LANG.split('-')[0].toUpperCase();renderLangs();
+  dispatchEvent(new Event('langchange'));
+}
+const llist=document.getElementById('llist');
+function renderLangs(){const de=LANG==='de',top=LANGS_TOP.length;
+  llist.innerHTML=`<li class="ls"><input id="lfind" placeholder="${de?'Sprache suchen …':'Search language …'}" autocomplete="off"></li><li class="hd">${de?'Häufig':'Popular'}</li>`+
+  LANGS.map(([c,n],k)=>(k===top?`<li class="hd">${de?'Alle Sprachen':'All languages'} (Google Translate)</li>`:'')+`<li data-l="${c}" data-n="${(n+' '+c+' '+langIn(c,'de')+' '+langIn(c,'en')).toLowerCase()}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
+  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`;
+  const f=document.getElementById('lfind');f.addEventListener('click',e=>e.stopPropagation());
+  f.addEventListener('input',()=>{const q=nrm(f.value.trim());llist.querySelectorAll('li[data-l]:not(.auto)').forEach(li=>li.style.display=!q||nrm(li.dataset.n).includes(q)?'':'none');
+    llist.querySelectorAll('li.hd').forEach(h=>h.style.display=q?'none':'')})}
+function setUiLang(code){const auto=code==='auto';if(auto)code=detectLang();
+  try{auto?localStorage.removeItem('k-lang'):localStorage.setItem('k-lang',code)}catch(e){}
+  const was=GT_ACTIVE,need=code!=='de'&&code!=='en';LANG_AUTO=auto;
+  if(!was&&!need){UI_LANG=code;LANG=code;llist.classList.remove('open');applyLang();return}
+  gtCookie(need?'/en/'+code:'');location.reload()}
+document.getElementById('lbtn').addEventListener('click',e=>{e.stopPropagation();llist.classList.toggle('open');if(llist.classList.contains('open'))setTimeout(()=>document.getElementById('lfind')?.focus(),50)});
+llist.addEventListener('click',e=>{const li=e.target.closest('li[data-l]');if(li)setUiLang(li.dataset.l)});
+document.addEventListener('click',e=>{if(!e.target.closest('#lsel'))llist.classList.remove('open')});
+addEventListener('keydown',e=>{if(e.key==='Escape')llist.classList.remove('open')});
+
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
+  e.target.querySelectorAll('.count').forEach(c=>{const to=+c.dataset.to,t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1800),v=Math.round(to*(1-Math.pow(1-k,3)));c.textContent=v.toLocaleString(LANG==='en'?'en-US':'de-DE');if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+  io.unobserve(e.target)}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* mini TopoJSON decoder */
+function topoFeatures(topo,name){
+  const t=topo.transform;
+  const arcs=topo.arcs.map(a=>{let x=0,y=0;return a.map(p=>{if(!t)return p.slice();x+=p[0];y+=p[1];return [x*t.scale[0]+t.translate[0],y*t.scale[1]+t.translate[1]]})});
+  const ring=idx=>{const pts=[];idx.forEach((i,k)=>{const a=i<0?arcs[~i].slice().reverse():arcs[i];a.forEach((p,j)=>{if(k&&!j)return;pts.push(p)})});return pts};
+  const geom=g=>g.type==='Polygon'?{type:'Polygon',coordinates:g.arcs.map(ring)}:g.type==='MultiPolygon'?{type:'MultiPolygon',coordinates:g.arcs.map(p=>p.map(ring))}:null;
+  return topo.objects[name].geometries.map(g=>({type:'Feature',id:String(g.id),properties:g.properties||{},geometry:geom(g)})).filter(f=>f.geometry);
+}
+const WORLD_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
+
+/* GLOBE */
+(function(){
+  const cv=document.getElementById('globe'),ctx=cv.getContext('2d'),inp=document.getElementById('hQ'),list=document.getElementById('hList');
+  let W,H,R,land=[],cn=null,di=defaultDest(),auto=true,hold=0;
+  const proj=d3.geoOrthographic().clipAngle(90),path=d3.geoPath(proj,ctx),grat=d3.geoGraticule10();
+  let rot=[0,0,0],target=[0,0],drag=false,lastX=0,lastY=0,visibleHero=true;
+  function size(){const dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    R=W<700?Math.min(W*.62,H*.4):Math.min(W*.46,H*.47);proj.scale(R).translate([W/2,H*.56]);}
+  addEventListener('resize',size);size();
+  new IntersectionObserver(e=>visibleHero=e[0].isIntersecting).observe(cv);
+  fetch(WORLD_URL).then(r=>r.json()).then(t=>{land=topoFeatures(t,'countries');cn=land.find(f=>f.id==='156')}).catch(()=>{});
+  let arcs=DEST.map(d=>({d,interp:d3.geoInterpolate(ORIGIN,d.c)}));
+  const lifted=(p,alt)=>{const c=proj.translate(),xy=proj(p);return [c[0]+(xy[0]-c[0])*(1+alt),c[1]+(xy[1]-c[1])*(1+alt)]};
+  const visible=p=>d3.geoDistance(p,[-rot[0],-rot[1]])<Math.PI/2;
+  const lerpAng=(a,b,k)=>{let d=((b-a+540)%360)-180;return a+d*k};
+  function aimAt(i){const k=DEST[i].km>9000?.72:.5,m=d3.geoInterpolate(ORIGIN,DEST[i].c)(k);target=[-m[0],-Math.max(-35,Math.min(50,m[1]))*.75-6]}
+  function frame(time){
+    requestAnimationFrame(frame);
+    if(!visibleHero)return;
+    if(!drag){rot[0]=lerpAng(rot[0],target[0],.03);rot[1]+=(target[1]-rot[1])*.03}
+    proj.rotate(rot);
+    const gold=css('--gold'),goldL=css('--gold-l'),cream=css('--cream'),c=proj.translate();
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createRadialGradient(c[0],c[1],R*.8,c[0],c[1],R*1.35);g.addColorStop(0,css('--glow'));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(c[0],c[1],R*1.35,0,7);ctx.fill();
+    const sg=ctx.createRadialGradient(c[0]-R*.3,c[1]-R*.35,R*.1,c[0],c[1],R);sg.addColorStop(0,css('--land'));sg.addColorStop(1,css('--sphere'));
+    ctx.fillStyle=sg;ctx.beginPath();path({type:'Sphere'});ctx.fill();
+    ctx.beginPath();path(grat);ctx.strokeStyle=css('--line2');ctx.lineWidth=.6;ctx.stroke();
+    if(land.length){
+      ctx.beginPath();land.forEach(f=>path(f));ctx.fillStyle=css('--land');ctx.fill();ctx.strokeStyle=css('--land-stroke');ctx.lineWidth=.7;ctx.stroke();
+      if(cn){ctx.beginPath();path(cn);ctx.globalAlpha=.16;ctx.fillStyle=gold;ctx.fill();ctx.globalAlpha=.7;ctx.strokeStyle=gold;ctx.stroke();ctx.globalAlpha=1}
+    }
+    ctx.beginPath();path({type:'Sphere'});ctx.strokeStyle=css('--line');ctx.lineWidth=1;ctx.stroke();
+    arcs.forEach((a,i)=>{const on=i===di,N=70;ctx.beginPath();let pen=false;
+      for(let j=0;j<=N;j++){const t=j/N,p=a.interp(t),alt=Math.sin(Math.PI*t)*(on?.3:.16);if(!(visible(p)||alt>.08)){pen=false;continue}
+        const xy=lifted(p,alt);pen?ctx.lineTo(xy[0],xy[1]):ctx.moveTo(xy[0],xy[1]);pen=true}
+      ctx.lineWidth=on?1.8:1.1;ctx.globalAlpha=on?1:.4;ctx.strokeStyle=on?goldL:gold;ctx.setLineDash(on?[7,6]:[]);ctx.lineDashOffset=-time/35;ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+      if(visible(a.d.c)){const s=proj(a.d.c);ctx.fillStyle=cream;ctx.globalAlpha=on?1:.55;ctx.beginPath();ctx.arc(s[0],s[1],on?4.5:2.4,0,7);ctx.fill();ctx.globalAlpha=1;
+        if(on){ctx.strokeStyle=goldL;ctx.beginPath();ctx.arc(s[0],s[1],9+Math.sin(time/260)*2,0,7);ctx.stroke();ctx.font='600 13px Manrope, sans-serif';ctx.fillStyle=css('--text');ctx.textAlign='left';if(innerWidth>820)ctx.fillText(a.d.city.toUpperCase(),s[0]+14,s[1]-10)}}});
+    if(visible(ORIGIN)){const o=proj(ORIGIN);ctx.fillStyle=gold;ctx.beginPath();ctx.arc(o[0],o[1],4,0,7);ctx.fill()}
+  }
+  requestAnimationFrame(frame);
+  const label=d=>`${d.city}, ${d.id.includes(':')?cname(d.id.split(':')[0]):dname(d)}`;
+  function setDest(i){di=i;aimAt(i);if(document.activeElement!==inp)inp.value=label(DEST[i]);document.getElementById('hKm').textContent=kmTxt(DEST[i].km)+' · '+daysTxt(TIMES[DEST[i].r].air)+' ✈'}
+  function pick(name,cc,c){auto=false;let i=DEST.findIndex(d=>d.city===name&&(d.id===cc||d.id.startsWith(cc)||d.id===cc+':'+name));
+    if(i<0){const d=cityDest(name,cc,c);DEST.push(d);arcs.push({d,interp:d3.geoInterpolate(ORIGIN,c)});i=DEST.length-1}
+    inp.blur();closeList();setDest(i)}
+  /* search */
+  let items=[],act=-1,remote=[],rq=0,timer=null;
+  const CCS=Object.keys(CITY_RAW);
+  function closeList(){list.classList.remove('open');act=-1}
+  function render(q){
+    const qn=nrm(q.trim());let html='';items=[];
+    const add=(name,cc,c)=>{items.push({name,cc,c});return `<li data-i="${items.length-1}" role="option">${name}<span>${flag(cc)} ${cname(cc)}</span></li>`};
+    if(!qn){html+=`<li class="hd">${t('Beliebte Ziele')}</li>`;DEST.slice(0,17).forEach(d=>{const cc=d.id.split(/[-:]/)[0];html+=add(d.city,cc,d.c)})}
+    else{
+      const countries=CCS.filter(cc=>[cname(cc,'de'),cname(cc,'en'),cc].some(n=>nrm(n).startsWith(qn))).slice(0,2);
+      countries.forEach(cc=>{html+=`<li class="hd">${t('Städte in')} ${flag(cc)} ${cname(cc)}</li>`;CITIES.filter(x=>x.cc===cc).forEach(x=>html+=add(x.name,x.cc,x.c))});
+      const local=CITIES.filter(x=>!countries.includes(x.cc)&&nrm(x.name).includes(qn)).sort((a,b)=>nrm(a.name).startsWith(qn)?-1:nrm(b.name).startsWith(qn)?1:0).slice(0,8);
+      if(local.length){html+=`<li class="hd">${t('Städte')}</li>`;local.forEach(x=>html+=add(x.name,x.cc,x.c))}
+      const seen=new Set(items.map(x=>nrm(x.name)+x.cc));
+      const rem=remote.filter(r=>!seen.has(nrm(r.name)+r.cc)).slice(0,8);
+      if(rem.length){html+=`<li class="hd">${t('Weitere Orte')}</li>`;rem.forEach(r=>html+=add(r.name,r.cc,r.c))}
+      if(!items.length)html+=`<li class="empty">${t('Suche läuft …')}</li>`;
+      html+=`<li class="ft">${t('Ortssuche')}: © OpenStreetMap</li>`;
+    }
+    list.innerHTML=html;act=-1;list.classList.add('open')}
+  function fetchRemote(q){const id=++rq;
+    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=12&lang=${LANG}&osm_tag=place`).then(r=>r.json()).then(j=>{
+      if(id!==rq)return;
+      remote=(j.features||[]).filter(f=>['city','town','village','municipality'].includes(f.properties.osm_value)&&f.properties.countrycode)
+        .map(f=>({name:f.properties.name,cc:f.properties.countrycode.toUpperCase(),c:f.geometry.coordinates}));
+      if(document.activeElement===inp)render(inp.value);
+    }).catch(()=>{if(id===rq&&document.activeElement===inp&&!items.length)list.innerHTML=`<li class="empty">${t('Keine Treffer')}</li>`})}
+  inp.addEventListener('focus',()=>{auto=false;inp.select();remote=[];render('')});
+  inp.addEventListener('input',()=>{remote=[];render(inp.value);clearTimeout(timer);const q=inp.value.trim();if(q.length>=2)timer=setTimeout(()=>fetchRemote(q),280)});
+  inp.addEventListener('keydown',e=>{const lis=[...list.querySelectorAll('li[data-i]')];
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!lis.length)return;act=(act+(e.key==='ArrowDown'?1:-1)+lis.length)%lis.length;lis.forEach((l,k)=>l.classList.toggle('act',k===act));lis[act].scrollIntoView({block:'nearest'})}
+    else if(e.key==='Enter'){e.preventDefault();const l=lis[act<0?0:act];if(l){const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)}}
+    else if(e.key==='Escape'){inp.blur()}});
+  list.addEventListener('mousedown',e=>{const l=e.target.closest('li[data-i]');if(!l)return;e.preventDefault();const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)});
+  inp.addEventListener('blur',()=>{setTimeout(()=>{closeList();inp.value=label(DEST[di])},120)});
+  addEventListener('langchange',()=>setDest(di));
+  setDest(di);rot[0]=target[0];rot[1]=target[1];
+  setInterval(()=>{if(auto&&performance.now()>hold)setDest((di+1)%DEST.length)},3500);
+  cv.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
+  cv.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;
+    const k=70/R;rot[0]+=dx*k;rot[1]=Math.max(-70,Math.min(70,rot[1]-dy*k))});
+  const end=()=>{if(drag){target=[rot[0],rot[1]];hold=performance.now()+6000}drag=false;cv.classList.remove('drag')};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+})();
+
+/* SORTIMENT */
+const catsEl=document.getElementById('cats');
+let catsShown=false;
+function renderCats(){catsEl.innerHTML=CATS.map(c=>`<button class="cat reveal${catsShown?' in':''}" data-id="${c.id}"><h3><svg viewBox="0 0 24 24">${ICONS[c.id]}</svg>${t(c.name)}</h3><p>${t(c.text)}</p><span class="more">${t('Beispiele ansehen')}</span></button>`).join('');
+  if(!catsShown)catsEl.querySelectorAll('.reveal').forEach(el=>io.observe(el));catsShown=true}
+renderCats();
+addEventListener('langchange',()=>{renderCats();if(modal.classList.contains('open'))openCat(openId);q.dispatchEvent(new Event('input'))});
+let wizState={type:null,cat:null};
+const modal=document.getElementById('modal');let openId=null;
+function openCat(id){const c=CATS.find(x=>x.id===id);openId=id;
+  document.getElementById('mTitle').textContent=t(c.name);document.getElementById('mText').textContent=t(c.text);
+  document.getElementById('mList').innerHTML=c.items.map(i=>`<span class="chip">${t(i)}</span>`).join('')+`<span class="chip">${t('… und viele mehr')}</span>`;
+  document.getElementById('mCta').onclick=()=>{modal.classList.remove('open');presetWizard({cat:c.name})};
+  modal.classList.add('open')}
+catsEl.addEventListener('click',e=>{const b=e.target.closest('.cat');if(b)openCat(b.dataset.id)});
+document.getElementById('mClose').onclick=()=>modal.classList.remove('open');
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
+
+const ALL=CATS.flatMap(c=>c.items.map(i=>({i,c})));
+const q=document.getElementById('q'),res=document.getElementById('results');
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const esc=s=>s.replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+q.addEventListener('input',()=>{
+  const v=norm(q.value.trim()),cards=catsEl.querySelectorAll('.cat');
+  if(!v){res.innerHTML='';cards.forEach(c=>c.classList.remove('dim','match'));return}
+  const hits=ALL.filter(x=>[x.i,t(x.i),x.c.name,t(x.c.name)].some(s=>norm(s).includes(v))),ids=new Set(hits.map(h=>h.c.id));
+  cards.forEach(c=>{const m=ids.has(c.dataset.id);c.classList.toggle('match',m);c.classList.toggle('dim',!m)});
+  res.innerHTML=hits.length?hits.slice(0,14).map(h=>`<span class="chip" data-p="${t(h.i)}" data-c="${h.c.name}">${t(h.i)}<small>${t(h.c.name)}</small></span>`).join('')
+    :`<span class="noresult">„${esc(q.value)}“ ${t('ist nicht in dieser Auswahl – aber sehr wahrscheinlich unter unseren 100.000+ Produkten.')} <a href="#kontakt" id="nr">${t('Jetzt anfragen →')}</a></span>`;
+  const nr=document.getElementById('nr');if(nr)nr.onclick=()=>presetWizard({prod:q.value});
+});
+res.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;presetWizard({prod:c.dataset.p,cat:c.dataset.c});location.hash='kontakt'});
+document.getElementById('qBtn').onclick=()=>presetWizard({prod:q.value});
+
+/* WIZARD */
+(function(){
+  const wiz=document.getElementById('wiz'),steps=[...wiz.querySelectorAll('.wstep')],bars=[...wiz.querySelectorAll('.prog i')];
+  const renderWCats=()=>{document.getElementById('wCats').innerHTML=CATS.map(c=>`<button class="opt${wizState.cat===c.name?' on':''}" data-v="${c.name}">${t(c.name)}</button>`).join('')};
+  renderWCats();addEventListener('langchange',()=>{renderWCats();if(cur===3)goStep(3);['err2','err3'].forEach(id=>{const e=document.getElementById(id);if(e.textContent)e.textContent=t(e.dataset.k)})});
+  const g=id=>document.getElementById(id).value.trim();
+  let cur=0;
+  function goStep(n){cur=n;steps.forEach((s,i)=>s.classList.toggle('on',i===n));bars.forEach((b,i)=>b.classList.toggle('on',i<=Math.min(n,3)));
+    document.getElementById('compF').style.display=wizState.type==='B2C'?'none':'';
+    if(n===3)document.getElementById('sum').innerHTML=`<b>${t(wizState.type==='B2C'?'Privat':'Unternehmen')}</b> · ${esc(t(wizState.cat||'–'))}<br>${esc(g('fProd')||'–')} · ${t(g('fQty'))} · ${t(g('fTime'))}`}
+  wiz.querySelectorAll('.opts').forEach(grp=>grp.addEventListener('click',e=>{const o=e.target.closest('.opt');if(!o)return;
+    grp.querySelectorAll('.opt').forEach(x=>x.classList.toggle('on',x===o));wizState[grp.dataset.key]=o.dataset.v;setTimeout(()=>goStep(cur===0&&wizState.cat?2:cur+1),220)}));
+  wiz.querySelectorAll('.back').forEach(b=>b.addEventListener('click',()=>goStep(Math.max(0,cur-1))));
+  wiz.querySelector('.next').onclick=()=>{const v=g('fProd');const e2=document.getElementById('err2');e2.dataset.k='Bitte geben Sie kurz an, was Sie suchen.';e2.textContent=v?'':t(e2.dataset.k);if(v)goStep(3)};
+  document.getElementById('restart').onclick=()=>{wizState={type:null,cat:null};wiz.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));wiz.querySelectorAll('input,textarea').forEach(i=>i.value='');goStep(0)};
+  document.getElementById('send').onclick=()=>{
+    const n=g('fName'),m=g('fMail');
+    if(!n||!/^\S+@\S+\.\S+$/.test(m)){const e3=document.getElementById('err3');e3.dataset.k='Bitte Name und eine gültige E-Mail angeben.';e3.textContent=t(e3.dataset.k);return}
+    document.getElementById('err3').textContent='';
+    const de=x=>{const k=Object.keys(EN).find(k=>EN[k]===x);return k||x};
+    const body=`Sprache: ${LANG.toUpperCase()}\nKundentyp: ${wizState.type||'-'}\nBereich: ${wizState.cat||'-'}\nProdukt: ${g('fProd')}\nMenge: ${de(g('fQty'))}\nZeitrahmen: ${de(g('fTime'))}\nDetails: ${g('fMsg')||'-'}\n\nName: ${n}\nFirma: ${g('fComp')||'-'}\nE-Mail: ${m}\nTelefon: ${g('fTel')||'-'}`;
+    location.href=`mailto:info@karmira.de?subject=${encodeURIComponent(`Anfrage (${wizState.type||''}) – ${g('fProd')}`)}&body=${encodeURIComponent(body)}`;
+    goStep(4)};
+  window.presetWizard=o=>{
+    if(o.type)wizState.type=o.type;if(o.cat)wizState.cat=o.cat;if(o.prod)document.getElementById('fProd').value=o.prod;
+    wiz.querySelectorAll('.opts').forEach(grp=>grp.querySelectorAll('.opt').forEach(x=>x.classList.toggle('on',x.dataset.v===wizState[grp.dataset.key])));
+    goStep(!wizState.type?0:!wizState.cat?1:2)};
+  document.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>presetWizard({type:b.dataset.type})));
+})();
+applyLang();
+</script>
+</body>
+</html>
