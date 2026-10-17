@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KARMIRA – Global Sourcing direkt aus China</title>
-<meta name="description" content="KARMIRA – über 100.000 Produkte direkt aus China. Beschaffung für Unternehmen (B2B) und Privatkunden (B2C): von Agrargeräten über Küche & Haushalt bis Auto-Zubehör.">
+<title>KARMIRA – Agrar, Garten & Outdoor direkt aus China</title>
+<meta name="description" content="KARMIRA – Landtechnik, Gartengeräte und Outdoor-Möbel direkt vom Hersteller aus China. Für Betriebe, Händler und Privatkunden, mit Lieferung weltweit.">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -280,9 +280,79 @@ footer a:hover{color:var(--gold-l)}
   .motto:before,.motto:after{width:20px}
   .search .btn{display:none}
 }
+/* REDESIGN */
+.benefits{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);background:var(--bg2)}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr)}
+.bi{display:flex;align-items:center;gap:14px;padding:26px 22px;border-left:1px solid var(--line2)}
+.bi:first-child{border-left:0}
+.bi svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.4;flex:none}
+.bi b{display:block;font-weight:600;font-size:.98rem}
+.bi span{font-size:.82rem;color:var(--muted)}
+.sh{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end;margin-bottom:10px}
+.sh h2{margin:0}
+.sh p{color:var(--muted);font-size:1rem;max-width:460px;justify-self:end}
+.sh p a{color:var(--gold-l);border-bottom:1px solid var(--gold)}
+.b2 .split{margin-top:44px}
+.flowsec{background:var(--bg2);border-top:1px solid var(--line2)}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px;position:relative}
+.flow:before{content:"";position:absolute;left:12%;right:12%;top:32px;border-top:1px dashed var(--line)}
+.fs{position:relative;text-align:center;padding:0 10px}
+.fs i{width:64px;height:64px;border-radius:50%;border:1px solid var(--gold);background:var(--bg2);display:grid;place-items:center;margin:0 auto 18px;position:relative}
+.fs i svg{width:26px;height:26px;stroke:var(--gold-l);fill:none;stroke-width:1.4}
+.fs h4{font-weight:600;font-size:1.12rem;margin-bottom:6px}
+.fs p{font-size:.92rem;color:var(--muted);max-width:280px;margin:0 auto}
+.fgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+.fgrid .sh{grid-template-columns:1fr;align-items:start}
+.fgrid .sh p{justify-self:start}
+.faq details{border-bottom:1px solid var(--line2);padding:4px 0}
+.faq details:first-child{border-top:1px solid var(--line2)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;font-weight:600;font-size:1.02rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--gold);font-size:1.4rem;font-weight:300;transition:.25s}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{color:var(--muted);padding:0 0 18px;max-width:620px}
+@media (max-width:1000px){.bgrid{grid-template-columns:1fr 1fr}.bi:nth-child(3){border-left:0}.bi:nth-child(n+3){border-top:1px solid var(--line2)}.sh,.fgrid{grid-template-columns:1fr;gap:16px}.sh p{justify-self:start}}
+@media (max-width:820px){.flow{grid-template-columns:1fr;gap:34px}.flow:before{left:50%;right:auto;top:30px;bottom:30px;border-top:0;border-left:1px dashed var(--line)}.fs{background:var(--bg2);padding:6px 0}}
+@media (max-width:820px){.panel .tag{position:static;display:inline-block;margin-bottom:6px}}
+@media (max-width:520px){.bgrid{grid-template-columns:1fr}.bi{border-left:0!important;border-top:1px solid var(--line2)}.bi:first-child{border-top:0}.bi{padding:16px 6px}}
+/* HUB MAP */
+.hubs{border-top:1px solid var(--line2)}
+.hubgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:30px;margin-top:44px;align-items:stretch}
+.hubmap{position:relative;border:1px solid var(--line2);border-radius:8px;background:radial-gradient(ellipse at 60% 40%,rgba(255,255,255,.035),transparent 70%),var(--bg2);overflow:hidden}
+#hubsvg{display:block;width:100%;height:auto}
+#hubsvg .land{fill:#17171a;stroke:rgba(216,192,138,.45);stroke-width:1;vector-effect:non-scaling-stroke}
+#hubsvg .hub{cursor:pointer}
+#hubsvg .hub circle.d{fill:var(--gold-l)}
+#hubsvg .hub circle.p{fill:none;stroke:var(--gold);vector-effect:non-scaling-stroke;animation:hp 2.4s infinite}
+#hubsvg .hub text{fill:var(--text);font-family:Manrope,sans-serif;font-weight:600;paint-order:stroke;stroke:#0b0b0c;stroke-width:3px;stroke-linejoin:round}
+#hubsvg .hub.on circle.d{fill:#fff}
+@keyframes hp{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(2.4)}}
+#hubsvg .hub circle.p{transform-box:fill-box;transform-origin:center}
+.hubback{position:absolute;top:14px;left:14px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:7px 12px;font-size:.8rem;opacity:0;pointer-events:none;transition:.3s}
+.hubmap.zoomed .hubback{opacity:1;pointer-events:auto}
+.hubchips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;border-top:1px solid var(--line2)}
+.hubchips button{border:1px solid var(--line);border-radius:6px;padding:6px 11px;font-size:.8rem;color:var(--muted);transition:.2s}
+.hubchips button.on{background:#f2f1ee;color:#0b0b0c;border-color:#f2f1ee;font-weight:600}
+.hubcard{border:1px solid var(--line2);border-radius:8px;background:var(--bg2);overflow:hidden;display:flex;flex-direction:column}
+.hubph{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#1d1b17,#0e0e10);overflow:hidden}
+.hubph img{width:100%;height:100%;object-fit:cover;display:block;animation:hz 6s ease-out both}
+@keyframes hz{from{transform:scale(1.12)}to{transform:scale(1)}}
+.hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px 20px;background:repeating-linear-gradient(115deg,transparent 0 18px,rgba(255,255,255,.03) 18px 19px)}
+.hubph .fb b{font-size:2rem;letter-spacing:.06em;line-height:1}
+.hubph .fb span{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--gold-l);margin-top:6px}
+.hubph .cr{position:absolute;right:8px;bottom:6px;font-size:.62rem;color:rgba(255,255,255,.7);background:rgba(0,0,0,.45);padding:2px 6px;border-radius:4px}
+.hubbody{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.hubbody .loc{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.hubbody h3{font-size:1.5rem;font-weight:600;line-height:1.2}
+.hubbody p{color:var(--muted);font-size:.94rem}
+.hubbody .tg{display:flex;flex-wrap:wrap;gap:6px}
+.hubbody .tg span{border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:.78rem}
+.hubbody .btn{align-self:flex-start;margin-top:auto}
+.hubcard.fade .hubph,.hubcard.fade .hubbody{animation:fade .5s}
+@media (max-width:900px){.hubgrid{grid-template-columns:1fr}}
 /* MOBILE FIXES */
 @media (max-width:440px){.opts.small{grid-template-columns:1fr!important}.opts.small .opt{padding:12px 14px!important}}
-.tags b::after{content:"\200B"}
+@media (max-width:820px){.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;max-width:340px;margin-left:auto;margin-right:auto}.tags b{font-size:0;margin:0;width:0;overflow:hidden}}
 @media (max-width:820px){
   .hero{height:auto;min-height:100vh;min-height:100svh}
   .hero-c{position:relative;inset:auto;min-height:100vh;min-height:100svh;justify-content:flex-start;padding:104px 20px 210px}
@@ -302,8 +372,10 @@ footer a:hover{color:var(--gold-l)}
     <a href="#top" class="brand notranslate"><img src="logo-small.jpg" alt="KARMIRA"><span>KARMIRA</span></a>
     <div class="links" id="links">
       <a href="#sortiment">Sortiment</a>
-      <a href="#herkunft">Herkunft</a>
+      <a href="#regionen">Herkunft</a>
       <a href="#loesungen">B2B & B2C</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#faq">FAQ</a>
       <a href="#kontakt">Kontakt</a>
     </div>
     <div class="nav-r">
@@ -319,28 +391,37 @@ footer a:hover{color:var(--gold-l)}
   <canvas id="globe"></canvas>
   <div class="hero-c">
     <img class="hero-logo" src="logo.jpg" alt="KARMIRA Monogramm">
-    <div class="est">GLOBAL SOURCING</div>
+    <div class="est">AGRAR · GARTEN · OUTDOOR</div>
     <h1 class="notranslate">KARMIRA</h1>
     <div class="motto">Direkt aus China</div>
-    <div class="tags">B2B<b>·</b>B2C<b>·</b>100.000+ Produkte<b>·</b>Weltweiter Versand</div>
-    <p class="lead">Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – direkt aus China, geliefert in die ganze Welt.</p>
+    <div class="tags">Landtechnik<b>·</b>Gartengeräte<b>·</b>Outdoor-Möbel<b>·</b>Weltweiter Versand</div>
+    <p class="lead">Kleintraktoren, Bewässerung, Gartengeräte und Outdoor-Möbel – direkt vom Hersteller für Betriebe, Händler und Ihren eigenen Garten.</p>
     <div class="ctas">
       <a href="#kontakt" class="btn btn-solid">Anfrage stellen</a>
-      <a href="#sortiment" class="btn">Sortiment entdecken</a>
+      <a href="#sortiment" class="btn">Sortiment ansehen</a>
     </div>
   </div>
   <div class="gdest"><small>Lieferziel</small><div class="dsearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="hQ" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land suchen …" aria-label="Lieferziel suchen"><ul id="hList" role="listbox"></ul></div><span id="hKm"></span></div>
   <div class="hint"><svg viewBox="0 0 24 24"><path d="M8 13V5a2 2 0 014 0v6m0-1a2 2 0 014 0v2m0-1a2 2 0 014 0v4a6 6 0 01-6 6h-2a6 6 0 01-5-3l-3-5a2 2 0 013-2l1 1"/></svg>Globus drehen</div>
 </header>
 
+<div class="benefits">
+  <div class="wrap bgrid">
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg><div><b>Direkt ab Werk</b><span>Ohne Zwischenhändler</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div><b>Muster & Prüfung</b><span>Vor der Bestellung</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><b>Zoll & Lieferung</b><span>Aus einer Hand</span></div></div>
+    <div class="bi reveal"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><div><b>Beratung auf Deutsch</b><span>Ein fester Ansprechpartner</span></div></div>
+  </div>
+</div>
+
 <section class="sortiment" id="sortiment">
+  <div class="wrap">
+    <div class="sh reveal"><h2>Alles für Hof, Garten <span class="gold">und Terrasse</span></h2><p>Unser Schwerpunkt liegt auf Landtechnik, Gartengeräten und Outdoor-Möbeln. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.</p></div>
+  </div>
   <div class="wrap center">
-    <div class="eyebrow reveal">Unser Sortiment</div>
-    <div class="rule"></div>
-    <h2 class="reveal">Über <span class="gold">100.000</span> Produkte.<br>Finden Sie Ihres.</h2>
     <div class="search reveal">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-      <input id="q" placeholder="z. B. Bewässerung, Kissen, Pfanne, Dachbox …" autocomplete="off">
+      <input id="q" placeholder="z. B. Motorhacke, Lounge-Set, Regner …" autocomplete="off">
       <a href="#kontakt" class="btn btn-solid" id="qBtn">Anfragen</a>
     </div>
     <div class="results" id="results"></div>
@@ -359,79 +440,60 @@ footer a:hover{color:var(--gold-l)}
   </div>
 </div>
 
-<section class="regions" id="herkunft">
-  <div class="wrap grid">
-    <div>
-      <div class="eyebrow reveal">Herkunft</div>
-      <h2 class="reveal" style="margin-top:14px">Wo Ihre Produkte entstehen.</h2>
-      <p class="sub reveal" style="margin-top:12px">Jede Region hat ihre Spezialität. Wir beschaffen dort, wo die Kompetenz zu Hause ist.</p>
-      <div class="rlist" id="rlist"></div>
-    </div>
-    <div class="reveal"><svg id="china" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsregionen in China"></svg></div>
-  </div>
+<section class="hubs" id="regionen">
   <div class="wrap">
-    <div class="kpis reveal"><div><b><span class="count" data-to="100000">0</span>+</b><small>Produkte</small></div><div><b><span class="count" data-to="5">0</span></b><small>Regionen</small></div><div><b>B2B · B2C</b><small>Kunden</small></div><div><b>1</b><small>Ansprechpartner</small></div></div>
-  </div>
-</section>
-
-<section class="assure">
-  <div class="wrap center"><div class="eyebrow reveal">Qualität & Import-Sicherheit</div></div>
-  <div class="wrap three">
-    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h4>Qualitätskontrolle</h4><p>Muster, Prüfung und Abnahme, bevor produziert oder versendet wird.</p></div>
-    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><h4>EU-Konformität</h4><p>Wir achten auf CE-Kennzeichnung, Kennzeichnungspflichten und vollständige Dokumentation.</p></div>
-    <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><h4>Zoll & Logistik</h4><p>Versand, Verzollung und Import aus einer Hand – weltweit, bis an Ihre Tür oder Ihr Lager.</p></div>
-  </div>
-</section>
-
-<section class="story">
-  <div class="wrap grid">
-    <div class="reveal">
-      <div class="eyebrow">Unsere Haltung</div>
-      <h2 style="margin-top:14px">Nähe trotz Distanz.</h2>
-      <p class="big">KARMIRA verbindet Unternehmen und Privatkunden weltweit direkt mit Herstellern in China. Ohne unnötige Zwischenhändler, mit persönlicher Betreuung auf Deutsch – von der ersten Idee bis zur Lieferung.</p>
-    </div>
-    <div class="reveal">
-      <div class="eyebrow" style="margin-bottom:20px">Unsere Prinzipien</div>
-      <div class="princ">
-        <div class="pc"><span class="n">01</span><h4>Herkunft</h4><p>Wir kennen die Regionen und ihre Hersteller.</p></div>
-        <div class="pc"><span class="n">02</span><h4>Qualität</h4><p>Geprüft, bevor es auf die Reise geht.</p></div>
-        <div class="pc"><span class="n">03</span><h4>Transparenz</h4><p>Klare Preise, klare Abläufe, keine Überraschungen.</p></div>
-        <div class="pc"><span class="n">04</span><h4>Partnerschaft</h4><p>Ein fester Ansprechpartner – langfristig.</p></div>
-      </div>
+    <div class="sh reveal"><h2>Direkt aus den Industriezentren <span class="gold">Chinas</span></h2><p>Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.</p></div>
+    <div class="hubgrid">
+      <div class="hubmap reveal"><svg id="hubsvg" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsstandorte in China"><g id="hubg"></g></svg>
+        <button class="hubback" id="hubBack" type="button">← Ganz China</button>
+        <div class="hubchips" id="hubChips"></div></div>
+      <div class="hubcard reveal" id="hubCard"></div>
     </div>
   </div>
 </section>
 
-<section id="loesungen" style="padding-top:40px">
-  <div class="wrap center">
-    <div class="eyebrow reveal">Lösungen</div>
-    <div class="rule"></div>
-    <h2 class="reveal">Für Unternehmen. <span class="gold">Für Sie.</span></h2>
+<section class="b2" id="loesungen">
+  <div class="wrap">
+    <div class="sh reveal"><h2>Für Betriebe <span class="gold">und für Zuhause</span></h2><p>Ob Landwirtschaftsbetrieb, Gartencenter oder der eigene Garten – wir passen Beschaffung und Lieferung an Ihren Bedarf an.</p></div>
   </div>
   <div class="wrap split">
     <div class="panel reveal">
       <span class="tag">B2B</span>
-      <div class="eyebrow">Geschäftskunden</div>
-      <h3>Beschaffung im großen Stil</h3>
-      <p class="sub">Für Händler, Gastronomie, Landwirtschaft und Industrie.</p>
+      <h3>Für Betriebe & Händler</h3>
+      <p class="sub">Landwirtschaft, Gartenbau, Gartencenter, Gastronomie und Handel.</p>
       <ul><li>Großhandelspreise direkt ab Hersteller</li><li>Lieferantensuche & Qualitätsprüfung</li><li>Individuelle Produkte & Private Label</li><li>Logistik, Zoll & Import aus einer Hand</li></ul>
       <a href="#kontakt" class="btn btn-solid" data-type="B2B">B2B-Anfrage</a>
     </div>
     <div class="panel reveal">
       <span class="tag">B2C</span>
-      <div class="eyebrow">Privatkunden</div>
-      <h3>Ausgewählt für Zuhause</h3>
-      <p class="sub">Hochwertige Produkte zu fairen Preisen.</p>
+      <h3>Für Ihren Garten</h3>
+      <p class="sub">Gartengeräte, Outdoor-Möbel und mehr zu fairen Preisen.</p>
       <ul><li>Faire Preise ohne Zwischenhändler</li><li>Geprüfte Qualität</li><li>Persönliche Beratung auf Deutsch</li><li>Lieferung bis an die Haustür</li></ul>
       <a href="#kontakt" class="btn" data-type="B2C">Privat anfragen</a>
     </div>
   </div>
+</section>
+
+<section class="flowsec" id="ablauf">
   <div class="wrap">
-    <div class="steps">
-      <div class="step reveal"><h4>Anfrage</h4><p>Sie sagen uns, was Sie suchen – Produkt, Menge, Wunschpreis.</p></div>
-      <div class="step reveal"><h4>Angebot</h4><p>Wir finden passende Hersteller und senden ein transparentes Angebot.</p></div>
-      <div class="step reveal"><h4>Qualität</h4><p>Muster, Prüfung und Abstimmung vor Produktion und Versand.</p></div>
-      <div class="step reveal"><h4>Lieferung</h4><p>Versand, Zoll und Import – bis zu Ihnen.</p></div>
+    <div class="sh reveal"><h2>So einfach <span class="gold">bestellen Sie</span></h2><p>Von der ersten Nachricht bis zur Lieferung haben Sie einen Ansprechpartner.</p></div>
+    <div class="flow">
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></i><h4>Anfrage senden</h4><p>Produkt, Menge und Lieferziel – über das Formular oder per E-Mail.</p></div>
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></i><h4>Angebot & Muster</h4><p>Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.</p></div>
+      <div class="fs reveal"><i><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></i><h4>Lieferung</h4><p>Wir organisieren Prüfung, Versand und Zoll – bis zu Ihnen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faqsec" id="faq">
+  <div class="wrap fgrid">
+    <div class="sh reveal"><h2>Häufige <span class="gold">Fragen</span></h2><p>Ihre Frage ist nicht dabei? Schreiben Sie uns an <a href="mailto:info@karmira.de">info@karmira.de</a>.</p></div>
+    <div class="faq">
+      <details class="reveal"><summary>Gibt es Mindestbestellmengen?</summary><p>Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.</p></details>
+      <details class="reveal"><summary>Was kostet ein Produkt?</summary><p>Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.</p></details>
+      <details class="reveal"><summary>Kann ich vorher ein Muster bekommen?</summary><p>Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.</p></details>
+      <details class="reveal"><summary>Wie lange dauert die Lieferung?</summary><p>Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.</p></details>
+      <details class="reveal"><summary>Kümmert ihr euch um Zoll und Einfuhr?</summary><p>Ja. Versand, Verzollung und Import organisieren wir aus einer Hand – bis an Ihre Tür oder Ihr Lager.</p></details>
     </div>
   </div>
 </section>
@@ -439,8 +501,7 @@ footer a:hover{color:var(--gold-l)}
 <section class="contact" id="kontakt">
   <div class="wrap grid">
     <div class="cinfo reveal">
-      <div class="eyebrow">Kontakt</div>
-      <h2 style="margin-top:14px">Lassen Sie uns <span class="gold">sprechen.</span></h2>
+      <h2>Jetzt <span class="gold">anfragen</span></h2>
       <p class="sub" style="margin:18px 0 30px">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
       <div class="line"><span>E-Mail</span><a href="mailto:info@karmira.de">info@karmira.de</a></div>
                 </div>
@@ -509,31 +570,25 @@ footer a:hover{color:var(--gold-l)}
 <script>
 const ICONS={
  agrar:'<path d="M3 17h2m14 0h2M5 17a2 2 0 104 0 2 2 0 00-4 0zm10 0a3 3 0 106 0 3 3 0 00-6 0zM9 17h6M7 15V8h6l3 4h3v3"/>',
- kueche:'<path d="M4 10h16v3a6 6 0 01-6 6h-4a6 6 0 01-6-6v-3zM8 6c0-1 1-1 1-2M12 6c0-1 1-1 1-2M16 6c0-1 1-1 1-2"/>',
- wohnen:'<path d="M3 9a3 3 0 013-3h12a3 3 0 013 3v6a3 3 0 01-3 3H6a3 3 0 01-3-3V9zM7 12h10"/>',
- auto:'<path d="M5 16l1.5-5A2 2 0 018.4 9.5h7.2a2 2 0 011.9 1.5L19 16M4 16h16v3H4zM7 19v1M17 19v1"/>',
- werkzeug:'<path d="M14 4l6 6-9 9H5v-6l9-9zM12 6l6 6"/>',
- elektronik:'<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/>',
- freizeit:'<path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/>',
+ wasser:'<path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/><path d="M9 14a3 3 0 003 3"/>',
+ garten:'<path d="M12 21V9M12 9c0-3 2-6 6-6 0 4-3 6-6 6zM12 13c0-3-2-5-6-5 0 4 3 5 6 5z"/><path d="M7 21h10"/>',
+ moebel:'<path d="M5 10h14M6 10l-1 9M18 10l1 9M8 14h8M7 10V6a2 2 0 012-2h6a2 2 0 012 2v4"/>',
+ gewaechs:'<path d="M3 20V10l9-6 9 6v10zM12 4v16M3 14h18"/>',
+ pavillon:'<path d="M3 10L12 4l9 6zM5 10v10M19 10v10M3 20h18"/>',
+ grill:'<path d="M4 10h16a8 8 0 01-16 0zM8 18l-2 3M16 18l2 3M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/>',
  mehr:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'
 };
 const CATS=[
- {id:'agrar',name:'Agrar & Garten',text:'Geräte, Maschinen und Zubehör für Landwirtschaft und Garten.',items:['Bewässerungssysteme','Gartenschlauch','Motorhacke','Rasenmäher','Sprühgerät','Gewächshaus','Pflanzgefäße','Gartenwerkzeug-Set','Tierbedarf','Weidezaun','Saatgutschalen','Schubkarre']},
- {id:'kueche',name:'Küche & Haushalt',text:'Utensilien, Geschirr und clevere Helfer für jeden Haushalt.',items:['Pfanne','Topf-Set','Messerset','Schneidebrett','Küchenhelfer','Aufbewahrungsboxen','Geschirr','Besteck','Gewürzregal','Thermoskanne','Backformen','Reinigungsbedarf']},
- {id:'wohnen',name:'Wohnen & Textil',text:'Kissen, Decken, Deko und alles für ein schönes Zuhause.',items:['Kissen','Kissenbezüge','Decken','Bettwäsche','Handtücher','Vorhänge','Teppiche','Dekoration','Lampen','Bilderrahmen','Vasen','Kerzen']},
- {id:'auto',name:'Auto & Zubehör',text:'Pflege, Ausstattung und Ersatzteile rund ums Fahrzeug.',items:['Fußmatten','Sitzbezüge','Dachbox','Handyhalterung','Autopflege-Set','Dashcam','LED-Beleuchtung','Ersatzteile','Felgen','Kofferraum-Organizer','Starthilfe','Reifenfüller']},
- {id:'werkzeug',name:'Werkzeug & Technik',text:'Handwerkzeug, Elektrowerkzeug und Industriebedarf.',items:['Akkuschrauber','Werkzeugkoffer','Bohrmaschine','Schraubensets','Leitern','Arbeitsschutz','Messgeräte','Schweißgerät','Kompressor','Regalsysteme']},
- {id:'elektronik',name:'Elektronik',text:'Gadgets, Zubehör und Smart-Home-Lösungen.',items:['Ladegeräte','Kabel','Powerbank','Kopfhörer','Lautsprecher','Smart-Home','Überwachungskamera','Solarpanel','LED-Streifen','Smartwatch']},
- {id:'freizeit',name:'Freizeit & Sport',text:'Outdoor, Fitness, Camping und Spiel.',items:['Campingzelt','Fitnessgeräte','Yogamatte','Fahrradzubehör','Rucksäcke','Angelzubehör','Spielzeug','Grill','Kühlbox','Hängematte']},
- {id:'mehr',name:'Und vieles mehr',text:'Über 100.000 Artikel – was Sie hier nicht sehen, finden wir für Sie.',items:['Verpackung','Bürobedarf','Haustierbedarf','Baby & Kind','Beauty-Zubehör','Gastronomiebedarf','Werbeartikel','Private Label']}
+ {id:'agrar',name:'Landtechnik',text:'Kleintraktoren, Bodenbearbeitung, Anhänger und Zubehör für Hof und Feld.',items:['Kleintraktor','Motorhacke','Bodenfräse','Anhänger','Sämaschine','Mulcher','Weidezaun','Tierbedarf','Futtertröge','Ersatzteile']},
+ {id:'wasser',name:'Bewässerung & Pumpen',text:'Tropfbewässerung, Regner, Pumpen und Wassertanks.',items:['Tropfbewässerung','Regner','Gartenschlauch','Tauchpumpe','Solarpumpe','Wassertank','Bewässerungscomputer']},
+ {id:'garten',name:'Gartengeräte',text:'Motor- und Handgeräte für Rasen, Hecke und Beet.',items:['Rasenmäher','Heckenschere','Freischneider','Kettensäge','Laubbläser','Schubkarre','Gartenwerkzeug-Set','Sprühgerät']},
+ {id:'moebel',name:'Outdoor-Möbel',text:'Lounge, Rattan, Tische und Liegen für Terrasse und Garten.',items:['Lounge-Set','Rattan-Möbel','Gartentisch','Gartenstühle','Sonnenliege','Hollywoodschaukel','Auflagen & Kissen','Gartenbank']},
+ {id:'gewaechs',name:'Gewächshaus & Hochbeet',text:'Gewächshäuser, Frühbeete, Hochbeete und Pflanzgefäße.',items:['Gewächshaus','Frühbeet','Hochbeet','Pflanzgefäße','Saatgutschalen','Rankhilfen','Komposter']},
+ {id:'pavillon',name:'Pavillon & Sonnenschutz',text:'Pavillons, Pergolen, Sonnenschirme und Gartenhäuser.',items:['Pavillon','Pergola','Sonnenschirm','Sonnensegel','Markise','Gartenhaus','Geräteschuppen']},
+ {id:'grill',name:'Grill & Outdoor-Küche',text:'Grills, Feuerstellen und alles für draußen.',items:['Grill','Feuerschale','Pizzaofen','Outdoor-Küche','Kühlbox','Solarleuchten','Gartenbeleuchtung']},
+ {id:'mehr',name:'Weitere Bereiche',text:'Auch außerhalb von Garten und Landwirtschaft beschaffen wir für Sie – über 100.000 Produkte.',items:['Haushalt & Küche','Wohnen & Textil','Auto & Zubehör','Werkzeug','Elektronik','Camping & Freizeit','Private Label']}
 ];
-const REGIONS=[
- {loc:'Guangdong · Shenzhen',nm:'Elektronik-Zentrum',ty:'Elektronik · Beleuchtung',det:'Das Perlflussdelta ist die Werkbank der Welt für Elektronik, LED und Haushaltsgeräte.',c:[114.06,22.54],o:[44,26]},
- {loc:'Zhejiang · Yiwu',nm:'Markt der kleinen Waren',ty:'Haushalt · Deko · Kleinwaren',det:'Yiwu beherbergt einen der größten Großhandelsmärkte der Welt für Alltagsprodukte.',c:[120.07,29.31],o:[48,14]},
- {loc:'Jiangsu · Nantong',nm:'Heimtextil-Region',ty:'Kissen · Bettwaren · Textil',det:'Nantong gilt als Zentrum für Heimtextilien – von Kissen bis Bettwäsche.',c:[120.86,32.0],o:[48,-10]},
- {loc:'Shandong · Weifang',nm:'Agrartechnik',ty:'Landmaschinen · Garten',det:'Shandong ist führend bei Landmaschinen, Agrargeräten und Bewässerung.',c:[119.16,36.71],o:[44,-30]},
- {loc:'Chongqing',nm:'Fahrzeug-Cluster',ty:'Auto · Motorrad · Teile',det:'Chongqing ist einer der größten Standorte für Fahrzeug- und Zubehörproduktion.',c:[106.55,29.56],o:[-50,24]}
-];
+
 
 /* WORLDWIDE DESTINATIONS */
 const ORIGIN=[114.06,22.54],RAIL_ORIGIN=[106.55,29.56];
@@ -663,7 +718,34 @@ document.getElementById('y').textContent=new Date().getFullYear();
 const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
 /* ---------- I18N ---------- */
 const EN={
-'Sortiment':'Products','Stadt oder Land suchen …':'Search city or country …','Lieferziel suchen':'Search destination','Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search','Weltweiter Versand':'Worldwide shipping','Weltweit':'Worldwide','Versand':'Shipping','Lieferziel':'Destination','Entfernung':'Distance','Nur Europa & Zentralasien':'Europe & Central Asia only','Ziel auf der Karte anklicken':'Click a destination on the map','Luftlinie':'as the crow flies','Weltweite Lieferung':'Worldwide delivery','Aus China in die ganze Welt.':'From China to the world.','Direkt aus China – geliefert, wohin Sie wollen.':'Direct from China – delivered wherever you are.','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
+'Sortiment':'Products','Herkunft':'Origin','Direkt aus den Industriezentren':'Straight from the industrial hubs of','Chinas':'China','Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see what is made there.','← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production locations in China',
+'Produkte aus dieser Region anfragen':'Request products from this region','6 Produktionsstandorte':'6 production hubs','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location','Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
+'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden equipment','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
+'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.':'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment manufacturers are based around Weifang.',
+'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.':'Changzhou is known for walking tractors, tillers and small engines for farming and gardening.',
+'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.':'Anji is a centre of chair and furniture production and known for bamboo products.',
+'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.':'Ningbo has one of the world’s largest ports and many manufacturers of garden tools, irrigation and household goods.',
+'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.':'Yongkang is known as China’s hardware capital – with many makers of tools, garden equipment and metal goods.',
+'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.':'Foshan, especially the Shunde district, is one of the world’s largest furniture hubs – including garden and outdoor furniture.',
+'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Einachsschlepper':'Walking tractors','Motorhacken':'Tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Export':'Export','Metallwaren':'Metal goods','Lounge':'Lounge','Gartentische':'Garden tables',
+'AGRAR · GARTEN · OUTDOOR':'FARM · GARDEN · OUTDOOR','Landtechnik':'Farm machinery','Gartengeräte':'Garden tools','Outdoor-Möbel':'Outdoor furniture','Weltweiter Versand':'Worldwide shipping',
+'Kleintraktoren, Bewässerung, Gartengeräte und Outdoor-Möbel – direkt vom Hersteller für Betriebe, Händler und Ihren eigenen Garten.':'Compact tractors, irrigation, garden tools and outdoor furniture – direct from the manufacturer for farms, retailers and your own garden.',
+'Sortiment ansehen':'View products','Direkt ab Werk':'Factory direct','Ohne Zwischenhändler':'No middlemen','Muster & Prüfung':'Samples & inspection','Vor der Bestellung':'Before you order','Zoll & Lieferung':'Customs & delivery','Aus einer Hand':'All from one source','Beratung auf Deutsch':'Personal advice','Ein fester Ansprechpartner':'One dedicated contact',
+'Alles für Hof, Garten':'Everything for farm, garden','und Terrasse':'and terrace','Unser Schwerpunkt liegt auf Landtechnik, Gartengeräten und Outdoor-Möbeln. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.':'Our focus is farm machinery, garden tools and outdoor furniture. Beyond that we can source almost any product from China – just ask.',
+'z. B. Motorhacke, Lounge-Set, Regner …':'e.g. tiller, lounge set, sprinkler …',
+'Für Betriebe':'For businesses','und für Zuhause':'and for your home','Ob Landwirtschaftsbetrieb, Gartencenter oder der eigene Garten – wir passen Beschaffung und Lieferung an Ihren Bedarf an.':'Whether a farm, a garden centre or your own garden – we tailor sourcing and delivery to your needs.',
+'Für Betriebe & Händler':'For businesses & retailers','Landwirtschaft, Gartenbau, Gartencenter, Gastronomie und Handel.':'Agriculture, horticulture, garden centres, hospitality and retail.','Für Ihren Garten':'For your garden','Gartengeräte, Outdoor-Möbel und mehr zu fairen Preisen.':'Garden tools, outdoor furniture and more at fair prices.',
+'So einfach':'Ordering','bestellen Sie':'made simple','Von der ersten Nachricht bis zur Lieferung haben Sie einen Ansprechpartner.':'One contact from your first message to delivery.','Anfrage senden':'Send inquiry','Produkt, Menge und Lieferziel – über das Formular oder per E-Mail.':'Product, quantity and destination – via the form or by email.','Angebot & Muster':'Quote & samples','Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.':'You receive a quote from suitable manufacturers, with samples on request.','Lieferung':'Delivery','Wir organisieren Prüfung, Versand und Zoll – bis zu Ihnen.':'We handle inspection, shipping and customs – all the way to you.',
+'Häufige':'Frequently asked','Fragen':'questions','Ihre Frage ist nicht dabei? Schreiben Sie uns an':'Question not listed? Write to us at',
+'Gibt es Mindestbestellmengen?':'Is there a minimum order quantity?','Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.':'It depends on the product and manufacturer. We state the minimum quantity directly in our quote.',
+'Was kostet ein Produkt?':'What does a product cost?','Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.':'The price depends on quantity, specification and shipping. After your inquiry you receive an individual quote.',
+'Kann ich vorher ein Muster bekommen?':'Can I get a sample first?','Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.':'Yes, on request we arrange a sample before you order so you can check quality and finish.',
+'Wie lange dauert die Lieferung?':'How long does delivery take?','Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.':'It depends on destination and shipping method. The destination search at the top of the page gives a first estimate; the exact time is in the quote.',
+'Kümmert ihr euch um Zoll und Einfuhr?':'Do you handle customs and import?','Ja. Versand, Verzollung und Import organisieren wir aus einer Hand – bis an Ihre Tür oder Ihr Lager.':'Yes. We handle shipping, customs clearance and import from one source – to your door or warehouse.',
+'Ablauf':'Process','FAQ':'FAQ','Jetzt':'Send an','anfragen':'inquiry','KARMIRA – Agrar, Garten & Outdoor direkt aus China':'KARMIRA – Farm, garden & outdoor direct from China',
+'Kleintraktoren, Bodenbearbeitung, Anhänger und Zubehör für Hof und Feld.':'Compact tractors, tillage, trailers and accessories for farm and field.','Bewässerung & Pumpen':'Irrigation & pumps','Tropfbewässerung, Regner, Pumpen und Wassertanks.':'Drip irrigation, sprinklers, pumps and water tanks.','Motor- und Handgeräte für Rasen, Hecke und Beet.':'Powered and hand tools for lawn, hedge and bed.','Lounge, Rattan, Tische und Liegen für Terrasse und Garten.':'Lounge, rattan, tables and loungers for terrace and garden.','Gewächshaus & Hochbeet':'Greenhouse & raised beds','Gewächshäuser, Frühbeete, Hochbeete und Pflanzgefäße.':'Greenhouses, cold frames, raised beds and planters.','Pavillon & Sonnenschutz':'Gazebos & shade','Pavillons, Pergolen, Sonnenschirme und Gartenhäuser.':'Gazebos, pergolas, parasols and garden sheds.','Grill & Outdoor-Küche':'Grill & outdoor kitchen','Grills, Feuerstellen und alles für draußen.':'Grills, fire pits and everything for outdoors.','Weitere Bereiche':'Other areas','Auch außerhalb von Garten und Landwirtschaft beschaffen wir für Sie – über 100.000 Produkte.':'Beyond garden and agriculture we source for you too – over 100,000 products.',
+'Kleintraktor':'Compact tractor','Bodenfräse':'Rotary tiller','Anhänger':'Trailer','Sämaschine':'Seeder','Mulcher':'Mulcher','Futtertröge':'Feed troughs','Tropfbewässerung':'Drip irrigation','Regner':'Sprinkler','Tauchpumpe':'Submersible pump','Solarpumpe':'Solar pump','Wassertank':'Water tank','Bewässerungscomputer':'Irrigation timer','Heckenschere':'Hedge trimmer','Freischneider':'Brush cutter','Kettensäge':'Chainsaw','Laubbläser':'Leaf blower','Lounge-Set':'Lounge set','Rattan-Möbel':'Rattan furniture','Gartentisch':'Garden table','Gartenstühle':'Garden chairs','Sonnenliege':'Sun lounger','Hollywoodschaukel':'Swing seat','Auflagen & Kissen':'Cushions & pads','Gartenbank':'Garden bench','Frühbeet':'Cold frame','Hochbeet':'Raised bed','Rankhilfen':'Trellises','Komposter':'Composter','Pavillon':'Gazebo','Pergola':'Pergola','Sonnenschirm':'Parasol','Sonnensegel':'Shade sail','Markise':'Awning','Gartenhaus':'Garden shed','Geräteschuppen':'Tool shed','Feuerschale':'Fire pit','Pizzaofen':'Pizza oven','Outdoor-Küche':'Outdoor kitchen','Solarleuchten':'Solar lights','Gartenbeleuchtung':'Garden lighting','Haushalt & Küche':'Household & kitchen','Wohnen & Textil':'Home & textiles','Auto & Zubehör':'Auto & accessories','Werkzeug':'Tools','Elektronik':'Electronics','Camping & Freizeit':'Camping & leisure',
+'Stadt oder Land suchen …':'Search city or country …','Lieferziel suchen':'Search destination','Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search','Weltweiter Versand':'Worldwide shipping','Weltweit':'Worldwide','Versand':'Shipping','Lieferziel':'Destination','Entfernung':'Distance','Nur Europa & Zentralasien':'Europe & Central Asia only','Ziel auf der Karte anklicken':'Click a destination on the map','Luftlinie':'as the crow flies','Weltweite Lieferung':'Worldwide delivery','Aus China in die ganze Welt.':'From China to the world.','Direkt aus China – geliefert, wohin Sie wollen.':'Direct from China – delivered wherever you are.','100.000':'100,000','100.000+':'100,000+','Herkunft':'Origin','Kontakt':'Contact','Anfrage stellen':'Send inquiry','Direkt aus China':'Direct from China',
 '100.000+ Produkte':'100,000+ products','Von Agrargeräten über Küche & Haushalt bis Auto-Zubehör – direkt aus China, geliefert in die ganze Welt.':'From farm equipment to kitchenware and car accessories – direct from China, delivered worldwide.',
 'Sortiment entdecken':'Explore products','Globus drehen':'Drag to rotate','Unser Sortiment':'Our range','Über':'Over','Produkte.':'products.','Finden Sie Ihres.':'Find yours.','Anfragen':'Inquire',
 'Agrar & Garten':'Farm & Garden','Geräte, Maschinen und Zubehör für Landwirtschaft und Garten.':'Tools, machinery and accessories for farming and gardening.','Beispiele ansehen':'See examples',
@@ -754,7 +836,7 @@ function applyLang(){
     document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(e=>['placeholder','aria-label','alt'].forEach(a=>{const v=e.getAttribute(a);if(v&&EN[v]!==undefined)I18N_NODES.push([e,v,v,a])}));
     I18N_NODES.title=document.title}
   I18N_NODES.forEach(([n,orig,tr,attr])=>{const v=LANG==='en'?orig.replace(tr,EN[tr]):orig;attr?n.setAttribute(attr,v):n.nodeValue=v});
-  document.title=LANG==='en'?I18N_NODES.title.replace('KARMIRA – Global Sourcing direkt aus China',EN['KARMIRA – Global Sourcing direkt aus China']):I18N_NODES.title;
+  document.title=LANG==='en'?I18N_NODES.title.replace('KARMIRA – Agrar, Garten & Outdoor direkt aus China',EN['KARMIRA – Agrar, Garten & Outdoor direkt aus China']):I18N_NODES.title;
   document.documentElement.lang=LANG;
   document.getElementById('lcur').textContent=UI_LANG.split('-')[0].toUpperCase();renderLangs();
   dispatchEvent(new Event('langchange'));
@@ -792,7 +874,6 @@ function topoFeatures(topo,name){
   return topo.objects[name].geometries.map(g=>({type:'Feature',id:String(g.id),properties:g.properties||{},geometry:geom(g)})).filter(f=>f.geometry);
 }
 const WORLD_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
-const CHINA_URL='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json';
 
 /* GLOBE */
 (function(){
@@ -921,31 +1002,53 @@ q.addEventListener('input',()=>{
 res.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;presetWizard({prod:c.dataset.p,cat:c.dataset.c});location.hash='kontakt'});
 document.getElementById('qBtn').onclick=()=>presetWizard({prod:q.value});
 
-/* CHINA MAP */
+
+/* HUB MAP */
+const HUBS=[
+ {id:'weifang',city:'Weifang',o:[10,4],prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
+ {id:'changzhou',city:'Changzhou',o:[-10,-2,1],prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
+ {id:'anji',city:'Anji',o:[-10,10,1],prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
+ {id:'ningbo',city:'Ningbo',o:[10,0],prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
+ {id:'yongkang',city:'Yongkang',o:[10,10],prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
+ {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
+];
+/* Fotos: Datei regions/<id>.jpg ablegen und hier Bildnachweis eintragen */
+const HUB_PHOTO={};
 (function(){
-  const svg=d3.select('#china'),list=document.getElementById('rlist');
-  let items=[],dots=null,cur=0;
-  function set(i){cur=i;items.forEach((el,k)=>el.classList.toggle('on',k===i));if(dots)dots.classed('on',(d,k)=>k===i)}
-  function renderList(){list.innerHTML=REGIONS.map((r,i)=>`<div class="ritem"><span class="n">0${i+1}</span><div><div class="loc">${t(r.loc)}</div><div class="nm">${t(r.nm)}</div><div class="ty">${t(r.ty)}</div></div><span class="ar">↗</span><div class="det">${t(r.det)}</div></div>`).join('');
-    items=[...list.children];items.forEach((el,i)=>{el.addEventListener('mouseenter',()=>set(i));el.addEventListener('click',()=>set(i))});set(cur)}
-  renderList();addEventListener('langchange',renderList);
-  let auto=setInterval(()=>set((cur+1)%REGIONS.length),3500);
-  list.addEventListener('mouseenter',()=>clearInterval(auto),{once:true});
-  document.getElementById('china').addEventListener('mouseenter',()=>clearInterval(auto),{once:true});
-  fetch(CHINA_URL).then(r=>r.json()).then(t=>{
-    const cn=topoFeatures(t,'countries').find(f=>f.id==='156');if(!cn)return;
-    const p=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
-    svg.append('path').attr('class','land').attr('d',d3.geoPath(p)(cn));
-    dots=svg.selectAll('g.r').data(REGIONS).join('g').attr('class','r').attr('transform',d=>`translate(${p(d.c)})`);
-    dots.append('line').attr('class','lead').attr('x2',d=>d.o[0]*.75).attr('y2',d=>d.o[1]*.75);
-    dots.append('text').attr('class','lbl').attr('x',d=>d.o[0]+(d.o[0]<0?-4:4)).attr('y',d=>d.o[1]+5).attr('text-anchor',d=>d.o[0]<0?'end':'start').text((d,i)=>'0'+(i+1));
-    dots.append('circle').attr('class','pulse').attr('r',6);
-    dots.append('circle').attr('class','dot').attr('r',5);
-    dots.on('mouseenter click',(e,d)=>set(REGIONS.indexOf(d)));
-    set(cur);
+  const svg=d3.select('#hubsvg'),g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
+  if(!g.node())return;
+  let proj=null,cur=-1,K=1;
+  const fmt=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
+  function renderCard(i){const h=HUBS[i];const ph=HUB_PHOTO[h.id];
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${t(h.city)}" loading="lazy"><span class="cr">${ph.credit}</span>`:`<img src="regions/${h.id}.jpg" alt="${t(h.city)}" onerror="this.remove()"><div class="fb"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmt(h.c)}</span></div>`}</div>
+      <div class="hubbody"><div class="loc">${h.prov} · ${t(h.focus)}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${t(h.txt)}</p><div class="tg">${h.tags.map(x=>`<span>${t(x)}</span>`).join('')}</div>
+      <a href="#kontakt" class="btn btn-solid" id="hubCta">${t('Produkte aus dieser Region anfragen')}</a></div>`;
+    card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade');
+    document.getElementById('hubCta').onclick=()=>presetWizard({prod:t(h.focus)+' – '+h.city})}
+  function renderIntro(){card.innerHTML=`<div class="hubph"><div class="fb"><b>CHINA</b><span>${t('6 Produktionsstandorte')}</span></div></div><div class="hubbody"><div class="loc">${t('Produktionsregionen')}</div><h3>${t('Wählen Sie einen Standort')}</h3><p>${t('Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.')}</p></div>`}
+  function renderChips(){chips.innerHTML=HUBS.map((h,i)=>`<button type="button" class="${i===cur?'on':''}" data-i="${i}">${h.city}</button>`).join('')}
+  function zoomTo(i){cur=i;renderChips();g.selectAll('.hub').classed('on',(d,k)=>k===i);
+    if(!proj)return;
+    let tr;if(i<0){K=1;tr=d3.zoomIdentity;map.classList.remove('zoomed');renderIntro()}
+    else{const [x,y]=proj(HUBS[i].c);K=4.2;tr=d3.zoomIdentity.translate(300-x*K,250-y*K).scale(K);map.classList.add('zoomed');renderCard(i);if(innerWidth<900)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),1150)}
+    g.transition().duration(1100).ease(d3.easeCubicInOut).attr('transform',tr.toString());
+    g.selectAll('.hub circle.d').transition().duration(1100).attr('r',d=>(HUBS.indexOf(d)===i?6:4.5)/K);
+    g.selectAll('.hub circle.p').transition().duration(1100).attr('r',8/K);
+    g.selectAll('.hub text').transition().duration(1100).attr('font-size',13/K).attr('x',d=>d.o[0]/K).attr('y',d=>d.o[1]/K)}
+  chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)zoomTo(+b.dataset.i===cur?-1:+b.dataset.i)});
+  document.getElementById('hubBack').onclick=()=>zoomTo(-1);
+  renderChips();renderIntro();
+  addEventListener('langchange',()=>cur<0?renderIntro():renderCard(cur));
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then(r=>r.json()).then(tp=>{
+    const cn=topoFeatures(tp,'countries').find(f=>f.id==='156');if(!cn)return;
+    proj=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
+    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
+    const hub=g.selectAll('g.hub').data(HUBS).join('g').attr('class','hub').attr('transform',d=>`translate(${proj(d.c)})`).on('click',(e,d)=>{const i=HUBS.indexOf(d);zoomTo(i===cur?-1:i)});
+    hub.append('circle').attr('class','p').attr('r',8);
+    hub.append('circle').attr('class','d').attr('r',4.5);
+    hub.append('text').attr('x',d=>d.o[0]).attr('y',d=>d.o[1]).attr('text-anchor',d=>d.o[2]?'end':'start').attr('font-size',13).text(d=>d.city);
   }).catch(()=>{});
 })();
-
 /* WIZARD */
 (function(){
   const wiz=document.getElementById('wiz'),steps=[...wiz.querySelectorAll('.wstep')],bars=[...wiz.querySelectorAll('.prog i')];
