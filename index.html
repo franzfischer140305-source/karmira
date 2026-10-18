@@ -389,6 +389,10 @@ footer a:hover{color:var(--gold-l)}
 @media (max-width:820px){.hcr{right:16px;bottom:auto;top:78px}}
 nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:color-mix(in srgb,var(--bg) 95%,transparent)}
 .gdest{backdrop-filter:none;background:rgba(12,15,10,.92)}
+.links a,.nav-cta,#lbtn{white-space:nowrap}
+.links{gap:clamp(14px,1.9vw,32px)}
+@media (max-width:1240px) and (min-width:821px){.links{font-size:.82rem}.nav-r{gap:10px}}
+@media (max-width:1120px){.links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);font-size:.95rem}.links.open{display:flex}.links a{padding:16px 24px;border-top:1px solid var(--line2)}.menu-btn{display:grid}}
 /* MOBILE FIXES */
 @media (max-width:440px){.opts.small{grid-template-columns:1fr!important}.opts.small .opt{padding:12px 14px!important}}
 @media (max-width:820px){.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;max-width:340px;margin-left:auto;margin-right:auto}.tags b{font-size:0;margin:0;width:0;overflow:hidden}}
@@ -415,7 +419,7 @@ nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:color-mix(in sr
       <a href="#regionen">Herkunft</a>
       <a href="#loesungen">B2B & B2C</a>
       <a href="#ablauf">Ablauf</a>
-      <a href="#faq">FAQ</a>
+      <a href="#faq" class="notranslate" translate="no">FAQ</a>
       <a href="#kontakt">Kontakt</a>
     </div>
     <div class="nav-r">
@@ -469,7 +473,7 @@ nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:color-mix(in sr
 
 <section class="sortiment" id="sortiment">
   <div class="wrap">
-    <div class="sh reveal"><h2>Das ganze <span class="gold">Sortiment</span></h2><p>Unser Schwerpunkt liegt auf Landtechnik, Bewässerung und Anbau – ergänzt durch Gartengeräte und Outdoor-Möbel. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.</p></div>
+    <div class="sh reveal"><h2>Unser <span class="gold">Sortiment</span></h2><p>Unser Schwerpunkt liegt auf Landtechnik, Bewässerung und Anbau – ergänzt durch Gartengeräte und Outdoor-Möbel. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.</p></div>
   </div>
   <div class="wrap center">
     <div class="search reveal">
@@ -771,6 +775,7 @@ document.getElementById('y').textContent=new Date().getFullYear();
 const _cc={};let _ct=0;const css=v=>{const n=performance.now();if(n-_ct>1500){for(const k in _cc)delete _cc[k];_ct=n}return _cc[v]??(_cc[v]=getComputedStyle(root).getPropertyValue(v).trim())};
 /* ---------- I18N ---------- */
 const EN={
+'Sprache wählen':'Choose language','KARMIRA – Landtechnik & Agrarbedarf direkt aus China':'KARMIRA – Farm machinery & agricultural supplies direct from China','LANDTECHNIK · AGRARBEDARF · GARTEN':'FARM MACHINERY · AGRICULTURAL SUPPLIES · GARDEN','Für Feld, Hof und Garten':'For field, farm and garden','Bewässerung':'Irrigation','Gewächshäuser':'Greenhouses','Landwirtschaft':'Agriculture','Unser':'Our','Kleintraktoren, Anbaugeräte, Bewässerung und Gewächshäuser – direkt vom Hersteller für landwirtschaftliche Betriebe und Händler. Dazu Gartengeräte und Outdoor-Möbel für Zuhause.':'Compact tractors, implements, irrigation and greenhouses – direct from the manufacturer for farms and dealers. Plus garden tools and outdoor furniture for your home.','Gebaut für':'Built for','Feld und Hof':'field and farm','Landwirtschaft ist unser Schwerpunkt: robuste Technik, effiziente Bewässerung und Anbau unter Folie – zu Preisen direkt ab Werk.':'Agriculture is our focus: robust machinery, efficient irrigation and protected cultivation – at factory-direct prices.','01 · Landtechnik':'01 · Farm machinery','Traktoren & Anbaugeräte':'Tractors & implements','Kleintraktoren, Fräsen, Mulcher, Anhänger und Zubehör':'Compact tractors, tillers, mulchers, trailers and accessories','Mehr ansehen':'See more','02 · Bewässerung':'02 · Irrigation','Regner, Tropfschlauch & Pumpen':'Sprinklers, drip lines & pumps','03 · Anbau & Garten':'03 · Growing & garden','Gewächshäuser, Hochbeete & Outdoor':'Greenhouses, raised beds & outdoor','Kompakttraktor mit Frontlader auf einem Hof':'Compact tractor with front loader on a farm','Regner bewässern ein Gemüsefeld':'Sprinklers irrigating a vegetable field','Folientunnel mit Hochbeeten und Terrasse':'Polytunnel with raised beds and terrace','Unser Schwerpunkt liegt auf Landtechnik, Bewässerung und Anbau – ergänzt durch Gartengeräte und Outdoor-Möbel. Darüber hinaus beschaffen wir fast jedes Produkt aus China – fragen Sie einfach an.':'Our focus is farm machinery, irrigation and cultivation – complemented by garden tools and outdoor furniture. Beyond that, we source almost any product from China – just ask.','Für Landwirtschaft & Handel':'For agriculture & trade','Landwirtschaftliche Betriebe, Gartenbau, Lohnunternehmen, Landhandel und Gartencenter.':'Farms, horticulture, agricultural contractors, farm supply dealers and garden centres.','Für Hobbylandwirte & Garten':'For hobby farmers & gardens','Kleintraktoren, Gewächshäuser, Gartengeräte und Outdoor-Möbel zu fairen Preisen.':'Compact tractors, greenhouses, garden tools and outdoor furniture at fair prices.','KI-Symbolbild: Industriegebiet Anji':'AI illustration: Anji industrial area',
 'Sortiment':'Products','Herkunft':'Origin','Direkt aus den Industriezentren':'Straight from the industrial hubs of','Chinas':'China','Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see what is made there.','← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production locations in China',
 'Produkte aus dieser Region anfragen':'Request products from this region','6 Produktionsstandorte':'6 production hubs','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location','Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
 'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden equipment','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
@@ -889,7 +894,7 @@ function applyLang(){
     document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(e=>['placeholder','aria-label','alt'].forEach(a=>{const v=e.getAttribute(a);if(v&&EN[v]!==undefined)I18N_NODES.push([e,v,v,a])}));
     I18N_NODES.title=document.title}
   I18N_NODES.forEach(([n,orig,tr,attr])=>{const v=LANG==='en'?orig.replace(tr,EN[tr]):orig;attr?n.setAttribute(attr,v):n.nodeValue=v});
-  document.title=LANG==='en'?I18N_NODES.title.replace('KARMIRA – Agrar, Garten & Outdoor direkt aus China',EN['KARMIRA – Agrar, Garten & Outdoor direkt aus China']):I18N_NODES.title;
+  document.title=LANG==='en'?I18N_NODES.title.replace('KARMIRA – Landtechnik & Agrarbedarf direkt aus China',EN['KARMIRA – Landtechnik & Agrarbedarf direkt aus China']):I18N_NODES.title;
   document.documentElement.lang=LANG;
   document.getElementById('lcur').textContent=UI_LANG.split('-')[0].toUpperCase();renderLangs();
   dispatchEvent(new Event('langchange'));
@@ -1075,7 +1080,7 @@ const HUB_PHOTO={"weifang": {"src": "https://upload.wikimedia.org/wikipedia/comm
   let proj=null,cur=-1,K=1;
   const fmt=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
   function renderCard(i){const h=HUBS[i];const ph=HUB_PHOTO[h.id];
-    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${t(h.city)}" loading="lazy">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${ph.credit}</a>`:`<span class="cr">${ph.credit}</span>`}`:`<img src="regions/${h.id}.jpg" alt="${t(h.city)}" onerror="this.remove()"><div class="fb"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmt(h.c)}</span></div>`}</div>
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${t(h.city)}" loading="lazy">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${ph.credit}</a>`:`<span class="cr">${t(ph.credit)}</span>`}`:`<img src="regions/${h.id}.jpg" alt="${t(h.city)}" onerror="this.remove()"><div class="fb"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmt(h.c)}</span></div>`}</div>
       <div class="hubbody"><div class="loc">${h.prov} · ${t(h.focus)}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${t(h.txt)}</p><div class="tg">${h.tags.map(x=>`<span>${t(x)}</span>`).join('')}</div>
       <a href="#kontakt" class="btn btn-solid" id="hubCta">${t('Produkte aus dieser Region anfragen')}</a></div>`;
     card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade');
