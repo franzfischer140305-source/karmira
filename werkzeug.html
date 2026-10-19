@@ -115,11 +115,11 @@ html.lock,html.lock body{overflow:hidden}
   </div>
  </div>
  <aside class="cfg-r" id="sum">
-  <div class="sum-h" id="sumH"><b>Ihr Set</b><span id="cnt"></span><strong id="tot1">–</strong><i class="chev">⌃</i></div>
+  <div class="sum-h" id="sumH"><b>Ihr Set</b><span id="cnt"></span><strong id="tot1" class="notranslate" translate="no">–</strong><i class="chev">⌃</i></div>
   <div class="sum-b">
    <ul id="sel"></ul>
    <div class="sline" id="sBat"></div><div class="sline" id="sCase"></div>
-   <div class="tot"><span>Richtpreis</span><strong id="tot">–</strong></div>
+   <div class="tot"><span>Richtpreis</span><strong id="tot" class="notranslate" translate="no">–</strong></div>
    <p class="note">inkl. MwSt., zzgl. Versand. Endgültiger Preis im Angebot.</p>
    <button class="btn gold full" id="ask" type="button">Set anfragen</button>
   </div>
@@ -163,8 +163,8 @@ function renderTpl(){$('#tplSize').innerHTML=SIZES.map(([k,n])=>`<button type="b
 function render(){
  $('#slots').innerHTML=st.slots.map((id,k)=>{const t=T[id];return `<div class="sl"><button type="button" class="dl" data-del="${k}" aria-label="Entfernen">×</button><div class="im" data-z="${img(id)}"><img src="${img(id)}" alt="${t.name}"></div><small class="notranslate" translate="no">TNYAN ${id}</small><b>${t.name}</b><div class="sp">${t.spec}</div><div class="bt"><button type="button" class="sw" data-swap="${k}">Tauschen</button></div></div>`}).join('')+`<button type="button" class="sl add" data-addslot="1"><span>+</span>Gerät hinzufügen</button>`;
  const need=st.slots.some(i=>T[i].cap>0);
- $('#bats').innerHTML=BATS.map(b=>`<button type="button" data-bat="${b.id}" class="${b.id===st.bat?'on':''}"><i></i><span>${b.t}<em>${b.d}</em></span><strong>${b.rmb?fmt(eur(b.rmb)):''}</strong></button>`).join('');$('#bats').style.opacity=need?1:.45;
- $('#cases').innerHTML=CASES.map(c=>`<button type="button" data-case="${c.id}" class="${c.id===st.cs?'on':''}"><i></i><span>${c.t}${c.d?`<em>${c.d}</em>`:''}</span><strong>${c.rmb?'+ '+fmt(eur(c.rmb)):''}</strong></button>`).join('');
+ $('#bats').innerHTML=BATS.map(b=>`<button type="button" data-bat="${b.id}" class="${b.id===st.bat?'on':''}"><i></i><span>${b.t}<em>${b.d}</em></span><strong class="notranslate" translate="no">${b.rmb?fmt(eur(b.rmb)):''}</strong></button>`).join('');$('#bats').style.opacity=need?1:.45;
+ $('#cases').innerHTML=CASES.map(c=>`<button type="button" data-case="${c.id}" class="${c.id===st.cs?'on':''}"><i></i><span>${c.t}${c.d?`<em>${c.d}</em>`:''}</span><strong class="notranslate" translate="no">${c.rmb?'+ '+fmt(eur(c.rmb)):''}</strong></button>`).join('');
  $('#sel').innerHTML=st.slots.length?st.slots.map(i=>`<li><img src="${img(i)}" alt=""><span>${T[i].name} <small class="notranslate" translate="no" style="color:var(--muted)">${i}</small></span></li>`).join(''):'<li style="color:var(--muted)">Noch keine Geräte – fügen Sie eines hinzu.</li>';
  const B=BATS.find(b=>b.id===st.bat),C=CASES.find(c=>c.id===st.cs);
  $('#sBat').textContent='Akkus: '+(need?B.t:'nicht nötig');$('#sCase').textContent='Koffer: '+C.t;
@@ -174,7 +174,7 @@ function lock(on){document.documentElement.classList.toggle('lock',on)}
 function openPick(mode){pickMode=mode;$('#pickT').textContent=mode.add?'Gerät hinzufügen':'Gerät tauschen: '+T[st.slots[mode.k]].name;renderPick();$('#pick').classList.add('open');lock(true);$('#pgrid').scrollTop=0}
 function renderPick(){$('#tabs').innerHTML=GROUPS.map(([k,n])=>`<button type="button" data-g="${k}" class="${k===grp?'on':''}">${n}</button>`).join('');
  const cur=pickMode&&!pickMode.add?st.slots[pickMode.k]:null;
- $('#pgrid').innerHTML=TOOLS.filter(t=>grp==='all'||t.g===grp).map(t=>{let pr;if(cur){const d=eur(t.bare)-eur(T[cur].bare);pr=t.id===cur?'aktuell':(d>0?'+ ':d<0?'− ':'± ')+fmt(Math.abs(d))}else pr='+ '+fmt(eur(t.bare));return `<button type="button" class="pi ${t.id===cur?'cur':''}" data-pick="${t.id}"><div class="im"><img src="${img(t.id)}" alt="" loading="lazy"></div><small class="notranslate" translate="no">${t.id}</small><b>${t.name}</b><em>${t.spec}</em><strong>${pr}</strong></button>`}).join('')}
+ $('#pgrid').innerHTML=TOOLS.filter(t=>grp==='all'||t.g===grp).map(t=>{let pr;if(cur){const d=eur(t.bare)-eur(T[cur].bare);pr=t.id===cur?'✓':(d>0?'+ ':d<0?'− ':'± ')+fmt(Math.abs(d))}else pr='+ '+fmt(eur(t.bare));return `<button type="button" class="pi ${t.id===cur?'cur':''}" data-pick="${t.id}"><div class="im"><img src="${img(t.id)}" alt="" loading="lazy"></div><small class="notranslate" translate="no">${t.id}</small><b>${t.name}</b><em>${t.spec}</em><strong class="notranslate" translate="no">${pr}</strong></button>`}).join('')}
 function close(id){$('#'+id).classList.remove('open');if(!document.querySelector('.modal.open'))lock(false)}
 document.addEventListener('click',e=>{const t=e.target;let b;
  if(t.classList&&t.classList.contains('modal')){close(t.id);return}
