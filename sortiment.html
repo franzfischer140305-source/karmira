@@ -77,6 +77,8 @@ html.lock,html.lock body{overflow:hidden}
 
 .dk{background:#000!important}
 
+button,.pc,.kt{touch-action:manipulation}
+
 </style>
 </head>
 <body>
@@ -103,9 +105,14 @@ html.lock,html.lock body{overflow:hidden}
 <aside class="ml" id="ml"><div class="ml-h" id="mlh"><b>Merkliste</b><span id="mlc">0</span><i>⌃</i></div><div class="ml-b"><ul id="mll"></ul><p class="note">Preise und Mindestmengen erhalten Sie mit dem Angebot.</p><button type="button" class="btn gold full" id="mlask">Merkliste anfragen</button><button type="button" class="btn full" id="mlclr">Leeren</button></div></aside>
 <div class="modal" id="mod"><div class="dbox"><button type="button" class="mx" data-close="1" aria-label="Schließen">×</button><div id="dc"></div></div></div>
 <footer><div class="wrap"><div class="notranslate">© <span id="yy"></span> KARMIRA · karmira.de</div><div><div class="li"><a href="impressum.html">Impressum</a></div><div class="li"><a href="datenschutz.html">Datenschutz</a></div></div></div></footer>
-<script>document.getElementById('yy').textContent=new Date().getFullYear()</script>
 <script src="products.js"></script>
+<script>document.getElementById('yy').textContent=new Date().getFullYear()</script>
 <script>
+/* Tippen vs. Scrollen unterscheiden (Handy) */
+let _tx=0,_ty=0,_tt=0,_moved=false;
+document.addEventListener('touchstart',e=>{const t=e.touches[0];_tx=t.clientX;_ty=t.clientY;_tt=Date.now();_moved=false},{passive:true,capture:true});
+document.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-_tx)>8||Math.abs(t.clientY-_ty)>8)_moved=true},{passive:true,capture:true});
+document.addEventListener('click',e=>{if(_moved&&Date.now()-_tt<1500){e.stopImmediatePropagation();e.preventDefault();_moved=false}},true);
 const RMB_PRO_EUR=8.2,AUFSCHLAG=2.5;
 const eur=r=>r<=0?0:Math.max(9,Math.ceil(r/RMB_PRO_EUR*AUFSCHLAG/10)*10-1);
 const P=window.KP,C=window.KC,$=s=>document.querySelector(s);

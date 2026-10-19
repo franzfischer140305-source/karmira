@@ -132,6 +132,11 @@ html.lock,html.lock body{overflow:hidden}
 <footer><div class="wrap"><div class="notranslate">© <span id="yy"></span> KARMIRA · karmira.de</div><div><div class="li"><a href="impressum.html">Impressum</a></div><div class="li"><a href="datenschutz.html">Datenschutz</a></div></div></div></footer>
 <script>document.getElementById('yy').textContent=new Date().getFullYear()</script>
 <script>
+/* Tippen vs. Scrollen unterscheiden (Handy) */
+let _tx=0,_ty=0,_tt=0,_moved=false;
+document.addEventListener('touchstart',e=>{const t=e.touches[0];_tx=t.clientX;_ty=t.clientY;_tt=Date.now();_moved=false},{passive:true,capture:true});
+document.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-_tx)>8||Math.abs(t.clientY-_ty)>8)_moved=true},{passive:true,capture:true});
+document.addEventListener('click',e=>{if(_moved&&Date.now()-_tt<1500){e.stopImmediatePropagation();e.preventDefault();_moved=false}},true);
 /* ===== Preis-Einstellungen: hier anpassen ===== */
 const RMB_PRO_EUR=8.2;   // Wechselkurs: 1 € = 8,2 RMB
 const AUFSCHLAG=2.5;     // Faktor auf den Einkaufspreis
