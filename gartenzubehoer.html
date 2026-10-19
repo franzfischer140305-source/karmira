@@ -24,7 +24,7 @@ if(['ar','fa','he','iw','ur','ps','sd','ug','yi','ckb','dv'].indexOf(l)>=0)docum
 body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
-#gt_el,.goog-te-banner-frame,.skiptranslate iframe{display:none!important}body{top:0!important}
+#gt_el,.goog-te-banner-frame,.skiptranslate iframe,iframe.skiptranslate,#goog-gt-tt,.goog-te-balloon-frame,.goog-tooltip,[class^="VIpgJd-"][class*="-ORHb"],.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,.VIpgJd-ZVi9od-aZ2wEe-OiiCO,.VIpgJd-yAWNEb-L7lbkb{display:none!important}body{top:0!important;position:static!important}.goog-text-highlight,font[style]{background:none!important;box-shadow:none!important}
 nav{position:sticky;top:0;z-index:60;background:rgba(9,11,8,.96);border-bottom:1px solid var(--line2)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
 .brand{display:flex;align-items:center;gap:12px}.brand img{width:36px;height:36px;border-radius:50%;object-fit:cover;mix-blend-mode:screen}.brand span{font-size:1rem;letter-spacing:.22em;font-weight:600}
@@ -67,6 +67,8 @@ footer{border-top:1px solid var(--line2);padding:30px 0;color:var(--muted);font-
 @media(max-width:820px){.gh{grid-template-columns:1fr}.gh figure{order:-1}}
 @media(max-width:560px){.pg{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pc b{font-size:.84rem}.ml{left:12px;right:12px;bottom:12px;width:auto}}
 
+html.lock,html.lock body{overflow:hidden}.mx{padding:0 6px}
+
 </style>
 </head>
 <body>
@@ -85,7 +87,7 @@ footer{border-top:1px solid var(--line2);padding:30px 0;color:var(--muted);font-
 <div class="wrap"><div class="gsearch"><input id="gq" placeholder="Suchen, z. B. Jute, Clips, Gießkanne …" autocomplete="off"><span id="gcount"></span></div></div>
 <main id="gmain"></main>
 <aside class="ml" id="ml"><div class="ml-h" id="mlh"><b>Merkliste</b><span id="mlc">0</span><i>⌃</i></div><div class="ml-b"><ul id="mll"></ul><p class="note">Preise und Mindestmengen erhalten Sie mit dem Angebot.</p><button class="btn gold full" id="mlask">Merkliste anfragen</button><button class="btn full" id="mlclr">Leeren</button></div></aside>
-<div class="modal" id="mod"><div class="mbox"><button class="mx" id="mx" aria-label="Schließen">×</button><div id="mc"></div></div></div>
+<div class="modal" id="mod"><div class="mbox"><button type="button" class="mx" id="mx" aria-label="Schließen">×</button><div id="mc"></div></div></div>
 <footer><div class="wrap"><div class="notranslate">© <span id="yy"></span> KARMIRA · karmira.de</div><div><div class="li"><a href="impressum.html">Impressum</a></div><div class="li"><a href="datenschutz.html">Datenschutz</a></div></div></div></footer>
 <script>document.getElementById('yy').textContent=new Date().getFullYear()</script>
 <script>
@@ -114,16 +116,16 @@ function mark(c){const el=document.querySelector(`.pc[data-c="${c}"]`);if(ML[c])
 document.addEventListener('click',e=>{const t=e.target;let b;
  if(b=t.closest('[data-sw]')){const im=b.closest('.pc').querySelector('.im');im.classList.toggle('alt',b.dataset.sw==='u');b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));return}
  if(b=t.closest('.pc .add')){mark(b.closest('.pc').dataset.c);return}
- if(b=t.closest('[data-z]')){const z=b.classList.contains('alt')?b.querySelector('img.u').getAttribute('src'):b.dataset.z;$('#mc').innerHTML=`<img src="${z}" alt="">`;$('#mod').classList.add('open');return}
+ if(t.id==='mod'||t.closest('#mx')){$('#mod').classList.remove('open');document.documentElement.classList.remove('lock');return}
+ if(b=t.closest('[data-z]')){const z=b.classList.contains('alt')?b.querySelector('img.u').getAttribute('src'):b.dataset.z;$('#mc').innerHTML=`<img src="${z}" alt="">`;$('#mod').classList.add('open');document.documentElement.classList.add('lock');return}
  if(b=t.closest('[data-rm]')){mark(b.dataset.rm);return}
- if(t.id==='mx'||t.id==='mod'){$('#mod').classList.remove('open');return}
  if(t.closest('#mlh')){$('#ml').classList.toggle('open');return}
  if(t.id==='mlclr'){Object.keys(ML).forEach(c=>mark(c));return}
  if(t.id==='mlask'){const ks=Object.keys(ML);location.href='mailto:info@karmira.de?subject='+encodeURIComponent('Anfrage Gartenzubehör ('+ks.length+' Artikel)')+'&body='+encodeURIComponent(['Hallo KARMIRA-Team,','','bitte senden Sie mir ein Angebot für folgende Artikel:',...ks.map(c=>{const p=P.find(x=>x.c===c);return '- '+ML[c]+' × '+p.n+' ('+c.replace(/-.*$/,'')+')'}),'','Privat oder gewerblich: ','Lieferadresse (PLZ/Ort): ','','Viele Grüße'].join('\n'));return}
 });
 document.addEventListener('input',e=>{if(e.target.dataset.q){ML[e.target.dataset.q]=Math.max(1,parseInt(e.target.value)||1);try{localStorage.setItem('k-yc',JSON.stringify(ML))}catch(x){}}
  if(e.target.id==='gq'){const q=e.target.value.trim().toLowerCase();let n=0;document.querySelectorAll('.pc').forEach(p=>{const ok=!q||q.split(/\s+/).every(w=>p.dataset.s.includes(w));p.classList.toggle('hide',!ok);if(ok)n++});document.querySelectorAll('.grp').forEach(g=>g.classList.toggle('hide',!g.querySelector('.pc:not(.hide)')));$('#gcount').textContent=q?n+' Treffer':''}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#mod').classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#mod').classList.remove('open');document.documentElement.classList.remove('lock')}});
 $('#gcount').textContent=P.length+' Artikel';renderML();
 
 </script>
