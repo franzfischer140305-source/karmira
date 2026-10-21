@@ -69,7 +69,7 @@ img{max-width:100%;display:block}
 .hero-sub{margin:22px auto 0;max-width:580px;font-size:clamp(16px,1.9vw,18.5px);color:var(--muted);text-shadow:0 1px 20px rgba(0,0,0,.9)}
 .hero-actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-.route{position:absolute;left:max(24px,env(safe-area-inset-left,0px));bottom:28px;width:min(330px,calc(100% - 48px));padding:16px 18px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);backdrop-filter:blur(14px);text-align:left}
+.route{position:absolute;left:max(24px,env(safe-area-inset-left,0px));top:calc(100svh - 112px);transform:translateY(-100%);width:min(330px,calc(100% - 48px));padding:16px 18px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);backdrop-filter:blur(14px);text-align:left}
 .route label{display:block;font:500 11px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
 .dsearch{position:relative;margin-top:8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line-strong)}
 .dsearch:focus-within{border-color:var(--gold)}
@@ -101,7 +101,7 @@ img{max-width:100%;display:block}
 #llist li.auto{border-top:1px solid var(--line);border-radius:0 0 9px 9px;margin-top:4px;color:var(--muted);font-size:13px}
 body.translated-ltr,body.translated-rtl{top:0!important}
 .goog-te-banner-frame,.skiptranslate iframe,#goog-gt-tt{display:none!important}
-.gpill{position:absolute;right:max(24px,env(safe-area-inset-right,0px));bottom:28px;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--muted);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px)}
+.gpill{position:absolute;right:max(24px,env(safe-area-inset-right,0px));top:calc(100svh - 112px);transform:translateY(-100%);display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--muted);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px)}
 .gpill:hover,.gpill[aria-pressed="true"]{color:var(--gold-l);border-color:var(--gold-edge)}
 .gpill svg{width:14px;height:14px}
 
@@ -169,6 +169,43 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 .footer-cols a:hover{color:var(--ink)}
 .copyright{margin:56px 0 0;padding-bottom:32px;text-align:center;font-size:13px;color:var(--muted-2)}
 
+/* HERKUNFT: China-Karte mit Produktionsstandorten */
+.hubgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,3vw,32px);align-items:stretch}
+.hubmap{position:relative;min-width:0;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubmap svg{display:block;width:100%;height:auto}
+.hubmap .land{fill:rgba(38,46,29,.95);stroke:rgba(235,211,155,.45);stroke-width:.8;vector-effect:non-scaling-stroke}
+.hubmap .hub{cursor:pointer}
+.hubmap .hub circle.p{fill:rgba(207,169,90,.18);stroke:rgba(235,211,155,.5);stroke-width:1;vector-effect:non-scaling-stroke}
+.hubmap .hub circle.d{fill:var(--gold-l)}
+.hubmap .hub text{fill:var(--cream);font-family:var(--f-mono);font-weight:500;paint-order:stroke;stroke:rgba(9,11,8,.85);stroke-width:3px;stroke-linejoin:round}
+.hubmap .hub:hover circle.p,.hubmap .hub.on circle.p{fill:rgba(207,169,90,.4)}
+.hubmap .hub.on text{fill:var(--gold-l)}
+@media (prefers-reduced-motion:no-preference){.hubmap .hub circle.p{animation:hubping 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes hubping{0%{opacity:1}70%{opacity:.25}100%{opacity:1}}
+.hubback{position:absolute;top:14px;left:14px;height:34px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+.hubmap.zoomed .hubback{opacity:1;pointer-events:auto}
+.hubchips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 16px}
+.hubchips button{height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font:600 13px var(--f-body);cursor:pointer}
+.hubchips button:hover{color:var(--ink);border-color:var(--line-strong)}
+.hubchips button.on{color:#17130b;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));border-color:transparent}
+.hubcard{min-width:0;display:flex;flex-direction:column;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubcard.fade{animation:hubfade .5s ease}
+@keyframes hubfade{from{opacity:.3;transform:translateY(8px)}}
+.hubph{position:relative;isolation:isolate;aspect-ratio:16/9;max-width:100%;background:radial-gradient(120% 120% at 30% 20%,rgba(207,169,90,.18),transparent 60%),var(--bg-2);overflow:hidden}
+.hubph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9)}
+.hubph .cr{position:absolute;right:8px;bottom:6px;padding:2px 8px;border-radius:6px;background:rgba(9,11,8,.7);font-size:10.5px;color:var(--muted)}
+.hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hubph .fb b{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:.2em;color:var(--gold-l)}
+.hubph .fb span{font:500 12px var(--f-mono);letter-spacing:.14em;color:var(--muted)}
+.hubbody{padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1}
+.hubbody .loc{font:500 11.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hubbody h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px}
+.hubbody p{margin:0;color:var(--muted);font-size:15.5px}
+.hubbody .tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.hubbody .tg span{padding:5px 11px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.hubbody .btn{margin-top:auto;align-self:flex-start}
+@media (max-width:900px){.hubgrid{grid-template-columns:1fr}}
+
 /* Reveal: Inhalt ist immer sichtbar, er gleitet nur leicht nach oben */
 .js [data-reveal]{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s;transition-delay:var(--rd,0ms)}
 .js [data-reveal]:not(.in){transform:translateY(22px);opacity:.55}
@@ -187,8 +224,8 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
   .feature-grid{grid-template-columns:1fr}
   .hero-inner{padding-block:24px 210px}
   .hero-actions .btn{flex:1}
-  .route{left:18px;right:18px;width:auto;bottom:74px}
-  .gpill{right:auto;left:18px;bottom:22px}
+  .route{left:18px;right:18px;width:auto;top:calc(100svh - 150px)}
+  .gpill{right:auto;left:18px;top:calc(100svh - 96px)}
   .dash-labels{font-size:10px}
   .footer{flex-direction:column}
 }
@@ -213,6 +250,7 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
         <a href="#vorteile">Garten &amp; Hof</a>
         <a href="werkzeug.html">Akku-Konfigurator</a>
         <a href="sortiment.html">Sortiment</a>
+        <a href="#herkunft">Herkunft</a>
         <a href="#ablauf">Ablauf</a>
         <a href="#vorteile">B2B &amp; B2C</a>
         <a href="#kontakt">Kontakt</a>
@@ -301,6 +339,22 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
         <div class="stat" data-reveal style="--rd:80ms"><div class="stat-value">6</div><div class="stat-label">Produktionsstandorte in China</div></div>
         <div class="stat" data-reveal style="--rd:160ms"><div class="stat-value">7–11</div><div class="stat-label">Tage Lieferzeit</div></div>
         <div class="stat" data-reveal style="--rd:240ms"><div class="stat-value">24 h</div><div class="stat-label">Antwort auf Ihre Anfrage</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="herkunft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Herkunft</p>
+        <h2 data-reveal style="--rd:80ms">Direkt aus den Industriezentren Chinas</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.</p>
+      </div>
+      <div class="hubgrid">
+        <div class="hubmap" data-reveal><svg id="hubsvg" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsstandorte in China"><g id="hubg"></g></svg>
+          <button class="hubback" id="hubBack" type="button">← Ganz China</button>
+          <div class="hubchips" id="hubChips"></div></div>
+        <div class="hubcard" id="hubCard" data-reveal style="--rd:120ms"></div>
       </div>
     </div>
   </section>
@@ -702,6 +756,80 @@ function frame(t){
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
+
+/* ================= Herkunft: China-Karte ================= */
+Object.assign(EN,{
+'Herkunft':'Origin','Direkt aus den Industriezentren Chinas':'Straight from China’s industrial centres',
+'Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see which products are made there.',
+'← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production sites in China',
+'6 Produktionsstandorte':'6 production sites','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location',
+'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
+'Produkte aus dieser Region anfragen':'Enquire about products from this region',
+'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden tools','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
+'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Anhänger':'Trailers','Einachsschlepper':'Two-wheel tractors','Motorhacken':'Power tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Gartengeräte':'Garden tools','Export':'Export','Werkzeug':'Tools','Metallwaren':'Metal goods','Lounge':'Lounge','Gartentische':'Garden tables',
+'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.':'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment makers are based around Weifang.',
+'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.':'Changzhou is known for two-wheel tractors, power tillers and small engines for farming and gardening.',
+'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.':'Anji is a centre of chair and furniture production and known for bamboo products.',
+'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.':'Ningbo has one of the world’s largest ports and many makers of garden tools, irrigation and household goods.',
+'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.':'Yongkang is considered China’s hardware capital, with many makers of tools, garden tools and metal goods.',
+'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.':'Foshan, especially the Shunde district, is one of the world’s largest furniture centres, including garden and outdoor furniture.',
+'KI-Symbolbild: Industriegebiet Anji':'AI illustration: Anji industrial area'
+});
+const HUBD=[
+ {id:'weifang',city:'Weifang',o:[10,4],prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
+ {id:'changzhou',city:'Changzhou',o:[-10,-2,1],prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
+ {id:'anji',city:'Anji',o:[-10,10,1],prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
+ {id:'ningbo',city:'Ningbo',o:[10,0],prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
+ {id:'yongkang',city:'Yongkang',o:[10,10],prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
+ {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
+];
+const HUB_PHOTO={
+ weifang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg',page:'https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg',credit:'Foto: Ngguls · CC BY-SA 4.0 · Wikimedia Commons'},
+ changzhou:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg',page:'https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg',credit:'Foto: A Chinese user · CC BY-SA 4.0 · Wikimedia Commons'},
+ anji:{src:'hub-anji.jpg',credit:'KI-Symbolbild: Industriegebiet Anji'},
+ ningbo:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg',page:'https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg',credit:'Foto: Nbfreeh · CC BY-SA 4.0 · Wikimedia Commons'},
+ yongkang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',page:'https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',credit:'Foto: Tyj1982338 · CC BY 2.0 · Wikimedia Commons'},
+ foshan:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',page:'https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',credit:'Foto: Lau Hau Yatyue Tiger · CC0 · Wikimedia Commons'}
+};
+(function(){
+  const g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
+  if(!g.node())return;
+  let proj=null,cur=-1,K=1;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const fmtC=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
+  function renderCard(i){const h=HUBD[i],ph=HUB_PHOTO[h.id];
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${esc(h.city)}" loading="lazy" onerror="this.remove()">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${esc(ph.credit)}</a>`:`<span class="cr">${esc(t(ph.credit))}</span>`}`:''}<div class="fb" style="z-index:-1"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmtC(h.c)}</span></div></div>
+      <div class="hubbody"><div class="loc">${h.prov} · ${esc(t(h.focus))}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${esc(t(h.txt))}</p><div class="tg">${h.tags.map(x=>`<span>${esc(t(x))}</span>`).join('')}</div>
+      <a href="index-alt.html#kontakt" class="btn btn-primary">${esc(t('Produkte aus dieser Region anfragen'))} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>`;
+    card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade')}
+  function renderIntro(){card.innerHTML=`<div class="hubph"><div class="fb"><b>CHINA</b><span>${esc(t('6 Produktionsstandorte'))}</span></div></div><div class="hubbody"><div class="loc">${esc(t('Produktionsregionen'))}</div><h3>${esc(t('Wählen Sie einen Standort'))}</h3><p>${esc(t('Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.'))}</p></div>`}
+  function renderChips(){chips.innerHTML=HUBD.map((h,i)=>`<button type="button" class="${i===cur?'on':''}" data-i="${i}">${h.city}</button>`).join('')}
+  function zoomTo(i){cur=i;renderChips();g.selectAll('.hub').classed('on',(d,k)=>k===i);
+    if(!proj){i<0?renderIntro():renderCard(i);return}
+    let tr;if(i<0){K=1;tr=d3.zoomIdentity;map.classList.remove('zoomed');renderIntro()}
+    else{const [x,y]=proj(HUBD[i].c);K=4.2;tr=d3.zoomIdentity.translate(300-x*K,250-y*K).scale(K);map.classList.add('zoomed');renderCard(i);if(innerWidth<900)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),1150)}
+    const dur=reduce?0:1100;
+    g.transition().duration(dur).ease(d3.easeCubicInOut).attr('transform',tr.toString());
+    g.selectAll('.hub circle.d').transition().duration(dur).attr('r',d=>(HUBD.indexOf(d)===i?6:4.5)/K);
+    g.selectAll('.hub circle.p').transition().duration(dur).attr('r',9/K);
+    g.selectAll('.hub text').transition().duration(dur).attr('font-size',13/K).attr('x',d=>d.o[0]/K).attr('y',d=>d.o[1]/K)}
+  chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)zoomTo(+b.dataset.i===cur?-1:+b.dataset.i)});
+  document.getElementById('hubBack').onclick=()=>zoomTo(-1);
+  renderChips();renderIntro();
+  addEventListener('langchange',()=>cur<0?renderIntro():renderCard(cur));
+  function draw(cn){
+    proj=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
+    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
+    const hub=g.selectAll('g.hub').data(HUBD).join('g').attr('class','hub').attr('transform',d=>`translate(${proj(d.c)})`).on('click',(e,d)=>{const i=HUBD.indexOf(d);zoomTo(i===cur?-1:i)});
+    hub.append('circle').attr('class','p').attr('r',9);
+    hub.append('circle').attr('class','d').attr('r',4.5);
+    hub.append('text').attr('x',d=>d.o[0]).attr('y',d=>d.o[1]).attr('text-anchor',d=>d.o[2]?'end':'start').attr('font-size',13).text(d=>d.city);
+  }
+  function fallback(){try{const tp=Datamap.prototype.worldTopo,key=Object.keys(tp.objects)[0];const f=topojson.feature(tp,tp.objects[key]).features.find(f=>f.id==='CHN');if(f)draw(f)}catch(e){}}
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then(r=>r.json()).then(tp=>{
+    const f=topojson.feature(tp,tp.objects.countries).features.find(f=>f.id==='156');f?draw(f):fallback()}).catch(fallback);
+})();
+
 applyLang();
 </script>
 
