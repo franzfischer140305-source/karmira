@@ -3,505 +3,499 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" href="favicon.png">
 <title>KARMIRA – Garten, Outdoor &amp; Landtechnik direkt aus China</title>
-<meta name="description" content="Gartengeräte, Gewächshäuser, Outdoor-Möbel und Landtechnik direkt vom Hersteller aus China. Für Privatkunden und Betriebe, mit Beratung auf Deutsch.">
+<meta name="description" content="Gartengeräte, Akku-Werkzeug, Gartenzubehör und Landtechnik direkt vom Hersteller aus sechs chinesischen Industriestädten. Für Privatkunden und Betriebe, mit Beratung auf Deutsch.">
+<link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wdth,wght@75..150,300..900&display=swap" rel="stylesheet">
 <style>
 @view-transition{navigation:auto}
-/* Layout: ein fester Karmira-Globus hinter der ganzen Seite, der beim Scrollen absinkt und
-   seitlich schwingt; darüber Glas-Karten in Gold auf Feld-Schwarz (Aufbau nach "Ascend"). */
+/* Richtung: Das Objekt, groß. Die Route aus der Werkstadt bis zum Kunden ist das Objekt. Markenfarben: Schwarz und Gold. */
 :root{
   color-scheme:dark;
-  --bg:#090b08; --bg-2:#0e110c;
-  --ink:#f3f1ea; --muted:#a3a593; --muted-2:#76786a;
-  --gold:#cfa95a; --gold-l:#ebd39b; --gold-d:#9a7838; --cream:#f1e6cc; --green:#93b062;
-  --line:rgba(236,226,196,.12); --line-strong:rgba(236,226,196,.22);
-  --glass:rgba(13,16,11,.58); --glass-2:rgba(16,20,13,.74);
-  --gold-wash:rgba(207,169,90,.10); --gold-edge:rgba(207,169,90,.22);
-  --shadow:0 30px 80px -30px rgba(0,0,0,.75);
-  --f-display:"Marcellus","Cormorant Garamond",Georgia,serif;
-  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --radius:18px; --radius-lg:26px; --maxw:1180px;
+  --bg:#0c0e0b;          /* Grund */
+  --surface:#171a15;     /* eine Stufe heller */
+  --surface-2:#20241d;
+  --ink:#ecebe5;         /* Schrift */
+  --muted:#b3b4aa;       /* Nebenschrift, 4.5:1 oder mehr */
+  --accent:#cfa95a;      /* Gold, nur für die Handlung */
+  --accent-ink:#17130a;
+  --stone:#e3e4e0;       /* helles Feld für Produkte */
+  --stone-2:#d4d6d0;
+  --ink-dark:#15170f;
+  --muted-dark:#4c4e44;
+  --field:#1d2a20;       /* tiefes Grün */
+  --f:"TikTok Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --step-small:clamp(.9375rem,.9rem + .1vw,1rem);
+  --step-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);
+  --step-lead:clamp(1.25rem,1.1rem + .7vw,1.625rem);
+  --step-head:clamp(2rem,1.3rem + 3.2vw,4rem);
+  --m:clamp(20px,3.6vw,56px);
+  --ease:cubic-bezier(.2,.7,.2,1);
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-:focus-visible{outline:2px solid var(--gold-l);outline-offset:3px;border-radius:8px}
-
-#globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:auto;cursor:grab}
-@media (hover:none),(pointer:coarse){#globe{cursor:default}}
-#globe.drag{cursor:grabbing}
-.page{position:relative;z-index:1;pointer-events:none}
-.page a,.page button,.page select,.page .card,.page .dashboard,.page .stat,.page .cta-card,.page .footer,.page .route,.page .gpill{pointer-events:auto}
-.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
-
-/* NAV */
-.nav-band{position:relative;z-index:3;pointer-events:auto;background:linear-gradient(180deg,rgba(9,11,8,.9),rgba(9,11,8,0))}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:20px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:20px;letter-spacing:.24em}
-.brand img{width:34px;height:34px}
-.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
-.nav-links a:hover{color:var(--ink)}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font:600 15px var(--f-body);border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
-.btn svg{width:16px;height:16px;transition:transform .2s}
-.btn:hover svg{transform:translateX(3px)}
-.btn-primary{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
-.btn-primary:hover{transform:translateY(-1px)}
-.btn-ghost{background:rgba(9,11,8,.35);border-color:var(--line-strong);color:var(--ink);backdrop-filter:blur(10px)}
-.btn-ghost:hover{border-color:var(--gold-edge);background:var(--gold-wash)}
-.btn-sm{height:40px;padding:0 18px;font-size:14px}
-
-/* HERO */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
-  background:radial-gradient(125% 62% at 50% -10%,rgba(9,11,8,.85) 0%,rgba(9,11,8,.3) 44%,transparent 68%)}
-.hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-block:40px 150px}
-.hero-logo{width:clamp(76px,9vw,104px);height:auto;filter:drop-shadow(0 6px 26px rgba(0,0,0,.6))}
-.eyebrow{font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-.hero .eyebrow{margin-top:18px}
-.hero-title{margin:18px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(40px,6.4vw,82px);line-height:1.02;letter-spacing:-.01em;max-width:13ch;text-wrap:balance;text-shadow:0 2px 50px rgba(0,0,0,.7)}
-.hero-title em{font-style:normal;background:linear-gradient(180deg,var(--gold-l),var(--gold-d));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-sub{margin:22px auto 0;max-width:580px;font-size:clamp(16px,1.9vw,18.5px);color:var(--muted);text-shadow:0 1px 20px rgba(0,0,0,.9)}
-.hero-actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-.route{position:absolute;left:max(24px,env(safe-area-inset-left,0px));top:calc(100svh - 112px);transform:translateY(-100%);width:min(330px,calc(100% - 48px));padding:16px 18px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);backdrop-filter:blur(14px);text-align:left}
-.route label{display:block;font:500 11px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
-.dsearch{position:relative;margin-top:8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line-strong)}
-.dsearch:focus-within{border-color:var(--gold)}
-.dsearch>svg{width:15px;height:15px;color:var(--gold);flex:none}
-.dsearch input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--ink);font:600 15px var(--f-body);padding:6px 0 8px}
-.dsearch input::placeholder{color:var(--muted-2);font-weight:500}
-#dlist,#llist{position:absolute;margin:0;padding:6px;list-style:none;max-height:300px;overflow-y:auto;background:rgba(14,17,12,.97);border:1px solid var(--line-strong);border-radius:14px;box-shadow:var(--shadow);display:none;z-index:20;backdrop-filter:blur(16px)}
-#dlist{left:-8px;right:-8px;bottom:calc(100% + 10px)}
-#dlist.open,#llist.open{display:block}
-#dlist li,#llist li{padding:8px 10px;border-radius:9px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
-#dlist li span{font-size:12px;color:var(--muted);white-space:nowrap}
-#dlist li[data-i]:hover,#dlist li.act,#llist li[data-l]:hover{background:var(--gold-wash)}
-#dlist li.hd,#llist li.hd{cursor:default;font:500 10.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);padding:10px 10px 4px}
-#dlist li.empty,#dlist li.ft{cursor:default;color:var(--muted-2);font-size:12px}
-.route-meta{margin-top:10px;font:500 12.5px var(--f-mono);color:var(--gold-l);font-variant-numeric:tabular-nums}
-
-.nav-right{display:flex;align-items:center;gap:10px}
-.lsel{position:relative}
-.lbtn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:rgba(9,11,8,.35);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer}
-.lbtn:hover{border-color:var(--gold-edge)}
-.lbtn svg{width:15px;height:15px;color:var(--gold)}
-.lbtn .chev{width:12px;height:12px;color:var(--muted)}
-#llist{right:0;top:calc(100% + 8px);width:250px;max-height:380px}
-#llist li small{font:500 11px var(--f-mono);color:var(--muted-2);text-transform:uppercase}
-#llist li.on{color:var(--gold-l)}
-#llist li.ls{padding:4px;cursor:default}
-#llist li.ls input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:9px;color:var(--ink);font:500 13.5px var(--f-body);padding:8px 10px;outline:0}
-#llist li.ls input:focus{border-color:var(--gold-edge)}
-#llist li.auto{border-top:1px solid var(--line);border-radius:0 0 9px 9px;margin-top:4px;color:var(--muted);font-size:13px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:var(--step-body);line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:var(--accent);color:var(--accent-ink)}
+.wrap{padding-left:max(var(--m),env(safe-area-inset-left,0px));padding-right:max(var(--m),env(safe-area-inset-right,0px))}
+.display{font-weight:800;font-stretch:150%;text-transform:uppercase;letter-spacing:-.01em;line-height:1}
+h1,h2,h3{font-weight:700;letter-spacing:-.015em;line-height:1.05;text-wrap:balance}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 24px;border:0;border-radius:0;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:var(--step-body);text-decoration:none;cursor:pointer;transition:transform .2s var(--ease),background .2s}
+.btn:hover{background:#dcb96b}
+.btn:active{transform:scale(.97)}
+.btn svg{width:18px;height:18px;transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.link{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;transition:color .2s}
+.link:hover{color:var(--accent)}
+#gt_el,.goog-te-banner-frame,.skiptranslate iframe,#goog-gt-tt{display:none!important}
 body.translated-ltr,body.translated-rtl{top:0!important}
-.goog-te-banner-frame,.skiptranslate iframe,#goog-gt-tt{display:none!important}
-.gpill{position:absolute;right:max(24px,env(safe-area-inset-right,0px));top:calc(100svh - 112px);transform:translateY(-100%);display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--muted);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px)}
-.gpill:hover,.gpill[aria-pressed="true"]{color:var(--gold-l);border-color:var(--gold-edge)}
-.gpill svg{width:14px;height:14px}
 
-.trust{padding-block:0 clamp(40px,6vw,70px);text-align:center}
-.trust-label{font:500 11.5px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
-.trust-row{margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px clamp(22px,4vw,48px);font-family:var(--f-display);font-size:18px;color:var(--muted)}
+/* ---------- Leiste ---------- */
+.bar{position:sticky;top:0;z-index:50;background:var(--bg);transition:background .3s}
+.bar-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-stretch:150%;letter-spacing:.04em;font-size:var(--step-small)}
+.mark img{width:36px;height:36px}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a,.nav button{display:inline-flex;align-items:center;height:40px;padding:0 14px;background:none;border:0;cursor:pointer;color:var(--ink);text-decoration:none;font-size:var(--step-small);font-weight:500;transition:color .2s}
+.nav a:hover,.nav button:hover,.nav button[aria-expanded="true"]{color:var(--accent)}
+.nav button svg{width:12px;height:12px;margin-left:6px;transition:transform .3s}
+.nav button[aria-expanded="true"] svg{transform:rotate(180deg)}
+.bar-r{display:flex;align-items:center;gap:8px}
+.bar .btn{height:42px;padding:0 18px;font-size:var(--step-small);gap:0}
+.lsel{position:relative}
+.lbtn{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 12px;background:var(--surface);border:0;cursor:pointer;font-size:var(--step-small);font-weight:600}
+.lbtn:hover{background:var(--surface-2)}
+.lbtn svg{width:16px;height:16px}
+#llist{position:absolute;right:0;top:calc(100% + 8px);width:260px;max-height:380px;overflow:auto;list-style:none;padding:6px;background:var(--surface-2);box-shadow:0 24px 60px rgba(0,0,0,.55); /* taste-skill-ignore: Menü */display:none;z-index:60}
+#llist.open{display:block}
+#llist li{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;cursor:pointer;font-size:var(--step-small)}
+#llist li:hover,#llist li.on{background:var(--surface)}
+#llist li small{color:var(--muted);text-transform:uppercase;font-size:var(--step-small)}
+#llist li.hd{cursor:default;color:var(--muted);padding-top:12px}
+#llist li.hd:hover{background:none}
+#llist li.ls{padding:4px;cursor:default}
+#llist li.ls input{width:100%;background:var(--bg);border:0;padding:10px;outline:0}
+.burger{display:none;width:44px;height:44px;background:var(--surface);border:0;place-items:center;cursor:pointer}
+.burger svg{width:20px;height:20px}
+.mega{display:none;position:absolute;left:0;right:0;top:100%;background:var(--surface);box-shadow:0 40px 80px -30px rgba(0,0,0,.8); /* taste-skill-ignore: Menü */visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s;max-height:calc(100svh - 72px);overflow:auto}
+.mega.open{display:block;visibility:visible;opacity:1;transform:none;animation:megain .3s var(--ease)}
+@keyframes megain{from{opacity:0;transform:translateY(-6px)}}
+.mega-in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.2fr);gap:12px;padding-block:24px 30px}
+.mc{display:flex;flex-direction:column;text-decoration:none;background:var(--bg);transition:background .2s}
+.mc:hover{background:var(--surface-2)}
+.mc .mi{aspect-ratio:4/3;background:var(--stone);position:relative;overflow:hidden}
+.mc .mi img{position:absolute;inset:4% 14%;width:72%;height:92%;object-fit:contain;transition:transform .5s var(--ease)}
+.mc:hover .mi img{transform:scale(1.07)}
+.mc b{display:block;padding:12px 14px 2px;font-size:var(--step-small);font-weight:600}
+.mc span{display:block;padding:0 14px 14px;font-size:var(--step-small);color:var(--muted)}
+.mside{display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:6px 6px 6px 16px;font-size:var(--step-small);color:var(--muted)}
+.mside p{color:var(--ink)}
+.mside a.link{display:inline-block;margin:0 10px 6px 0}
+.mob-links{display:none}
 
-/* SECTIONS */
-.section{padding-block:clamp(80px,11vw,140px)}
-.section-head{max-width:700px;margin:0 auto clamp(40px,6vw,64px);text-align:center}
-h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.2vw,50px);line-height:1.08;text-wrap:balance}
-.lead{margin:18px auto 0;max-width:62ch;color:var(--muted);font-size:17px}
+/* ---------- Hero ---------- */
+.hero{position:relative;height:calc(100svh - 72px);min-height:640px;overflow:hidden;background:var(--bg)}
+.wordmark{display:block;font-size:clamp(3.4rem,9.4vw,9.5rem)}
+.hero-copy{position:absolute;right:var(--m);top:clamp(20px,5vh,48px);width:min(36ch,34vw);z-index:2;text-align:right}
+.hero-h1{position:absolute;left:var(--m);top:clamp(16px,4vh,40px);z-index:2}
+.hero-sub{display:block;margin-top:14px;max-width:24ch;font-size:var(--step-lead);font-weight:700;line-height:1.15}
+.hero-copy p{font-size:var(--step-body);color:var(--ink)}
+#globe{position:absolute;inset:0;width:100%;height:100%;z-index:1;cursor:grab;touch-action:auto}
+#globe.drag{cursor:grabbing}
+.route{position:absolute;left:var(--m);bottom:clamp(20px,5vh,48px);z-index:3;width:min(380px,calc(100% - 2*var(--m)));background:var(--surface);padding:18px 18px 20px}
+.route label{display:block;font-size:var(--step-small);color:var(--muted);margin-bottom:6px}
+.dsearch{position:relative;display:flex;align-items:center;gap:10px;background:var(--bg);padding:0 14px}
+.dsearch svg{width:18px;height:18px;flex:none;color:var(--accent)}
+.dsearch input{flex:1;min-width:0;height:50px;background:none;border:0;outline:0;font-size:var(--step-body);font-weight:600}
+.dsearch input::placeholder{color:var(--muted);font-weight:400}
+#dlist{position:absolute;left:0;right:0;bottom:calc(100% + 8px);max-height:320px;overflow:auto;list-style:none;padding:6px;background:var(--surface-2);box-shadow:0 24px 60px rgba(0,0,0,.6); /* taste-skill-ignore: Menü */display:none;z-index:10}
+#dlist.open{display:block}
+#dlist li{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;cursor:pointer;font-size:var(--step-small)}
+#dlist li span{color:var(--muted);white-space:nowrap}
+#dlist li[data-i]:hover,#dlist li.act{background:var(--surface)}
+#dlist li.hd{cursor:default;color:var(--muted);padding-top:12px}
+#dlist li.empty,#dlist li.ft{cursor:default;color:var(--muted)}
+.route-out{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-variant-numeric:tabular-nums}
+.route-out dt{color:var(--muted);font-size:var(--step-small)}
+.route-out dd{font-size:var(--step-small);font-weight:600}
+.route .btn{margin-top:16px;width:100%}
+.spin{position:absolute;right:var(--m);bottom:clamp(20px,5vh,48px);z-index:3;height:44px;padding:0 16px;background:var(--surface);border:0;cursor:pointer;font-size:var(--step-small);font-weight:500;color:var(--ink);transition:background .2s}
+.spin:hover,.spin[aria-pressed="true"]{background:var(--surface-2)}
 
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{position:relative;padding:30px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
-.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 0% 0%,rgba(207,169,90,.09),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
-.card:hover{transform:translateY(-4px);border-color:var(--line-strong);background:var(--glass-2)}
-.card:hover::before{opacity:1}
-.card-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--gold-l);background:var(--gold-wash);border:1px solid var(--gold-edge)}
-.card-icon svg{width:22px;height:22px}
-.card h3{margin:20px 0 0;font-size:19px;font-weight:700}
-.card p{margin:8px 0 0;font-size:15px;color:var(--muted)}
+/* ---------- Abschnitte allgemein ---------- */
+section{position:relative}
+.sec{padding-block:clamp(110px,14vw,200px)}
+.h2{font-size:var(--step-head)}
+.lead{font-size:var(--step-lead);line-height:1.3}
 
-.showcase-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,6vw,72px);align-items:center}
-.showcase-copy{min-width:0}
-.showcase-copy .btn{margin-top:30px}
-.dashboard{position:relative;min-width:0;padding:24px;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.dashboard::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(160deg,rgba(207,169,90,.45),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700}
-.dash-live{display:inline-flex;align-items:center;gap:7px;font:500 12px var(--f-mono);color:var(--green)}
-.dash-live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(147,176,98,.6);animation:pulse 2s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(147,176,98,0)}100%{box-shadow:0 0 0 0 rgba(147,176,98,0)}}
-.dash-chart{margin-top:18px;padding:16px 14px 10px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
-.dash-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:end;height:170px;border-bottom:1px solid var(--line)}
-.dash-bar{position:relative;height:var(--h);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--gold-l),rgba(154,120,56,.25));transform-origin:bottom;animation:grow 1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 90ms)}
-.dash-bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font:500 12px var(--f-mono);color:var(--cream);font-variant-numeric:tabular-nums}
-@keyframes grow{from{transform:scaleY(0)}}
-.dash-labels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));overflow-wrap:anywhere;hyphens:auto;gap:12px;margin-top:8px;font-size:11.5px;line-height:1.3;color:var(--muted);text-align:center}
-.dash-req{margin-top:18px}
-.dash-req p{margin:0;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
-.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
-.chip{padding:6px 12px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+/* ---------- Sortiment: Objekt auf der Scheibe ---------- */
+.show{min-height:100svh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:end;gap:0 var(--m);overflow:hidden}
+.show-list{list-style:none;padding-bottom:clamp(30px,8vh,90px);position:relative;z-index:2}
+.show-list .hd{font-size:clamp(1.75rem,2.9vw,2.75rem);font-weight:700;line-height:1.12;color:var(--muted);letter-spacing:-.015em}
+.show-list button{display:block;text-align:left;background:none;border:0;cursor:pointer;font-size:clamp(1.75rem,2.9vw,2.75rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;color:var(--muted);transition:color .25s}
+.show-list button:hover{color:var(--ink)}
+.show-list button[aria-pressed="true"]{color:var(--ink)}
+.show-list button[aria-pressed="true"]::after{content:"";display:inline-block;width:.32em;height:.32em;border-radius:50%;background:var(--accent);margin-left:.3em;vertical-align:.2em}
+.show-stage{position:relative;height:100svh;max-height:980px;min-height:620px}
+.disc{position:absolute;left:42%;top:56%;width:min(64vh,46vw);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);transition:background-color .5s var(--ease)}
+.disc-obj{position:absolute;left:42%;top:56%;width:min(64vh,46vw);aspect-ratio:1;transform:translate(-50%,-58%)}
+.disc-obj img{position:absolute;inset:-6% -2% 8%;width:104%;height:98%;object-fit:contain;transition:opacity .3s,transform .5s var(--ease)}
+.disc-obj img.out{opacity:0;transform:translateY(12px) scale(.98)}
+.fact{position:absolute;right:0;bottom:clamp(30px,8vh,90px);width:min(28ch,19vw);font-size:var(--step-body)}
+.fact b{display:block;font-size:var(--step-lead);font-weight:700;margin-bottom:6px}
+.fact p{color:var(--ink)}
+.fact .link{display:inline-block;margin-top:12px;font-weight:600}
 
-.stats{margin-top:clamp(56px,8vw,96px);display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.stat{padding:30px 18px;text-align:center;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.stat-value{font-family:var(--f-display);font-size:clamp(32px,4vw,46px);line-height:1;background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
-.stat-label{margin-top:10px;font-size:14px;color:var(--muted)}
+/* ---------- Neu im Sortiment: kleine Bilder, viel Raum ---------- */
+.strip{background:var(--stone);color:var(--ink-dark);min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:120px}
+.strip h2{font-size:var(--step-lead);font-weight:700;color:var(--ink-dark);position:relative;z-index:2;margin-bottom:-12px}
+.strip h2 span{font-weight:400;color:var(--muted-dark)}
+.strip-row{display:flex;gap:5vw;overflow-x:auto;scrollbar-width:none;padding-block:28px 10px;padding-left:max(var(--m),env(safe-area-inset-left,0px));padding-right:var(--m);scroll-snap-type:x proximity;cursor:grab}
+.strip-row::-webkit-scrollbar{display:none}
+.strip-row.drag{cursor:grabbing;scroll-snap-type:none}
+.frame{flex:none;width:clamp(170px,14vw,240px);height:clamp(250px,30svh,360px);position:relative;scroll-snap-align:start;transition:transform .25s var(--ease)}
+.frame:hover,.frame:focus-visible{transform:scale(1.1)}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.strip-foot{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:40px;font-size:var(--step-body)}
+.strip-foot p{color:var(--muted-dark);max-width:52ch}
+.strip .link{color:var(--ink-dark);font-weight:600}
+.strip .link:hover{color:#7d5d1e}
 
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
-.step{padding:26px;border-radius:var(--radius);border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);pointer-events:auto}
-.step-n{font:500 12px var(--f-mono);color:var(--gold);letter-spacing:.14em}
-.step h3{margin:12px 0 0;font-size:18px}
-.step p{margin:6px 0 0;font-size:15px;color:var(--muted)}
+/* ---------- Herkunft: Foto bleibt stehen, Liste ist aktiv ---------- */
+.cities{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--m)}
+.cities-fig{grid-column:1/6;position:sticky;top:14vh;align-self:start}
+.cities-photo{position:relative;aspect-ratio:4/5;background:var(--surface);overflow:hidden}
+.cities-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ease)}
+.cities-photo img.on{opacity:1}
+.cities-photo img.on{animation:drift 9s ease-out both}
+@keyframes drift{from{transform:scale(1.08)}to{transform:scale(1)}}
+.locator{position:absolute;right:0;bottom:0;width:44%;aspect-ratio:6/5;background:var(--bg);z-index:2}
+.locator svg{width:100%;height:100%;display:block}
+.locator .land{fill:var(--surface-2)}
+.locator circle{fill:var(--muted);transition:r .3s,fill .3s}
+.locator circle.on{fill:var(--accent)}
+.cities-cap{margin-top:12px;font-size:var(--step-small);color:var(--muted)}
+.cities-cap a{color:inherit}
+.cities-list{grid-column:7/13}
+.cities-list h2{font-size:var(--step-head);margin-bottom:48px}
+.cities-list p.intro{font-size:var(--step-body);max-width:52ch;margin:-26px 0 40px}
+.crow{border:0}
+.crow button{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:64px;padding:14px 0;background:none;border:0;cursor:pointer;text-align:left}
+.crow button b{font-size:var(--step-lead);font-weight:700;color:var(--muted);transition:color .25s}
+.crow button span{font-size:var(--step-small);color:var(--muted);text-align:right}
+.crow.on button b,.crow button:hover b{color:var(--ink)}
+.crow .cd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.crow.on .cd{grid-template-rows:1fr}
+.crow .cd>div{overflow:hidden}
+.crow .cd p{max-width:44ch;padding-bottom:10px}
+.crow .cd ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding-bottom:22px}
+.crow .cd li{background:var(--surface);padding:5px 12px;font-size:var(--step-small)}
 
-.cta-card{max-width:780px;margin:0 auto;text-align:center;padding:clamp(48px,7vw,80px) clamp(24px,5vw,64px);border-radius:var(--radius-lg);background:radial-gradient(120% 140% at 50% 0%,rgba(207,169,90,.14),transparent 55%),var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.cta-card .hero-actions{margin-top:30px}
-.mail{margin-top:22px;font:500 14px var(--f-mono);color:var(--muted)}
-.mail span{color:var(--gold-l);user-select:all}
+/* ---------- Ablauf: ein Verb nach dem anderen ---------- */
+.verb{position:relative;height:100svh;overflow:hidden;background:var(--bg)}
+.verb>img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;filter:brightness(.52);will-change:transform}
+.verb.light{background:var(--stone)}
+.verb.light>img{filter:none;object-fit:contain;inset:6% 0 -10% 22%;width:78%;height:104%}
+.verb-word{position:sticky;top:50%;transform:translateY(-50%);text-align:center;font-size:clamp(4.4rem,15vw,15rem);color:var(--ink);z-index:2;pointer-events:none;padding-inline:var(--m)}
+.verb.light .verb-word{color:var(--ink-dark);text-align:left}
+.verb-note{position:absolute;left:var(--m);bottom:clamp(24px,6vh,56px);max-width:40ch;font-size:var(--step-body);z-index:3}
+.verb.light .verb-note{color:var(--ink-dark)}
+.verb-note b{display:block;font-size:var(--step-lead);margin-bottom:4px}
+.verb-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
-.footer{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;margin-top:clamp(64px,9vw,110px);padding-top:48px;border-top:1px solid var(--line)}
-.footer-brand p{margin:12px 0 0;max-width:30ch;color:var(--muted);font-size:14.5px}
-.footer-cols{display:flex;gap:clamp(32px,6vw,72px);flex-wrap:wrap}
-.footer-cols h4{margin:0 0 12px;font:500 11.5px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
-.footer-cols a{display:block;padding:4px 0;font-size:14.5px;color:var(--muted)}
-.footer-cols a:hover{color:var(--ink)}
-.copyright{margin:56px 0 0;padding-bottom:32px;text-align:center;font-size:13px;color:var(--muted-2)}
+/* ---------- Für wen: eingesetzte Fläche, geformtes Foto ---------- */
+.panel-wrap{padding:20px}
+.panel{position:relative;background:var(--field);min-height:110svh;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:56px}
+.panel h2{font-size:var(--step-head);max-width:12ch;color:var(--ink)}
+.shape{position:absolute;left:56px;bottom:-9%;width:38vw;aspect-ratio:4/5;border-radius:999px 999px 0 0;overflow:hidden}
+.shape img{width:100%;height:100%;object-fit:cover}
+.panel-txt{grid-column:2;padding-left:13%;display:flex;flex-direction:column;gap:64px;max-width:640px}
+.panel-txt h3{font-size:var(--step-lead);margin-bottom:12px}
+.panel-txt ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.panel-txt li::before{content:"";display:inline-block;width:8px;height:8px;background:var(--accent);margin-right:12px;vertical-align:2px}
+.panel-txt .btn{align-self:flex-start;margin-top:-24px}
 
-/* HERKUNFT: China-Karte mit Produktionsstandorten */
-.hubgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,3vw,32px);align-items:stretch}
-.hubmap{position:relative;min-width:0;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
-.hubmap svg{display:block;width:100%;height:auto}
-.hubmap .land{fill:rgba(38,46,29,.95);stroke:rgba(235,211,155,.45);stroke-width:.8;vector-effect:non-scaling-stroke}
-.hubmap .hub{cursor:pointer}
-.hubmap .hub circle.p{fill:rgba(207,169,90,.18);stroke:rgba(235,211,155,.5);stroke-width:1;vector-effect:non-scaling-stroke}
-.hubmap .hub circle.d{fill:var(--gold-l)}
-.hubmap .hub text{fill:var(--cream);font-family:var(--f-mono);font-weight:500;paint-order:stroke;stroke:rgba(9,11,8,.85);stroke-width:3px;stroke-linejoin:round}
-.hubmap .hub:hover circle.p,.hubmap .hub.on circle.p{fill:rgba(207,169,90,.4)}
-.hubmap .hub.on text{fill:var(--gold-l)}
-@media (prefers-reduced-motion:no-preference){.hubmap .hub circle.p{animation:hubping 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}}
-@keyframes hubping{0%{opacity:1}70%{opacity:.25}100%{opacity:1}}
-.hubback{position:absolute;top:14px;left:14px;height:34px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
-.hubmap.zoomed .hubback{opacity:1;pointer-events:auto}
-.hubchips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 16px}
-.hubchips button{height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font:600 13px var(--f-body);cursor:pointer}
-.hubchips button:hover{color:var(--ink);border-color:var(--line-strong)}
-.hubchips button.on{color:#17130b;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));border-color:transparent}
-.hubcard{min-width:0;display:flex;flex-direction:column;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
-.hubcard.fade{animation:hubfade .5s ease}
-@keyframes hubfade{from{opacity:.3;transform:translateY(8px)}}
-.hubph{position:relative;isolation:isolate;aspect-ratio:16/9;max-width:100%;background:radial-gradient(120% 120% at 30% 20%,rgba(207,169,90,.18),transparent 60%),var(--bg-2);overflow:hidden}
-.hubph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9)}
-.hubph .cr{position:absolute;right:8px;bottom:6px;padding:2px 8px;border-radius:6px;background:rgba(9,11,8,.7);font-size:10.5px;color:var(--muted)}
-.hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.hubph .fb b{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:.2em;color:var(--gold-l)}
-.hubph .fb span{font:500 12px var(--f-mono);letter-spacing:.14em;color:var(--muted)}
-.hubbody{padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1}
-.hubbody .loc{font:500 11.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-.hubbody h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px}
-.hubbody p{margin:0;color:var(--muted);font-size:15.5px}
-.hubbody .tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.hubbody .tg span{padding:5px 11px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
-.hubbody .btn{margin-top:auto;align-self:flex-start}
-@media (max-width:900px){.hubgrid{grid-template-columns:1fr}}
+/* ---------- Fragen ---------- */
+.faq h2{font-size:var(--step-head);max-width:16ch}
+.faq-list{margin-top:80px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--m)}
+.faq-list>div{grid-column:5/13;display:flex;flex-direction:column;gap:12px}
+.faq details{padding:12px 24px;margin-inline:-24px;transition:background .25s}
+.faq details[open]{background:var(--surface)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:var(--step-lead);min-height:52px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:12px;height:12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translate(-3px,-3px);transition:transform .3s var(--ease)}
+.faq details[open] summary i{transform:rotate(-135deg)}
+.faq summary:hover{color:var(--accent)}
+.faq details p{max-width:48ch;padding:6px 0 14px}
 
-/* Gemeinsame Navigation mit Sortiment-Menü */
-.knav{position:sticky;top:0;z-index:80;background:rgba(9,11,8,.82);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(236,226,196,.08)}
-.knav-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
-.kbrand{display:inline-flex;align-items:center;gap:10px;font-family:"Marcellus",Georgia,serif;font-size:19px;letter-spacing:.24em;color:#f3f1ea}
-.kbrand img{width:34px;height:34px;object-fit:contain}
-.klinks{display:flex;align-items:center;gap:6px;font:500 14px "Manrope",system-ui,sans-serif}
-.klinks a,.kmega-btn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:999px;color:#c3c4b5;transition:color .2s,background .2s}
-.klinks a:hover,.kmega-btn:hover,.kmega-btn[aria-expanded="true"],.klinks a.on{color:#f3f1ea;background:rgba(236,226,196,.07)}
-.kmega-btn svg{width:13px;height:13px;transition:transform .3s}
-.kmega-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
-.kright{display:flex;align-items:center;gap:10px}
-.kcta{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(236,226,196,.22);font:600 13.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;white-space:nowrap;transition:.2s}
-.kcta:hover{border-color:rgba(207,169,90,.4);background:rgba(207,169,90,.1)}
-.kburger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(236,226,196,.22);place-items:center;color:#f3f1ea}
-.kburger svg{width:18px;height:18px}
-.kmega{position:absolute;left:0;right:0;top:100%;background:#0c0f0a;border-bottom:1px solid rgba(236,226,196,.12);box-shadow:0 40px 80px -30px rgba(0,0,0,.85);visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1),visibility 0s .35s;max-height:calc(100svh - 72px);overflow-y:auto}
-.kmega.open{visibility:visible;opacity:1;transform:none;transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1)}
-.kmega-in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 1.1fr;gap:18px;padding-block:26px 30px}
-.kmob{display:none}
-.kcol{min-width:0}
-.kcol>a.kch{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(236,226,196,.1);background:#10140d;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
-.kcol>a.kch:hover{transform:translateY(-3px);border-color:rgba(207,169,90,.4)}
-.kch .ki{display:block;aspect-ratio:16/10;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%);position:relative}
-.kch .ki img{position:absolute;inset:5% 10%;width:80%;height:90%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.kch:hover .ki img{transform:scale(1.07)}
-.kch .kt2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px}
-.kch b{font:600 14px "Manrope",system-ui,sans-serif;color:#f3f1ea}
-.kch small{font:500 11px "IBM Plex Mono",monospace;color:#cfa95a}
-.kcol ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:1px}
-.kcol li a{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-radius:8px;font:500 13px "Manrope",system-ui,sans-serif;color:#a3a593;transition:.2s}
-.kcol li a:hover{color:#f3f1ea;background:rgba(236,226,196,.06)}
-.kcol li a span{font:500 11px "IBM Plex Mono",monospace;color:#76786a}
-.kside{display:flex;flex-direction:column;gap:14px}
-.kfeat{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(207,169,90,.3);background:linear-gradient(160deg,rgba(207,169,90,.14),rgba(16,20,13,1) 55%)}
-.kfeat .ki{display:block;aspect-ratio:4/3;position:relative}
-.kfeat .ki img{position:absolute;inset:4% 12%;width:76%;height:92%;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(0,0,0,.45));transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.kfeat:hover .ki img{transform:scale(1.06) rotate(-2deg)}
-.kfeat .kt2{padding:0 14px 14px;display:flex;flex-direction:column;gap:2px}
-.kfeat small{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;color:#cfa95a;text-transform:uppercase}
-.kfeat b{font:600 14.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;line-height:1.3}
-.kreq{font:500 12.5px "Manrope",system-ui,sans-serif;color:#a3a593}
-.kreq p{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:#76786a;margin-bottom:6px}
-.kreq a{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:999px;border:1px solid rgba(236,226,196,.12);color:#c3c4b5}
-.kreq a:hover{border-color:rgba(207,169,90,.4);color:#f3f1ea}
-.kall{display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:999px;background:linear-gradient(100deg,#9a7838,#ebd39b 50%,#cfa95a);color:#17130b;font:600 14px "Manrope",system-ui,sans-serif}
-@media (max-width:1100px){.kmega-in{grid-template-columns:repeat(3,minmax(0,1fr))}.kside{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}.kside>*{flex:1 1 240px}}
-@media (max-width:900px){
-  .klinks{display:none}.kburger{display:grid}
-  .knav-in{height:64px}
-  .kmega{max-height:calc(100svh - 64px)}
-  .kmob{display:flex;flex-direction:column;gap:2px;grid-column:1/-1;padding-bottom:6px;border-bottom:1px solid rgba(236,226,196,.1)}
-  .kmob a{padding:11px 4px;font:600 16px "Manrope",system-ui,sans-serif;color:#f3f1ea}
-  .kmega-in{grid-template-columns:1fr;gap:8px}
-  .kcol ul{display:none}
-  .kcol>a.kch{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;border-radius:14px}
-  .kch .ki{aspect-ratio:auto;height:64px}
-  .kch .ki img{inset:8%;width:84%;height:84%}
-  .kch .kt2{padding:10px 14px}
-  .kside{flex-direction:column}.kside>*{flex:none}
-  .kfeat{display:none}
+/* ---------- Abschluss: das Objekt kommt zurück ---------- */
+.close{position:relative;min-height:90svh;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--m);align-items:center;overflow:hidden;background:var(--bg)}
+#globe2{position:absolute;left:0;top:0;width:58%;height:100%;z-index:0}
+.close-txt{grid-column:8/13;position:relative;z-index:2;display:flex;flex-direction:column;gap:18px;padding-block:80px}
+.close-txt h2{font-size:var(--step-head)}
+.close-txt .k{font-size:var(--step-lead);font-weight:700}
+.close-txt .k span{display:block;font-size:var(--step-small);font-weight:400;color:var(--muted)}
+.close-txt .btn{align-self:flex-start}
+.mail{font-size:var(--step-body)}
+
+/* ---------- Fuß: der Name über dem letzten Foto ---------- */
+.foot{position:relative;min-height:100svh;overflow:hidden;color:var(--ink);display:flex;flex-direction:column;justify-content:space-between}
+.foot>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5);animation:slow 30s ease-in-out infinite alternate}
+@keyframes slow{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+.foot-top{position:relative;z-index:2;display:flex;justify-content:space-between;gap:40px;padding-top:32px;font-size:var(--step-body)}
+.foot-top ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.foot-top a{text-decoration:none}
+.foot-top a:hover{color:var(--accent)}
+.foot-top .r{text-align:right}
+.foot-bottom{position:relative;z-index:2;padding-bottom:28px}
+.foot-name{font-size:19.6vw;line-height:.82;margin-left:-.04em;white-space:nowrap}
+.foot-legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;margin-top:22px;font-size:var(--step-small)}
+.foot-legal a{color:inherit}
+
+/* ---------- Bewegung: Teile jedes Abschnitts kommen nacheinander ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .js [data-r]{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--d,0) * 75ms)}
+  .js [data-r].in{opacity:1;transform:none}
 }
-@media (max-width:640px){.kcta{display:none}}
-@media (prefers-reduced-motion:reduce){.kmega,.kmega.open{transition:none}}
-.kmega-btn{background:transparent;border:0;cursor:pointer;font:500 14px "Manrope",system-ui,sans-serif}
-.kburger{background:transparent;cursor:pointer}
-.kcol ul{padding:0;margin-left:0}
-.knav{pointer-events:auto}
-
-/* Produkt-Laufband */
-.mq-sec{padding-bottom:clamp(60px,8vw,110px)}
-.mq{display:flex;flex-direction:column;gap:16px;overflow:hidden;pointer-events:auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.mq-row{overflow:hidden}
-.mq-track{display:flex;gap:16px;width:max-content;animation:mqmove var(--dur,80s) linear infinite}
-.mq-row.rev .mq-track{animation-direction:reverse}
-.mq:hover .mq-track,.mq:focus-within .mq-track{animation-play-state:paused}
-@keyframes mqmove{to{transform:translateX(-50%)}}
-.mq-tile{flex:none;width:clamp(150px,14vw,200px);border-radius:18px;overflow:hidden;background:var(--glass-2);border:1px solid var(--line);transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .5s}
-.mq-tile:hover{transform:translateY(-6px);border-color:var(--gold-edge);box-shadow:0 30px 50px -30px rgba(0,0,0,.9)}
-.mq-tile .ti{display:block;aspect-ratio:1/1;position:relative;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%)}
-.mq-tile .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.mq-tile:hover .ti img{transform:scale(1.08) rotate(-2deg)}
-.mq-tile .tc{display:flex;flex-direction:column;gap:2px;padding:10px 12px 12px}
-.mq-tile small{font:500 10.5px var(--f-mono);letter-spacing:.1em;color:var(--gold)}
-.mq-tile b{font-size:13.5px;font-weight:600;line-height:1.3;color:var(--ink)}
-.mq-more{text-align:center;margin-top:30px}
-@media (prefers-reduced-motion:reduce){.mq-track{animation:none}.mq-row{overflow-x:auto}}
-::view-transition-group(prod){animation-duration:.55s;animation-timing-function:cubic-bezier(.3,.7,.1,1)}
-
-/* Reveal: Inhalt ist immer sichtbar, er gleitet nur leicht nach oben */
-.js [data-reveal]{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s;transition-delay:var(--rd,0ms)}
-.js [data-reveal]:not(.in){transform:translateY(22px);opacity:.55}
-
-@media (max-width:980px){
-  .nav-links{display:none}
-  .feature-grid{grid-template-columns:repeat(2,1fr)}
-  .showcase-grid{grid-template-columns:1fr}
-  .showcase-copy{text-align:center}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .steps{grid-template-columns:1fr}
-}
-@media (max-width:640px){
-  .wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
-  .nav .btn{display:none}
-  .feature-grid{grid-template-columns:1fr}
-  .hero-inner{padding-block:24px 210px}
-  .hero-actions .btn{flex:1}
-  .route{left:18px;right:18px;width:auto;top:calc(100svh - 150px)}
-  .gpill{right:auto;left:18px;top:calc(100svh - 96px)}
-  .dash-labels{font-size:10px}
-  .footer{flex-direction:column}
-}
-@media (max-width:380px){.stats{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js [data-reveal]:not(.in){transform:none;opacity:1}
-  .dash-bar,.dash-live i{animation:none}
+  .cities-photo img.on,.foot>img{animation:none}
+}
+
+/* ---------- Tablet und Handy ---------- */
+@media (max-width:1100px){
+  .mega-in{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mside{grid-column:1/-1;padding:8px 0}
+}
+@media (max-width:640px){.bar .btn .lg{display:none}.bar .btn{padding:0 14px}}
+@media (max-width:900px){
+  .nav{display:none}
+  .burger{display:grid}
+  .mob-links{display:flex;flex-direction:column;grid-column:1/-1;gap:2px}
+  .mob-links a{padding:12px 0;font-size:var(--step-lead);font-weight:600;text-decoration:none}
+  .mega-in{grid-template-columns:1fr;gap:8px}
+  .mc{flex-direction:row;align-items:center}
+  .mc .mi{width:84px;flex:none;aspect-ratio:1}
+  .mc b{padding:0 14px}
+  .mc span{padding:0 14px 0 0;margin-left:auto}
+  .hero{height:auto;min-height:calc(100svh - 64px);display:flex;flex-direction:column}
+  .hero-h1{position:relative;left:auto;top:auto;padding:20px var(--m) 0}
+  .wordmark{font-size:13.6vw}
+  .hero-copy{position:relative;right:auto;top:auto;width:auto;text-align:left;padding:14px var(--m) 0}
+  .hero-sub{margin-top:10px;max-width:none}
+  .hero-copy p{margin-top:0;font-size:var(--step-body)}
+  .hero-copy{padding-top:10px}
+  #globe{position:relative;inset:auto;height:62vw;min-height:280px;flex:none;margin-top:4px}
+  .route{position:relative;left:auto;bottom:auto;width:auto;margin:0 var(--m) 24px}
+  .spin{display:none}
+  .show{grid-template-columns:1fr;min-height:0}
+  .show-stage{order:-1}
+  .disc,.disc-obj{left:50%;top:50%;width:86vw}
+  .show-stage{height:auto;min-height:0;padding-top:98vw;margin-inline:calc(-1*var(--m))}
+  .disc,.disc-obj{top:50vw}
+  .fact{position:static;width:auto;max-width:none;padding:0 var(--m)}
+  .show-list{padding:24px 0 0;display:flex;flex-wrap:wrap;gap:4px 18px}
+  .show-list .hd{width:100%;font-size:var(--step-lead);margin-bottom:6px}
+  .show-list button{font-size:var(--step-lead)}
+  .show{padding-bottom:30px}
+  .strip{min-height:80svh}
+  .frame{width:34vw;height:51vw}
+  .strip-foot{flex-direction:column}
+  .cities{grid-template-columns:1fr}
+  .cities-fig{grid-column:1;position:relative;top:auto}
+  .cities-photo{aspect-ratio:4/3;max-height:38svh;width:100%}
+  .cities-cap{display:none}
+  .cities-list{grid-column:1;margin-top:28px}
+  .crow button{min-height:56px}
+  .verb-word{font-size:20vw}
+  .verb.light>img{inset:10% -10% -6% 6%;width:104%}
+  .verb-note{right:var(--m)}
+  .panel-wrap{padding:10px}
+  .panel{grid-template-columns:1fr;padding:32px 22px 0;min-height:0}
+  .panel h2{font-size:8.5vw}
+  .panel-txt{grid-column:1;padding-left:0;margin-top:32px;gap:36px}
+  .panel-txt .btn{margin-top:0}
+  .shape{position:relative;left:auto;bottom:auto;width:86vw;margin:40px auto -22vw}
+  .faq-list>div{grid-column:1/-1}
+  .faq h2{font-size:10vw}
+  .faq details{margin-inline:calc(-1*var(--m));padding-inline:var(--m)}
+  .close{grid-template-columns:1fr;min-height:0}
+  .close-txt{grid-column:1;order:-1;padding-block:110px 0}
+  #globe2{position:relative;width:130%;height:55svh;margin-left:-15%}
+  .foot{min-height:88svh}
+  .foot-top{flex-direction:column;gap:22px}
+  .foot-top .r{text-align:left}
 }
 </style>
 </head>
 <body>
+<div id="gt_el"></div>
 
-
-<canvas id="globe" aria-label="Globus mit Lieferrouten von China nach Europa"></canvas>
-
-<div class="page">
-<header class="knav" id="knav"><div class="knav-in wrap">
-  <a class="kbrand notranslate" translate="no" href="#top"><img src="logo-k.png" alt="">KARMIRA</a>
-  <nav class="klinks" aria-label="Hauptnavigation">
-    <button type="button" class="kmega-btn" id="kmb" aria-expanded="false" aria-controls="kmega">Sortiment<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+<header class="bar" id="bar"><div class="bar-in wrap">
+  <a class="mark" href="#top" aria-label="KARMIRA Startseite"><img src="logo-k.png" alt="" width="36" height="36"><span class="notranslate" translate="no">KARMIRA</span></a>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <button type="button" id="kmb" aria-expanded="false" aria-controls="mega">Sortiment<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
     <a href="#herkunft">Herkunft</a>
     <a href="#ablauf">Ablauf</a>
-    <a href="#vorteile">B2B &amp; B2C</a>
-    <a href="index-alt.html#kontakt">Kontakt</a>
+    <a href="#fragen">Fragen</a>
   </nav>
-  <div class="kright">
-    <a class="kcta" href="index-alt.html#kontakt">Anfrage stellen</a>
+  <div class="bar-r">
     <div class="lsel" id="lsel">
-          <button class="lbtn" id="lbtn" type="button" aria-haspopup="listbox" aria-label="Sprache wählen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span id="lcur">DE</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <ul id="llist" role="listbox"></ul>
-        </div>
-        <div id="gt_el" style="display:none"></div>
-    <button type="button" class="kburger" id="kbg" aria-label="Menü öffnen" aria-expanded="false" aria-controls="kmega"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="lbtn" id="lbtn" type="button" aria-haspopup="listbox" aria-label="Sprache wählen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span id="lcur">DE</span></button>
+      <ul id="llist" role="listbox"></ul>
+    </div>
+    <a class="btn" href="index-alt.html#kontakt">Anfrage<span class="lg">&nbsp;stellen</span></a>
+    <button type="button" class="burger" id="kbg" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mega"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </div>
-<div class="kmega" id="kmega"><div class="wrap kmega-in" id="kmegain"></div></div>
+<div class="mega" id="mega"><div class="mega-in wrap" id="megain"></div></div>
 </header>
 
-  <header class="hero" id="top">
-    <div class="hero-inner wrap">
-      <img class="hero-logo" src="logo-k.png" alt="KARMIRA Monogramm" data-reveal style="--rd:0ms">
-      <p class="eyebrow" data-reveal style="--rd:60ms">Garten · Outdoor · Landtechnik</p>
-      <h1 class="hero-title" data-reveal style="--rd:120ms">Für Garten, Hof <em>und Feld</em></h1>
-      <p class="hero-sub" data-reveal style="--rd:220ms">Gartengeräte, Gewächshäuser, Hochbeete und Outdoor-Möbel für Ihren Garten, direkt vom Hersteller. Und für Landwirte: Kleintraktoren, Beregnungsanlagen und Anbaugeräte.</p>
-      <div class="hero-actions" data-reveal style="--rd:320ms">
-        <a class="btn btn-primary" href="index-alt.html#kontakt">Anfrage stellen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-ghost" href="sortiment.html">Sortiment ansehen</a>
-      </div>
-    </div>
-
-    <div class="route">
-      <label for="dest">Lieferziel</label>
-      <div class="dsearch">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-        <input id="dest" type="text" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land suchen …" role="combobox" aria-expanded="false" aria-controls="dlist">
-        <ul id="dlist" role="listbox"></ul>
-      </div>
-      <div class="route-meta" aria-live="polite" id="hKm">≈ 9.200 km · ca. 7–11 Tage ✈</div>
-    </div>
-    <button class="gpill" id="spin" type="button" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>Globus drehen</button>
-  </header>
-
-  <div class="trust wrap" data-reveal style="--rd:420ms">
-    <div class="trust-label">Wir beliefern</div>
-    <div class="trust-row"><span>Privatgärten</span><span>Gartencenter</span><span>Landhandel</span><span>Gartenbau</span><span>Lohnunternehmen</span><span>Landwirtschaft</span></div>
+<main id="top">
+<section class="hero" aria-labelledby="h-hero">
+  <h1 id="h-hero" class="hero-h1"><span class="wordmark display notranslate" translate="no">Karmira</span> <span class="hero-sub">Geräte für Garten, Hof und Feld, direkt ab Werk</span></h1>
+  <div class="hero-copy">
+    <p>Wir beschaffen bei Herstellern in sechs chinesischen Industriestädten und liefern bis an Ihre Tür. Mit Muster, Zoll und Beratung auf Deutsch.</p>
   </div>
-
-  <section class="section" id="vorteile">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow" data-reveal>Ein Ansprechpartner für alles</p>
-        <h2 data-reveal style="--rd:80ms">Vom Werk in China bis zu Ihrem Hof</h2>
-        <p class="lead" data-reveal style="--rd:160ms">Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.</p>
-      </div>
-      <div class="feature-grid">
-        <article class="card" data-reveal style="--rd:0ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V10l6 3V10l6 3V6l6 3v12z"/><path d="M7 17h2M13 17h2"/></svg></div><h3>Direkt ab Werk</h3><p>Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.</p></article>
-        <article class="card" data-reveal style="--rd:90ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg></div><h3>Muster &amp; Prüfung</h3><p>Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.</p></article>
-        <article class="card" data-reveal style="--rd:180ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></div><h3>Zoll &amp; Lieferung</h3><p>Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.</p></article>
-        <article class="card" data-reveal style="--rd:270ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></div><h3>Beratung auf Deutsch</h3><p>Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.</p></article>
-        <article class="card" data-reveal style="--rd:360ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>Private Label</h3><p>Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.</p></article>
-        <article class="card" data-reveal style="--rd:450ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21V10M12 10c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6zM12 16c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6z"/></svg></div><h3>B2B &amp; B2C</h3><p>Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.</p></article>
-      </div>
+  <canvas id="globe" aria-label="Globus mit der Lieferroute von China zu Ihrem Ort"></canvas>
+  <div class="route">
+    <label for="dest">Wohin liefern wir?</label>
+    <div class="dsearch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="dest" type="text" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land eingeben" role="combobox" aria-expanded="false" aria-controls="dlist">
+      <ul id="dlist" role="listbox"></ul>
     </div>
-  </section>
+    <dl class="route-out" aria-live="polite">
+      <dt>Strecke</dt><dd id="rKm">≈ 9.200 km</dd>
+      <dt>Luftfracht</dt><dd id="rAir">ca. 7–11 Tage</dd>
+      <dt>Bahn</dt><dd id="rRail">ca. 19–24 Tage</dd>
+    </dl>
+    <a class="btn" href="index-alt.html#kontakt">Anfrage stellen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+  <button class="spin" id="spin" type="button" aria-pressed="true">Ziele wechseln</button>
+</section>
 
-  <section class="section" id="sortiment">
-    <div class="wrap">
-      <div class="showcase-grid">
-        <div class="showcase-copy">
-          <p class="eyebrow" data-reveal>Unser Sortiment</p>
-          <h2 data-reveal style="--rd:90ms" data-total>Über 260 Artikel sind bereits online</h2>
-          <p class="lead" style="margin-left:0;--rd:180ms" data-reveal>Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.</p>
-          <a class="btn btn-primary" href="sortiment.html" data-reveal style="--rd:270ms">Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </div>
-        <div class="dashboard" data-reveal style="--rd:160ms">
-          <div class="dash-top"><span>Artikel online · nach Kategorie</span><span class="dash-live"><i></i>Live</span></div>
-          <div class="dash-chart">
-            <div class="dash-bars" id="bars"></div>
-            <div class="dash-labels" id="barlabels"></div>
-          </div>
-          <div class="dash-req">
-            <p>Auf Anfrage</p>
-            <div class="chips"><span class="chip">Outdoor-Möbel</span><span class="chip">Pavillon &amp; Sonnenschutz</span><span class="chip">Grill &amp; Outdoor-Küche</span><span class="chip">Landtechnik</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="stat" data-reveal style="--rd:0ms"><div class="stat-value" data-total>260+</div><div class="stat-label">Artikel online</div></div>
-        <div class="stat" data-reveal style="--rd:80ms"><div class="stat-value">6</div><div class="stat-label">Produktionsstandorte in China</div></div>
-        <div class="stat" data-reveal style="--rd:160ms"><div class="stat-value">7–11</div><div class="stat-label">Tage Lieferzeit</div></div>
-        <div class="stat" data-reveal style="--rd:240ms"><div class="stat-value">24 h</div><div class="stat-label">Antwort auf Ihre Anfrage</div></div>
-      </div>
-    </div>
-  </section>
+<section class="show wrap" id="sortiment" aria-labelledby="h-show">
+  <ul class="show-list" id="showList">
+    <li><h2 class="hd" id="h-show" data-r>Unser Sortiment</h2></li>
+  </ul>
+  <div class="show-stage">
+    <div class="disc" id="disc"></div>
+    <div class="disc-obj"><img id="discImg" src="pi/sy-13.webp" alt="" width="900" height="900"></div>
+    <div class="fact" id="fact" aria-live="polite"></div>
+  </div>
+</section>
 
-  <section class="section mq-sec" id="neu">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow" data-reveal>Neu im Sortiment</p>
-        <h2 data-reveal style="--rd:80ms" id="mqTitle">Neue Geräte von SHENGYAO</h2>
-        <p class="lead" data-reveal style="--rd:160ms">Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.</p>
-      </div>
-    </div>
-    <div class="mq" id="mq" aria-label="Produktauswahl">
-      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
-      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
-    </div>
-    <div class="wrap mq-more"><a class="btn btn-ghost" href="sortiment.html">Ganzes Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-  </section>
+<section class="strip" id="neu" aria-labelledby="h-neu">
+  <h2 class="wrap" id="h-neu" data-r>Neu im Sortiment <span id="neuN">57</span></h2>
+  <div class="strip-row" id="strip"></div>
+  <div class="strip-foot wrap">
+    <p data-r>Astscheren, Kettensägen, Laubbläser, Trimmer und Bodenlockerer von SHENGYAO, alle im 21-V-Akkusystem. Ziehen Sie die Reihe zur Seite oder öffnen Sie ein Gerät.</p>
+    <a class="link" href="sortiment.html?k=akkugarten" data-r style="--d:1">Alle Akku-Gartengeräte</a>
+  </div>
+</section>
 
-  <section class="section" id="herkunft">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow" data-reveal>Herkunft</p>
-        <h2 data-reveal style="--rd:80ms">Direkt aus den Industriezentren Chinas</h2>
-        <p class="lead" data-reveal style="--rd:160ms">Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.</p>
-      </div>
-      <div class="hubgrid">
-        <div class="hubmap" data-reveal><svg id="hubsvg" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsstandorte in China"><g id="hubg"></g></svg>
-          <button class="hubback" id="hubBack" type="button">← Ganz China</button>
-          <div class="hubchips" id="hubChips"></div></div>
-        <div class="hubcard" id="hubCard" data-reveal style="--rd:120ms"></div>
-      </div>
+<section class="sec wrap" id="herkunft" aria-labelledby="h-her">
+  <div class="cities">
+    <figure class="cities-fig">
+      <div class="cities-photo" id="cPhoto"></div>
+      <div class="locator" aria-hidden="true"><svg id="loc" viewBox="0 0 300 250"><g id="locg"></g></svg></div>
+      <figcaption class="cities-cap" id="cCap"></figcaption>
+    </figure>
+    <div class="cities-list">
+      <h2 id="h-her" data-r>Sechs Werkstädte</h2>
+      <p class="intro" data-r style="--d:1">Wir arbeiten mit Herstellern dort, wo ihre Branche zu Hause ist. Wählen Sie eine Stadt und sehen Sie, was dort entsteht.</p>
+      <div id="cList"></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section" id="ablauf">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow" data-reveal>So einfach bestellen Sie</p>
-        <h2 data-reveal style="--rd:80ms">Drei Schritte bis zur Lieferung</h2>
-      </div>
-      <div class="steps">
-        <div class="step" data-reveal style="--rd:0ms"><div class="step-n">SCHRITT 1</div><h3>Anfrage senden</h3><p>Produkt, Menge und Lieferziel, über das Formular oder per E-Mail.</p></div>
-        <div class="step" data-reveal style="--rd:90ms"><div class="step-n">SCHRITT 2</div><h3>Angebot &amp; Muster</h3><p>Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.</p></div>
-        <div class="step" data-reveal style="--rd:180ms"><div class="step-n">SCHRITT 3</div><h3>Lieferung</h3><p>Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.</p></div>
-      </div>
+<section id="ablauf" aria-labelledby="h-abl">
+  <h2 class="verb-head" id="h-abl">So läuft eine Bestellung ab</h2>
+  <div class="verb">
+    <img src="agrar-garten.jpg" alt="Hochbeete und Folientunnel in einem Garten" width="1024" height="765" loading="lazy">
+    <div class="verb-word display">Anfragen</div>
+    <p class="verb-note"><b>Sie sagen, was Sie brauchen.</b>Produkt, Menge und Lieferziel, über das Formular oder per E-Mail. Wir antworten meist innerhalb von 24 Stunden.</p>
+  </div>
+  <div class="verb light">
+    <img src="pi/sy-13.webp" alt="Akku-Astschere aus nächster Nähe" width="900" height="900" loading="lazy">
+    <div class="verb-word display">Prüfen</div>
+    <p class="verb-note"><b>Sie sehen ein Muster.</b>Auf Wunsch kommt vor der Bestellung ein Muster zu Ihnen, damit Sie Qualität und Ausführung selbst prüfen.</p>
+  </div>
+  <div class="verb">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/1600px-Beilun_Port_2020-05-02.jpg" alt="Containerhafen Beilun in Ningbo" width="1600" height="1067" loading="lazy">
+    <div class="verb-word display">Verschiffen</div>
+    <p class="verb-note"><b>Wir kümmern uns um den Weg.</b>Versand ab Ningbo per Schiff, Bahn oder Luftfracht, dazu Verzollung und Einfuhr aus einer Hand.</p>
+  </div>
+  <div class="verb">
+    <img src="agrar-traktor.jpg" alt="Kompakttraktor mit Frontlader auf einem Hof" width="1024" height="765" loading="lazy">
+    <div class="verb-word display">Liefern</div>
+    <p class="verb-note"><b>Die Ware steht bei Ihnen.</b>Bis an die Haustür, ins Lager oder auf den Hof. Ein fester Ansprechpartner begleitet Sie bis dahin.</p>
+  </div>
+</section>
+
+<section class="panel-wrap" id="kunden" aria-labelledby="h-kun">
+  <div class="panel">
+    <div>
+      <h2 id="h-kun" data-r>Für Ihren Garten und für den Hof</h2>
+      <div class="shape" id="shape"><img src="agrar-bewaesserung.jpg" alt="Regner bewässern ein Gemüsefeld" width="1024" height="765" loading="lazy"></div>
     </div>
-  </section>
-
-  <section class="section" id="kontakt" style="padding-bottom:0">
-    <div class="wrap">
-      <div class="cta-card">
-        <p class="eyebrow" data-reveal style="--rd:60ms">Jetzt anfragen</p>
-        <h2 data-reveal style="--rd:140ms">Ihr nächstes Produkt kommt direkt ab Werk</h2>
-        <p class="lead" data-reveal style="--rd:220ms">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
-        <div class="hero-actions" data-reveal style="--rd:300ms">
-          <a class="btn btn-primary" href="index-alt.html#kontakt">Privat anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-ghost" href="index-alt.html#kontakt">B2B-Anfrage</a>
-        </div>
-        <p class="mail">E-Mail: <span>info@karmira.de</span></p>
+    <div class="panel-txt">
+      <div data-r style="--d:1">
+        <h3>Für Zuhause</h3>
+        <p>Gartengeräte, Gewächshäuser, Outdoor-Möbel und Zubehör zu fairen Preisen, ohne Zwischenhändler.</p>
+        <ul><li>Geprüfte Qualität</li><li>Beratung auf Deutsch</li><li>Lieferung bis an die Haustür</li></ul>
       </div>
-
-      <footer class="footer">
-        <div class="footer-brand"><a class="brand" href="#top"><img src="logo-k.png" alt="">KARMIRA</a><p>Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.</p></div>
-        <div class="footer-cols">
-          <div><h4>Sortiment</h4><a href="sortiment.html?k=akkugarten">Akku-Gartengeräte</a><a href="sortiment.html?k=zubehoer">Gartenzubehör</a><a href="sortiment.html?k=wasser">Bewässerung</a></div>
-          <div><h4>Service</h4><a href="#vorteile">B2B &amp; B2C</a><a href="#ablauf">Ablauf</a><a href="index-alt.html#kontakt">Kontakt</a></div>
-          <div><h4>Rechtliches</h4><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
-        </div>
-      </footer>
-      <p class="copyright">© <span id="yr"></span> KARMIRA · karmira.de</p>
+      <div data-r style="--d:2">
+        <h3>Für Betriebe</h3>
+        <p>Landwirtschaft, Gartenbau, Lohnunternehmen, Landhandel und Gartencenter bekommen Großhandelspreise direkt ab Hersteller.</p>
+        <ul><li>Lieferantensuche und Qualitätsprüfung</li><li>Eigene Produkte und Private Label</li><li>Logistik, Zoll und Import aus einer Hand</li></ul>
+      </div>
+      <a class="btn" href="index-alt.html#kontakt" data-r style="--d:3">Angebot anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-  </section>
-</div>
+  </div>
+</section>
+
+<section class="sec wrap faq" id="fragen" aria-labelledby="h-faq">
+  <h2 id="h-faq" data-r>Was Sie vorher wissen sollten</h2>
+  <div class="faq-list"><div>
+    <details data-r><summary>Gibt es Mindestbestellmengen?<i></i></summary><p>Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.</p></details>
+    <details data-r style="--d:1"><summary>Was kostet ein Produkt?<i></i></summary><p>Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.</p></details>
+    <details data-r style="--d:2"><summary>Kann ich vorher ein Muster bekommen?<i></i></summary><p>Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.</p></details>
+    <details data-r style="--d:3"><summary>Wie lange dauert die Lieferung?<i></i></summary><p>Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.</p></details>
+    <details data-r style="--d:4"><summary>Kümmert ihr euch um Zoll und Einfuhr?<i></i></summary><p>Ja. Versand, Verzollung und Import organisieren wir aus einer Hand, bis an Ihre Tür oder Ihr Lager.</p></details>
+    <details data-r style="--d:5"><summary>Liefert ihr auch an Privatkunden?<i></i></summary><p>Ja. Ob ein Gewächshaus für den eigenen Garten oder eine Palette Akku-Geräte für den Betrieb: Wir beschaffen für beide.</p></details>
+  </div></div>
+</section>
+
+<section class="close wrap" id="anfrage" aria-labelledby="h-close">
+  <canvas id="globe2" aria-hidden="true"></canvas>
+  <div class="close-txt">
+    <h2 id="h-close" data-r>Was dürfen wir beschaffen?</h2>
+    <p data-r style="--d:1">Schreiben Sie uns Produkt, Menge und Lieferziel. Auch was nicht im Sortiment steht, finden wir meist beim passenden Hersteller.</p>
+    <p class="k" data-r style="--d:2">24 Stunden<span>bis zur ersten Antwort, in der Regel</span></p>
+    <a class="btn" href="index-alt.html#kontakt" data-r style="--d:3">Anfrage stellen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p class="mail" data-r style="--d:4">oder per E-Mail an <a class="link" href="mailto:info@karmira.de">info@karmira.de</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <img src="agrar-hero.jpg" alt="Traktor auf einem Feld in der Abenddämmerung" width="1024" height="434" loading="lazy">
+  <div class="foot-top wrap">
+    <ul><li><a href="sortiment.html">Sortiment</a></li><li><a href="#herkunft">Herkunft</a></li><li><a href="#ablauf">Ablauf</a></li><li><a href="#fragen">Fragen</a></li><li><a href="index-alt.html#kontakt">Kontakt</a></li></ul>
+    <ul class="r"><li><a href="mailto:info@karmira.de">info@karmira.de</a></li><li>karmira.de</li><li>Beratung auf Deutsch</li></ul>
+  </div>
+  <div class="foot-bottom wrap">
+    <div class="foot-name display notranslate" translate="no" aria-hidden="true">Karmira</div>
+    <div class="foot-legal"><span>© <span id="yr"></span> KARMIRA · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span><span>Fotos: Feld Takkk, CC BY-SA 3.0 · Hafen Beilun Nbfreeh, CC BY-SA 4.0 · Städtefotos siehe Bildunterschriften, Wikimedia Commons</span></div>
+  </div>
+</footer>
 
 <script src="products.js?v=30f3050d"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -511,42 +505,45 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 document.documentElement.classList.add('js');
 document.getElementById('yr').textContent=new Date().getFullYear();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P=window.KP||[],C=window.KC||[];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
-/* ================= SPRACHE (wie bisher: DE/EN direkt, alle anderen über Google Translate) ================= */
+/* ================= Englisch (alle anderen Sprachen über Google Translate) ================= */
 const EN={
-'Garten & Hof':'Garden & yard','Sortiment':'Range','Ablauf':'Process','B2B & B2C':'B2B & B2C','Kontakt':'Contact',
-'Anfrage stellen':'Send enquiry','Garten · Outdoor · Landtechnik':'Garden · Outdoor · Farm machinery',
-'Für Garten, Hof':'For garden, yard','und Feld':'and field',
-'Gartengeräte, Gewächshäuser, Hochbeete und Outdoor-Möbel für Ihren Garten, direkt vom Hersteller. Und für Landwirte: Kleintraktoren, Beregnungsanlagen und Anbaugeräte.':'Garden tools, greenhouses, raised beds and outdoor furniture for your garden, straight from the manufacturer. And for farmers: compact tractors, irrigation systems and implements.',
-'Sortiment ansehen':'View range','Lieferziel':'Destination','Globus drehen':'Rotate globe',
-'Wir beliefern':'We supply','Privatgärten':'Home gardens','Gartencenter':'Garden centres','Landhandel':'Farm supply stores','Gartenbau':'Horticulture','Lohnunternehmen':'Agricultural contractors','Landwirtschaft':'Agriculture',
-'Ein Ansprechpartner für alles':'One contact for everything','Vom Werk in China bis zu Ihrem Hof':'From the factory in China to your yard',
-'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture, and we take care of inspection, shipping and customs.',
-'Direkt ab Werk':'Direct from the factory','Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.':'No middlemen. You buy where it is made, at fair prices.',
-'Muster & Prüfung':'Samples & inspection','Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.':'On request you get a sample before ordering. Quality is inspected.',
-'Zoll & Lieferung':'Customs & delivery','Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.':'Logistics, customs and import from a single source, right to your door or yard.',
-'Beratung auf Deutsch':'Advice in German','Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.':'One dedicated contact supports you from the first message to delivery.',
-'Private Label':'Private label','Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.':'Custom products under your name, for retailers, garden centres and farm supply stores.',
-'Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.':'Whether your own garden or a farm: sourcing and delivery adapt to your needs.',
-'Unser Sortiment':'Our range','Neu im Sortiment':'New in our range','Neue Geräte von SHENGYAO':'New tools from SHENGYAO','Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.':'Pruning shears, chainsaws, leaf blowers, trimmers and more on the 21 V system. Hover to pause or click a product.','Ganzes Sortiment ansehen':'View the full range','Herkunft':'Origin','Kontakt':'Contact','Alle Artikel':'All items','Über 260 Artikel sind bereits online':'Over 260 items are already online',
-'Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.':'From cordless tools to binding twine. Beyond that, we source almost any product from China. Just ask.',
-'Artikel online · nach Kategorie':'Items online · by category','Live':'Live','Auf Anfrage':'On request',
-'Outdoor-Möbel':'Outdoor furniture','Pavillon & Sonnenschutz':'Gazebos & sun protection','Grill & Outdoor-Küche':'Grills & outdoor kitchens','Landtechnik':'Farm machinery',
-'Gartenzubehör':'Garden accessories','Akku-Gartengeräte':'Cordless garden tools','Akku-Werkzeug':'Cordless power tools','Bewässerung':'Irrigation','Gewächshaus & Anzucht':'Greenhouse & propagation',
-'Artikel online':'Items online','Produktionsstandorte in China':'Production sites in China','Tage Lieferzeit':'Days delivery time','Antwort auf Ihre Anfrage':'Reply to your enquiry',
-'So einfach bestellen Sie':'How to order','Drei Schritte bis zur Lieferung':'Three steps to delivery',
-'SCHRITT 1':'STEP 1','SCHRITT 2':'STEP 2','SCHRITT 3':'STEP 3','Anfrage senden':'Send enquiry',
-'Produkt, Menge und Lieferziel, über das Formular oder per E-Mail.':'Product, quantity and destination, via the form or by email.',
-'Angebot & Muster':'Quote & sample','Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.':'You receive a quote from suitable manufacturers, with a sample on request.',
-'Lieferung':'Delivery','Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.':'We organise inspection, shipping and customs, all the way to you.',
-'Jetzt anfragen':'Enquire now','Ihr nächstes Produkt kommt direkt ab Werk':'Your next product comes straight from the factory',
-'In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.':'Your enquiry in just a few steps. We usually reply within 24 hours.',
-'Privat anfragen':'Private enquiry','B2B-Anfrage':'B2B enquiry','E-Mail:':'Email:',
-'Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.':'Garden, outdoor and farm machinery straight from China’s industrial centres.',
-'Service':'Service','Rechtliches':'Legal','Impressum':'Legal notice','Datenschutz':'Privacy',
-'Stadt oder Land suchen …':'Search city or country …','Sprache wählen':'Choose language','KARMIRA Monogramm':'KARMIRA monogram',
+'Sortiment':'Range','Herkunft':'Origin','Ablauf':'Process','Fragen':'FAQ','Kontakt':'Contact','Anfrage stellen':'Send enquiry',
+'Sprache wählen':'Choose language','Menü öffnen':'Open menu','KARMIRA Startseite':'KARMIRA home',
+'Geräte für Garten, Hof und Feld, direkt ab Werk':'Tools for garden, yard and field, straight from the factory',
+'Wir beschaffen bei Herstellern in sechs chinesischen Industriestädten und liefern bis an Ihre Tür. Mit Muster, Zoll und Beratung auf Deutsch.':'We source from manufacturers in six Chinese industrial cities and deliver to your door, with samples, customs handling and advice in German.',
+'Globus mit der Lieferroute von China zu Ihrem Ort':'Globe showing the delivery route from China to your location',
+'Wohin liefern wir?':'Where should we deliver?','Stadt oder Land eingeben':'Enter a city or country','Strecke':'Distance','Luftfracht':'Air freight','Bahn':'Rail','Ziele wechseln':'Cycle destinations',
+'Unser Sortiment':'Our range','Neu im Sortiment':'New in our range','Alle Akku-Gartengeräte':'All cordless garden tools',
+'Astscheren, Kettensägen, Laubbläser, Trimmer und Bodenlockerer von SHENGYAO, alle im 21-V-Akkusystem. Ziehen Sie die Reihe zur Seite oder öffnen Sie ein Gerät.':'Pruning shears, chainsaws, leaf blowers, trimmers and tillers from SHENGYAO, all on the 21 V battery system. Drag the row sideways or open a tool.',
+'Sechs Werkstädte':'Six factory cities',
+'Wir arbeiten mit Herstellern dort, wo ihre Branche zu Hause ist. Wählen Sie eine Stadt und sehen Sie, was dort entsteht.':'We work with manufacturers where their trade is at home. Choose a city to see what is made there.',
+'So läuft eine Bestellung ab':'How an order works','Anfragen':'Enquire','Prüfen':'Inspect','Verschiffen':'Ship','Liefern':'Deliver',
+'Sie sagen, was Sie brauchen.':'You tell us what you need.','Produkt, Menge und Lieferziel, über das Formular oder per E-Mail. Wir antworten meist innerhalb von 24 Stunden.':'Product, quantity and destination, via the form or by email. We usually reply within 24 hours.',
+'Sie sehen ein Muster.':'You see a sample.','Auf Wunsch kommt vor der Bestellung ein Muster zu Ihnen, damit Sie Qualität und Ausführung selbst prüfen.':'On request a sample comes to you before you order, so you can check quality and finish yourself.',
+'Wir kümmern uns um den Weg.':'We take care of the journey.','Versand ab Ningbo per Schiff, Bahn oder Luftfracht, dazu Verzollung und Einfuhr aus einer Hand.':'Shipping from Ningbo by sea, rail or air, plus customs and import from a single source.',
+'Die Ware steht bei Ihnen.':'The goods arrive with you.','Bis an die Haustür, ins Lager oder auf den Hof. Ein fester Ansprechpartner begleitet Sie bis dahin.':'To your door, warehouse or yard. One dedicated contact stays with you all the way.',
+'Hochbeete und Folientunnel in einem Garten':'Raised beds and a polytunnel in a garden','Akku-Astschere aus nächster Nähe':'Cordless pruning shears up close','Containerhafen Beilun in Ningbo':'Beilun container port in Ningbo','Kompakttraktor mit Frontlader auf einem Hof':'Compact tractor with front loader in a yard','Regner bewässern ein Gemüsefeld':'Sprinklers watering a vegetable field','Traktor auf einem Feld in der Abenddämmerung':'Tractor in a field at dusk',
+'Für Ihren Garten und für den Hof':'For your garden and for the farm','Für Zuhause':'For your home','Für Betriebe':'For businesses',
+'Gartengeräte, Gewächshäuser, Outdoor-Möbel und Zubehör zu fairen Preisen, ohne Zwischenhändler.':'Garden tools, greenhouses, outdoor furniture and accessories at fair prices, without middlemen.',
+'Geprüfte Qualität':'Inspected quality','Beratung auf Deutsch':'Advice in German','Lieferung bis an die Haustür':'Delivery to your door',
+'Landwirtschaft, Gartenbau, Lohnunternehmen, Landhandel und Gartencenter bekommen Großhandelspreise direkt ab Hersteller.':'Farms, horticulture, contractors, farm supply stores and garden centres get wholesale prices straight from the manufacturer.',
+'Lieferantensuche und Qualitätsprüfung':'Supplier search and quality inspection','Eigene Produkte und Private Label':'Custom products and private label','Logistik, Zoll und Import aus einer Hand':'Logistics, customs and import from one source','Angebot anfragen':'Request a quote',
+'Was Sie vorher wissen sollten':'What to know before you order',
+'Gibt es Mindestbestellmengen?':'Are there minimum order quantities?','Das hängt vom Produkt und vom Hersteller ab. Die Mindestmenge nennen wir Ihnen direkt im Angebot.':'That depends on the product and the manufacturer. We state the minimum quantity in your quote.',
+'Was kostet ein Produkt?':'What does a product cost?','Der Preis hängt von Menge, Ausführung und Versand ab. Nach Ihrer Anfrage erhalten Sie ein individuelles Angebot.':'The price depends on quantity, specification and shipping. After your enquiry you receive an individual quote.',
+'Kann ich vorher ein Muster bekommen?':'Can I get a sample first?','Ja, auf Wunsch organisieren wir vor der Bestellung ein Muster, damit Sie Qualität und Ausführung prüfen können.':'Yes, on request we arrange a sample before you order so you can check quality and finish.',
+'Wie lange dauert die Lieferung?':'How long does delivery take?','Das hängt von Lieferziel und Versandart ab. Eine erste Schätzung zeigt die Lieferziel-Suche oben auf der Seite, die genaue Dauer steht im Angebot.':'That depends on destination and shipping method. The destination search at the top gives a first estimate; the exact time is in the quote.',
+'Kümmert ihr euch um Zoll und Einfuhr?':'Do you handle customs and import?','Ja. Versand, Verzollung und Import organisieren wir aus einer Hand, bis an Ihre Tür oder Ihr Lager.':'Yes. We organise shipping, customs and import from a single source, right to your door or warehouse.',
+'Liefert ihr auch an Privatkunden?':'Do you deliver to private customers?','Ja. Ob ein Gewächshaus für den eigenen Garten oder eine Palette Akku-Geräte für den Betrieb: Wir beschaffen für beide.':'Yes. Whether a greenhouse for your own garden or a pallet of cordless tools for your business, we source for both.',
+'Was dürfen wir beschaffen?':'What can we source for you?','Schreiben Sie uns Produkt, Menge und Lieferziel. Auch was nicht im Sortiment steht, finden wir meist beim passenden Hersteller.':'Send us product, quantity and destination. Even items not in our range we can usually find at the right manufacturer.',
+'24 Stunden':'24 hours','bis zur ersten Antwort, in der Regel':'until our first reply, as a rule','oder per E-Mail an':'or email','Impressum':'Legal notice','Datenschutz':'Privacy',
 'Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search',
-'KARMIRA – Garten, Outdoor & Landtechnik direkt aus China':'KARMIRA – Garden, outdoor & farm machinery direct from China'
+'Bereich öffnen':'Open area','Artikel':'items','Ganzes Sortiment':'Full range','Auf Anfrage':'On request','Produkte aus dieser Region anfragen':'Enquire about products from this region',
+'KARMIRA – Garten, Outdoor & Landtechnik direkt aus China':'KARMIRA – Garden, outdoor & farm machinery direct from China',
+'Akku-Gartengeräte':'Cordless garden tools','Akku-Werkzeug':'Cordless power tools','Gartenzubehör':'Garden accessories','Gewächshaus & Anzucht':'Greenhouse & propagation','Bewässerung':'Irrigation'
 };
 let LANG='de';
 const LANGS_TOP=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['iw','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
@@ -585,7 +582,7 @@ const llist=document.getElementById('llist');
 function renderLangs(){const de=LANG==='de',top=LANGS_TOP.length;
   llist.innerHTML=`<li class="ls"><input id="lfind" placeholder="${de?'Sprache suchen …':'Search language …'}" autocomplete="off"></li><li class="hd">${de?'Häufig':'Popular'}</li>`+
   LANGS.map(([c,n],k)=>(k===top?`<li class="hd">${de?'Alle Sprachen':'All languages'} (Google Translate)</li>`:'')+`<li data-l="${c}" data-n="${(n+' '+c+' '+langIn(c,'de')+' '+langIn(c,'en')).toLowerCase()}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
-  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`;
+  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' (aktiv)':''}</li>`;
   const f=document.getElementById('lfind');f.addEventListener('click',e=>e.stopPropagation());
   f.addEventListener('input',()=>{const q=nrm(f.value.trim());llist.querySelectorAll('li[data-l]:not(.auto)').forEach(li=>li.style.display=!q||nrm(li.dataset.n).includes(q)?'':'none');
     llist.querySelectorAll('li.hd').forEach(h=>h.style.display=q?'none':'')})}
@@ -599,22 +596,7 @@ llist.addEventListener('click',e=>{const li=e.target.closest('li[data-l]');if(li
 document.addEventListener('click',e=>{if(!e.target.closest('#lsel'))llist.classList.remove('open')});
 addEventListener('keydown',e=>{if(e.key==='Escape')llist.classList.remove('open')});
 
-/* ================= Sortiment-Balken (Artikelzahlen von karmira.de) ================= */
-const KPd=window.KP||[],KCd=window.KC||[];
-const cats=KCd.map(c=>[c[1],KPd.filter(p=>p.k===c[0]).length]).filter(c=>c[1]).sort((a,b)=>b[1]-a[1]).slice(0,5);
-const cmax=Math.max(1,...cats.map(c=>c[1]));
-document.getElementById('bars').innerHTML=cats.map(([n,v],i)=>`<div class="dash-bar" style="--h:${(v/cmax*100).toFixed(1)}%;--i:${i}"><b>${v}</b></div>`).join('');
-const tot=KPd.length,totR=Math.floor(tot/10)*10;
-const fixTotals=()=>document.querySelectorAll('[data-total]').forEach(el=>{el.textContent=el.textContent.replace(/260/g,totR)});
-addEventListener('langchange',fixTotals);
-document.getElementById('barlabels').innerHTML=cats.map(([n])=>`<span>${n.replace('&','&amp;')}</span>`).join('');
-
-/* ================= Reveal ================= */
-const els=document.querySelectorAll('[data-reveal]');
-if(reduce||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'))}
-else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.18,rootMargin:'0px 0px -8% 0px'});els.forEach(e=>io.observe(e))}
-
-/* ================= Lieferziele (Daten wie auf karmira.de) ================= */
+/* ================= Lieferziele ================= */
 const ORIGIN=[114.06,22.54];
 const DEST=[
  {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
@@ -731,39 +713,55 @@ const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
 function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
   const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
 
-/* ================= Globus ================= */
+/* ================= Globus: flach gezeichnet, Gold nur für die Route ================= */
 const HUBS=[['Weifang',119.16,36.71],['Changzhou',119.97,31.81],['Anji',119.68,30.64],['Ningbo',121.55,29.87],['Yongkang',120.04,28.89],['Foshan',113.12,23.02]];
-const cv=document.getElementById('globe'),ctx=cv.getContext('2d');
-let W=0,H=0,DPR=1;
-function size(){DPR=Math.min(devicePixelRatio||1,2);W=document.documentElement.clientWidth||innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
-size();addEventListener('resize',size);
-
 let land=null,borders=null;
 try{const topo=Datamap.prototype.worldTopo,key=Object.keys(topo.objects)[0];
-  land=topojson.merge(topo,topo.objects[key].geometries);borders=topojson.mesh(topo,topo.objects[key],(a,b)=>a!==b)}
-catch(e){console.warn('Kartendaten fehlen',e)}
-
-const proj=d3.geoOrthographic().clipAngle(90).precision(.4);
-const path=d3.geoPath(proj,ctx);
+  land=topojson.merge(topo,topo.objects[key].geometries);borders=topojson.mesh(topo,topo.objects[key],(a,b)=>a!==b)}catch(e){}
 const grat=d3.geoGraticule10();
-let rot=[-62,-30],target=null,spinning=!reduce,lastTouch=-1e9,hold=0,auto=true;
-const stars=Array.from({length:240},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+.2,p:Math.random()*6.28,s:.4+Math.random()*1.6}));
-
 function routePts(b){const it=d3.geoInterpolate(ORIGIN,b),n=72,pts=[],lift=Math.min(.32,.08+d3.geoDistance(ORIGIN,b)*.09);for(let i=0;i<=n;i++){const k=i/n;pts.push([...it(k),Math.sin(Math.PI*k)*lift])}return pts}
 let ROUTES=DEST.map(d=>routePts(d.c));
 let di=defaultDest();
+function makeGlobe(cv,opt){
+  const ctx=cv.getContext('2d'),proj=d3.geoOrthographic().clipAngle(90).precision(.4),path=d3.geoPath(proj,ctx);
+  const G={cv,ctx,proj,path,W:0,H:0,R:300,CX:0,CY:0,rot:opt.rot.slice(),opt};
+  G.size=()=>{const DPR=Math.min(devicePixelRatio||1,2),r=cv.getBoundingClientRect();G.W=r.width;G.H=r.height;cv.width=G.W*DPR;cv.height=G.H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);opt.layout(G)};
+  G.xyz=(lon,lat,h)=>{const q=d3.geoRotation(G.rot)([lon,lat]),l=q[0]*Math.PI/180,f=q[1]*Math.PI/180;const x=Math.cos(f)*Math.sin(l),y=Math.sin(f),z=Math.cos(f)*Math.cos(l),s=1+(h||0);return [G.CX+G.R*x*s,G.CY-G.R*y*s,z>=0||Math.hypot(x*s,y*s)>1,z]};
+  G.draw=t=>{const {ctx,W,H}=G;proj.translate([G.CX,G.CY]).scale(G.R).rotate(G.rot);ctx.clearRect(0,0,W,H);
+    ctx.beginPath();path({type:'Sphere'});ctx.fillStyle='#141811';ctx.fill();
+    ctx.beginPath();path(grat);ctx.strokeStyle='rgba(236,235,229,.06)';ctx.lineWidth=.7;ctx.stroke();
+    if(land){ctx.beginPath();path(land);ctx.fillStyle='#2a3226';ctx.fill();ctx.beginPath();path(borders);ctx.strokeStyle='rgba(12,14,11,.7)';ctx.lineWidth=.7;ctx.stroke()}
+    ROUTES.forEach((pts,i)=>{const on=i===di;if(!on&&opt.onlyActive)return;
+      ctx.setLineDash(on?[]:[2,6]);ctx.strokeStyle=on?'#cfa95a':'rgba(207,169,90,.4)';ctx.lineWidth=on?2.4:1;
+      const upto=on&&!reduce?Math.min(1,(t-G.drawStart)/1400):1;const lim=Math.floor(upto*(pts.length-1));
+      ctx.beginPath();let pen=false;for(let k=0;k<=lim;k++){const p=pts[k],q=G.xyz(p[0],p[1],p[2]);if(q[2]){pen?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);pen=true}else pen=false}ctx.stroke()});
+    ctx.setLineDash([]);
+    DEST.forEach((d,i)=>{const q=G.xyz(d.c[0],d.c[1],0);if(q[3]<0)return;const on=i===di;if(!on&&opt.onlyActive)return;
+      ctx.fillStyle=on?'#cfa95a':'rgba(236,235,229,.7)';ctx.beginPath();ctx.arc(q[0],q[1],on?5:2.2,0,6.283);ctx.fill();
+      if(on&&opt.labels){ctx.font='600 15px "TikTok Sans",system-ui,sans-serif';ctx.fillStyle='#ecebe5';ctx.fillText(d.city,q[0]+12,q[1]-10)}});
+    HUBS.forEach(h=>{const q=G.xyz(h[1],h[2],0);if(q[3]<0)return;ctx.fillStyle='#ecebe5';ctx.beginPath();ctx.arc(q[0],q[1],3,0,6.283);ctx.fill()});
+    if(opt.labels){const cn=G.xyz(104,33,0);if(cn[3]>.2&&W>720){ctx.font='600 15px "TikTok Sans",system-ui,sans-serif';ctx.fillStyle='#b3b4aa';ctx.fillText(LANG==='en'?'China, 6 factory cities':'China, 6 Werkstädte',cn[0]-70,cn[1]+4)}}
+  };
+  G.drawStart=0;
+  return G;
+}
+const g1=makeGlobe(document.getElementById('globe'),{rot:[-62,-30],labels:true,layout:G=>{const mob=G.W<900;G.R=mob?G.W*.62:Math.min(G.W*.4,G.H*.74);G.CX=G.W*(mob?.5:.56);G.CY=mob?G.R*1.02:G.H*1.02}});
+const g2=makeGlobe(document.getElementById('globe2'),{rot:[-20,-38],labels:false,onlyActive:false,layout:G=>{G.R=Math.max(G.W,G.H)*.62;G.CX=G.W*.42;G.CY=G.H*.98}});
+[g1,g2].forEach(G=>G.size());addEventListener('resize',()=>[g1,g2].forEach(G=>G.size()));
 
-const inp=document.getElementById('dest'),list=document.getElementById('dlist'),hKm=document.getElementById('hKm');
+let target=null,spinning=!reduce,hold=0,auto=true;
+const inp=document.getElementById('dest'),list=document.getElementById('dlist');
 const label=d=>`${d.city}, ${d.id.includes(':')?cname(d.id.split(':')[0]):dname(d)}`;
 function aimAt(i){const d=DEST[i],mid=d3.geoInterpolate(ORIGIN,d.c)(.5);target=[-mid[0],-Math.max(-55,Math.min(55,mid[1]))*.85]}
-function setDest(i){di=i;aimAt(i);if(document.activeElement!==inp)inp.value=label(DEST[i]);
+function setDest(i){di=i;aimAt(i);g1.drawStart=performance.now();if(document.activeElement!==inp)inp.value=label(DEST[i]);
   const d=DEST[i],tm=TIMES[d.r]||{};
-  hKm.textContent=kmTxt(d.km)+' · '+daysTxt(tm.air)+' ✈'+(tm.rail?'  ·  '+daysTxt(tm.rail)+(LANG==='en'?' by rail':' Bahn'):'')}
+  document.getElementById('rKm').textContent=kmTxt(d.km);
+  document.getElementById('rAir').textContent=daysTxt(tm.air);
+  document.getElementById('rRail').textContent=tm.rail?daysTxt(tm.rail):(LANG==='en'?'not available':'nicht verfügbar')}
 function pick(name,cc,c){auto=false;hold=performance.now()+8000;
   let i=DEST.findIndex(d=>d.city===name&&(d.id===cc||d.id.startsWith(cc)||d.id===cc+':'+name));
   if(i<0){DEST.push(cityDest(name,cc,c));ROUTES.push(routePts(c));i=DEST.length-1}
   inp.blur();closeList();setDest(i)}
-
 /* Ortssuche: alle Städte aus der Liste, dazu weltweite Suche über OpenStreetMap */
 let items=[],act=-1,remote=[],rq=0,timer=null;
 const CCS=Object.keys(CITY_RAW);
@@ -800,192 +798,143 @@ inp.addEventListener('keydown',e=>{const lis=[...list.querySelectorAll('li[data-
   else if(e.key==='Escape'){inp.blur()}});
 list.addEventListener('mousedown',e=>{const l=e.target.closest('li[data-i]');if(!l)return;e.preventDefault();const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)});
 inp.addEventListener('blur',()=>{setTimeout(()=>{closeList();inp.value=label(DEST[di])},120)});
-addEventListener('langchange',()=>setDest(di));
-setDest(di);rot=target.slice();
-/* Ziele wechseln automatisch durch, bis jemand selbst eines wählt */
-setInterval(()=>{if(auto&&!reduce&&performance.now()>hold)setDest((di+1)%17)},3500);
-
+setDest(di);g1.rot=target.slice();g1.drawStart=-1e9;
+setInterval(()=>{if(auto&&!reduce&&!document.hidden&&performance.now()>hold)setDest((di+1)%17)},6000);
 const spinBtn=document.getElementById('spin');
-spinBtn.addEventListener('click',()=>{spinning=!spinning;auto=spinning;spinBtn.setAttribute('aria-pressed',spinning)});
+spinBtn.addEventListener('click',()=>{auto=!auto;spinBtn.setAttribute('aria-pressed',auto)});
 if(reduce)spinBtn.setAttribute('aria-pressed','false');
-
-let drag=null,R=300,CX=0,CY=0;
-cv.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;drag={x:e.clientX,y:e.clientY,r:rot.slice()};target=null;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
-cv.addEventListener('pointermove',e=>{if(!drag)return;const k=70/Math.max(R,200);rot=[drag.r[0]+(e.clientX-drag.x)*k,Math.max(-70,Math.min(70,drag.r[1]-(e.clientY-drag.y)*k))]});
-const end=()=>{if(drag){lastTouch=performance.now();hold=lastTouch+6000}drag=null;cv.classList.remove('drag')};
-cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
-
-function layout(){
-  const max=Math.max(1,document.documentElement.scrollHeight-H),p=Math.min(1,scrollY/max);
-  const base=Math.min(W,H)*(W<640?0.62:0.44),e=d3.easeCubicInOut(Math.min(1,p*1.6));
-  R=base*(1+0.45*e);CX=W/2+Math.sin(p*Math.PI*1.6)*W*(W<640?0.12:0.24);CY=H*0.56+e*H*0.42;
-}
-function xyz(lon,lat,h){
-  const r=d3.geoRotation(rot)([lon,lat]),l=r[0]*Math.PI/180,f=r[1]*Math.PI/180;
-  const x=Math.cos(f)*Math.sin(l),y=Math.sin(f),z=Math.cos(f)*Math.cos(l),s=1+(h||0);
-  return [CX+R*x*s,CY-R*y*s,z>=0||Math.hypot(x*s,y*s)>1,z];
-}
+let drag=null;const cv1=g1.cv;
+cv1.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;drag={x:e.clientX,y:e.clientY,r:g1.rot.slice()};target=null;cv1.classList.add('drag');cv1.setPointerCapture(e.pointerId)});
+cv1.addEventListener('pointermove',e=>{if(!drag)return;const k=70/Math.max(g1.R,200);g1.rot=[drag.r[0]+(e.clientX-drag.x)*k,Math.max(-70,Math.min(70,drag.r[1]-(e.clientY-drag.y)*k))]});
+const end=()=>{if(drag)hold=performance.now()+6000;drag=null;cv1.classList.remove('drag')};
+cv1.addEventListener('pointerup',end);cv1.addEventListener('pointercancel',end);
+let g2vis=false;new IntersectionObserver(es=>es.forEach(e=>g2vis=e.isIntersecting)).observe(g2.cv);
+let g1vis=true;new IntersectionObserver(es=>es.forEach(e=>g1vis=e.isIntersecting)).observe(g1.cv);
 function frame(t){
-  layout();
-  if(target&&!drag){rot[0]+=(target[0]-rot[0])*0.045;rot[1]+=(target[1]-rot[1])*0.045;if(Math.abs(target[0]-rot[0])<.05&&Math.abs(target[1]-rot[1])<.05)target=null}
-  else if(spinning&&!drag&&!auto&&t>hold){rot[0]+=0.04}
-  proj.translate([CX,CY]).scale(R).rotate(rot);
-  ctx.clearRect(0,0,W,H);
-  for(const s of stars){const a=reduce?.5:.25+.35*(1+Math.sin(t*.001*s.s+s.p))/2;ctx.fillStyle=`rgba(241,230,204,${a})`;ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,6.283);ctx.fill()}
-  let g=ctx.createRadialGradient(CX,CY,R*.92,CX,CY,R*1.32);
-  g.addColorStop(0,'rgba(207,169,90,.20)');g.addColorStop(.4,'rgba(207,169,90,.06)');g.addColorStop(1,'rgba(207,169,90,0)');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R*1.32,0,6.283);ctx.fill();
-  g=ctx.createRadialGradient(CX-R*.35,CY-R*.45,R*.1,CX,CY,R);g.addColorStop(0,'#1a2114');g.addColorStop(.7,'#0c0f09');g.addColorStop(1,'#070906');
-  ctx.beginPath();path({type:'Sphere'});ctx.fillStyle=g;ctx.fill();
-  ctx.beginPath();path(grat);ctx.strokeStyle='rgba(236,226,196,.05)';ctx.lineWidth=.6;ctx.stroke();
-  if(land){ctx.beginPath();path(land);ctx.fillStyle='rgba(38,46,29,.95)';ctx.fill();ctx.strokeStyle='rgba(236,226,196,.16)';ctx.lineWidth=.7;ctx.stroke();
-    ctx.beginPath();path(borders);ctx.strokeStyle='rgba(236,226,196,.06)';ctx.lineWidth=.5;ctx.stroke()}
-  g=ctx.createLinearGradient(CX-R,CY-R,CX+R,CY+R);g.addColorStop(0,'rgba(235,211,155,.55)');g.addColorStop(.5,'rgba(207,169,90,.10)');g.addColorStop(1,'rgba(154,120,56,.35)');
-  ctx.beginPath();path({type:'Sphere'});ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.stroke();
-  // alle Routen
-  ROUTES.forEach((pts,i)=>{const on=i===di;
-    ctx.setLineDash(on?[6,6]:[2,5]);ctx.lineDashOffset=reduce?0:-t*(on?.03:.012);
-    ctx.strokeStyle=on?'rgba(235,211,155,.95)':'rgba(207,169,90,.26)';ctx.lineWidth=on?1.6:.9;
-    ctx.beginPath();let pen=false;
-    for(const p of pts){const q=xyz(p[0],p[1],p[2]);if(q[2]){pen?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);pen=true}else pen=false}
-    ctx.stroke()});
-  ctx.setLineDash([]);
-  if(!reduce){const pts=ROUTES[di],k=(t*0.00022)%1,p=pts[Math.floor(k*(pts.length-1))],q=xyz(p[0],p[1],p[2]);
-    if(q[2]){const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],10);gg.addColorStop(0,'rgba(255,240,200,.95)');gg.addColorStop(1,'rgba(235,211,155,0)');ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],10,0,6.283);ctx.fill()}}
-  // alle Ziele, aktives mit Radar-Ping und Name
-  DEST.forEach((d,i)=>{const q=xyz(d.c[0],d.c[1],0);if(q[3]<0)return;const on=i===di;
-    ctx.fillStyle=on?'#ebd39b':'rgba(241,230,204,.6)';ctx.beginPath();ctx.arc(q[0],q[1],on?3.4:2,0,6.283);ctx.fill();
-    if(on){for(let k=0;k<2;k++){const ph=reduce?.4:((t*.0006+k*.5)%1);ctx.strokeStyle=`rgba(235,211,155,${.7*(1-ph)})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(q[0],q[1],4+ph*22,0,6.283);ctx.stroke()}
-      ctx.font='600 11px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(241,230,204,.92)';ctx.fillText(d.city.toUpperCase(),q[0]+10,q[1]-8)}});
-  HUBS.forEach(h=>{const q=xyz(h[1],h[2],0);if(q[3]<0)return;
-    const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],9);gg.addColorStop(0,'rgba(235,211,155,.6)');gg.addColorStop(1,'rgba(235,211,155,0)');
-    ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],9,0,6.283);ctx.fill();ctx.fillStyle='#f1e6cc';ctx.beginPath();ctx.arc(q[0],q[1],1.9,0,6.283);ctx.fill()});
-  const cn=xyz(104,35,0);if(cn[3]>.15&&W>720){ctx.font='500 10.5px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(207,169,90,.85)';ctx.fillText(LANG==='en'?'CHINA · 6 SITES':'CHINA · 6 STANDORTE',cn[0]-60,cn[1]+4)}
-  g=ctx.createRadialGradient(W*.1,H*1.05,0,W*.1,H*1.05,Math.max(W,H)*.6);g.addColorStop(0,'rgba(154,120,56,.16)');g.addColorStop(1,'rgba(154,120,56,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  requestAnimationFrame(frame);
-}
+  if(g1vis){if(target&&!drag){g1.rot[0]+=(target[0]-g1.rot[0])*.045;g1.rot[1]+=(target[1]-g1.rot[1])*.045;if(Math.abs(target[0]-g1.rot[0])<.05&&Math.abs(target[1]-g1.rot[1])<.05)target=null}
+    g1.draw(t)}
+  if(g2vis){if(!reduce)g2.rot[0]+=.03;g2.draw(t)}
+  requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
 
-/* ================= Herkunft: China-Karte ================= */
-Object.assign(EN,{
-'Herkunft':'Origin','Direkt aus den Industriezentren Chinas':'Straight from China’s industrial centres',
-'Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see which products are made there.',
-'← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production sites in China',
-'6 Produktionsstandorte':'6 production sites','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location',
-'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
-'Produkte aus dieser Region anfragen':'Enquire about products from this region',
-'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden tools','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
-'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Anhänger':'Trailers','Einachsschlepper':'Two-wheel tractors','Motorhacken':'Power tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Gartengeräte':'Garden tools','Export':'Export','Werkzeug':'Tools','Metallwaren':'Metal goods','Lounge':'Lounge','Gartentische':'Garden tables',
-'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.':'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment makers are based around Weifang.',
-'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.':'Changzhou is known for two-wheel tractors, power tillers and small engines for farming and gardening.',
-'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.':'Anji is a centre of chair and furniture production and known for bamboo products.',
-'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.':'Ningbo has one of the world’s largest ports and many makers of garden tools, irrigation and household goods.',
-'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.':'Yongkang is considered China’s hardware capital, with many makers of tools, garden tools and metal goods.',
-'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.':'Foshan, especially the Shunde district, is one of the world’s largest furniture centres, including garden and outdoor furniture.',
-'KI-Symbolbild: Industriegebiet Anji':'AI illustration: Anji industrial area'
-});
-const HUBD=[
- {id:'weifang',city:'Weifang',o:[10,4],prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
- {id:'changzhou',city:'Changzhou',o:[-10,-2,1],prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
- {id:'anji',city:'Anji',o:[-10,10,1],prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
- {id:'ningbo',city:'Ningbo',o:[10,0],prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
- {id:'yongkang',city:'Yongkang',o:[10,10],prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
- {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
-];
-const HUB_PHOTO={
- weifang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg',page:'https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg',credit:'Foto: Ngguls · CC BY-SA 4.0 · Wikimedia Commons'},
- changzhou:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg',page:'https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg',credit:'Foto: A Chinese user · CC BY-SA 4.0 · Wikimedia Commons'},
- anji:{src:'hub-anji.jpg',credit:'KI-Symbolbild: Industriegebiet Anji'},
- ningbo:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg',page:'https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg',credit:'Foto: Nbfreeh · CC BY-SA 4.0 · Wikimedia Commons'},
- yongkang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',page:'https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',credit:'Foto: Tyj1982338 · CC BY 2.0 · Wikimedia Commons'},
- foshan:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',page:'https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',credit:'Foto: Lau Hau Yatyue Tiger · CC0 · Wikimedia Commons'}
-};
+/* ================= Sortiment: Objekt auf der Scheibe ================= */
 (function(){
-  const g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
-  if(!g.node())return;
-  let proj=null,cur=-1,K=1;
-  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-  const fmtC=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
-  function renderCard(i){const h=HUBD[i],ph=HUB_PHOTO[h.id];
-    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${esc(h.city)}" loading="lazy" onerror="this.remove()">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${esc(ph.credit)}</a>`:`<span class="cr">${esc(t(ph.credit))}</span>`}`:''}<div class="fb" style="z-index:-1"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmtC(h.c)}</span></div></div>
-      <div class="hubbody"><div class="loc">${h.prov} · ${esc(t(h.focus))}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${esc(t(h.txt))}</p><div class="tg">${h.tags.map(x=>`<span>${esc(t(x))}</span>`).join('')}</div>
-      <a href="index-alt.html#kontakt" class="btn btn-primary">${esc(t('Produkte aus dieser Region anfragen'))} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>`;
-    card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade')}
-  function renderIntro(){card.innerHTML=`<div class="hubph"><div class="fb"><b>CHINA</b><span>${esc(t('6 Produktionsstandorte'))}</span></div></div><div class="hubbody"><div class="loc">${esc(t('Produktionsregionen'))}</div><h3>${esc(t('Wählen Sie einen Standort'))}</h3><p>${esc(t('Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.'))}</p></div>`}
-  function renderChips(){chips.innerHTML=HUBD.map((h,i)=>`<button type="button" class="${i===cur?'on':''}" data-i="${i}">${h.city}</button>`).join('')}
-  function zoomTo(i){cur=i;renderChips();g.selectAll('.hub').classed('on',(d,k)=>k===i);
-    if(!proj){i<0?renderIntro():renderCard(i);return}
-    let tr;if(i<0){K=1;tr=d3.zoomIdentity;map.classList.remove('zoomed');renderIntro()}
-    else{const [x,y]=proj(HUBD[i].c);K=4.2;tr=d3.zoomIdentity.translate(300-x*K,250-y*K).scale(K);map.classList.add('zoomed');renderCard(i);if(innerWidth<900)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),1150)}
-    const dur=reduce?0:1100;
-    g.transition().duration(dur).ease(d3.easeCubicInOut).attr('transform',tr.toString());
-    g.selectAll('.hub circle.d').transition().duration(dur).attr('r',d=>(HUBD.indexOf(d)===i?6:4.5)/K);
-    g.selectAll('.hub circle.p').transition().duration(dur).attr('r',9/K);
-    g.selectAll('.hub text').transition().duration(dur).attr('font-size',13/K).attr('x',d=>d.o[0]/K).attr('y',d=>d.o[1]/K)}
-  chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)zoomTo(+b.dataset.i===cur?-1:+b.dataset.i)});
-  document.getElementById('hubBack').onclick=()=>zoomTo(-1);
-  renderChips();renderIntro();
-  addEventListener('langchange',()=>cur<0?renderIntro():renderCard(cur));
-  function draw(cn){
-    proj=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
-    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
-    const hub=g.selectAll('g.hub').data(HUBD).join('g').attr('class','hub').attr('transform',d=>`translate(${proj(d.c)})`).on('click',(e,d)=>{const i=HUBD.indexOf(d);zoomTo(i===cur?-1:i)});
-    hub.append('circle').attr('class','p').attr('r',9);
-    hub.append('circle').attr('class','d').attr('r',4.5);
-    hub.append('text').attr('x',d=>d.o[0]).attr('y',d=>d.o[1]).attr('text-anchor',d=>d.o[2]?'end':'start').attr('font-size',13).text(d=>d.city);
-  }
-  function fallback(){try{const tp=Datamap.prototype.worldTopo,key=Object.keys(tp.objects)[0];const f=topojson.feature(tp,tp.objects[key]).features.find(f=>f.id==='CHN');if(f)draw(f)}catch(e){}}
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then(r=>r.json()).then(tp=>{
-    const f=topojson.feature(tp,tp.objects.countries).features.find(f=>f.id==='156');f?draw(f):fallback()}).catch(fallback);
-})();
-
-
-/* ================= Produkt-Laufband ================= */
-(function(){
-  const P=window.KP||[];if(!P.length)return;
-  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-  const fresh=P.filter(p=>p.b==='SHENGYAO');
-  const pick=(arr,n)=>{const st=Math.max(1,Math.floor(arr.length/n));return arr.filter((_,i)=>i%st===0).slice(0,n)};
-  const r1=pick(fresh,16);
-  const r2=[...pick(P.filter(p=>p.b==='TNYAN'),6),...pick(P.filter(p=>p.b==='SCHENG'),5),...pick(P.filter(p=>p.k==='zubehoer'),5),...pick(P.filter(p=>p.k==='wasser'||p.k==='anzucht'),3)];
-  const tile=p=>`<a class="mq-tile" href="sortiment.html?p=${encodeURIComponent(p.i)}" data-vt><span class="ti"><img src="${p.im}" alt="" loading="lazy" decoding="async"></span><span class="tc"><small class="notranslate" translate="no">${esc(p.b||'')} · ${esc(p.i)}</small><b>${esc(p.n)}</b></span></a>`;
-  const fill=(id,arr,dur)=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=arr.map(tile).join('')+arr.map(tile).join('').replace(/<a /g,'<a tabindex="-1" aria-hidden="true" ');el.style.setProperty('--dur',dur+'s')};
-  fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);
-  const ttl=document.getElementById('mqTitle');if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO');
-  addEventListener('langchange',()=>{if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO')});
-})();
-applyLang();fixTotals();
-</script>
-<script>
-(function(){
-  const P=window.KP||[],C=window.KC||[],box=document.getElementById('kmegain'),mega=document.getElementById('kmega');
-  if(!box)return;
   const IMG={akkugarten:'pi/sy-13.webp',werkzeug:'pi/ex21.webp',zubehoer:'pi/csz1001.webp',anzucht:'pi/ycs07.webp',wasser:'pi/sy-44.webp'};
-  const FEAT='JD-4001';
-  const n=(k,s)=>P.filter(p=>p.k===k&&(!s||p.s===s)).length;
-  const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
-  const f=P.find(p=>p.i===FEAT)||P[P.length-1];
-  box.innerHTML=
-    `<div class="kmob"><a href="sortiment.html">Ganzes Sortiment</a><a href="index.html#herkunft">Herkunft</a><a href="index.html#ablauf">Ablauf</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">Kontakt &amp; Anfrage</a></div>`+
-    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${name}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${s[1]}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
-    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>Neu im Sortiment</small><b>${f.n}</b></span></a>`:''}<div class="kreq"><p>Auf Anfrage</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${c[1]}</a>`).join('')}</div><a class="kall" href="sortiment.html">Alle ${P.length} Artikel</a></div>`;
-  const btns=[document.getElementById('kmb'),document.getElementById('kbg')].filter(Boolean);
-  let t=null;
-  function set(open){mega.classList.toggle('open',open);btns.forEach(b=>b.setAttribute('aria-expanded',open))}
+  const DISC={akkugarten:'#d8c9a8',werkzeug:'#cdd2c5',zubehoer:'#dfcca4',anzucht:'#c4d0ae',wasser:'#bcced0'};
+  const act=C.filter(c=>P.some(p=>p.k===c[0]));const n=k=>P.filter(p=>p.k===k).length;
+  const ul=document.getElementById('showList'),disc=document.getElementById('disc'),img=document.getElementById('discImg'),fact=document.getElementById('fact');
+  act.forEach(([k,name],j)=>{const li=document.createElement('li');li.innerHTML=`<button type="button" data-k="${k}" aria-pressed="false" data-r style="--d:${j+1}">${esc(t(name))}</button>`;ul.appendChild(li)});
+  act.forEach(c=>{const im=new Image();im.src=IMG[c[0]]});
+  let cur=null,timer=null;
+  function show(k){if(k===cur)return;cur=k;const c=act.find(x=>x[0]===k);
+    ul.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+    disc.style.backgroundColor=DISC[k]||'#d8c9a8';
+    img.classList.add('out');setTimeout(()=>{img.src=IMG[k]||'';img.alt=t(c[1]);img.onload=()=>img.classList.remove('out');if(img.complete)img.classList.remove('out')},reduce?0:300);
+    const subs=c[3].filter(s=>P.some(p=>p.k===k&&p.s===s[0])).map(s=>s[1]);
+    fact.innerHTML=`<b>${n(k)} ${t('Artikel')}</b><p>${esc((subs.length?subs.slice(0,4).join(', '):c[2]))}</p><a class="link" href="sortiment.html?k=${k}">${t('Bereich öffnen')}</a>`}
+  ul.addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(b){show(b.dataset.k);clearInterval(timer)}});
+  ul.addEventListener('mouseover',e=>{const b=e.target.closest('button[data-k]');if(b&&matchMedia('(hover:hover)').matches){show(b.dataset.k);clearInterval(timer)}});
+  ul.addEventListener('focusin',e=>{const b=e.target.closest('button[data-k]');if(b)show(b.dataset.k)});
+  show(act[0][0]);
+  let j=0;if(!reduce)timer=setInterval(()=>{if(document.hidden)return;j=(j+1)%act.length;show(act[j][0])},5500);
+  addEventListener('langchange',()=>{ul.querySelectorAll('button[data-k]').forEach(b=>{const c=act.find(x=>x[0]===b.dataset.k);b.textContent=t(c[1])});const k=cur;cur=null;show(k)});
+})();
+
+/* ================= Neu im Sortiment: Reihe zum Ziehen ================= */
+(function(){
+  const row=document.getElementById('strip');const fresh=P.filter(p=>p.b==='SHENGYAO');
+  document.getElementById('neuN').textContent=fresh.length;
+  row.innerHTML=fresh.slice(0,24).map(p=>`<a class="frame" href="sortiment.html?p=${encodeURIComponent(p.i)}" title="${esc(p.n)}" data-vt><img src="${p.im}" alt="${esc(p.n)}" width="900" height="900" loading="lazy" decoding="async"></a>`).join('');
+  let down=null,moved=false;
+  row.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down={x:e.clientX,s:row.scrollLeft};moved=false;row.classList.add('drag')});
+  addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-down.x;if(Math.abs(dx)>4)moved=true;row.scrollLeft=down.s-dx});
+  addEventListener('pointerup',()=>{down=null;row.classList.remove('drag')});
+  row.addEventListener('click',e=>{if(moved){e.preventDefault();moved=false}},true);
+  row.addEventListener('dragstart',e=>e.preventDefault());
+})();
+
+/* ================= Herkunft: sechs Städte ================= */
+(function(){
+  const HUBD=[
+   {id:'weifang',city:'Weifang',prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
+   {id:'changzhou',city:'Changzhou',prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
+   {id:'anji',city:'Anji',prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
+   {id:'ningbo',city:'Ningbo',prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
+   {id:'yongkang',city:'Yongkang',prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas, mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
+   {id:'foshan',city:'Foshan',prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt, auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}];
+  const PH={
+   weifang:['https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg','https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg','Weifang · Foto: Ngguls, CC BY-SA 4.0'],
+   changzhou:['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg','https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg','Changzhou · Foto: A Chinese user, CC BY-SA 4.0'],
+   anji:['hub-anji.jpg','','Anji · Symbolbild Industriegebiet'],
+   ningbo:['https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg','https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg','Ningbo, Hafen Beilun · Foto: Nbfreeh, CC BY-SA 4.0'],
+   yongkang:['https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg','https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg','Yongkang · Foto: Tyj1982338, CC BY 2.0'],
+   foshan:['https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg','https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg','Foshan · Foto: Lau Hau Yatyue Tiger, CC0']};
+  Object.assign(EN,{'Landtechnik':'Farm machinery','Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden tools','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
+   'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Anhänger':'Trailers','Einachsschlepper':'Two-wheel tractors','Motorhacken':'Power tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Gartengeräte':'Garden tools','Export':'Export','Werkzeug':'Tools','Metallwaren':'Metal goods','Outdoor-Möbel':'Outdoor furniture','Lounge':'Lounge','Gartentische':'Garden tables',
+   [HUBD[0].txt]:'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment makers are based around Weifang.',
+   [HUBD[1].txt]:'Changzhou is known for two-wheel tractors, power tillers and small engines for farming and gardening.',
+   [HUBD[2].txt]:'Anji is a centre of chair and furniture production and known for bamboo products.',
+   [HUBD[3].txt]:'Ningbo has one of the world’s largest ports and many makers of garden tools, irrigation and household goods.',
+   [HUBD[4].txt]:'Yongkang is considered China’s hardware capital, with many makers of tools, garden tools and metal goods.',
+   [HUBD[5].txt]:'Foshan, especially the Shunde district, is one of the world’s largest furniture centres, including garden and outdoor furniture.'});
+  const photo=document.getElementById('cPhoto'),cap=document.getElementById('cCap'),listEl=document.getElementById('cList');
+  photo.innerHTML=HUBD.map((h,i)=>`<img src="${PH[h.id][0]}" alt="${esc(h.city)}" width="960" height="1200" ${i?'loading="lazy"':''} decoding="async">`).join('');
+  const imgs=[...photo.querySelectorAll('img')];
+  function rows(){listEl.innerHTML=HUBD.map((h,i)=>`<div class="crow" data-i="${i}"><button type="button" aria-expanded="false"><b class="notranslate" translate="no">${h.city}</b><span>${h.prov} · ${esc(t(h.focus))}</span></button><div class="cd"><div><p>${esc(t(h.txt))}</p><ul>${h.tags.map(x=>`<li>${esc(t(x))}</li>`).join('')}</ul></div></div></div>`).join('')}
+  rows();
+  let cur=-1;
+  function act(i){if(i===cur)return;cur=i;imgs.forEach((im,k)=>im.classList.toggle('on',k===i));
+    listEl.querySelectorAll('.crow').forEach((r,k)=>{r.classList.toggle('on',k===i);r.querySelector('button').setAttribute('aria-expanded',k===i)});
+    const p=PH[HUBD[i].id];cap.innerHTML=p[1]?`<a href="${p[1]}" target="_blank" rel="noopener">${esc(p[2])}</a>`:esc(p[2]);
+    document.querySelectorAll('#locg circle').forEach((c,k)=>{c.classList.toggle('on',k===i);c.setAttribute('r',k===i?7:4)})}
+  listEl.addEventListener('click',e=>{const r=e.target.closest('.crow');if(r)act(+r.dataset.i)});
+  listEl.addEventListener('mouseover',e=>{const r=e.target.closest('.crow');if(r&&matchMedia('(hover:hover)').matches)act(+r.dataset.i)});
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)act(+e.target.dataset.i)}),{rootMargin:'-45% 0px -45% 0px'});listEl.querySelectorAll('.crow').forEach(r=>io.observe(r))}
+  act(0);
+  addEventListener('langchange',()=>{const k=cur;rows();cur=-1;act(k)});
+  /* Lagekarte China */
+  function drawMap(cn){const proj=d3.geoMercator().fitExtent([[10,10],[290,240]],cn);const g=d3.select('#locg');
+    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
+    g.selectAll('circle').data(HUBD).join('circle').attr('cx',d=>proj(d.c)[0]).attr('cy',d=>proj(d.c)[1]).attr('r',(d,k)=>k===cur?7:4).attr('class',(d,k)=>k===cur?'on':'')}
+  try{const tp=Datamap.prototype.worldTopo,key=Object.keys(tp.objects)[0];const f=topojson.feature(tp,tp.objects[key]).features.find(f=>f.id==='CHN');if(f)drawMap(f)}catch(e){}
+})();
+
+/* ================= Ablauf: Fotos bewegen sich langsam mit ================= */
+(function(){if(reduce)return;const ims=[...document.querySelectorAll('.verb>img')];let tick=false;
+  function upd(){tick=false;const H=innerHeight;ims.forEach(im=>{const r=im.parentNode.getBoundingClientRect();if(r.bottom<0||r.top>H)return;const p=(r.top+r.height/2-H/2)/H;im.style.transform=`translateY(${(p*-6).toFixed(2)}%) scale(${(1.04+Math.abs(p)*.04).toFixed(3)})`})}
+  addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd()})();
+
+/* ================= Teile jedes Abschnitts kommen nacheinander ================= */
+(function(){const els=document.querySelectorAll('[data-r]');
+  if(reduce||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  els.forEach(e=>io.observe(e));
+  setTimeout(()=>document.querySelectorAll('[data-r]').forEach(e=>{const r=e.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)e.classList.add('in')}),50);
+  new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===1){(n.matches&&n.matches('[data-r]')?[n]:[]).concat([...n.querySelectorAll?n.querySelectorAll('[data-r]'):[]]).forEach(x=>io.observe(x))}}))).observe(document.body,{childList:true,subtree:true});
+})();
+
+/* ================= Menü ================= */
+(function(){
+  const box=document.getElementById('megain'),mega=document.getElementById('mega');
+  const IMG={akkugarten:'pi/sy-13.webp',werkzeug:'pi/ex21.webp',zubehoer:'pi/csz1001.webp',anzucht:'pi/ycs07.webp',wasser:'pi/sy-44.webp'};
+  const n=k=>P.filter(p=>p.k===k).length;
+  function build(){const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
+    box.innerHTML=`<div class="mob-links"><a href="sortiment.html">${t('Ganzes Sortiment')}</a><a href="#herkunft">${t('Herkunft')}</a><a href="#ablauf">${t('Ablauf')}</a><a href="#fragen">${t('Fragen')}</a><a href="index-alt.html#kontakt">${t('Kontakt')}</a></div>`+
+    on.map(([k,name])=>`<a class="mc" href="sortiment.html?k=${k}"><span class="mi"><img src="${IMG[k]}" alt="" loading="lazy"></span><b>${esc(t(name))}</b><span>${n(k)} ${t('Artikel')}</span></a>`).join('')+
+    `<div class="mside"><p>${t('Auf Anfrage')}: ${req.map(c=>`<a class="link" href="sortiment.html?k=${c[0]}">${esc(t(c[1]))}</a>`).join(' ')}</p><a class="btn" href="sortiment.html">${t('Ganzes Sortiment')} · ${P.length}</a></div>`}
+  build();addEventListener('langchange',build);
+  const btns=[document.getElementById('kmb'),document.getElementById('kbg')];let tm=null;
+  const set=o=>{mega.classList.toggle('open',o);btns.forEach(b=>b.setAttribute('aria-expanded',o))};
   btns.forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();set(!mega.classList.contains('open'))}));
-  const mb=document.getElementById('kmb');
-  if(mb&&matchMedia('(hover:hover)').matches){
-    const enter=()=>{clearTimeout(t);t=setTimeout(()=>set(true),120)},leave=()=>{clearTimeout(t);t=setTimeout(()=>set(false),220)};
-    mb.addEventListener('mouseenter',enter);mb.addEventListener('mouseleave',leave);mega.addEventListener('mouseenter',()=>clearTimeout(t));mega.addEventListener('mouseleave',leave);
-  }
-  document.addEventListener('click',e=>{if(!e.target.closest('#knav'))set(false)});
+  const mb=btns[0];if(matchMedia('(hover:hover)').matches){mb.addEventListener('mouseenter',()=>{clearTimeout(tm);tm=setTimeout(()=>set(true),120)});[mb,mega].forEach(el=>el.addEventListener('mouseleave',()=>{clearTimeout(tm);tm=setTimeout(()=>set(false),250)}));mega.addEventListener('mouseenter',()=>clearTimeout(tm))}
+  document.addEventListener('click',e=>{if(!e.target.closest('#bar'))set(false)});
+  mega.addEventListener('click',e=>{if(e.target.closest('a[href^="#"]'))set(false)});
   addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
-  /* Seitenübergang: Produktbild fliegt in die Detailansicht */
-  document.addEventListener('click',e=>{const a=e.target.closest('a[data-vt]');if(!a)return;const im=a.querySelector('img');if(im)im.style.viewTransitionName='prod';},true);
+  document.addEventListener('click',e=>{const a=e.target.closest('a[data-vt]');if(a){const im=a.querySelector('img');if(im)im.style.viewTransitionName='prod'}},true);
   addEventListener('pageshow',()=>document.querySelectorAll('a[data-vt] img').forEach(i=>i.style.viewTransitionName=''));
 })();
+applyLang();
+
 </script>
-
-
 </body>
 </html>
