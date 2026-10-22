@@ -319,7 +319,7 @@ button,.pc,.kt{touch-action:manipulation}
 <aside class="ml" id="ml"><div class="ml-h" id="mlh"><b>Merkliste</b><span id="mlc">0</span><i>⌃</i></div><div class="ml-b"><ul id="mll"></ul><p class="note">Preise und Mindestmengen erhalten Sie mit dem Angebot.</p><button type="button" class="btn gold full" id="mlask">Merkliste anfragen</button><button type="button" class="btn full" id="mlclr">Leeren</button></div></aside>
 <div class="modal" id="mod"><div class="dbox"><button type="button" class="mx" data-close="1" aria-label="Schließen">×</button><div id="dc"></div></div></div>
 <footer><div class="wrap"><div class="notranslate">© <span id="yy"></span> KARMIRA · karmira.de</div><div><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div></div></footer>
-<script src="products.js?v=30f3050d"></script>
+<script src="products.js?v=52b7a4c2"></script>
 <script>document.getElementById('yy').textContent=new Date().getFullYear()</script>
 <script>
 (function(){
@@ -330,10 +330,15 @@ button,.pc,.kt{touch-action:manipulation}
   const n=(k,s)=>P.filter(p=>p.k===k&&(!s||p.s===s)).length;
   const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
   const f=P.find(p=>p.i===FEAT)||P[P.length-1];
-  box.innerHTML=
-    `<div class="kmob"><a href="sortiment.html">Ganzes Sortiment</a><a href="index.html#herkunft">Herkunft</a><a href="index.html#ablauf">Ablauf</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">Kontakt &amp; Anfrage</a></div>`+
-    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${name}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${s[1]}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
-    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>Neu im Sortiment</small><b>${f.n}</b></span></a>`:''}<div class="kreq"><p>Auf Anfrage</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${c[1]}</a>`).join('')}</div><a class="kall" href="sortiment.html">Alle ${P.length} Artikel</a></div>`;
+  const nm=x=>(typeof LANG!=='undefined'&&LANG==='en'&&window.KEN&&KEN[x])||x;
+  const EN2={'Ganzes Sortiment':'Full range','Herkunft':'Origin','Ablauf':'Process','Kontakt & Anfrage':'Contact & enquiry','Neu im Sortiment':'New in our range','Auf Anfrage':'On request','Alle':'All','Artikel':'items'};
+  const L=x=>(typeof LANG!=='undefined'&&LANG==='en'&&EN2[x])||x;
+  function build(){box.innerHTML=
+    `<div class="kmob"><a href="sortiment.html">${L('Ganzes Sortiment')}</a><a href="index.html#herkunft">${L('Herkunft')}</a><a href="index.html#ablauf">${L('Ablauf')}</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">${L('Kontakt & Anfrage')}</a></div>`+
+    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${nm(name)}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${nm(s[1])}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
+    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>${L('Neu im Sortiment')}</small><b>${nm(f.n)}</b></span></a>`:''}<div class="kreq"><p>${L('Auf Anfrage')}</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${nm(c[1])}</a>`).join('')}</div><a class="kall" href="sortiment.html">${L('Alle')} ${P.length} ${L('Artikel')}</a></div>`;
+  }
+  build();addEventListener('langchange',build);
   const btns=[document.getElementById('kmb'),document.getElementById('kbg')].filter(Boolean);
   let t=null;
   function set(open){mega.classList.toggle('open',open);btns.forEach(b=>b.setAttribute('aria-expanded',open))}
@@ -383,7 +388,7 @@ function list(){let L=P;const v=norm(q.trim());
 const catName=k=>(C.find(c=>c[0]===k)||[])[1]||'';
 const subName=(k,s)=>{const c=C.find(c=>c[0]===k);const x=c&&c[3].find(y=>y[0]===s);return x?x[1]:''};
 function price(p){return p.rmb?`<div class="pr">ab ${eur(p.rmb).toLocaleString('de-DE')} € <span style="color:var(--muted)">${p.cap>0?'ohne Akku':''}</span></div>`:''}
-function card(p,n){return `<div class="pc ${ML[p.i]?'on':''}" data-i="${esc(p.i)}" style="--n:${n%24}"><div class="im" data-open="${esc(p.i)}"><img src="${p.im}" alt="${esc(p.n)}" loading="lazy" decoding="async"></div><div class="bd" data-open="${esc(p.i)}"><small class="notranslate" translate="no">${p.b||''} · ${p.i.replace(/-[SRWK]$/,'')}</small><b>${esc(p.n)}</b>${p.sp?`<div class="sp">${esc(p.sp)}</div>`:''}${price(p)}</div><button type="button" class="add" data-mark="${esc(p.i)}">${ML[p.i]?'✓ Gemerkt':'+ Merken'}</button></div>`}
+function card(p,n){return `<div class="pc ${ML[p.i]?'on':''}" data-i="${esc(p.i)}" style="--n:${n%24}"><div class="im" data-open="${esc(p.i)}"><img src="${p.im}" alt="${esc(p.n)}" loading="lazy" decoding="async"></div><div class="bd" data-open="${esc(p.i)}"><small class="notranslate" translate="no">${p.b||''} · ${p.i.replace(/-[SRWK]$/,'')}</small><b>${esc(p.n)}</b>${p.sp?`<div class="sp">${esc(p.sp)}</div>`:''}${price(p)}</div><button type="button" class="add" data-mark="${esc(p.i)}">${ML[p.i]?'Gemerkt':'+ Merken'}</button></div>`}
 function render(animate){const c=C.find(x=>x[0]===cat);const L=list();const step=(cat||q.trim())?'items':'cats';$('#main').dataset.step=step;if(step==='cats'){renderCats();}
  $('#gq').parentNode.classList.toggle('has',!!q);
  $('#kh').innerHTML=q&&!cat?`<div><h2>Suchergebnisse</h2><p>${L.length} Artikel für „${esc(q)}“</p></div>`:c?`<div class="khead">${cnt(c[0])?`<span class="ki"><img src="${CAT_IMG[c[0]]||thumb(c[0])}" alt=""></span>`:''}<div><h2>${c[1]}</h2><p>${cnt(c[0])?cnt(c[0])+' Artikel':''}<span class="kd">${cnt(c[0])?' · ':''}${c[2]}</span></p></div></div>`:'';
@@ -402,11 +407,11 @@ addEventListener('popstate',()=>{const U=new URLSearchParams(location.search);VT
 function renderML(){const ks=Object.keys(ML).filter(i=>byId[i]);$('#mlc').textContent=ks.length;$('#ml').classList.toggle('has',ks.length>0);
  $('#mll').innerHTML=ks.map(i=>`<li><img src="${byId[i].im}" alt=""><span>${esc(byId[i].n)}<br><small class="notranslate" translate="no" style="color:var(--muted)">${esc(i)}</small></span><input type="number" min="1" value="${ML[i]}" data-q="${esc(i)}" aria-label="Menge"><button type="button" data-mark="${esc(i)}" aria-label="Entfernen">×</button></li>`).join('');
  try{localStorage.setItem('k-ml',JSON.stringify(ML))}catch(e){}}
-function mark(i){if(ML[i])delete ML[i];else ML[i]=1;document.querySelectorAll(`.pc[data-i="${CSS.escape(i)}"]`).forEach(el=>{el.classList.toggle('on',!!ML[i]);el.querySelector('.add').textContent=ML[i]?'✓ Gemerkt':'+ Merken'});const db=document.querySelector('#dc [data-mark]');if(db&&db.dataset.mark===i)db.textContent=ML[i]?'✓ Auf der Merkliste':'+ Auf die Merkliste';renderML()}
+function mark(i){if(ML[i])delete ML[i];else ML[i]=1;document.querySelectorAll(`.pc[data-i="${CSS.escape(i)}"]`).forEach(el=>{el.classList.toggle('on',!!ML[i]);el.querySelector('.add').textContent=ML[i]?'Gemerkt':'+ Merken'});const db=document.querySelector('#dc [data-mark]');if(db&&db.dataset.mark===i)db.textContent=ML[i]?'Auf der Merkliste':'+ Auf die Merkliste';renderML()}
 function lock(on){document.documentElement.classList.toggle('lock',on)}
 function detailHTML(i){const p=byId[i];const ai=p.u&&p.u.startsWith('g/');
  const specs=(p.sp||'').split(' · ').filter(Boolean).map(s=>`<span>${esc(s)}</span>`).join('');
- return `<div class="dim"><img class="p" src="${p.im}" alt="${esc(p.n)}">${p.u?`<img class="u" src="${p.u}" alt="" style="display:none"><span class="tagai" style="display:none">${ai?'Anwendungsbeispiel (KI-Bild)':'Anwendungsbeispiel (Herstellerfoto)'}</span><div class="dsw"><button type="button" class="on" data-v="p">Produkt</button><button type="button" data-v="u">Anwendung</button></div>`:''}</div><div class="dt"><small class="notranslate" translate="no">${p.b||''} · ${p.i.replace(/-[SRWK]$/,'')}</small><h3>${esc(p.n)}</h3><p>${[catName(p.k),subName(p.k,p.s)].filter(Boolean).join(' · ')}</p>${specs?`<div class="specs">${specs}</div>`:''}${price(p)}<button type="button" class="btn gold" data-mark="${esc(i)}">${ML[i]?'✓ Auf der Merkliste':'+ Auf die Merkliste'}</button><a class="btn" href="mailto:info@karmira.de?subject=${encodeURIComponent('Anfrage '+p.n+' ('+p.i+')')}">Direkt anfragen</a></div>`}
+ return `<div class="dim"><img class="p" src="${p.im}" alt="${esc(p.n)}">${p.u?`<img class="u" src="${p.u}" alt="" style="display:none"><span class="tagai" style="display:none">${ai?'Anwendungsbeispiel (KI-Bild)':'Anwendungsbeispiel (Herstellerfoto)'}</span><div class="dsw"><button type="button" class="on" data-v="p">Produkt</button><button type="button" data-v="u">Anwendung</button></div>`:''}</div><div class="dt"><small class="notranslate" translate="no">${p.b||''} · ${p.i.replace(/-[SRWK]$/,'')}</small><h3>${esc(p.n)}</h3><p>${[catName(p.k),subName(p.k,p.s)].filter(Boolean).join(' · ')}</p>${specs?`<div class="specs">${specs}</div>`:''}${price(p)}<button type="button" class="btn gold" data-mark="${esc(i)}">${ML[i]?'Auf der Merkliste':'+ Auf die Merkliste'}</button><a class="btn" href="mailto:info@karmira.de?subject=${encodeURIComponent('Anfrage '+p.n+' ('+p.i+')')}">Direkt anfragen</a></div>`}
 let openFrom=null;
 function openD(i,fromImg){
  const go=()=>{$('#dc').innerHTML=detailHTML(i);$('#mod').classList.add('open');lock(true);

@@ -503,7 +503,7 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
   </section>
 </div>
 
-<script src="products.js?v=30f3050d"></script>
+<script src="products.js?v=52b7a4c2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/datamaps@0.5.9/dist/datamaps.world.min.js"></script>
@@ -948,11 +948,12 @@ const HUB_PHOTO={
   const pick=(arr,n)=>{const st=Math.max(1,Math.floor(arr.length/n));return arr.filter((_,i)=>i%st===0).slice(0,n)};
   const r1=pick(fresh,16);
   const r2=[...pick(P.filter(p=>p.b==='TNYAN'),6),...pick(P.filter(p=>p.b==='SCHENG'),5),...pick(P.filter(p=>p.k==='zubehoer'),5),...pick(P.filter(p=>p.k==='wasser'||p.k==='anzucht'),3)];
-  const tile=p=>`<a class="mq-tile" href="sortiment.html?p=${encodeURIComponent(p.i)}" data-vt><span class="ti"><img src="${p.im}" alt="" loading="lazy" decoding="async"></span><span class="tc"><small class="notranslate" translate="no">${esc(p.b||'')} · ${esc(p.i)}</small><b>${esc(p.n)}</b></span></a>`;
+  const nm=x=>(LANG==='en'&&window.KEN&&KEN[x])||x;
+  const tile=p=>`<a class="mq-tile" href="sortiment.html?p=${encodeURIComponent(p.i)}" data-vt><span class="ti"><img src="${p.im}" alt="" loading="lazy" decoding="async"></span><span class="tc"><small class="notranslate" translate="no">${esc(p.b||'')} · ${esc(p.i)}</small><b>${esc(nm(p.n))}</b></span></a>`;
   const fill=(id,arr,dur)=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=arr.map(tile).join('')+arr.map(tile).join('').replace(/<a /g,'<a tabindex="-1" aria-hidden="true" ');el.style.setProperty('--dur',dur+'s')};
   fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);
   const ttl=document.getElementById('mqTitle');if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO');
-  addEventListener('langchange',()=>{if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO')});
+  addEventListener('langchange',()=>{fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO')});
 })();
 applyLang();fixTotals();
 </script>
@@ -965,10 +966,15 @@ applyLang();fixTotals();
   const n=(k,s)=>P.filter(p=>p.k===k&&(!s||p.s===s)).length;
   const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
   const f=P.find(p=>p.i===FEAT)||P[P.length-1];
-  box.innerHTML=
-    `<div class="kmob"><a href="sortiment.html">Ganzes Sortiment</a><a href="index.html#herkunft">Herkunft</a><a href="index.html#ablauf">Ablauf</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">Kontakt &amp; Anfrage</a></div>`+
-    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${name}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${s[1]}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
-    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>Neu im Sortiment</small><b>${f.n}</b></span></a>`:''}<div class="kreq"><p>Auf Anfrage</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${c[1]}</a>`).join('')}</div><a class="kall" href="sortiment.html">Alle ${P.length} Artikel</a></div>`;
+  const nm=x=>(typeof LANG!=='undefined'&&LANG==='en'&&window.KEN&&KEN[x])||x;
+  const EN2={'Ganzes Sortiment':'Full range','Herkunft':'Origin','Ablauf':'Process','Kontakt & Anfrage':'Contact & enquiry','Neu im Sortiment':'New in our range','Auf Anfrage':'On request','Alle':'All','Artikel':'items'};
+  const L=x=>(typeof LANG!=='undefined'&&LANG==='en'&&EN2[x])||x;
+  function build(){box.innerHTML=
+    `<div class="kmob"><a href="sortiment.html">${L('Ganzes Sortiment')}</a><a href="index.html#herkunft">${L('Herkunft')}</a><a href="index.html#ablauf">${L('Ablauf')}</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">${L('Kontakt & Anfrage')}</a></div>`+
+    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${nm(name)}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${nm(s[1])}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
+    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>${L('Neu im Sortiment')}</small><b>${nm(f.n)}</b></span></a>`:''}<div class="kreq"><p>${L('Auf Anfrage')}</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${nm(c[1])}</a>`).join('')}</div><a class="kall" href="sortiment.html">${L('Alle')} ${P.length} ${L('Artikel')}</a></div>`;
+  }
+  build();addEventListener('langchange',build);
   const btns=[document.getElementById('kmb'),document.getElementById('kbg')].filter(Boolean);
   let t=null;
   function set(open){mega.classList.toggle('open',open);btns.forEach(b=>b.setAttribute('aria-expanded',open))}
