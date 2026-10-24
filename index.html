@@ -325,40 +325,50 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
   .js [data-reveal]:not(.in){transform:none;opacity:1}
   .dash-bar,.dash-live i{animation:none}
 }
-/* ===== Rundgang: Haus → Terrasse → Garten → Schuppen → Gewächshaus ===== */
-.tour{position:relative;z-index:1;padding:clamp(70px,9vw,120px) 0 0}
+/* ===== Rundgang v2: scrollgesteuerte Kamerafahrt (Vorgarten → Terrasse → Garten → Gewächshaus → Schuppen) ===== */
+.tour{position:relative;z-index:1;padding:clamp(70px,9vw,120px) 0 0;pointer-events:auto}
 .tour-head{text-align:center;margin-bottom:clamp(26px,4vw,44px)}
 .tour-head h2{font-family:var(--f-display);font-weight:400;font-size:clamp(32px,4.6vw,56px);line-height:1.08;margin:10px 0 0}
-.tour-head .lead{max-width:620px;margin:14px auto 0;color:var(--muted)}
-.tour-stage{position:relative;height:min(86vh,66.667vw);height:min(86svh,66.667vw);min-height:520px;background:#0b0d09;overflow:hidden;border-block:1px solid var(--line)}
-.tour-scroll{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.tour-scroll::-webkit-scrollbar{display:none}
-.tour-img{position:relative;width:100%;height:100%;overflow:hidden}
-.tl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.1);transition:opacity .9s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
-.tl.on{opacity:1;transform:scale(1)}
-.tl.out{opacity:0;transition:opacity .75s ease,transform .9s cubic-bezier(.55,0,.6,1)}
-.ths{position:absolute;inset:0;transition:opacity .35s}
-.tour-stage.moving .ths{opacity:0;pointer-events:none}
-.hs{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;z-index:2}
-.hs i{display:block;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 26%,var(--gold) 30% 58%,rgba(207,169,90,.25) 62%);box-shadow:0 0 0 2px rgba(9,11,8,.35),0 4px 18px rgba(0,0,0,.5);position:relative}
-.hs i::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid rgba(235,211,155,.8);animation:hsp 2.2s ease-out infinite}
+.tour-head .lead{max-width:640px;margin:14px auto 0;color:var(--muted)}
+.ttrack{position:relative;height:900svh}
+.tpin{touch-action:pan-y;position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0b0d09;border-block:1px solid var(--line)}
+.tpin canvas,.tpin .tst{position:absolute;inset:0;width:100%;height:100%}
+.tpin .tst{object-fit:cover;opacity:0;transition:opacity .25s linear;will-change:opacity}
+.tpin .tst.on{opacity:1}
+.tpin canvas{opacity:0}
+.tpin canvas.on{opacity:1}
+.tvig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,11,8,.55) 0,rgba(9,11,8,0) 22%,rgba(9,11,8,0) 70%,rgba(9,11,8,.6) 100%)}
+.ths{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s}
+.ths.on{opacity:1;pointer-events:auto}
+.hs{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;z-index:4}
+.hs i{display:block;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 26%,var(--gold) 30% 58%,rgba(207,169,90,.25) 62%);box-shadow:0 0 0 2px rgba(9,11,8,.35),0 4px 18px rgba(0,0,0,.5);position:relative}
+.hs i::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(235,211,155,.8);animation:hsp 2.2s ease-out infinite}
 @keyframes hsp{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.5);opacity:0}}
-.hs .hl{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);white-space:nowrap;font:600 12px var(--f-body);padding:6px 11px;border-radius:999px;background:rgba(9,11,8,.82);border:1px solid var(--gold-edge);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.2s}
+.hs .hl{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);white-space:nowrap;font:600 12px var(--f-body);padding:6px 11px;border-radius:999px;background:rgba(9,11,8,.85);border:1px solid var(--gold-edge);opacity:0;pointer-events:none;transition:.2s}
 .hs:hover .hl,.hs:focus-visible .hl,.hs.act .hl{opacity:1;transform:translate(-50%,0)}
 .hs.act i{background:radial-gradient(circle,#fff 0 30%,var(--gold-l) 34% 62%,rgba(235,211,155,.3) 66%)}
-.hs.go{display:inline-flex;align-items:center;gap:8px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(9,11,8,.72);border:1px solid var(--gold-edge);backdrop-filter:blur(10px);font:600 13px var(--f-body);white-space:nowrap;box-shadow:0 10px 30px -10px rgba(0,0,0,.8);transition:background .2s,transform .2s}
-.hs.go:hover{background:rgba(30,26,16,.85);transform:translate(-50%,-50%) scale(1.04)}
-.hs.go svg{width:18px;height:18px;color:var(--gold-l);flex:none}
-.tour-top{position:absolute;left:max(16px,env(safe-area-inset-left));top:16px;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(9,11,8,.6);border:1px solid var(--line);backdrop-filter:blur(10px);z-index:3;pointer-events:none}
+.ttop{position:absolute;left:0;right:0;top:calc(84px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));z-index:3;pointer-events:none}
+.tour-top{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(9,11,8,.62);border:1px solid var(--line);backdrop-filter:blur(10px)}
 .tour-top b{font-family:var(--f-display);font-weight:400;font-size:18px}
 .tour-step{font:500 11px var(--f-mono);letter-spacing:.18em;color:var(--gold)}
-.tour-ai{position:absolute;right:max(16px,env(safe-area-inset-right));top:20px;font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,230,204,.75);background:rgba(9,11,8,.45);padding:5px 9px;border-radius:999px;z-index:3;pointer-events:none}
-.tour-swipe{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 12px var(--f-mono);letter-spacing:.2em;color:var(--cream);background:rgba(9,11,8,.6);padding:10px 16px;border-radius:999px;z-index:3;pointer-events:none;transition:opacity .4s}
-.tour-nav{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(9,11,8,.66);border:1px solid var(--line);backdrop-filter:blur(12px);z-index:3;max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none}
+.tour-ai{font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,230,204,.8);background:rgba(9,11,8,.5);padding:5px 9px;border-radius:999px}
+.tour-nav{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(9,11,8,.66);border:1px solid var(--line);backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none;min-width:0}
 .tour-nav::-webkit-scrollbar{display:none}
-.tour-nav button{border:0;background:none;color:var(--muted);font:600 13px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tour-nav button{border:0;background:none;color:var(--muted);font:600 12.5px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .tour-nav button.on{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
-.tour-card{position:absolute;right:max(16px,env(safe-area-inset-right));top:64px;width:min(330px,calc(100% - 32px));border-radius:20px;background:rgba(13,16,11,.9);border:1px solid var(--line-strong);backdrop-filter:blur(16px);box-shadow:var(--shadow);z-index:4;overflow:hidden;animation:tcin .35s ease}
+.thint{position:absolute;left:50%;bottom:calc(170px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cream);background:rgba(9,11,8,.55);padding:8px 14px;border-radius:999px;z-index:3;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+.thint.off{opacity:0}
+.tstrip{position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;flex-direction:column-reverse;gap:8px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));transition:opacity .35s,transform .35s}
+.tsh{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.tstrip.off .tsr,.tstrip.off small{opacity:0;transform:translateY(10px);pointer-events:none}
+.tsr,.tstrip small{transition:opacity .35s,transform .35s}
+.tstrip small{font:500 10.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.tsr{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.tsr::-webkit-scrollbar{display:none}
+.tsr button{flex:none;display:flex;align-items:center;gap:8px;height:52px;padding:4px 12px 4px 4px;border-radius:14px;background:rgba(9,11,8,.72);border:1px solid var(--line);backdrop-filter:blur(10px);color:var(--ink);font:600 12.5px var(--f-body);cursor:pointer;white-space:nowrap}
+.tsr button:hover,.tsr button.act{border-color:var(--gold-edge);background:rgba(30,26,16,.85)}
+.tsr img{width:44px;height:44px;border-radius:10px;object-fit:contain;background:#efebe2}
+.tour-card{position:absolute;right:max(16px,env(safe-area-inset-right));top:calc(132px + env(safe-area-inset-top,0px));width:min(330px,calc(100% - 32px));border-radius:20px;background:rgba(13,16,11,.92);border:1px solid var(--line-strong);backdrop-filter:blur(16px);box-shadow:var(--shadow);z-index:5;overflow:hidden;animation:tcin .35s ease}
 @keyframes tcin{from{opacity:0;transform:translateY(10px)}}
 .tour-card .ti{background:radial-gradient(120% 100% at 50% 0%,#f6f3ec,#e2ddd1);aspect-ratio:4/3;display:grid;place-items:center}
 .tour-card .ti img{width:78%;height:88%;object-fit:contain}
@@ -369,19 +379,24 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 .tour-card .tbtn{display:flex;gap:8px}
 .tour-card .btn{height:40px;font-size:13.5px;padding:0 14px;flex:1}
 .tour-card .x{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(9,11,8,.7);color:#fff;font-size:18px;cursor:pointer;line-height:32px}
+.tskip{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:calc(100px + env(safe-area-inset-bottom,0px));z-index:3;font:600 12px var(--f-body);color:var(--muted);background:rgba(9,11,8,.55);border:1px solid var(--line);padding:7px 12px;border-radius:999px;display:none}
 @media (max-width:760px){
-  .tour-stage{height:76svh;min-height:480px}
-  .tour-swipe{display:block}
-  .tour-card{left:12px;right:12px;width:auto;top:auto;bottom:70px;display:grid;grid-template-columns:112px 1fr}
+  .ttop{top:calc(74px + env(safe-area-inset-top,0px))}
+  .tour-top b{font-size:16px}
+  .tsh{flex-direction:column;align-items:stretch;gap:6px}
+  .tour-nav{align-self:stretch}
+  .tour-nav button{padding:6px 10px;font-size:12px}
+  .hs i{width:18px;height:18px}
+  .tour-card{left:12px;right:12px;width:auto;top:auto;bottom:calc(150px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:104px 1fr}
   .tour-card[hidden]{display:none}
   .tour-card .ti{aspect-ratio:auto;height:100%}
-  .tour-card .tb{padding:14px 14px 14px}
-  .tour-card h3{font-size:17px;margin-right:24px}
+  .tour-card .tb{padding:12px 14px}
+  .tour-card h3{font-size:16px;margin-right:24px}
   .tour-card p{display:none}
   .tour-card .btn{height:36px;font-size:12.5px;padding:0 10px}
-  .tour-nav button{padding:7px 11px;font-size:12px}
+  .thint{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 }
-@media (prefers-reduced-motion:reduce){.tl,.tl.out{transition:opacity .3s}.tl{transform:none}.hs i::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.hs i::after{animation:none}}
 /* Mobile Anfrage-Leiste (immer erreichbar, hebt sich farblich ab) */
 .mcta{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;display:none;gap:8px;transform:translateY(140%);transition:transform .35s ease}
 .mcta.on{transform:none}
@@ -456,21 +471,19 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
     <div class="wrap tour-head">
       <p class="eyebrow" data-reveal>Rundgang</p>
       <h2 data-reveal style="--rd:80ms">Einmal ums Haus</h2>
-      <p class="lead" data-reveal style="--rd:160ms">Vom Vorgarten über die Terrasse bis in den Schuppen. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.</p>
+      <p class="lead" data-reveal style="--rd:160ms">Scrollen Sie durch Vorgarten, Terrasse, Gemüsegarten, Gewächshaus und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
     </div>
-    <div class="tour-stage" id="tstage">
-      <div class="tour-scroll" id="tscroll">
-        <div class="tour-img" id="timg">
-          <img class="tl on" alt="" decoding="async">
-          <img class="tl" alt="" decoding="async">
-          <div class="ths" id="ths"></div>
-        </div>
+    <div class="ttrack" id="ttrack">
+      <div class="tpin" id="tstage">
+        <img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async">
+        <canvas id="tcv" aria-hidden="true"></canvas>
+        <div class="tvig"></div>
+        <div class="ths" id="ths"></div>
+        <div class="ttop"><div class="tour-top"><span class="tour-step" id="tstep">1 / 5</span><b id="tname">Vorgarten</b></div><span class="tour-ai">KI-Visualisierung</span></div>
+        <div class="thint" id="thint">Scrollen zum Weitergehen ↓</div>
+        <div class="tstrip" id="tstrip"><div class="tsh"><small id="tcount"></small><nav class="tour-nav" id="tnav" aria-label="Bereiche"></nav></div><div class="tsr" id="tsr"></div></div>
+        <aside class="tour-card" id="tcard" aria-live="polite" hidden></aside>
       </div>
-      <div class="tour-top"><span class="tour-step" id="tstep">1 / 5</span><b id="tname">Vorgarten</b></div>
-      <span class="tour-ai">KI-Visualisierung</span>
-      <div class="tour-swipe" id="tswipe" aria-hidden="true">← Wischen →</div>
-      <aside class="tour-card" id="tcard" aria-live="polite" hidden></aside>
-      <nav class="tour-nav" id="tnav" aria-label="Bereiche"></nav>
     </div>
   </section>
 
@@ -1109,86 +1122,107 @@ applyLang();fixTotals();
 })();
 </script>
 <script>
-/* Rundgang: Szenen mit klickbaren Produkten, Weg-Punkte führen in den nächsten Bereich */
+/* Rundgang v2: Scroll steuert eine Kamerafahrt (KI-Video als Einzelbilder) durch fünf Szenen mit klickbaren Produkten */
 (function(){
-  const st=document.getElementById('tstage');if(!st)return;
-  const sc=document.getElementById('tscroll'),box=document.getElementById('timg'),hsBox=document.getElementById('ths'),
-        card=document.getElementById('tcard'),nav=document.getElementById('tnav'),nameEl=document.getElementById('tname'),
-        stepEl=document.getElementById('tstep'),swipe=document.getElementById('tswipe'),L=[...box.querySelectorAll('.tl')];
+  const track=document.getElementById('ttrack');if(!track)return;
+  const st=document.getElementById('tstage'),cv=document.getElementById('tcv'),ctx=cv.getContext('2d'),
+        IM=[...st.querySelectorAll('.tst')],hsBox=document.getElementById('ths'),card=document.getElementById('tcard'),
+        nav=document.getElementById('tnav'),nameEl=document.getElementById('tname'),stepEl=document.getElementById('tstep'),
+        hint=document.getElementById('thint'),strip=document.getElementById('tstrip'),sr=document.getElementById('tsr'),cnt=document.getElementById('tcount');
   const P=window.KP||[],byId=Object.fromEntries(P.map(p=>[p.i,p]));
   const EN=()=>typeof LANG!=='undefined'&&LANG==='en';
   const nm=x=>(EN()&&window.KEN&&KEN[x])||x;
-  const T=x=>EN()?({'Vorgarten':'Front garden','Terrasse':'Terrace','Garten':'Garden','Schuppen':'Shed','Gewächshaus':'Greenhouse',
-    'In den Geräteschuppen':'Into the shed','Ums Haus zur Terrasse':'Round to the terrace','In den Garten':'Into the garden','Zum Gewächshaus':'To the greenhouse',
-    'Zurück zum Vorgarten':'Back to the front','Zurück zur Terrasse':'Back to the terrace','Zurück in den Garten':'Back to the garden','Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved',
-    'Outdoor-Möbel':'Outdoor furniture','Auf Anfrage':'On request','Alle anzeigen':'Show all','← Wischen →':'← Swipe →'}[x]||x):x;
-  const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  /* Szenen: x/y in Prozent des Bildes; p = Artikelnummer, k = Kategorie (ohne Artikel), go = Zielszene */
+  const T=x=>EN()?({'Vorgarten':'Front garden','Terrasse':'Terrace','Gemüsegarten':'Kitchen garden','Gewächshaus':'Greenhouse','Werkstatt':'Workshop',
+    'Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved','Scrollen zum Weitergehen ↓':'Scroll to walk on ↓','← Wischen · Scrollen ↓':'← Swipe · Scroll ↓','Produkte in dieser Szene':'products in this scene'}[x]||x):x;
+  const B='tour/v2/',IW=1672,IH=941,FW=640,FH=360,NFK=[48,48,48,96],TRK=[1.7,1.7,1.7,2.9];
   const S=[
-    {id:'vorne',n:'Vorgarten',img:'tour/raw/raw1.webp',fx:50,h:[
-      {x:11,y:55,go:3,t:'In den Geräteschuppen'},{x:84,y:67,go:1,t:'Ums Haus zur Terrasse'},
-      {x:22,y:73,p:'4CD-45E-Z'},{x:40,y:61,p:'CSL2025'},{x:68,y:62,p:'CSL2016'},{x:62,y:80,p:'CSL2032'}]},
-    {id:'terrasse',n:'Terrasse',img:'tour/raw/raw2.webp',fx:62,h:[
-      {x:55,y:51,go:2,t:'In den Garten'},{x:13,y:80,go:0,t:'Zurück zum Vorgarten'},
-      {x:71,y:51,p:'SC-2433B-MBS'},{x:92,y:52,p:'SC-2432A-BL'},{x:81,y:63,p:'SC-2434B-MBS'},{x:17,y:61,k:'moebel',t:'Outdoor-Möbel'}]},
-    {id:'garten',n:'Garten',img:'tour/raw/raw3.webp',fx:55,h:[
-      {x:20,y:47,go:4,t:'Zum Gewächshaus'},{x:14,y:80,go:1,t:'Zurück zur Terrasse'},
-      {x:16,y:75,p:'EX4100'},{x:31,y:70,p:'SC-25HZ50-L'},{x:45,y:67,p:'CSL2014'},{x:90,y:66,p:'4CD-45C-Z'},
-      {x:78,y:22,p:'CZM1007'},{x:69,y:23,p:'CSZ1002'},{x:75.5,y:52,p:'CQT1015'},{x:65.5,y:55,p:'CZM1013'}]},
-    {id:'schuppen',n:'Schuppen',img:'tour/raw/raw4.webp',fx:52,h:[
-      {x:13,y:62,go:0,t:'Zurück zum Vorgarten'},
-      {x:36,y:21,p:'EX18'},{x:43,y:21,p:'EX166'},{x:49,y:17,p:'EX125A'},{x:61,y:24,p:'DJ-3003'},{x:59,y:33,p:'EX300'},
-      {x:83,y:15,p:'CSZ1004'},{x:82,y:28,p:'CSZ1002'},{x:72,y:56,p:'CZM1007'},{x:80,y:50,p:'CSL2002'},{x:84.5,y:52,p:'CSL2003'}]},
-    {id:'gewaechshaus',n:'Gewächshaus',img:'tour/raw/raw5.webp',fx:45,h:[
-      {x:72,y:80,go:2,t:'Zurück in den Garten'},
-      {x:14,y:40,p:'YCS07'},{x:25,y:52,p:'YCS02'},{x:32,y:39,p:'CSL2012'},{x:52,y:48,p:'YCS01'},{x:58,y:41,p:'CSL2014'},
-      {x:46,y:83,p:'YCS05'},{x:44,y:44,p:'CZM1014'}]}
+    {n:'Vorgarten',img:'s1.webp',fx:50,h:[[15,72,'4CD-45E-Z'],[36,58,'GCJ-5003'],[90,53,'CFJ-2005'],[43,41,'CSL2025'],[51,48,'CSL2026'],[80,41,'CSL2016'],[47,56,'CSL2032'],[60,57,'CSL2030'],[10,16,'CZM2001'],[15,24,'CZM2004'],[31,39,'YCP08'],[96,64,'CFZ5001'],[95,78,'SL1011'],[85,78,'CSL2014'],[22,49,'YCP07'],[27,59,'CSL2005'],[90,20,'CZM1003']]},
+    {n:'Terrasse',img:'s2.webp',fx:55,h:[[74,48,'SC-2433B-MBS'],[59,29,'SP-2613B'],[86,60,'CSL2016'],[13,76,'CSL2018'],[14,53,'CSL2033'],[22,60,'CSL2015'],[79.5,34,'CSL2012'],[85,31,'CZM1012'],[90,36,'YCM09'],[84,58,'CSL1004'],[91,77,'CSL1005'],[42,33,'DFS-1002'],[34,64,'EX700'],[92.5,12,'EX1040']]},
+    {n:'Gemüsegarten',img:'s3.webp',fx:50,h:[[14,51,'WGJ-10001'],[87.5,31,'SC-25HZ50-L'],[65,58,'EX4100'],[24,29,'CZM1007'],[8,43,'CSZ1013'],[33,21,'CZM1001'],[78,47,'CSL2028'],[72,46,'CSL2031'],[44,53,'CQT1015'],[36,63,'CSL1003'],[29,50,'YCP01'],[55,42,'YCP14'],[40,57,'CZM1013'],[71,36,'SL1006'],[90,57,'SP-4001'],[82,66,'JD-1008'],[86,83,'DJ-3003'],[37.5,78,'CSL2003'],[43,80,'CSL2001']]},
+    {n:'Gewächshaus',img:'s4.webp',fx:50,h:[[12,56,'YCS07'],[27,46,'YCS08'],[27,61,'YCS02'],[19,74,'YCS01'],[68,87,'YCS05'],[34,33,'YCS06'],[71,56,'YCS04'],[30,33,'CSL2012'],[57,69,'CSL2014'],[21,30,'CZM1014'],[8,71,'CSL1001'],[74,66,'SL1001'],[54,33,'CSL1014'],[78.5,42,'CSL2022'],[83,43,'CQT1015'],[44,33,'CSL1017'],[16,14,'CSZ2003'],[92.5,48,'SL1004'],[86,17,'CSL1011']]},
+    {n:'Werkstatt',img:'s5.webp',fx:50,h:[[24,12,'EX18'],[31,10,'EX166'],[39,13,'EX125A'],[49,12,'EX26'],[59,12,'EX165'],[29,26,'EX8500'],[41,26,'EX321'],[49,26,'EX320'],[37.5,59,'EX5012'],[54,59,'SC-30DSJ50'],[84,40,'EX6012'],[57.5,27,'EX300'],[30,71,'EX1L'],[51,77,'EX508'],[70.5,31,'EX12'],[29,41,'CSZ1004'],[68,12,'CSL2002'],[71.5,12,'CSL2004'],[41,36,'3CXD-700D'],[70,69,'CFJ-1001'],[15,71,'WGJ-10004'],[80,24,'YCM07']]}
   ];
-  let cur=-1,front=0,busy=false;
-  S.forEach(s=>{const i=new Image();i.src=s.img});
-  const IW=1536,IH=1024;
-  function layout(){const W=st.clientWidth,H=st.clientHeight;let s=H/IH;if(IW*s<W)s=W/IW;
-    box.style.width=IW*s+'px';box.style.height=IH*s+'px';box.style.marginTop=(H-IH*s)/2+'px'}
-  function center(){const s=S[cur];sc.scrollLeft=Math.max(0,box.clientWidth*s.fx/100-sc.clientWidth/2)}
+  S.forEach(s=>s.h=s.h.filter(h=>byId[h[2]]));
+  /* Zeitleiste: Halt (Produkte) – Fahrt – Halt … */
+  const HOLD=1,SEG=[];let t0=0;
+  S.forEach((s,i)=>{SEG.push({k:'h',i,a:t0,b:t0+HOLD});t0+=HOLD;if(i<S.length-1){SEG.push({k:'t',i,a:t0,b:t0+TRK[i]});t0+=TRK[i]}});
+  const TOT=t0;
+  track.style.height=(TOT*75+100)+'svh';
+  IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});
+  /* Einzelbilder der Kamerafahrten: erst jedes 8. Bild, dann jedes 4., 2., dann alle (Fahrt ist schnell grob da) */
+  const FR=NFK.map(n=>new Array(n));const Q=[];
+  for(const step of [8,4,2,1])for(let k=0;k<S.length-1;k++)for(let f=0;f<NFK[k];f+=step)if(!Q.some(q=>q[0]===k&&q[1]===f))Q.push([k,f]);
+  let qi=0;const pad=n=>String(n).padStart(3,'0');
+  function loadNext(){if(qi>=Q.length)return;const [k,f]=Q[qi++];const im=new Image();im.decoding='async';
+    im.onload=()=>{FR[k][f]=im;if(lastSeg&&lastSeg.k==='t'&&lastSeg.i===k)req();loadNext()};im.onerror=loadNext;im.src=B+'t'+(k+1)+'/'+pad(f)+'.webp'}
+  let started=false;const kick=()=>{if(started)return;started=true;for(let n=0;n<4;n++)loadNext()};
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){kick();io.disconnect()}},{rootMargin:'150% 0px'});io.observe(track)}else kick();
+  let lastSeg=null;
+  let W=0,H=0,DPR=1;
+  function size(){DPR=Math.min(devicePixelRatio||1,1.5);W=st.clientWidth;H=st.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR)}
+  function cover(iw,ih,fx){const s=Math.max(W/iw,H/ih),dw=iw*s,dh=ih*s;return {s,dw,dh,ox:(W-dw)*fx/100,oy:(H-dh)/2}}
+  function near(k,f,dir){const N=NFK[k];for(let d=0;d<N;d++){const g=f+d*dir;if(g<0||g>=N)break;if(FR[k][g])return [FR[k][g],g]}return null}
+  let cur=-1,lastP=-1;
+  function prog(){const r=track.getBoundingClientRect(),run=track.offsetHeight-innerHeight;return Math.min(Math.max(-r.top/run,0),1)*TOT}
+  function seg(p){for(const s of SEG)if(p<=s.b)return s;return SEG[SEG.length-1]}
+  function draw(){
+    const p=prog();lastP=p;const s=seg(p);lastSeg=s;
+    if(s.k==='h'){
+      IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');setScene(s.i,true);
+      hint.classList.toggle('off',s.i===S.length-1||p-s.a>.75);return}
+    const f=(p-s.a)/(s.b-s.a),k=s.i,fx=S[k].fx+(S[k+1].fx-S[k].fx)*f;
+    setScene(f<.5?k:k+1,false);hint.classList.add('off');
+    const fi=f*(NFK[k]-1),A=near(k,Math.floor(fi),-1),Bf=near(k,Math.ceil(fi),1);
+    if(A){const c=cover(FW,FH,fx);ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.drawImage(A[0],c.ox,c.oy,c.dw,c.dh);
+      const w=Bf&&Bf[1]>A[1]?(fi-A[1])/(Bf[1]-A[1]):0;
+      if(w>.02){ctx.globalAlpha=w;ctx.drawImage(Bf[0],c.ox,c.oy,c.dw,c.dh);ctx.globalAlpha=1}
+      cv.classList.add('on');
+      /* Standbilder blenden am Anfang und Ende der Fahrt weich über */
+      IM.forEach((im,i)=>im.classList.toggle('on',(i===k&&f<.04)||(i===k+1&&f>.96)))}
+    else{cv.classList.remove('on');IM.forEach((im,i)=>im.classList.toggle('on',i===(f<.5?k:k+1)))}
+  }
+  function place(){const s=S[cur];if(!s)return;const c=cover(IW,IH,s.fx);
+    hsBox.querySelectorAll('.hs').forEach(b=>{const h=s.h[+b.dataset.h],x=c.ox+h[0]/100*c.dw,y=c.oy+h[1]/100*c.dh;
+      b.style.left=x+'px';b.style.top=y+'px';b.hidden=x<12||x>W-12||y<(W<760?64:76)||y>H-(W<760?150:128)})}
+  function setScene(i,hold){
+    if(i!==cur){cur=i;closeCard();const s=S[i];
+      hsBox.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" class="hs" data-h="${n}" aria-label="${nm(p.n)}"><i></i><span class="hl">${nm(p.n)}</span></button>`}).join('');
+      sr.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" data-h="${n}"><img src="${p.im}" alt="" loading="lazy">${nm(p.n)}</button>`}).join('');
+      cnt.textContent=s.h.length+' '+(EN()?T('Produkte in dieser Szene'):'Produkte in dieser Szene');
+      nameEl.textContent=T(s.n);stepEl.textContent=`${i+1} / ${S.length}`;
+      nav.querySelectorAll('button').forEach((b,n)=>b.classList.toggle('on',n===i));place()}
+    hsBox.classList.toggle('on',hold);strip.classList.toggle('off',!hold);if(!hold)closeCard()}
   function navHTML(){nav.innerHTML=S.map((s,i)=>`<button type="button" data-s="${i}" class="${i===cur?'on':''}">${T(s.n)}</button>`).join('')}
-  function hsHTML(){const s=S[cur];hsBox.innerHTML=s.h.map((h,i)=>{
-      if(h.go!==undefined)return `<button type="button" class="hs go" data-h="${i}" style="left:${h.x}%;top:${h.y}%">${ARROW}${T(h.t)}</button>`;
-      const p=byId[h.p];if(h.p&&!p)return '';const lab=h.p?nm(p.n):T(h.t);
-      return `<button type="button" class="hs" data-h="${i}" style="left:${h.x}%;top:${h.y}%" aria-label="${lab}"><i></i><span class="hl">${lab}</span></button>`}).join('')}
-  function show(i,ox,oy){if(i===cur||busy)return;closeCard();
-    const first=cur<0,a=L[front],b=L[1-front];busy=!first;
-    if(!first){a.style.transformOrigin=`${ox??50}% ${oy??50}%`;a.classList.remove('on');a.classList.add('out');a.style.transform='scale(1.55)';st.classList.add('moving')}
-    b.classList.remove('out');b.style.transition='none';b.style.transformOrigin='50% 50%';b.style.transform='scale(1.12)';b.src=S[i].img;b.offsetWidth;b.style.transition='';
-    const go=()=>{b.classList.add('on');b.style.transform='';front=1-front;cur=i;hsHTML();navHTML();nameEl.textContent=T(S[i].n);stepEl.textContent=`${i+1} / ${S.length}`;center();
-      setTimeout(()=>{st.classList.remove('moving');a.classList.remove('out');a.style.transform='';busy=false},first?0:650)};
-    if(first)go();else setTimeout(go,420)}
-  function closeCard(){card.hidden=true;hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
   function ml(){try{return JSON.parse(localStorage.getItem('k-ml')||'{}')}catch(e){return {}}}
-  function openCard(h,el){hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'));el.classList.add('act');
-    if(h.k){card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"></div><div class="tb"><small>${T('Auf Anfrage')}</small><h3>${T(h.t)}</h3><p>${EN()?'Lounge sets, tables and loungers. We source them directly from the manufacturer.':'Lounge-Sets, Tische und Liegen. Wir beschaffen sie direkt beim Hersteller.'}</p><div class="tbtn"><a class="btn btn-primary" href="sortiment.html?k=${h.k}">${T('Alle anzeigen')}</a></div></div>`;
-      card.querySelector('.ti').style.background='url(tour/raw/raw2.webp) 15% 62%/420% auto';}
-    else{const p=byId[h.p],on=!!ml()[p.i];
-      card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="${p.im}" alt="${nm(p.n)}"></div><div class="tb"><small class="notranslate" translate="no">${p.b||''} · ${p.i}</small><h3>${nm(p.n)}</h3>${p.sp?`<p>${p.sp}</p>`:''}<div class="tbtn"><a class="btn btn-primary" href="sortiment.html?p=${encodeURIComponent(p.i)}">${T('Im Shop ansehen')}</a><button type="button" class="btn btn-ghost" data-ml="${p.i}">${on?'✓ '+T('Gemerkt'):'+ '+T('Merken')}</button></div></div>`}
-    card.hidden=false;
-    /* auf dem Handy den Punkt sichtbar halten */
-    const r=el.getBoundingClientRect(),sr=sc.getBoundingClientRect();if(r.left<sr.left+20||r.right>sr.right-20)sc.scrollBy({left:r.left-sr.left-sr.width/2,behavior:'smooth'})}
-  hsBox.addEventListener('click',e=>{const b=e.target.closest('.hs');if(!b)return;const h=S[cur].h[+b.dataset.h];
-    if(h.go!==undefined)show(h.go,h.x,h.y);else if(b.classList.contains('act'))closeCard();else openCard(h,b)});
+  function closeCard(){card.hidden=true;st.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
+  function openCard(n){const h=S[cur].h[n],p=byId[h[2]],on=!!ml()[p.i];closeCard();
+    hsBox.querySelector(`[data-h="${n}"]`)?.classList.add('act');const sb=sr.querySelector(`[data-h="${n}"]`);if(sb){sb.classList.add('act');sb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'})}
+    card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="${p.im}" alt="${nm(p.n)}"></div><div class="tb"><small class="notranslate" translate="no">${p.b||''} · ${p.i}</small><h3>${nm(p.n)}</h3>${p.sp?`<p>${p.sp}</p>`:''}<div class="tbtn"><a class="btn btn-primary" href="sortiment.html?p=${encodeURIComponent(p.i)}">${T('Im Shop ansehen')}</a><button type="button" class="btn btn-ghost" data-ml="${p.i}">${on?'✓ '+T('Gemerkt'):'+ '+T('Merken')}</button></div></div>`;
+    card.hidden=false}
+  hsBox.addEventListener('click',e=>{const b=e.target.closest('.hs');if(!b)return;b.classList.contains('act')?closeCard():openCard(+b.dataset.h)});
+  sr.addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(b)openCard(+b.dataset.h)});
   card.addEventListener('click',e=>{if(e.target.closest('.x')){closeCard();return}
     const m=e.target.closest('[data-ml]');if(m){const o=ml(),i=m.dataset.ml;o[i]?delete o[i]:o[i]=1;try{localStorage.setItem('k-ml',JSON.stringify(o))}catch(x){}m.textContent=o[i]?'✓ '+T('Gemerkt'):'+ '+T('Merken')}});
-  nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b)show(+b.dataset.s)});
+  nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;const h=SEG.find(s=>s.k==='h'&&s.i===+b.dataset.s);
+    const run=track.offsetHeight-innerHeight,y=track.getBoundingClientRect().top+scrollY+((h.a+h.b)/2/TOT)*run;scrollTo({top:y,behavior:'smooth'})});
   addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
-  sc.addEventListener('scroll',()=>{swipe.style.opacity=0},{passive:true});
-  setTimeout(()=>{swipe.style.opacity=0},4500);
-  addEventListener('resize',()=>{layout();center()});
-  addEventListener('langchange',()=>{if(cur<0)return;hsHTML();navHTML();nameEl.textContent=T(S[cur].n);swipe.textContent=T('← Wischen →');closeCard()});
-  layout();show(0);
-  if(window.ResizeObserver)new ResizeObserver(()=>{layout();if(cur>=0)center()}).observe(st);
-  /* Mobile Anfrage-Leiste: erscheint nach dem Einstieg, verschwindet am Seitenende */
+  /* Handy: im Halt seitlich wischen, um das ganze Bild zu sehen */
+  let dx=null,fx0=50;
+  st.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!hsBox.classList.contains('on')||e.target.closest('button,a,.tsr,.tour-card'))return;dx=e.clientX;fx0=S[cur].fx});
+  st.addEventListener('pointermove',e=>{if(dx===null)return;const c=cover(IW,IH,50),rg=c.dw-W;if(rg<=4)return;
+    S[cur].fx=Math.min(100,Math.max(0,fx0-(e.clientX-dx)/rg*100));IM[cur].style.objectPosition=S[cur].fx+'% 50%';place();hint.classList.add('off')});
+  ['pointerup','pointercancel','pointerleave'].forEach(t=>st.addEventListener(t,()=>{dx=null}));
+  let raf=0;const req=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;draw()})};
+  addEventListener('scroll',req,{passive:true});
+  addEventListener('resize',()=>{size();place();req()});
+  addEventListener('langchange',()=>{const c=cur;cur=-1;navHTML();if(c>=0)setScene(c,hsBox.classList.contains('on'));hint.textContent=HT()});
+  const HT=()=>T(matchMedia('(pointer:coarse)').matches&&W<760?'← Wischen · Scrollen ↓':'Scrollen zum Weitergehen ↓');
+  size();navHTML();setScene(0,true);hint.textContent=HT();draw();
+  /* Mobile Anfrage-Leiste: erscheint nach dem Einstieg, verschwindet am Seitenende und im Rundgang */
   const m=document.getElementById('mcta');
   if(m){const hero=document.getElementById('top'),k=document.getElementById('kontakt');
     const upd=()=>{const past=hero.getBoundingClientRect().bottom<0,end=k.getBoundingClientRect().top<innerHeight*.9;
-      const r=st.getBoundingClientRect(),inT=r.top<innerHeight*.5&&r.bottom>innerHeight*.5;m.classList.toggle('on',past&&!end&&!inT)};
+      const r=track.getBoundingClientRect(),inT=r.top<innerHeight*.5&&r.bottom>innerHeight*.5;m.classList.toggle('on',past&&!end&&!inT)};
     addEventListener('scroll',upd,{passive:true});upd()}
 })();
 </script>
