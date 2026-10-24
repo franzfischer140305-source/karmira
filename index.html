@@ -471,11 +471,11 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
     <div class="wrap tour-head">
       <p class="eyebrow" data-reveal>Rundgang</p>
       <h2 data-reveal style="--rd:80ms">Einmal ums Haus</h2>
-      <p class="lead" data-reveal style="--rd:160ms">Scrollen Sie durch Vorgarten, Terrasse, Gemüsegarten, Gewächshaus und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
+      <p class="lead" data-reveal style="--rd:160ms">Fliegen Sie aus den Wolken herab und mit der Drohne durch Vorgarten, Terrasse, Gemüsegarten, Gewächshaus und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
     </div>
     <div class="ttrack" id="ttrack">
       <div class="tpin" id="tstage">
-        <img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async">
+        <img class="tst tcl" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async">
         <canvas id="tcv" aria-hidden="true"></canvas>
         <div class="tvig"></div>
         <div class="ths" id="ths"></div>
@@ -1122,19 +1122,23 @@ applyLang();fixTotals();
 })();
 </script>
 <script>
-/* Rundgang v2: Scroll steuert eine Kamerafahrt (KI-Video als Einzelbilder) durch fünf Szenen mit klickbaren Produkten */
+/* Rundgang v3: Drohnenflug – Anflug aus den Wolken, dann Aufstieg/Abstieg zwischen fünf Szenen mit klickbaren Produkten */
 (function(){
   const track=document.getElementById('ttrack');if(!track)return;
   const st=document.getElementById('tstage'),cv=document.getElementById('tcv'),ctx=cv.getContext('2d'),
-        IM=[...st.querySelectorAll('.tst')],hsBox=document.getElementById('ths'),card=document.getElementById('tcard'),
+        IM=[...st.querySelectorAll('.tst:not(.tcl)')],CLD=st.querySelector('.tcl'),hsBox=document.getElementById('ths'),card=document.getElementById('tcard'),
         nav=document.getElementById('tnav'),nameEl=document.getElementById('tname'),stepEl=document.getElementById('tstep'),
         hint=document.getElementById('thint'),strip=document.getElementById('tstrip'),sr=document.getElementById('tsr'),cnt=document.getElementById('tcount');
   const P=window.KP||[],byId=Object.fromEntries(P.map(p=>[p.i,p]));
   const EN=()=>typeof LANG!=='undefined'&&LANG==='en';
   const nm=x=>(EN()&&window.KEN&&KEN[x])||x;
   const T=x=>EN()?({'Vorgarten':'Front garden','Terrasse':'Terrace','Gemüsegarten':'Kitchen garden','Gewächshaus':'Greenhouse','Werkstatt':'Workshop',
-    'Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved','Scrollen zum Weitergehen ↓':'Scroll to walk on ↓','← Wischen · Scrollen ↓':'← Swipe · Scroll ↓','Produkte in dieser Szene':'products in this scene'}[x]||x):x;
-  const B='tour/v2/',IW=1672,IH=941,FW=640,FH=360,NFK=[48,48,48,96],TRK=[1.7,1.7,1.7,2.9];
+    'Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved','Scrollen zum Weitergehen ↓':'Scroll to walk on ↓','← Wischen · Scrollen ↓':'← Swipe · Scroll ↓','Produkte in dieser Szene':'products in this scene','Anflug':'Approach','Scrollen zum Landen ↓':'Scroll to land ↓'}[x]||x):x;
+  const B='tour/v2/',V='tour/v3/',IW=1672,IH=941,FW=640,FH=360,NC=40;
+  /* Drohnenclips (je 40 Einzelbilder): c = Wolken→Luftbild, r1…r5 = Aufstieg aus Szene 1…5 zum Luftbild. Rückwärts = Abstieg. */
+  const CL=['c','r1','r2','r3','r4','r5'];
+  const TRS=[[['c',0],['r1',1]],[['r1',0],['r2',1]],[['r2',0],['r3',1]],[['r3',0],['r4',1]],[['r4',0],['r5',1]]];
+  const TRL=[2.4,2.6,2.6,2.6,2.6];
   const S=[
     {n:'Vorgarten',img:'s1.webp',fx:50,h:[[15,72,'4CD-45E-Z'],[36,58,'GCJ-5003'],[90,53,'CFJ-2005'],[43,41,'CSL2025'],[51,48,'CSL2026'],[80,41,'CSL2016'],[47,56,'CSL2032'],[60,57,'CSL2030'],[10,16,'CZM2001'],[15,24,'CZM2004'],[31,39,'YCP08'],[96,64,'CFZ5001'],[95,78,'SL1011'],[85,78,'CSL2014'],[22,49,'YCP07'],[27,59,'CSL2005'],[90,20,'CZM1003']]},
     {n:'Terrasse',img:'s2.webp',fx:55,h:[[74,48,'SC-2433B-MBS'],[59,29,'SP-2613B'],[86,60,'CSL2016'],[13,76,'CSL2018'],[14,53,'CSL2033'],[22,60,'CSL2015'],[79.5,34,'CSL2012'],[85,31,'CZM1012'],[90,36,'YCM09'],[84,58,'CSL1004'],[91,77,'CSL1005'],[42,33,'DFS-1002'],[34,64,'EX700'],[92.5,12,'EX1040']]},
@@ -1143,55 +1147,56 @@ applyLang();fixTotals();
     {n:'Werkstatt',img:'s5.webp',fx:50,h:[[24,12,'EX18'],[31,10,'EX166'],[39,13,'EX125A'],[49,12,'EX26'],[59,12,'EX165'],[29,26,'EX8500'],[41,26,'EX321'],[49,26,'EX320'],[37.5,59,'EX5012'],[54,59,'SC-30DSJ50'],[84,40,'EX6012'],[57.5,27,'EX300'],[30,71,'EX1L'],[51,77,'EX508'],[70.5,31,'EX12'],[29,41,'CSZ1004'],[68,12,'CSL2002'],[71.5,12,'CSL2004'],[41,36,'3CXD-700D'],[70,69,'CFJ-1001'],[15,71,'WGJ-10004'],[80,24,'YCM07']]}
   ];
   S.forEach(s=>s.h=s.h.filter(h=>byId[h[2]]));
-  /* Zeitleiste: Halt (Produkte) – Fahrt – Halt … */
   const HOLD=1,SEG=[];let t0=0;
-  S.forEach((s,i)=>{SEG.push({k:'h',i,a:t0,b:t0+HOLD});t0+=HOLD;if(i<S.length-1){SEG.push({k:'t',i,a:t0,b:t0+TRK[i]});t0+=TRK[i]}});
+  SEG.push({k:'t',i:-1,tr:0,a:t0,b:t0+TRL[0]});t0+=TRL[0];
+  S.forEach((s,i)=>{SEG.push({k:'h',i,a:t0,b:t0+HOLD});t0+=HOLD;if(i<S.length-1){SEG.push({k:'t',i,tr:i+1,a:t0,b:t0+TRL[i+1]});t0+=TRL[i+1]}});
   const TOT=t0;
   track.style.height=(TOT*75+100)+'svh';
-  IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});
-  /* Einzelbilder der Kamerafahrten: erst jedes 8. Bild, dann jedes 4., 2., dann alle (Fahrt ist schnell grob da) */
-  const FR=NFK.map(n=>new Array(n));const Q=[];
-  for(const step of [8,4,2,1])for(let k=0;k<S.length-1;k++)for(let f=0;f<NFK[k];f+=step)if(!Q.some(q=>q[0]===k&&q[1]===f))Q.push([k,f]);
+  IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});CLD.src=V+'wolken.webp';
+  const FR=Object.fromEntries(CL.map(c=>[c,new Array(NC)]));const Q=[];
+  for(const step of [8,4,2,1])for(const c of CL)for(let f=0;f<NC;f+=step)if(!Q.some(q=>q[0]===c&&q[1]===f))Q.push([c,f]);
   let qi=0;const pad=n=>String(n).padStart(3,'0');
-  function loadNext(){if(qi>=Q.length)return;const [k,f]=Q[qi++];const im=new Image();im.decoding='async';
-    im.onload=()=>{FR[k][f]=im;if(lastSeg&&lastSeg.k==='t'&&lastSeg.i===k)req();loadNext()};im.onerror=loadNext;im.src=B+'t'+(k+1)+'/'+pad(f)+'.webp'}
-  let started=false;const kick=()=>{if(started)return;started=true;for(let n=0;n<4;n++)loadNext()};
-  if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){kick();io.disconnect()}},{rootMargin:'150% 0px'});io.observe(track)}else kick();
+  function loadNext(){if(qi>=Q.length)return;const [c,f]=Q[qi++];const im=new Image();im.decoding='async';
+    im.onload=()=>{FR[c][f]=im;if(lastSeg&&lastSeg.k==='t')req();loadNext()};im.onerror=loadNext;im.src=V+c+'/'+pad(f)+'.webp'}
+  let started=false;const kick=()=>{if(started)return;started=true;for(let n=0;n<5;n++)loadNext()};
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){kick();io.disconnect()}},{rootMargin:'200% 0px'});io.observe(track)}else kick();
   let lastSeg=null;
   let W=0,H=0,DPR=1;
   function size(){DPR=Math.min(devicePixelRatio||1,1.5);W=st.clientWidth;H=st.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR)}
   function cover(iw,ih,fx){const s=Math.max(W/iw,H/ih),dw=iw*s,dh=ih*s;return {s,dw,dh,ox:(W-dw)*fx/100,oy:(H-dh)/2}}
-  function near(k,f,dir){const N=NFK[k];for(let d=0;d<N;d++){const g=f+d*dir;if(g<0||g>=N)break;if(FR[k][g])return [FR[k][g],g]}return null}
+  const TN=t=>TRS[t].length*NC;
+  function fr(t,g){const p=TRS[t][Math.floor(g/NC)],l=g%NC;return FR[p[0]][p[1]?NC-1-l:l]}
+  function near(t,f,dir){const N=TN(t);for(let d=0;d<N;d++){const g=f+d*dir;if(g<0||g>=N)break;const im=fr(t,g);if(im)return [im,g]}return null}
   let cur=-1,lastP=-1;
   function prog(){const r=track.getBoundingClientRect(),run=track.offsetHeight-innerHeight;return Math.min(Math.max(-r.top/run,0),1)*TOT}
   function seg(p){for(const s of SEG)if(p<=s.b)return s;return SEG[SEG.length-1]}
   function draw(){
-    const p=prog();lastP=p;const s=seg(p);lastSeg=s;
+    const p=prog();lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
     if(s.k==='h'){
-      IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');setScene(s.i,true);
+      IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');CLD.classList.remove('on');setScene(s.i,true);
       hint.classList.toggle('off',s.i===S.length-1||p-s.a>.75);return}
-    const f=(p-s.a)/(s.b-s.a),k=s.i,fx=S[k].fx+(S[k+1].fx-S[k].fx)*f;
-    setScene(f<.5?k:k+1,false);hint.classList.add('off');
-    const fi=f*(NFK[k]-1),A=near(k,Math.floor(fi),-1),Bf=near(k,Math.ceil(fi),1);
+    const f=(p-s.a)/(s.b-s.a),k=s.i,t=s.tr,to=k+1,fx=k<0?S[0].fx:S[k].fx+(S[to].fx-S[k].fx)*f;
+    if(k<0)setScene(0,false,true);else setScene(f<.5?k:to,false);hint.classList.toggle('off',!(k<0&&f<.08));
+    const fi=f*(TN(t)-1),A=near(t,Math.floor(fi),-1),Bf=near(t,Math.ceil(fi),1);
     if(A){const c=cover(FW,FH,fx);ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.drawImage(A[0],c.ox,c.oy,c.dw,c.dh);
       const w=Bf&&Bf[1]>A[1]?(fi-A[1])/(Bf[1]-A[1]):0;
       if(w>.02){ctx.globalAlpha=w;ctx.drawImage(Bf[0],c.ox,c.oy,c.dw,c.dh);ctx.globalAlpha=1}
-      cv.classList.add('on');
-      /* Standbilder blenden am Anfang und Ende der Fahrt weich über */
-      IM.forEach((im,i)=>im.classList.toggle('on',(i===k&&f<.04)||(i===k+1&&f>.96)))}
-    else{cv.classList.remove('on');IM.forEach((im,i)=>im.classList.toggle('on',i===(f<.5?k:k+1)))}
+      cv.classList.add('on');CLD.classList.remove('on');
+      IM.forEach((im,i)=>im.classList.toggle('on',(i===k&&f<.03)||(i===to&&f>.97)))}
+    else{cv.classList.remove('on');CLD.classList.toggle('on',k<0&&f<.5);IM.forEach((im,i)=>im.classList.toggle('on',k<0?(i===0&&f>=.5):i===(f<.5?k:to)))}
   }
   function place(){const s=S[cur];if(!s)return;const c=cover(IW,IH,s.fx);
     hsBox.querySelectorAll('.hs').forEach(b=>{const h=s.h[+b.dataset.h],x=c.ox+h[0]/100*c.dw,y=c.oy+h[1]/100*c.dh;
       b.style.left=x+'px';b.style.top=y+'px';b.hidden=x<12||x>W-12||y<(W<760?64:76)||y>H-(W<760?150:128)})}
-  function setScene(i,hold){
+  function setScene(i,hold,intro){
+    stepEl.hidden=!!intro;if(intro)nameEl.textContent=T('Anflug');
     if(i!==cur){cur=i;closeCard();const s=S[i];
       hsBox.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" class="hs" data-h="${n}" aria-label="${nm(p.n)}"><i></i><span class="hl">${nm(p.n)}</span></button>`}).join('');
       sr.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" data-h="${n}"><img src="${p.im}" alt="" loading="lazy">${nm(p.n)}</button>`}).join('');
       cnt.textContent=s.h.length+' '+(EN()?T('Produkte in dieser Szene'):'Produkte in dieser Szene');
-      nameEl.textContent=T(s.n);stepEl.textContent=`${i+1} / ${S.length}`;
+      stepEl.textContent=`${i+1} / ${S.length}`;
       nav.querySelectorAll('button').forEach((b,n)=>b.classList.toggle('on',n===i));place()}
-    hsBox.classList.toggle('on',hold);strip.classList.toggle('off',!hold);if(!hold)closeCard()}
+    if(!intro)nameEl.textContent=T(S[i].n);hsBox.classList.toggle('on',hold);strip.classList.toggle('off',!hold);if(!hold)closeCard()}
   function navHTML(){nav.innerHTML=S.map((s,i)=>`<button type="button" data-s="${i}" class="${i===cur?'on':''}">${T(s.n)}</button>`).join('')}
   function ml(){try{return JSON.parse(localStorage.getItem('k-ml')||'{}')}catch(e){return {}}}
   function closeCard(){card.hidden=true;st.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
@@ -1206,7 +1211,6 @@ applyLang();fixTotals();
   nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;const h=SEG.find(s=>s.k==='h'&&s.i===+b.dataset.s);
     const run=track.offsetHeight-innerHeight,y=track.getBoundingClientRect().top+scrollY+((h.a+h.b)/2/TOT)*run;scrollTo({top:y,behavior:'smooth'})});
   addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
-  /* Handy: im Halt seitlich wischen, um das ganze Bild zu sehen */
   let dx=null,fx0=50;
   st.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!hsBox.classList.contains('on')||e.target.closest('button,a,.tsr,.tour-card'))return;dx=e.clientX;fx0=S[cur].fx});
   st.addEventListener('pointermove',e=>{if(dx===null)return;const c=cover(IW,IH,50),rg=c.dw-W;if(rg<=4)return;
@@ -1216,9 +1220,8 @@ applyLang();fixTotals();
   addEventListener('scroll',req,{passive:true});
   addEventListener('resize',()=>{size();place();req()});
   addEventListener('langchange',()=>{const c=cur;cur=-1;navHTML();if(c>=0)setScene(c,hsBox.classList.contains('on'));hint.textContent=HT()});
-  const HT=()=>T(matchMedia('(pointer:coarse)').matches&&W<760?'← Wischen · Scrollen ↓':'Scrollen zum Weitergehen ↓');
-  size();navHTML();setScene(0,true);hint.textContent=HT();draw();
-  /* Mobile Anfrage-Leiste: erscheint nach dem Einstieg, verschwindet am Seitenende und im Rundgang */
+  const HT=()=>T(lastSeg&&lastSeg.i<0?'Scrollen zum Landen ↓':(matchMedia('(pointer:coarse)').matches&&W<760?'← Wischen · Scrollen ↓':'Scrollen zum Weitergehen ↓'));
+  size();navHTML();draw();hint.textContent=HT();
   const m=document.getElementById('mcta');
   if(m){const hero=document.getElementById('top'),k=document.getElementById('kontakt');
     const upd=()=>{const past=hero.getBoundingClientRect().bottom<0,end=k.getBoundingClientRect().top<innerHeight*.9;
