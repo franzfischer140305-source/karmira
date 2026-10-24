@@ -1184,7 +1184,7 @@ applyLang();fixTotals();
   const holdT=i=>{const h=SEG.find(s=>s.k==='h'&&s.i===i);return (h.a+h.b)/2};
   const ez=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
   function goScene(i){i=Math.max(0,Math.min(S.length-1,i));const to=holdT(i);if(Math.abs(to-pv)<.01&&!tw)return;closeCard();
-    const d=Math.abs(to-pv);tw={from:pv,to,t0:performance.now(),dur:Math.min(5200,Math.max(1400,d*(d>3?650:900)))};st.classList.add('busy');land.hidden=true;anim()}
+    const d=Math.abs(to-pv);tw={from:pv,to,t0:performance.now(),dur:Math.min(12000,Math.max(2500,d*1350))};st.classList.add('busy');land.hidden=true;anim()}
   function anim(){if(!tw)return;const k=Math.min(1,(performance.now()-tw.t0)/tw.dur);pv=tw.from+(tw.to-tw.from)*ez(k);draw();
     if(k<1)requestAnimationFrame(anim);else{tw=null;st.classList.remove('busy');ctl()}}
   function at(){const s=seg(pv);return s.k==='h'?s.i:-1}
@@ -1196,7 +1196,7 @@ applyLang();fixTotals();
   addEventListener('keydown',e=>{const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;if(e.key==='ArrowRight'){goScene(at()+1)}if(e.key==='ArrowLeft'&&at()>0){goScene(at()-1)}});
   function seg(p){for(const s of SEG)if(p<=s.b)return s;return SEG[SEG.length-1]}
   function draw(){
-    const tg=prog();if(sp<0||Math.abs(tg-sp)>6)sp=tg;sp+=(tg-sp)*.085;if(Math.abs(tg-sp)<.0015)sp=tg;else req();const p=sp;lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
+    const p=prog();lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
     if(s.k==='h'){
       IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');CLD.classList.remove('on');setScene(s.i,true);
       hint.classList.toggle('off',s.i===S.length-1||p-s.a>.75);return}
