@@ -325,27 +325,63 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
   .js [data-reveal]:not(.in){transform:none;opacity:1}
   .dash-bar,.dash-live i{animation:none}
 }
-/* ===== Scroll-Film: Garten → Outdoorküche → Sortiment → Logo ===== */
-.film{position:relative;height:560vh;z-index:1}
-.film-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:rgba(9,11,8,var(--fa,1))}
-#filmc{position:absolute;inset:0;width:100%;height:100%;display:block}
-.film-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,11,8,.55),rgba(9,11,8,0) 30%,rgba(9,11,8,0) 62%,rgba(9,11,8,.7));opacity:var(--fs,1)}
-.fcap,.fend{position:absolute;left:0;right:0;text-align:center;padding:0 24px;opacity:0;pointer-events:none;will-change:opacity,transform}
-.fcap{top:clamp(84px,13vh,140px)}
-.fcap h2,.fend h2{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,5vw,60px);line-height:1.08;margin:10px auto 0;max-width:900px;text-shadow:0 2px 30px rgba(0,0,0,.6)}
-.fend h2 em{font-style:normal;color:var(--gold-l)}
-.fsub{color:#e4e1d6;max-width:560px;margin:14px auto 0;font-size:clamp(15px,1.6vw,18px);text-shadow:0 1px 16px rgba(0,0,0,.7)}
-.fend{top:50%;transform:translateY(-50%)}
-.fend.on{pointer-events:auto}
-.fend-logo{width:clamp(72px,9vw,108px);margin:0 auto 14px;filter:drop-shadow(0 6px 30px rgba(207,169,90,.45))}
-.fend .hero-actions{justify-content:center;margin-top:26px}
-.fcat{position:absolute;left:50%;bottom:clamp(70px,12vh,120px);transform:translateX(-50%);font:500 12px var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);padding:9px 16px;border:1px solid var(--gold-edge);border-radius:999px;background:rgba(9,11,8,.55);backdrop-filter:blur(8px);opacity:0;white-space:nowrap;transition:opacity .25s}
-.fhint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font:500 11px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--cream);opacity:var(--fh,1)}
-.fhint i{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:fh 1.8s ease-in-out infinite}
-@keyframes fh{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.fbar{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(236,226,196,.08)}
-.fbar i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--gold-d),var(--gold-l))}
-@media (prefers-reduced-motion:reduce){.film{height:auto}.film-stick{position:relative;height:100svh}.fhint,.fbar{display:none}.fhint i{animation:none}}
+/* ===== Rundgang: Haus → Terrasse → Garten → Schuppen → Gewächshaus ===== */
+.tour{position:relative;z-index:1;padding:clamp(70px,9vw,120px) 0 0}
+.tour-head{text-align:center;margin-bottom:clamp(26px,4vw,44px)}
+.tour-head h2{font-family:var(--f-display);font-weight:400;font-size:clamp(32px,4.6vw,56px);line-height:1.08;margin:10px 0 0}
+.tour-head .lead{max-width:620px;margin:14px auto 0;color:var(--muted)}
+.tour-stage{position:relative;height:min(86vh,66.667vw);height:min(86svh,66.667vw);min-height:520px;background:#0b0d09;overflow:hidden;border-block:1px solid var(--line)}
+.tour-scroll{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tour-scroll::-webkit-scrollbar{display:none}
+.tour-img{position:relative;width:100%;height:100%;overflow:hidden}
+.tl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.1);transition:opacity .9s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
+.tl.on{opacity:1;transform:scale(1)}
+.tl.out{opacity:0;transition:opacity .75s ease,transform .9s cubic-bezier(.55,0,.6,1)}
+.ths{position:absolute;inset:0;transition:opacity .35s}
+.tour-stage.moving .ths{opacity:0;pointer-events:none}
+.hs{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;z-index:2}
+.hs i{display:block;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 26%,var(--gold) 30% 58%,rgba(207,169,90,.25) 62%);box-shadow:0 0 0 2px rgba(9,11,8,.35),0 4px 18px rgba(0,0,0,.5);position:relative}
+.hs i::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid rgba(235,211,155,.8);animation:hsp 2.2s ease-out infinite}
+@keyframes hsp{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.hs .hl{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);white-space:nowrap;font:600 12px var(--f-body);padding:6px 11px;border-radius:999px;background:rgba(9,11,8,.82);border:1px solid var(--gold-edge);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.2s}
+.hs:hover .hl,.hs:focus-visible .hl,.hs.act .hl{opacity:1;transform:translate(-50%,0)}
+.hs.act i{background:radial-gradient(circle,#fff 0 30%,var(--gold-l) 34% 62%,rgba(235,211,155,.3) 66%)}
+.hs.go{display:inline-flex;align-items:center;gap:8px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(9,11,8,.72);border:1px solid var(--gold-edge);backdrop-filter:blur(10px);font:600 13px var(--f-body);white-space:nowrap;box-shadow:0 10px 30px -10px rgba(0,0,0,.8);transition:background .2s,transform .2s}
+.hs.go:hover{background:rgba(30,26,16,.85);transform:translate(-50%,-50%) scale(1.04)}
+.hs.go svg{width:18px;height:18px;color:var(--gold-l);flex:none}
+.tour-top{position:absolute;left:max(16px,env(safe-area-inset-left));top:16px;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(9,11,8,.6);border:1px solid var(--line);backdrop-filter:blur(10px);z-index:3;pointer-events:none}
+.tour-top b{font-family:var(--f-display);font-weight:400;font-size:18px}
+.tour-step{font:500 11px var(--f-mono);letter-spacing:.18em;color:var(--gold)}
+.tour-ai{position:absolute;right:max(16px,env(safe-area-inset-right));top:20px;font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,230,204,.75);background:rgba(9,11,8,.45);padding:5px 9px;border-radius:999px;z-index:3;pointer-events:none}
+.tour-swipe{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 12px var(--f-mono);letter-spacing:.2em;color:var(--cream);background:rgba(9,11,8,.6);padding:10px 16px;border-radius:999px;z-index:3;pointer-events:none;transition:opacity .4s}
+.tour-nav{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(9,11,8,.66);border:1px solid var(--line);backdrop-filter:blur(12px);z-index:3;max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none}
+.tour-nav::-webkit-scrollbar{display:none}
+.tour-nav button{border:0;background:none;color:var(--muted);font:600 13px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tour-nav button.on{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
+.tour-card{position:absolute;right:max(16px,env(safe-area-inset-right));top:64px;width:min(330px,calc(100% - 32px));border-radius:20px;background:rgba(13,16,11,.9);border:1px solid var(--line-strong);backdrop-filter:blur(16px);box-shadow:var(--shadow);z-index:4;overflow:hidden;animation:tcin .35s ease}
+@keyframes tcin{from{opacity:0;transform:translateY(10px)}}
+.tour-card .ti{background:radial-gradient(120% 100% at 50% 0%,#f6f3ec,#e2ddd1);aspect-ratio:4/3;display:grid;place-items:center}
+.tour-card .ti img{width:78%;height:88%;object-fit:contain}
+.tour-card .tb{padding:16px 18px 18px}
+.tour-card small{font:500 10.5px var(--f-mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.tour-card h3{font-family:var(--f-display);font-weight:400;font-size:21px;line-height:1.2;margin:6px 0 6px}
+.tour-card p{font-size:13px;color:var(--muted);margin:0 0 14px;line-height:1.5}
+.tour-card .tbtn{display:flex;gap:8px}
+.tour-card .btn{height:40px;font-size:13.5px;padding:0 14px;flex:1}
+.tour-card .x{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(9,11,8,.7);color:#fff;font-size:18px;cursor:pointer;line-height:32px}
+@media (max-width:760px){
+  .tour-stage{height:76svh;min-height:480px}
+  .tour-swipe{display:block}
+  .tour-card{left:12px;right:12px;width:auto;top:auto;bottom:70px;display:grid;grid-template-columns:112px 1fr}
+  .tour-card[hidden]{display:none}
+  .tour-card .ti{aspect-ratio:auto;height:100%}
+  .tour-card .tb{padding:14px 14px 14px}
+  .tour-card h3{font-size:17px;margin-right:24px}
+  .tour-card p{display:none}
+  .tour-card .btn{height:36px;font-size:12.5px;padding:0 10px}
+  .tour-nav button{padding:7px 11px;font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){.tl,.tl.out{transition:opacity .3s}.tl{transform:none}.hs i::after{animation:none}}
 /* Mobile Anfrage-Leiste (immer erreichbar, hebt sich farblich ab) */
 .mcta{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;display:none;gap:8px;transform:translateY(140%);transition:transform .35s ease}
 .mcta.on{transform:none}
@@ -354,7 +390,7 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 .cta-note{margin-top:14px;font:500 12px var(--f-mono);letter-spacing:.06em;color:var(--muted)}
 .cta-note b{color:var(--gold-l);font-weight:500}
 .btn{white-space:nowrap}
-@media (max-width:420px){.hero-actions .btn,.mcta .btn,.fend .btn,.cta-card .btn{padding:0 15px;font-size:14px;gap:8px}}
+@media (max-width:420px){.hero-actions .btn,.mcta .btn,.cta-card .btn{padding:0 15px;font-size:14px;gap:8px}}
 
 </style>
 </head>
@@ -416,22 +452,25 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
     <div class="trust-row"><span>Privatgärten</span><span>Gartencenter</span><span>Landhandel</span><span>Gartenbau</span><span>Lohnunternehmen</span><span>Landwirtschaft</span></div>
   </div>
 
-  <section class="film" id="film" aria-label="Kamerafahrt durch das Sortiment">
-    <div class="film-stick">
-      <canvas id="filmc" aria-hidden="true"></canvas>
-      <div class="film-shade" aria-hidden="true"></div>
-      <div class="fcap" data-a=".015" data-b=".15"><p class="eyebrow">Neu im Sortiment</p><h2>Die Outdoorküche für Ihren Garten</h2></div>
-      <div class="fcap" data-a=".16" data-b=".31"><p class="eyebrow">Modular aus Edelstahl 304</p><h2>Gasgrill, Kühlschrank und Spüle in einer Zeile</h2><p class="fsub">Wählen Sie Länge, Farbe und Module. Wir liefern sie direkt ab Werk.</p></div>
-      <div class="fcap" data-a=".45" data-b=".6"><p class="eyebrow">Ein Ansprechpartner</p><h2>Vom Akku-Gerät bis zur Bindeschnur</h2></div>
-      <div class="fcat" id="fcat" aria-hidden="true"></div>
-      <div class="fend" data-a=".84" data-b="2">
-        <img src="logo-k.png" alt="" class="fend-logo">
-        <h2>Direkt ab Werk. <em>Bis zu Ihnen.</em></h2>
-        <p class="fsub">Prüfung, Versand und Zoll übernehmen wir. Sie senden nur die Anfrage.</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="sortiment.html?k=grill">Outdoorküchen ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" href="index-alt.html#kontakt">Kostenlos anfragen</a></div>
+  <section class="tour" id="rundgang" aria-label="Rundgang durch Haus und Garten">
+    <div class="wrap tour-head">
+      <p class="eyebrow" data-reveal>Rundgang</p>
+      <h2 data-reveal style="--rd:80ms">Einmal ums Haus</h2>
+      <p class="lead" data-reveal style="--rd:160ms">Vom Vorgarten über die Terrasse bis in den Schuppen. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.</p>
+    </div>
+    <div class="tour-stage" id="tstage">
+      <div class="tour-scroll" id="tscroll">
+        <div class="tour-img" id="timg">
+          <img class="tl on" alt="" decoding="async">
+          <img class="tl" alt="" decoding="async">
+          <div class="ths" id="ths"></div>
+        </div>
       </div>
-      <div class="fhint" aria-hidden="true"><span>Scrollen</span><i></i></div>
-      <div class="fbar" aria-hidden="true"><i id="fbar"></i></div>
+      <div class="tour-top"><span class="tour-step" id="tstep">1 / 5</span><b id="tname">Vorgarten</b></div>
+      <span class="tour-ai">KI-Visualisierung</span>
+      <div class="tour-swipe" id="tswipe" aria-hidden="true">← Wischen →</div>
+      <aside class="tour-card" id="tcard" aria-live="polite" hidden></aside>
+      <nav class="tour-nav" id="tnav" aria-label="Bereiche"></nav>
     </div>
   </section>
 
@@ -569,6 +608,7 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ================= SPRACHE (wie bisher: DE/EN direkt, alle anderen über Google Translate) ================= */
 const EN={
+"Rundgang":"Tour","Einmal ums Haus":"Once around the house","Vom Vorgarten über die Terrasse bis in den Schuppen. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.":"From the front garden across the terrace into the shed. Every gold dot hides a product from our range.","KI-Visualisierung":"AI visualisation",
 "Gartengeräte, Outdoorküchen und Zubehör direkt vom Hersteller. Wir kümmern uns um Prüfung, Versand und Zoll. Sie senden nur die Anfrage.":"Garden tools, outdoor kitchens and accessories straight from the manufacturer. We handle inspection, shipping and customs. All you send is the enquiry.",
 "Kostenlos anfragen":"Free enquiry",
 "Unverbindlich · Antwort meist in 24 h · Muster auf Wunsch":"No obligation · Reply usually within 24 h · Samples on request",
@@ -1069,116 +1109,86 @@ applyLang();fixTotals();
 })();
 </script>
 <script>
-/* Scroll-Film: wird vollständig im Browser aus Katalogfotos und Produktbildern gerechnet.
-   Jeder Zustand hängt nur vom Scrollfortschritt ab, deshalb läuft der Film rückwärts mit. */
+/* Rundgang: Szenen mit klickbaren Produkten, Weg-Punkte führen in den nächsten Bereich */
 (function(){
-  const sec=document.getElementById('film');if(!sec)return;
-  const stick=sec.querySelector('.film-stick'),cv=document.getElementById('filmc'),c=cv.getContext('2d');
-  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const caps=[...sec.querySelectorAll('.fcap,.fend')],fcat=document.getElementById('fcat'),bar=document.getElementById('fbar');
-  const img=s=>{const i=new Image();i.decoding='async';i.src=s;i.onload=()=>dirty=true;return i};
-  const bg=img('film/garden.webp'),kit=img('film/kitchen.webp');
-  const BW=1920,BH=1281;                    /* Weltkoordinaten = Gartenfoto */
-  const KW=1180,KH=KW*516/1302,KX=1035-KW/2,KY=1281*.865-KH;   /* Lage der Küche im Garten */
-  const SL=[0,.165,.335,.695,.855,1];        /* Module der Küche (Spüle, Schrank, Grill, Kühlschrank, Kamado) */
-  const GRILL=[KX+KW*.515,KY+KH*.2];
-  /* Produkte für die Fahrt durch das Sortiment: je Kategorie ein paar Unterkategorien */
-  const P=window.KP||[],C=(window.KC||[]).filter(k=>k[0]!=='grill'&&P.some(p=>p.k===k[0]));
-  const SP=[];
-  C.forEach(([k,name])=>{const by={};for(const p of P){if(p.k===k)(by[p.s||'_']=by[p.s||'_']||[]).push(p)}
-    const ls=Object.values(by),pick=[];for(let r=0;r<8&&pick.length<4;r++)for(const l of ls){if(l[r]&&pick.length<4&&!pick.some(q=>q.im===l[r].im))pick.push(l[r])}
-    pick.forEach(p=>SP.push({p,k,name,im:null}))});
-  SP.forEach((s,i)=>{s.z=1.4+i*.62;s.a=i*2.39996;s.r=.62+((i*37)%10)/28});
-  const ZMAX=SP.length?SP[SP.length-1].z:4;
-  const DUST=Array.from({length:140},(_,i)=>({a:Math.random()*6.283,r:.15+Math.random()*1.3,z:Math.random()*(ZMAX+4)}));
-  let W=0,H=0,D=1,dirty=true,cur=RM?.25:0,tgt=cur,run=false;
-  function size(){D=Math.min(devicePixelRatio||1,2);W=stick.clientWidth;H=stick.clientHeight;cv.width=W*D;cv.height=H*D;c.setTransform(D,0,0,D,0,0);dirty=true}
-  const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),seg=(p,a,b)=>cl((p-a)/(b-a));
-  const eo=t=>1-Math.pow(1-t,3),eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  const nm=x=>(typeof LANG!=='undefined'&&LANG==='en'&&window.KEN&&KEN[x])||x;
-
-  function drawGarden(p){
-    const a=seg(p,0,.34),z=seg(p,.3,.46),port=W/H<.9;
-    const s0=port?W/(KW*.8):Math.max(W/BW,H/BH);
-    const k=(port?1+.12*eio(a):1.0+.2*eio(a))*(1+2.5*eio(z)*eio(z));
-    const f0=port?[KX+KW/2,BH*.56]:[BW*.53,BH*(.47+.1*eio(a))];
-    const fx=f0[0]+(GRILL[0]-f0[0])*eio(z),fy=f0[1]+(GRILL[1]-f0[1])*eio(z);
-    const sc=s0*k,ox=W/2-fx*sc,oy=H/2-fy*sc;
-    if(port){c.fillStyle='#0b0d09';c.fillRect(0,0,W,H)}
-    c.save();c.setTransform(D*sc,0,0,D*sc,D*ox,D*oy);
-    if(bg.complete&&bg.naturalWidth)c.drawImage(bg,0,0,BW,BH);
-    /* Bodenschatten wächst mit der Küche */
-    const built=seg(p,.03,.24);
-    if(built>0){const g=c.createRadialGradient(KX+KW/2,KY+KH,10,KX+KW/2,KY+KH,KW*.55);g.addColorStop(0,`rgba(0,0,0,${.55*built})`);g.addColorStop(1,'rgba(0,0,0,0)');
-      c.save();c.translate(0,KY+KH);c.scale(1,.09);c.translate(0,-(KY+KH));c.fillStyle=g;c.fillRect(KX-200,KY+KH-KW*.6,KW+400,KW*1.2);c.restore()}
-    if(kit.complete&&kit.naturalWidth){const iw=kit.naturalWidth,ih=kit.naturalHeight;
-      for(let i=0;i<5;i++){const t=eo(seg(p,.03+i*.03,.1+i*.03));if(t<=0)continue;
-        const x0=SL[i],x1=SL[i+1],lift=(1-t)*(KH*.7+i*16);
-        c.globalAlpha=cl(t*3);c.drawImage(kit,iw*x0,0,iw*(x1-x0)+1,ih,KX+KW*x0,KY-lift,KW*(x1-x0)+1,KH)}
-      c.globalAlpha=1}
-    c.restore();
-    if(port){const y0=oy,y1=oy+BH*sc,e=70;let g=c.createLinearGradient(0,y0,0,y0+e);g.addColorStop(0,'#0b0d09');g.addColorStop(1,'rgba(11,13,9,0)');c.fillStyle=g;c.fillRect(0,y0-1,W,e+1);
-      g=c.createLinearGradient(0,y1-e,0,y1);g.addColorStop(0,'rgba(11,13,9,0)');g.addColorStop(1,'#0b0d09');c.fillStyle=g;c.fillRect(0,y1-e,W,e+1)}
-    /* warmer Farbton und Abdunkeln beim Eintauchen in den Grill */
-    c.fillStyle=`rgba(40,26,8,${.18})`;c.fillRect(0,0,W,H);
-    const dk=eio(seg(p,.36,.47));if(dk>0){c.fillStyle=`rgba(9,11,8,${dk})`;c.fillRect(0,0,W,H)}
-    const gl=Math.sin(Math.PI*seg(p,.36,.5));if(gl>0){const g=c.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.6);g.addColorStop(0,`rgba(235,190,110,${.35*gl})`);g.addColorStop(1,'rgba(235,190,110,0)');c.fillStyle=g;c.fillRect(0,0,W,H)}
-  }
-  function drawTunnel(p){
-    const t=seg(p,.44,.84),cam=-1+t*(ZMAX+1.6),R0=Math.min(W,H)*.62,S0=Math.min(W,H)*(W<640?.6:.46);
-    const fade=1-seg(p,.8,.9);
-    for(const d of DUST){const dz=((d.z-cam)%(ZMAX+4)+(ZMAX+4))%(ZMAX+4);if(dz<.15)continue;const s=1/dz;
-      const x=W/2+Math.cos(d.a)*d.r*R0*s,y=H/2+Math.sin(d.a)*d.r*R0*s*.8;if(x<-20||x>W+20||y<-20||y>H+20)continue;
-      c.fillStyle=`rgba(235,211,155,${cl((1-dz/(ZMAX+4))*.9)*fade*seg(p,.42,.5)})`;c.beginPath();c.arc(x,y,Math.min(3,1.2*s),0,6.283);c.fill()}
-    const vis=[];let near=null,nd=9;
-    for(const s of SP){const dz=s.z-cam;if(dz<.22||dz>7)continue;vis.push([dz,s]);if(dz>.5&&dz<nd){nd=dz;near=s}}
-    vis.sort((a,b)=>b[0]-a[0]);
-    for(const [dz,s] of vis){if(!s.im){s.im=img(s.p.im)}if(!s.im.complete||!s.im.naturalWidth)continue;
-      const sc=1/dz,sz=S0*sc,x=W/2+Math.cos(s.a)*s.r*R0*sc-sz/2,y=H/2+Math.sin(s.a)*s.r*R0*sc*.8-sz/2;
-      c.globalAlpha=cl((7-dz)/2.5)*cl((dz-.22)/.35)*fade;c.drawImage(s.im,x,y,sz,sz)}
-    c.globalAlpha=1;
-    const show=near&&t>0&&t<.97&&fade>.5;
-    if(show&&fcat.dataset.k!==near.name){fcat.dataset.k=near.name;fcat.textContent=nm(near.name)}
-    fcat.style.opacity=show?1:0;
-    /* Preload der nächsten Bilder */
-    if(t>0)for(const s of SP){if(!s.im&&s.z-cam<9)s.im=img(s.p.im)}
-  }
-  function drawEnd(p){const e=eo(seg(p,.82,.95));if(e<=0)return;
-    const r=Math.min(W,H)*(.2+.05*e);c.strokeStyle=`rgba(207,169,90,${.5*e})`;c.lineWidth=1;
-    c.beginPath();c.arc(W/2,H/2,r*1.55,0,6.283);c.stroke();
-    c.setLineDash([2,6]);c.beginPath();c.arc(W/2,H/2,r*1.85,-.4+p*2,2.7+p*2);c.stroke();c.setLineDash([])}
-  function frame(){
-    cur+=(tgt-cur)*(RM?1:.11);if(Math.abs(tgt-cur)<.0004)cur=tgt;
-    const p=cur;c.clearRect(0,0,W,H);
-    if(p<.5)drawGarden(p);
-    if(p>.42)drawTunnel(p);else fcat.style.opacity=0;
-    drawEnd(p);
-    stick.style.setProperty('--fa',(1-.82*eio(seg(p,.84,.97))).toFixed(3));
-    stick.style.setProperty('--fs',(1-seg(p,.4,.5)).toFixed(3));
-    stick.style.setProperty('--fh',(1-seg(p,0,.03)).toFixed(3));
-    bar.style.transform=`scaleX(${p.toFixed(4)})`;
-    for(const el of caps){const a=+el.dataset.a,b=+el.dataset.b,w=.035;
-      const o=RM?(el.classList.contains('fend')?1:(p>=a&&p<b?1:0)):cl(Math.min((p-a)/w,(b-p)/w));
-      el.style.opacity=o.toFixed(3);const dy=(1-o)*18*(p<a?1:-1);
-      el.style.transform=el.classList.contains('fend')?`translateY(calc(-50% + ${dy}px))`:`translateY(${dy}px)`;
-      el.classList.toggle('on',o>.6)}
-    dirty=false;
-    if(run&&(cur!==tgt||!bg.complete))requestAnimationFrame(frame);else ticking=false;
-  }
-  let ticking=false;
-  function kick(){if(!ticking){ticking=true;requestAnimationFrame(frame)}}
-  function onScroll(){if(RM)return;const r=sec.getBoundingClientRect(),len=sec.offsetHeight-H;tgt=cl(-r.top/Math.max(1,len));kick()}
-  new IntersectionObserver(es=>{run=es[0].isIntersecting;if(run){onScroll();kick()}}).observe(sec);
-  addEventListener('scroll',onScroll,{passive:true});
-  addEventListener('resize',()=>{size();onScroll();kick()});
-  bg.addEventListener('load',kick);kit.addEventListener('load',kick);
-  addEventListener('langchange',()=>{fcat.dataset.k='';kick()});
-  size();onScroll();kick();
+  const st=document.getElementById('tstage');if(!st)return;
+  const sc=document.getElementById('tscroll'),box=document.getElementById('timg'),hsBox=document.getElementById('ths'),
+        card=document.getElementById('tcard'),nav=document.getElementById('tnav'),nameEl=document.getElementById('tname'),
+        stepEl=document.getElementById('tstep'),swipe=document.getElementById('tswipe'),L=[...box.querySelectorAll('.tl')];
+  const P=window.KP||[],byId=Object.fromEntries(P.map(p=>[p.i,p]));
+  const EN=()=>typeof LANG!=='undefined'&&LANG==='en';
+  const nm=x=>(EN()&&window.KEN&&KEN[x])||x;
+  const T=x=>EN()?({'Vorgarten':'Front garden','Terrasse':'Terrace','Garten':'Garden','Schuppen':'Shed','Gewächshaus':'Greenhouse',
+    'In den Geräteschuppen':'Into the shed','Ums Haus zur Terrasse':'Round to the terrace','In den Garten':'Into the garden','Zum Gewächshaus':'To the greenhouse',
+    'Zurück zum Vorgarten':'Back to the front','Zurück zur Terrasse':'Back to the terrace','Zurück in den Garten':'Back to the garden','Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved',
+    'Outdoor-Möbel':'Outdoor furniture','Auf Anfrage':'On request','Alle anzeigen':'Show all','← Wischen →':'← Swipe →'}[x]||x):x;
+  const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  /* Szenen: x/y in Prozent des Bildes; p = Artikelnummer, k = Kategorie (ohne Artikel), go = Zielszene */
+  const S=[
+    {id:'vorne',n:'Vorgarten',img:'tour/raw/raw1.webp',fx:50,h:[
+      {x:11,y:55,go:3,t:'In den Geräteschuppen'},{x:84,y:67,go:1,t:'Ums Haus zur Terrasse'},
+      {x:22,y:73,p:'4CD-45E-Z'},{x:40,y:61,p:'CSL2025'},{x:68,y:62,p:'CSL2016'},{x:62,y:80,p:'CSL2032'}]},
+    {id:'terrasse',n:'Terrasse',img:'tour/raw/raw2.webp',fx:62,h:[
+      {x:55,y:51,go:2,t:'In den Garten'},{x:13,y:80,go:0,t:'Zurück zum Vorgarten'},
+      {x:71,y:51,p:'SC-2433B-MBS'},{x:92,y:52,p:'SC-2432A-BL'},{x:81,y:63,p:'SC-2434B-MBS'},{x:17,y:61,k:'moebel',t:'Outdoor-Möbel'}]},
+    {id:'garten',n:'Garten',img:'tour/raw/raw3.webp',fx:55,h:[
+      {x:20,y:47,go:4,t:'Zum Gewächshaus'},{x:14,y:80,go:1,t:'Zurück zur Terrasse'},
+      {x:16,y:75,p:'EX4100'},{x:31,y:70,p:'SC-25HZ50-L'},{x:45,y:67,p:'CSL2014'},{x:90,y:66,p:'4CD-45C-Z'},
+      {x:78,y:22,p:'CZM1007'},{x:69,y:23,p:'CSZ1002'},{x:75.5,y:52,p:'CQT1015'},{x:65.5,y:55,p:'CZM1013'}]},
+    {id:'schuppen',n:'Schuppen',img:'tour/raw/raw4.webp',fx:52,h:[
+      {x:13,y:62,go:0,t:'Zurück zum Vorgarten'},
+      {x:36,y:21,p:'EX18'},{x:43,y:21,p:'EX166'},{x:49,y:17,p:'EX125A'},{x:61,y:24,p:'DJ-3003'},{x:59,y:33,p:'EX300'},
+      {x:83,y:15,p:'CSZ1004'},{x:82,y:28,p:'CSZ1002'},{x:72,y:56,p:'CZM1007'},{x:80,y:50,p:'CSL2002'},{x:84.5,y:52,p:'CSL2003'}]},
+    {id:'gewaechshaus',n:'Gewächshaus',img:'tour/raw/raw5.webp',fx:45,h:[
+      {x:72,y:80,go:2,t:'Zurück in den Garten'},
+      {x:14,y:40,p:'YCS07'},{x:25,y:52,p:'YCS02'},{x:32,y:39,p:'CSL2012'},{x:52,y:48,p:'YCS01'},{x:58,y:41,p:'CSL2014'},
+      {x:46,y:83,p:'YCS05'},{x:44,y:44,p:'CZM1014'}]}
+  ];
+  let cur=-1,front=0,busy=false;
+  S.forEach(s=>{const i=new Image();i.src=s.img});
+  const IW=1536,IH=1024;
+  function layout(){const W=st.clientWidth,H=st.clientHeight;let s=H/IH;if(IW*s<W)s=W/IW;
+    box.style.width=IW*s+'px';box.style.height=IH*s+'px';box.style.marginTop=(H-IH*s)/2+'px'}
+  function center(){const s=S[cur];sc.scrollLeft=Math.max(0,box.clientWidth*s.fx/100-sc.clientWidth/2)}
+  function navHTML(){nav.innerHTML=S.map((s,i)=>`<button type="button" data-s="${i}" class="${i===cur?'on':''}">${T(s.n)}</button>`).join('')}
+  function hsHTML(){const s=S[cur];hsBox.innerHTML=s.h.map((h,i)=>{
+      if(h.go!==undefined)return `<button type="button" class="hs go" data-h="${i}" style="left:${h.x}%;top:${h.y}%">${ARROW}${T(h.t)}</button>`;
+      const p=byId[h.p];if(h.p&&!p)return '';const lab=h.p?nm(p.n):T(h.t);
+      return `<button type="button" class="hs" data-h="${i}" style="left:${h.x}%;top:${h.y}%" aria-label="${lab}"><i></i><span class="hl">${lab}</span></button>`}).join('')}
+  function show(i,ox,oy){if(i===cur||busy)return;closeCard();
+    const first=cur<0,a=L[front],b=L[1-front];busy=!first;
+    if(!first){a.style.transformOrigin=`${ox??50}% ${oy??50}%`;a.classList.remove('on');a.classList.add('out');a.style.transform='scale(1.55)';st.classList.add('moving')}
+    b.classList.remove('out');b.style.transition='none';b.style.transformOrigin='50% 50%';b.style.transform='scale(1.12)';b.src=S[i].img;b.offsetWidth;b.style.transition='';
+    const go=()=>{b.classList.add('on');b.style.transform='';front=1-front;cur=i;hsHTML();navHTML();nameEl.textContent=T(S[i].n);stepEl.textContent=`${i+1} / ${S.length}`;center();
+      setTimeout(()=>{st.classList.remove('moving');a.classList.remove('out');a.style.transform='';busy=false},first?0:650)};
+    if(first)go();else setTimeout(go,420)}
+  function closeCard(){card.hidden=true;hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
+  function ml(){try{return JSON.parse(localStorage.getItem('k-ml')||'{}')}catch(e){return {}}}
+  function openCard(h,el){hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'));el.classList.add('act');
+    if(h.k){card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"></div><div class="tb"><small>${T('Auf Anfrage')}</small><h3>${T(h.t)}</h3><p>${EN()?'Lounge sets, tables and loungers. We source them directly from the manufacturer.':'Lounge-Sets, Tische und Liegen. Wir beschaffen sie direkt beim Hersteller.'}</p><div class="tbtn"><a class="btn btn-primary" href="sortiment.html?k=${h.k}">${T('Alle anzeigen')}</a></div></div>`;
+      card.querySelector('.ti').style.background='url(tour/raw/raw2.webp) 15% 62%/420% auto';}
+    else{const p=byId[h.p],on=!!ml()[p.i];
+      card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="${p.im}" alt="${nm(p.n)}"></div><div class="tb"><small class="notranslate" translate="no">${p.b||''} · ${p.i}</small><h3>${nm(p.n)}</h3>${p.sp?`<p>${p.sp}</p>`:''}<div class="tbtn"><a class="btn btn-primary" href="sortiment.html?p=${encodeURIComponent(p.i)}">${T('Im Shop ansehen')}</a><button type="button" class="btn btn-ghost" data-ml="${p.i}">${on?'✓ '+T('Gemerkt'):'+ '+T('Merken')}</button></div></div>`}
+    card.hidden=false;
+    /* auf dem Handy den Punkt sichtbar halten */
+    const r=el.getBoundingClientRect(),sr=sc.getBoundingClientRect();if(r.left<sr.left+20||r.right>sr.right-20)sc.scrollBy({left:r.left-sr.left-sr.width/2,behavior:'smooth'})}
+  hsBox.addEventListener('click',e=>{const b=e.target.closest('.hs');if(!b)return;const h=S[cur].h[+b.dataset.h];
+    if(h.go!==undefined)show(h.go,h.x,h.y);else if(b.classList.contains('act'))closeCard();else openCard(h,b)});
+  card.addEventListener('click',e=>{if(e.target.closest('.x')){closeCard();return}
+    const m=e.target.closest('[data-ml]');if(m){const o=ml(),i=m.dataset.ml;o[i]?delete o[i]:o[i]=1;try{localStorage.setItem('k-ml',JSON.stringify(o))}catch(x){}m.textContent=o[i]?'✓ '+T('Gemerkt'):'+ '+T('Merken')}});
+  nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b)show(+b.dataset.s)});
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
+  sc.addEventListener('scroll',()=>{swipe.style.opacity=0},{passive:true});
+  setTimeout(()=>{swipe.style.opacity=0},4500);
+  addEventListener('resize',()=>{layout();center()});
+  addEventListener('langchange',()=>{if(cur<0)return;hsHTML();navHTML();nameEl.textContent=T(S[cur].n);swipe.textContent=T('← Wischen →');closeCard()});
+  layout();show(0);
+  if(window.ResizeObserver)new ResizeObserver(()=>{layout();if(cur>=0)center()}).observe(st);
   /* Mobile Anfrage-Leiste: erscheint nach dem Einstieg, verschwindet am Seitenende */
   const m=document.getElementById('mcta');
   if(m){const hero=document.getElementById('top'),k=document.getElementById('kontakt');
     const upd=()=>{const past=hero.getBoundingClientRect().bottom<0,end=k.getBoundingClientRect().top<innerHeight*.9;
-      const r=sec.getBoundingClientRect(),inFilm=r.top<=60&&r.bottom>innerHeight;m.classList.toggle('on',past&&!end&&!inFilm)};
+      const r=st.getBoundingClientRect(),inT=r.top<innerHeight*.5&&r.bottom>innerHeight*.5;m.classList.toggle('on',past&&!end&&!inT)};
     addEventListener('scroll',upd,{passive:true});upd()}
 })();
 </script>
