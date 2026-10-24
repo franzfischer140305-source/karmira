@@ -1149,7 +1149,7 @@ applyLang();fixTotals();
   /* Drohnenclips (je 40 Einzelbilder): c = Wolken→Luftbild, r1…r5 = Aufstieg aus Szene 1…5 zum Luftbild. Rückwärts = Abstieg. */
   const CL=['c','r1','r2','r3','r4','r5'];
   const TRS=[[['c',0],['r1',1]],[['r1',0],['r2',1]],[['r2',0],['r3',1]],[['r3',0],['r4',1]],[['r4',0],['r5',1]]];
-  const TRL=[2.4,2.6,2.6,2.6,2.6];
+  const TRL=[6,6.5,6.5,6.5,6.5];
   const S=[
     {n:'Vorgarten',img:'s1.webp',fx:50,h:[[15,72,'4CD-45E-Z'],[36,58,'GCJ-5003'],[90,53,'CFJ-2005'],[43,41,'CSL2025'],[51,48,'CSL2026'],[80,41,'CSL2016'],[47,56,'CSL2032'],[60,57,'CSL2030'],[10,16,'CZM2001'],[15,24,'CZM2004'],[31,39,'YCP08'],[96,64,'CFZ5001'],[95,78,'SL1011'],[85,78,'CSL2014'],[22,49,'YCP07'],[27,59,'CSL2005'],[90,20,'CZM1003']]},
     {n:'Terrasse',img:'s2.webp',fx:55,h:[[74,48,'SC-2433B-MBS'],[59,29,'SP-2613B'],[86,60,'CSL2016'],[13,76,'CSL2018'],[14,53,'CSL2033'],[22,60,'CSL2015'],[79.5,34,'CSL2012'],[85,31,'CZM1012'],[90,36,'YCM09'],[84,58,'CSL1004'],[91,77,'CSL1005'],[42,33,'DFS-1002'],[34,64,'EX700'],[92.5,12,'EX1040']]},
@@ -1177,7 +1177,7 @@ applyLang();fixTotals();
   const TN=t=>TRS[t].length*NC;
   function fr(t,g){const p=TRS[t][Math.floor(g/NC)],l=g%NC;return FR[p[0]][p[1]?NC-1-l:l]}
   function near(t,f,dir){const N=TN(t);for(let d=0;d<N;d++){const g=f+d*dir;if(g<0||g>=N)break;const im=fr(t,g);if(im)return [im,g]}return null}
-  let cur=-1,lastP=-1;
+  let cur=-1,lastP=-1,sp=-1;
   /* Abspielposition statt Scrollposition: jeder Klick fliegt zur nächsten Szene */
   let pv=0,tw=null;const prevB=document.getElementById('tprev'),nextB=document.getElementById('tnext'),land=document.getElementById('tland');
   function prog(){return pv}
@@ -1196,7 +1196,7 @@ applyLang();fixTotals();
   addEventListener('keydown',e=>{const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;if(e.key==='ArrowRight'){goScene(at()+1)}if(e.key==='ArrowLeft'&&at()>0){goScene(at()-1)}});
   function seg(p){for(const s of SEG)if(p<=s.b)return s;return SEG[SEG.length-1]}
   function draw(){
-    const p=prog();lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
+    const tg=prog();if(sp<0||Math.abs(tg-sp)>6)sp=tg;sp+=(tg-sp)*.085;if(Math.abs(tg-sp)<.0015)sp=tg;else req();const p=sp;lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
     if(s.k==='h'){
       IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');CLD.classList.remove('on');setScene(s.i,true);
       hint.classList.toggle('off',s.i===S.length-1||p-s.a>.75);return}
