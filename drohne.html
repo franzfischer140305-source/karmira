@@ -1,0 +1,1488 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="favicon.png">
+<title>KARMIRA – Drohnenflug</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+@view-transition{navigation:auto}
+/* Layout: ein fester Karmira-Globus hinter der ganzen Seite, der beim Scrollen absinkt und
+   seitlich schwingt; darüber Glas-Karten in Gold auf Feld-Schwarz (Aufbau nach "Ascend"). */
+:root{
+  color-scheme:dark;
+  --bg:#090b08; --bg-2:#0e110c;
+  --ink:#f3f1ea; --muted:#a3a593; --muted-2:#76786a;
+  --gold:#cfa95a; --gold-l:#ebd39b; --gold-d:#9a7838; --cream:#f1e6cc; --green:#93b062;
+  --line:rgba(236,226,196,.12); --line-strong:rgba(236,226,196,.22);
+  --glass:rgba(13,16,11,.58); --glass-2:rgba(16,20,13,.74);
+  --gold-wash:rgba(207,169,90,.10); --gold-edge:rgba(207,169,90,.22);
+  --shadow:0 30px 80px -30px rgba(0,0,0,.75);
+  --f-display:"Marcellus","Cormorant Garamond",Georgia,serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --radius:18px; --radius-lg:26px; --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--gold-l);outline-offset:3px;border-radius:8px}
+
+#globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:auto;cursor:grab}
+@media (hover:none),(pointer:coarse){#globe{cursor:default}}
+#globe.drag{cursor:grabbing}
+.page{position:relative;z-index:1;pointer-events:none}
+.page a,.page button,.page select,.page .card,.page .dashboard,.page .stat,.page .cta-card,.page .footer,.page .route,.page .gpill{pointer-events:auto}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+
+/* NAV */
+.nav-band{position:relative;z-index:3;pointer-events:auto;background:linear-gradient(180deg,rgba(9,11,8,.9),rgba(9,11,8,0))}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:20px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:20px;letter-spacing:.24em}
+.brand img{width:34px;height:34px}
+.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font:600 15px var(--f-body);border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+.btn svg{width:16px;height:16px;transition:transform .2s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:rgba(9,11,8,.35);border-color:var(--line-strong);color:var(--ink);backdrop-filter:blur(10px)}
+.btn-ghost:hover{border-color:var(--gold-edge);background:var(--gold-wash)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
+  background:radial-gradient(125% 62% at 50% -10%,rgba(9,11,8,.85) 0%,rgba(9,11,8,.3) 44%,transparent 68%)}
+.hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-block:40px 150px}
+.hero-logo{width:clamp(76px,9vw,104px);height:auto;filter:drop-shadow(0 6px 26px rgba(0,0,0,.6))}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.hero .eyebrow{margin-top:18px}
+.hero-title{margin:18px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(40px,6.4vw,82px);line-height:1.02;letter-spacing:-.01em;max-width:13ch;text-wrap:balance;text-shadow:0 2px 50px rgba(0,0,0,.7)}
+.hero-title em{font-style:normal;background:linear-gradient(180deg,var(--gold-l),var(--gold-d));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{margin:22px auto 0;max-width:580px;font-size:clamp(16px,1.9vw,18.5px);color:var(--muted);text-shadow:0 1px 20px rgba(0,0,0,.9)}
+.hero-actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+.route{position:absolute;left:max(24px,env(safe-area-inset-left,0px));top:calc(100svh - 112px);transform:translateY(-100%);width:min(330px,calc(100% - 48px));padding:16px 18px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);backdrop-filter:blur(14px);text-align:left}
+.route label{display:block;font:500 11px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.dsearch{position:relative;margin-top:8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line-strong)}
+.dsearch:focus-within{border-color:var(--gold)}
+.dsearch>svg{width:15px;height:15px;color:var(--gold);flex:none}
+.dsearch input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--ink);font:600 15px var(--f-body);padding:6px 0 8px}
+.dsearch input::placeholder{color:var(--muted-2);font-weight:500}
+#dlist,#llist{position:absolute;margin:0;padding:6px;list-style:none;max-height:300px;overflow-y:auto;background:rgba(14,17,12,.97);border:1px solid var(--line-strong);border-radius:14px;box-shadow:var(--shadow);display:none;z-index:20;backdrop-filter:blur(16px)}
+#dlist{left:-8px;right:-8px;bottom:calc(100% + 10px)}
+#dlist.open,#llist.open{display:block}
+#dlist li,#llist li{padding:8px 10px;border-radius:9px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#dlist li span{font-size:12px;color:var(--muted);white-space:nowrap}
+#dlist li[data-i]:hover,#dlist li.act,#llist li[data-l]:hover{background:var(--gold-wash)}
+#dlist li.hd,#llist li.hd{cursor:default;font:500 10.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);padding:10px 10px 4px}
+#dlist li.empty,#dlist li.ft{cursor:default;color:var(--muted-2);font-size:12px}
+.route-meta{margin-top:10px;font:500 12.5px var(--f-mono);color:var(--gold-l);font-variant-numeric:tabular-nums}
+
+.nav-right{display:flex;align-items:center;gap:10px}
+.lsel{position:relative}
+.lbtn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:rgba(9,11,8,.35);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer}
+.lbtn:hover{border-color:var(--gold-edge)}
+.lbtn svg{width:15px;height:15px;color:var(--gold)}
+.lbtn .chev{width:12px;height:12px;color:var(--muted)}
+#llist{right:0;top:calc(100% + 8px);width:250px;max-height:380px}
+#llist li small{font:500 11px var(--f-mono);color:var(--muted-2);text-transform:uppercase}
+#llist li.on{color:var(--gold-l)}
+#llist li.ls{padding:4px;cursor:default}
+#llist li.ls input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:9px;color:var(--ink);font:500 13.5px var(--f-body);padding:8px 10px;outline:0}
+#llist li.ls input:focus{border-color:var(--gold-edge)}
+#llist li.auto{border-top:1px solid var(--line);border-radius:0 0 9px 9px;margin-top:4px;color:var(--muted);font-size:13px}
+body.translated-ltr,body.translated-rtl{top:0!important}
+.goog-te-banner-frame,.skiptranslate iframe,#goog-gt-tt{display:none!important}
+.gpill{position:absolute;right:max(24px,env(safe-area-inset-right,0px));top:calc(100svh - 112px);transform:translateY(-100%);display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--muted);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px)}
+.gpill:hover,.gpill[aria-pressed="true"]{color:var(--gold-l);border-color:var(--gold-edge)}
+.gpill svg{width:14px;height:14px}
+
+.trust{padding-block:0 clamp(40px,6vw,70px);text-align:center}
+.trust-label{font:500 11.5px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.trust-row{margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px clamp(22px,4vw,48px);font-family:var(--f-display);font-size:18px;color:var(--muted)}
+
+/* SECTIONS */
+.section{padding-block:clamp(80px,11vw,140px)}
+.section-head{max-width:700px;margin:0 auto clamp(40px,6vw,64px);text-align:center}
+h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.2vw,50px);line-height:1.08;text-wrap:balance}
+.lead{margin:18px auto 0;max-width:62ch;color:var(--muted);font-size:17px}
+
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{position:relative;padding:30px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 0% 0%,rgba(207,169,90,.09),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{transform:translateY(-4px);border-color:var(--line-strong);background:var(--glass-2)}
+.card:hover::before{opacity:1}
+.card-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--gold-l);background:var(--gold-wash);border:1px solid var(--gold-edge)}
+.card-icon svg{width:22px;height:22px}
+.card h3{margin:20px 0 0;font-size:19px;font-weight:700}
+.card p{margin:8px 0 0;font-size:15px;color:var(--muted)}
+
+.showcase-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,6vw,72px);align-items:center}
+.showcase-copy{min-width:0}
+.showcase-copy .btn{margin-top:30px}
+.dashboard{position:relative;min-width:0;padding:24px;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.dashboard::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(160deg,rgba(207,169,90,.45),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700}
+.dash-live{display:inline-flex;align-items:center;gap:7px;font:500 12px var(--f-mono);color:var(--green)}
+.dash-live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(147,176,98,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(147,176,98,0)}100%{box-shadow:0 0 0 0 rgba(147,176,98,0)}}
+.dash-chart{margin-top:18px;padding:16px 14px 10px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.dash-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:end;height:170px;border-bottom:1px solid var(--line)}
+.dash-bar{position:relative;height:var(--h);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--gold-l),rgba(154,120,56,.25));transform-origin:bottom;animation:grow 1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 90ms)}
+.dash-bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font:500 12px var(--f-mono);color:var(--cream);font-variant-numeric:tabular-nums}
+@keyframes grow{from{transform:scaleY(0)}}
+.dash-labels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));overflow-wrap:anywhere;hyphens:auto;gap:12px;margin-top:8px;font-size:11.5px;line-height:1.3;color:var(--muted);text-align:center}
+.dash-req{margin-top:18px}
+.dash-req p{margin:0;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+
+.stats{margin-top:clamp(56px,8vw,96px);display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.stat{padding:30px 18px;text-align:center;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.stat-value{font-family:var(--f-display);font-size:clamp(32px,4vw,46px);line-height:1;background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat-label{margin-top:10px;font-size:14px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.step{padding:26px;border-radius:var(--radius);border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);pointer-events:auto}
+.step-n{font:500 12px var(--f-mono);color:var(--gold);letter-spacing:.14em}
+.step h3{margin:12px 0 0;font-size:18px}
+.step p{margin:6px 0 0;font-size:15px;color:var(--muted)}
+
+.cta-card{max-width:780px;margin:0 auto;text-align:center;padding:clamp(48px,7vw,80px) clamp(24px,5vw,64px);border-radius:var(--radius-lg);background:radial-gradient(120% 140% at 50% 0%,rgba(207,169,90,.14),transparent 55%),var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.cta-card .hero-actions{margin-top:30px}
+.mail{margin-top:22px;font:500 14px var(--f-mono);color:var(--muted)}
+.mail span{color:var(--gold-l);user-select:all}
+
+.footer{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;margin-top:clamp(64px,9vw,110px);padding-top:48px;border-top:1px solid var(--line)}
+.footer-brand p{margin:12px 0 0;max-width:30ch;color:var(--muted);font-size:14.5px}
+.footer-cols{display:flex;gap:clamp(32px,6vw,72px);flex-wrap:wrap}
+.footer-cols h4{margin:0 0 12px;font:500 11.5px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
+.footer-cols a{display:block;padding:4px 0;font-size:14.5px;color:var(--muted)}
+.footer-cols a:hover{color:var(--ink)}
+.copyright{margin:56px 0 0;padding-bottom:32px;text-align:center;font-size:13px;color:var(--muted-2)}
+
+/* HERKUNFT: China-Karte mit Produktionsstandorten */
+.hubgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,3vw,32px);align-items:stretch}
+.hubmap{position:relative;min-width:0;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubmap svg{display:block;width:100%;height:auto}
+.hubmap .land{fill:rgba(38,46,29,.95);stroke:rgba(235,211,155,.45);stroke-width:.8;vector-effect:non-scaling-stroke}
+.hubmap .hub{cursor:pointer}
+.hubmap .hub circle.p{fill:rgba(207,169,90,.18);stroke:rgba(235,211,155,.5);stroke-width:1;vector-effect:non-scaling-stroke}
+.hubmap .hub circle.d{fill:var(--gold-l)}
+.hubmap .hub text{fill:var(--cream);font-family:var(--f-mono);font-weight:500;paint-order:stroke;stroke:rgba(9,11,8,.85);stroke-width:3px;stroke-linejoin:round}
+.hubmap .hub:hover circle.p,.hubmap .hub.on circle.p{fill:rgba(207,169,90,.4)}
+.hubmap .hub.on text{fill:var(--gold-l)}
+@media (prefers-reduced-motion:no-preference){.hubmap .hub circle.p{animation:hubping 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes hubping{0%{opacity:1}70%{opacity:.25}100%{opacity:1}}
+.hubback{position:absolute;top:14px;left:14px;height:34px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+.hubmap.zoomed .hubback{opacity:1;pointer-events:auto}
+.hubchips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 16px}
+.hubchips button{height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font:600 13px var(--f-body);cursor:pointer}
+.hubchips button:hover{color:var(--ink);border-color:var(--line-strong)}
+.hubchips button.on{color:#17130b;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));border-color:transparent}
+.hubcard{min-width:0;display:flex;flex-direction:column;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubcard.fade{animation:hubfade .5s ease}
+@keyframes hubfade{from{opacity:.3;transform:translateY(8px)}}
+.hubph{position:relative;isolation:isolate;aspect-ratio:16/9;max-width:100%;background:radial-gradient(120% 120% at 30% 20%,rgba(207,169,90,.18),transparent 60%),var(--bg-2);overflow:hidden}
+.hubph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9)}
+.hubph .cr{position:absolute;right:8px;bottom:6px;padding:2px 8px;border-radius:6px;background:rgba(9,11,8,.7);font-size:10.5px;color:var(--muted)}
+.hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hubph .fb b{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:.2em;color:var(--gold-l)}
+.hubph .fb span{font:500 12px var(--f-mono);letter-spacing:.14em;color:var(--muted)}
+.hubbody{padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1}
+.hubbody .loc{font:500 11.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hubbody h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px}
+.hubbody p{margin:0;color:var(--muted);font-size:15.5px}
+.hubbody .tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.hubbody .tg span{padding:5px 11px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.hubbody .btn{margin-top:auto;align-self:flex-start}
+@media (max-width:900px){.hubgrid{grid-template-columns:1fr}}
+
+/* Gemeinsame Navigation mit Sortiment-Menü */
+.knav{position:sticky;top:0;z-index:80;background:rgba(9,11,8,.82);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(236,226,196,.08)}
+.knav-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
+.kbrand{display:inline-flex;align-items:center;gap:10px;font-family:"Marcellus",Georgia,serif;font-size:19px;letter-spacing:.24em;color:#f3f1ea}
+.kbrand img{width:34px;height:34px;object-fit:contain}
+.klinks{display:flex;align-items:center;gap:6px;font:500 14px "Manrope",system-ui,sans-serif}
+.klinks a,.kmega-btn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:999px;color:#c3c4b5;transition:color .2s,background .2s}
+.klinks a:hover,.kmega-btn:hover,.kmega-btn[aria-expanded="true"],.klinks a.on{color:#f3f1ea;background:rgba(236,226,196,.07)}
+.kmega-btn svg{width:13px;height:13px;transition:transform .3s}
+.kmega-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.kright{display:flex;align-items:center;gap:10px}
+.kcta{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(236,226,196,.22);font:600 13.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;white-space:nowrap;transition:.2s}
+.kcta:hover{border-color:rgba(207,169,90,.4);background:rgba(207,169,90,.1)}
+.kburger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(236,226,196,.22);place-items:center;color:#f3f1ea}
+.kburger svg{width:18px;height:18px}
+.kmega{position:absolute;left:0;right:0;top:100%;background:#0c0f0a;border-bottom:1px solid rgba(236,226,196,.12);box-shadow:0 40px 80px -30px rgba(0,0,0,.85);visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1),visibility 0s .35s;max-height:calc(100svh - 72px);overflow-y:auto}
+.kmega.open{visibility:visible;opacity:1;transform:none;transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1)}
+.kmega-in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 1.1fr;gap:18px;padding-block:26px 30px}
+.kmob{display:none}
+.kcol{min-width:0}
+.kcol>a.kch{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(236,226,196,.1);background:#10140d;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.kcol>a.kch:hover{transform:translateY(-3px);border-color:rgba(207,169,90,.4)}
+.kch .ki{display:block;aspect-ratio:16/10;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%);position:relative}
+.kch .ki img{position:absolute;inset:5% 10%;width:80%;height:90%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.kch:hover .ki img{transform:scale(1.07)}
+.kch .kt2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px}
+.kch b{font:600 14px "Manrope",system-ui,sans-serif;color:#f3f1ea}
+.kch small{font:500 11px "IBM Plex Mono",monospace;color:#cfa95a}
+.kcol ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:1px}
+.kcol li a{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-radius:8px;font:500 13px "Manrope",system-ui,sans-serif;color:#a3a593;transition:.2s}
+.kcol li a:hover{color:#f3f1ea;background:rgba(236,226,196,.06)}
+.kcol li a span{font:500 11px "IBM Plex Mono",monospace;color:#76786a}
+.kside{display:flex;flex-direction:column;gap:14px}
+.kfeat{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(207,169,90,.3);background:linear-gradient(160deg,rgba(207,169,90,.14),rgba(16,20,13,1) 55%)}
+.kfeat .ki{display:block;aspect-ratio:4/3;position:relative}
+.kfeat .ki img{position:absolute;inset:4% 12%;width:76%;height:92%;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(0,0,0,.45));transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.kfeat:hover .ki img{transform:scale(1.06) rotate(-2deg)}
+.kfeat .kt2{padding:0 14px 14px;display:flex;flex-direction:column;gap:2px}
+.kfeat small{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;color:#cfa95a;text-transform:uppercase}
+.kfeat b{font:600 14.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;line-height:1.3}
+.kreq{font:500 12.5px "Manrope",system-ui,sans-serif;color:#a3a593}
+.kreq p{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:#76786a;margin-bottom:6px}
+.kreq a{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:999px;border:1px solid rgba(236,226,196,.12);color:#c3c4b5}
+.kreq a:hover{border-color:rgba(207,169,90,.4);color:#f3f1ea}
+.kall{display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:999px;background:linear-gradient(100deg,#9a7838,#ebd39b 50%,#cfa95a);color:#17130b;font:600 14px "Manrope",system-ui,sans-serif}
+@media (max-width:1100px){.kmega-in{grid-template-columns:repeat(3,minmax(0,1fr))}.kside{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}.kside>*{flex:1 1 240px}}
+@media (max-width:900px){
+  .klinks{display:none}.kburger{display:grid}
+  .knav-in{height:64px}
+  .kmega{max-height:calc(100svh - 64px)}
+  .kmob{display:flex;flex-direction:column;gap:2px;grid-column:1/-1;padding-bottom:6px;border-bottom:1px solid rgba(236,226,196,.1)}
+  .kmob a{padding:11px 4px;font:600 16px "Manrope",system-ui,sans-serif;color:#f3f1ea}
+  .kmega-in{grid-template-columns:1fr;gap:8px}
+  .kcol ul{display:none}
+  .kcol>a.kch{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;border-radius:14px}
+  .kch .ki{aspect-ratio:auto;height:64px}
+  .kch .ki img{inset:8%;width:84%;height:84%}
+  .kch .kt2{padding:10px 14px}
+  .kside{flex-direction:column}.kside>*{flex:none}
+  .kfeat{display:none}
+}
+@media (max-width:640px){.kcta{display:none}}
+@media (prefers-reduced-motion:reduce){.kmega,.kmega.open{transition:none}}
+.kmega-btn{background:transparent;border:0;cursor:pointer;font:500 14px "Manrope",system-ui,sans-serif}
+.kburger{background:transparent;cursor:pointer}
+.kcol ul{padding:0;margin-left:0}
+.knav{pointer-events:auto}
+
+/* Produkt-Laufband */
+.mq-sec{padding-bottom:clamp(60px,8vw,110px)}
+.mq{display:flex;flex-direction:column;gap:16px;overflow:hidden;pointer-events:auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;gap:16px;width:max-content;animation:mqmove var(--dur,80s) linear infinite}
+.mq-row.rev .mq-track{animation-direction:reverse}
+.mq:hover .mq-track,.mq:focus-within .mq-track{animation-play-state:paused}
+@keyframes mqmove{to{transform:translateX(-50%)}}
+.mq-tile{flex:none;width:clamp(150px,14vw,200px);border-radius:18px;overflow:hidden;background:var(--glass-2);border:1px solid var(--line);transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .5s}
+.mq-tile:hover{transform:translateY(-6px);border-color:var(--gold-edge);box-shadow:0 30px 50px -30px rgba(0,0,0,.9)}
+.mq-tile .ti{display:block;aspect-ratio:1/1;position:relative;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%)}
+.mq-tile .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.mq-tile:hover .ti img{transform:scale(1.08) rotate(-2deg)}
+.mq-tile .tc{display:flex;flex-direction:column;gap:2px;padding:10px 12px 12px}
+.mq-tile small{font:500 10.5px var(--f-mono);letter-spacing:.1em;color:var(--gold)}
+.mq-tile b{font-size:13.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.mq-more{text-align:center;margin-top:30px}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}.mq-row{overflow-x:auto}}
+::view-transition-group(prod){animation-duration:.55s;animation-timing-function:cubic-bezier(.3,.7,.1,1)}
+
+/* Reveal: Inhalt ist immer sichtbar, er gleitet nur leicht nach oben */
+.js [data-reveal]{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s;transition-delay:var(--rd,0ms)}
+.js [data-reveal]:not(.in){transform:translateY(22px);opacity:.55}
+
+@media (max-width:980px){
+  .nav-links{display:none}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+  .showcase-grid{grid-template-columns:1fr}
+  .showcase-copy{text-align:center}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+  .nav .btn{display:none}
+  .feature-grid{grid-template-columns:1fr}
+  .hero-inner{padding-block:24px 210px}
+  .hero-actions .btn{flex:1}
+  .route{left:18px;right:18px;width:auto;top:calc(100svh - 150px)}
+  .gpill{right:auto;left:18px;top:calc(100svh - 96px)}
+  .dash-labels{font-size:10px}
+  .footer{flex-direction:column}
+}
+@media (max-width:380px){.stats{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js [data-reveal]:not(.in){transform:none;opacity:1}
+  .dash-bar,.dash-live i{animation:none}
+}
+/* ===== Rundgang: Haus → Terrasse → Garten → Schuppen → Gewächshaus ===== */
+.tour{position:relative;z-index:1;padding:clamp(70px,9vw,120px) 0 0}
+.tour-head{text-align:center;margin-bottom:clamp(26px,4vw,44px)}
+.tour-head h2{font-family:var(--f-display);font-weight:400;font-size:clamp(32px,4.6vw,56px);line-height:1.08;margin:10px 0 0}
+.tour-head .lead{max-width:620px;margin:14px auto 0;color:var(--muted)}
+.tour-stage{position:relative;height:min(86vh,66.667vw);height:min(86svh,66.667vw);min-height:520px;background:#0b0d09;overflow:hidden;border-block:1px solid var(--line)}
+.tour-scroll{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tour-scroll::-webkit-scrollbar{display:none}
+.tour-img{position:relative;width:100%;height:100%;overflow:hidden}
+.tl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.1);transition:opacity .9s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
+.tl.on{opacity:1;transform:scale(1)}
+.tl.out{opacity:0;transition:opacity .75s ease,transform .9s cubic-bezier(.55,0,.6,1)}
+.ths{position:absolute;inset:0;transition:opacity .35s}
+.tour-stage.moving .ths{opacity:0;pointer-events:none}
+.hs{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;z-index:2}
+.hs i{display:block;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 26%,var(--gold) 30% 58%,rgba(207,169,90,.25) 62%);box-shadow:0 0 0 2px rgba(9,11,8,.35),0 4px 18px rgba(0,0,0,.5);position:relative}
+.hs i::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid rgba(235,211,155,.8);animation:hsp 2.2s ease-out infinite}
+@keyframes hsp{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.hs .hl{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);white-space:nowrap;font:600 12px var(--f-body);padding:6px 11px;border-radius:999px;background:rgba(9,11,8,.82);border:1px solid var(--gold-edge);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.2s}
+.hs:hover .hl,.hs:focus-visible .hl,.hs.act .hl{opacity:1;transform:translate(-50%,0)}
+.hs.act i{background:radial-gradient(circle,#fff 0 30%,var(--gold-l) 34% 62%,rgba(235,211,155,.3) 66%)}
+.hs.go{display:inline-flex;align-items:center;gap:8px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(9,11,8,.72);border:1px solid var(--gold-edge);backdrop-filter:blur(10px);font:600 13px var(--f-body);white-space:nowrap;box-shadow:0 10px 30px -10px rgba(0,0,0,.8);transition:background .2s,transform .2s}
+.hs.go:hover{background:rgba(30,26,16,.85);transform:translate(-50%,-50%) scale(1.04)}
+.hs.go svg{width:18px;height:18px;color:var(--gold-l);flex:none}
+.tour-top{position:absolute;left:max(16px,env(safe-area-inset-left));top:16px;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(9,11,8,.6);border:1px solid var(--line);backdrop-filter:blur(10px);z-index:3;pointer-events:none}
+.tour-top b{font-family:var(--f-display);font-weight:400;font-size:18px}
+.tour-step{font:500 11px var(--f-mono);letter-spacing:.18em;color:var(--gold)}
+.tour-ai{position:absolute;right:max(16px,env(safe-area-inset-right));top:20px;font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,230,204,.75);background:rgba(9,11,8,.45);padding:5px 9px;border-radius:999px;z-index:3;pointer-events:none}
+.tour-swipe{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 12px var(--f-mono);letter-spacing:.2em;color:var(--cream);background:rgba(9,11,8,.6);padding:10px 16px;border-radius:999px;z-index:3;pointer-events:none;transition:opacity .4s}
+.tour-nav{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(9,11,8,.66);border:1px solid var(--line);backdrop-filter:blur(12px);z-index:3;max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none}
+.tour-nav::-webkit-scrollbar{display:none}
+.tour-nav button{border:0;background:none;color:var(--muted);font:600 13px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tour-nav button.on{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
+.tour-card{position:absolute;right:max(16px,env(safe-area-inset-right));top:64px;width:min(330px,calc(100% - 32px));border-radius:20px;background:rgba(13,16,11,.9);border:1px solid var(--line-strong);backdrop-filter:blur(16px);box-shadow:var(--shadow);z-index:4;overflow:hidden;animation:tcin .35s ease}
+@keyframes tcin{from{opacity:0;transform:translateY(10px)}}
+.tour-card .ti{background:radial-gradient(120% 100% at 50% 0%,#f6f3ec,#e2ddd1);aspect-ratio:4/3;display:grid;place-items:center}
+.tour-card .ti img{width:78%;height:88%;object-fit:contain}
+.tour-card .tb{padding:16px 18px 18px}
+.tour-card small{font:500 10.5px var(--f-mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.tour-card h3{font-family:var(--f-display);font-weight:400;font-size:21px;line-height:1.2;margin:6px 0 6px}
+.tour-card p{font-size:13px;color:var(--muted);margin:0 0 14px;line-height:1.5}
+.tour-card .tbtn{display:flex;gap:8px}
+.tour-card .btn{height:40px;font-size:13.5px;padding:0 14px;flex:1}
+.tour-card .x{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(9,11,8,.7);color:#fff;font-size:18px;cursor:pointer;line-height:32px}
+@media (max-width:760px){
+  .tour-stage{height:76svh;min-height:480px}
+  .tour-swipe{display:block}
+  .tour-card{left:12px;right:12px;width:auto;top:auto;bottom:70px;display:grid;grid-template-columns:112px 1fr}
+  .tour-card[hidden]{display:none}
+  .tour-card .ti{aspect-ratio:auto;height:100%}
+  .tour-card .tb{padding:14px 14px 14px}
+  .tour-card h3{font-size:17px;margin-right:24px}
+  .tour-card p{display:none}
+  .tour-card .btn{height:36px;font-size:12.5px;padding:0 10px}
+  .tour-nav button{padding:7px 11px;font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){.tl,.tl.out{transition:opacity .3s}.tl{transform:none}.hs i::after{animation:none}}
+/* Mobile Anfrage-Leiste (immer erreichbar, hebt sich farblich ab) */
+.mcta{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;display:none;gap:8px;transform:translateY(140%);transition:transform .35s ease}
+.mcta.on{transform:none}
+.mcta .btn{flex:1;height:46px;box-shadow:0 12px 30px -10px rgba(0,0,0,.8)}
+@media (max-width:760px){.mcta{display:flex}}
+.cta-note{margin-top:14px;font:500 12px var(--f-mono);letter-spacing:.06em;color:var(--muted)}
+.cta-note b{color:var(--gold-l);font-weight:500}
+.btn{white-space:nowrap}
+@media (max-width:420px){.hero-actions .btn,.mcta .btn,.cta-card .btn{padding:0 15px;font-size:14px;gap:8px}}
+/* ===== Drohnenflug (Echtzeit-3D) ===== */
+.dstage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.dhs{position:absolute;inset:0;pointer-events:none;transition:opacity .3s}
+.dhs>*{pointer-events:auto}
+.dstage.flying .dhs{opacity:0;pointer-events:none}.dstage.flying .dhs>*{pointer-events:none}
+.dhs .hs{left:0;top:0}
+.dhs .hs.go.dup{left:max(16px,env(safe-area-inset-left));top:auto;bottom:74px;transform:none}
+.dhs .hs.go.dup:hover{transform:scale(1.04)}
+.dpin{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;cursor:pointer;padding:9px 14px 8px;border-radius:14px;background:rgba(9,11,8,.74);border:1px solid var(--gold-edge);backdrop-filter:blur(10px);color:var(--ink);box-shadow:0 12px 30px -10px rgba(0,0,0,.8);transition:background .2s}
+.dpin::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:26px;background:linear-gradient(var(--gold),transparent);transform:translateX(-50%)}
+.dpin b{font-family:var(--f-display);font-weight:400;font-size:16px;white-space:nowrap}
+.dpin small{font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.dpin:hover{background:rgba(30,26,16,.88)}
+.dhint{position:absolute;left:50%;top:18px;transform:translateX(-50%);font:500 12px var(--f-body);color:var(--cream);background:rgba(9,11,8,.55);padding:8px 14px;border-radius:999px;white-space:nowrap;transition:opacity .4s;pointer-events:none;z-index:3}
+.dload{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;background:#0b0d09;color:var(--muted);font:500 12px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;z-index:6;transition:opacity .8s}
+.dload i{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold-edge);border-top-color:var(--gold);animation:dsp 1s linear infinite}
+@keyframes dsp{to{transform:rotate(1turn)}}
+.dload.done{opacity:0;pointer-events:none}
+@media (max-width:760px){.dhint{top:60px;white-space:normal;text-align:center;width:max-content;max-width:86%}.dpin{padding:7px 11px}.dpin b{font-size:14px}.tour-stage.dstage{height:78svh}}
+
+</style>
+</head>
+<body>
+
+
+<canvas id="globe" aria-label="Globus mit Lieferrouten von China nach Europa"></canvas>
+
+<div class="page">
+<header class="knav" id="knav"><div class="knav-in wrap">
+  <a class="kbrand notranslate" translate="no" href="#top"><img src="logo-k.png" alt="">KARMIRA</a>
+  <nav class="klinks" aria-label="Hauptnavigation">
+    <button type="button" class="kmega-btn" id="kmb" aria-expanded="false" aria-controls="kmega">Sortiment<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    <a href="#herkunft">Herkunft</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#vorteile">B2B &amp; B2C</a>
+    <a href="index-alt.html#kontakt">Kontakt</a>
+  </nav>
+  <div class="kright">
+    <a class="kcta" href="index-alt.html#kontakt">Anfrage stellen</a>
+    <div class="lsel" id="lsel">
+          <button class="lbtn" id="lbtn" type="button" aria-haspopup="listbox" aria-label="Sprache wählen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span id="lcur">DE</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <ul id="llist" role="listbox"></ul>
+        </div>
+        <div id="gt_el" style="display:none"></div>
+    <button type="button" class="kburger" id="kbg" aria-label="Menü öffnen" aria-expanded="false" aria-controls="kmega"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</div>
+<div class="kmega" id="kmega"><div class="wrap kmega-in" id="kmegain"></div></div>
+</header>
+
+  <header class="hero" id="top">
+    <div class="hero-inner wrap">
+      <img class="hero-logo" src="logo-k.png" alt="KARMIRA Monogramm" data-reveal style="--rd:0ms">
+      <p class="eyebrow" data-reveal style="--rd:60ms">Garten · Outdoor · Landtechnik</p>
+      <h1 class="hero-title" data-reveal style="--rd:120ms">Für Garten, Hof <em>und Feld</em></h1>
+      <p class="hero-sub" data-reveal style="--rd:220ms">Gartengeräte, Outdoorküchen und Zubehör direkt vom Hersteller. Wir kümmern uns um Prüfung, Versand und Zoll. Sie senden nur die Anfrage.</p>
+      <div class="hero-actions" data-reveal style="--rd:320ms">
+        <a class="btn btn-primary" href="index-alt.html#kontakt">Kostenlos anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="sortiment.html">Sortiment ansehen</a>
+      </div>
+      <p class="cta-note" data-reveal style="--rd:380ms">Unverbindlich · Antwort meist in 24 h · Muster auf Wunsch</p>
+    </div>
+
+    <div class="route">
+      <label for="dest">Lieferziel</label>
+      <div class="dsearch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="dest" type="text" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land suchen …" role="combobox" aria-expanded="false" aria-controls="dlist">
+        <ul id="dlist" role="listbox"></ul>
+      </div>
+      <div class="route-meta" aria-live="polite" id="hKm">≈ 9.200 km · ca. 7–11 Tage ✈</div>
+    </div>
+    <button class="gpill" id="spin" type="button" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>Globus drehen</button>
+  </header>
+
+  <div class="trust wrap" data-reveal style="--rd:420ms">
+    <div class="trust-label">Wir beliefern</div>
+    <div class="trust-row"><span>Privatgärten</span><span>Gartencenter</span><span>Landhandel</span><span>Gartenbau</span><span>Lohnunternehmen</span><span>Landwirtschaft</span></div>
+  </div>
+
+  <section class="tour drone" id="rundgang" aria-label="Drohnenflug über Haus und Garten">
+    <div class="wrap tour-head">
+      <p class="eyebrow" data-reveal>Drohnenflug</p>
+      <h2 data-reveal style="--rd:80ms">Einmal über Haus und Garten</h2>
+      <p class="lead" data-reveal style="--rd:160ms">Klicken Sie auf einen Ort, die Drohne fliegt hin. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.</p>
+    </div>
+    <div class="tour-stage dstage" id="dstage">
+      <canvas id="dcv" aria-label="3D-Ansicht von Haus und Garten"></canvas>
+      <div class="dhs" id="dhs"></div>
+      <div class="tour-top"><span class="tour-step" id="dstep">●</span><b id="dtitle">Drohnenblick</b></div>
+      <span class="tour-ai">Echtzeit-3D</span>
+      <div class="dhint" id="dhint"></div>
+      <aside class="tour-card" id="dcard" aria-live="polite" hidden></aside>
+      <nav class="tour-nav" id="dnav" aria-label="Orte"></nav>
+      <div class="dload" id="dload"><i></i>3D-Welt wird geladen …</div>
+    </div>
+  </section>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+
+  <div class="mcta" id="mcta"><a class="btn btn-primary" href="index-alt.html#kontakt">Kostenlos anfragen</a><a class="btn btn-ghost" href="sortiment.html">Sortiment</a></div>
+
+  <section class="section" id="vorteile">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Ein Ansprechpartner für alles</p>
+        <h2 data-reveal style="--rd:80ms">Vom Werk in China bis zu Ihrem Hof</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="card" data-reveal style="--rd:0ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V10l6 3V10l6 3V6l6 3v12z"/><path d="M7 17h2M13 17h2"/></svg></div><h3>Direkt ab Werk</h3><p>Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.</p></article>
+        <article class="card" data-reveal style="--rd:90ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg></div><h3>Muster &amp; Prüfung</h3><p>Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.</p></article>
+        <article class="card" data-reveal style="--rd:180ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></div><h3>Zoll &amp; Lieferung</h3><p>Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.</p></article>
+        <article class="card" data-reveal style="--rd:270ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></div><h3>Beratung auf Deutsch</h3><p>Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.</p></article>
+        <article class="card" data-reveal style="--rd:360ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>Private Label</h3><p>Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.</p></article>
+        <article class="card" data-reveal style="--rd:450ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21V10M12 10c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6zM12 16c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6z"/></svg></div><h3>B2B &amp; B2C</h3><p>Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ablauf">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>So einfach bestellen Sie</p>
+        <h2 data-reveal style="--rd:80ms">Drei Schritte bis zur Lieferung</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Ihr Aufwand ist eine Nachricht. Den Rest übernehmen wir.</p>
+      </div>
+      <div class="steps">
+        <div class="step" data-reveal style="--rd:0ms"><div class="step-n">SCHRITT 1</div><h3>Anfrage senden</h3><p>Produkt, Menge und Lieferziel, über das Formular, die Merkliste oder per E-Mail. Kostenlos und unverbindlich.</p></div>
+        <div class="step" data-reveal style="--rd:90ms"><div class="step-n">SCHRITT 2</div><h3>Angebot &amp; Muster</h3><p>Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.</p></div>
+        <div class="step" data-reveal style="--rd:180ms"><div class="step-n">SCHRITT 3</div><h3>Lieferung</h3><p>Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sortiment">
+    <div class="wrap">
+      <div class="showcase-grid">
+        <div class="showcase-copy">
+          <p class="eyebrow" data-reveal>Unser Sortiment</p>
+          <h2 data-reveal style="--rd:90ms" data-total>Über 260 Artikel sind bereits online</h2>
+          <p class="lead" style="margin-left:0;--rd:180ms" data-reveal>Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.</p>
+          <a class="btn btn-primary" href="sortiment.html" data-reveal style="--rd:270ms">Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="dashboard" data-reveal style="--rd:160ms">
+          <div class="dash-top"><span>Artikel online · nach Kategorie</span><span class="dash-live"><i></i>Live</span></div>
+          <div class="dash-chart">
+            <div class="dash-bars" id="bars"></div>
+            <div class="dash-labels" id="barlabels"></div>
+          </div>
+          <div class="dash-req">
+            <p>Auf Anfrage</p>
+            <div class="chips"><span class="chip">Outdoor-Möbel</span><span class="chip">Pavillon &amp; Sonnenschutz</span><span class="chip">Landtechnik</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat" data-reveal style="--rd:0ms"><div class="stat-value" data-total>260+</div><div class="stat-label">Artikel online</div></div>
+        <div class="stat" data-reveal style="--rd:80ms"><div class="stat-value">6</div><div class="stat-label">Produktionsstandorte in China</div></div>
+        <div class="stat" data-reveal style="--rd:160ms"><div class="stat-value">7–11</div><div class="stat-label">Tage Lieferzeit</div></div>
+        <div class="stat" data-reveal style="--rd:240ms"><div class="stat-value">24 h</div><div class="stat-label">Antwort auf Ihre Anfrage</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mq-sec" id="neu">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Neu im Sortiment</p>
+        <h2 data-reveal style="--rd:80ms" id="mqTitle">Neue Geräte von SHENGYAO</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.</p>
+      </div>
+    </div>
+    <div class="mq" id="mq" aria-label="Produktauswahl">
+      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
+    </div>
+    <div class="wrap mq-more"><a class="btn btn-ghost" href="sortiment.html">Ganzes Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </section>
+
+  <section class="section" id="herkunft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Herkunft</p>
+        <h2 data-reveal style="--rd:80ms">Direkt aus den Industriezentren Chinas</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.</p>
+      </div>
+      <div class="hubgrid">
+        <div class="hubmap" data-reveal><svg id="hubsvg" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsstandorte in China"><g id="hubg"></g></svg>
+          <button class="hubback" id="hubBack" type="button">← Ganz China</button>
+          <div class="hubchips" id="hubChips"></div></div>
+        <div class="hubcard" id="hubCard" data-reveal style="--rd:120ms"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kontakt" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="cta-card">
+        <p class="eyebrow" data-reveal style="--rd:60ms">Jetzt anfragen</p>
+        <h2 data-reveal style="--rd:140ms">Ihr nächstes Produkt kommt direkt ab Werk</h2>
+        <p class="lead" data-reveal style="--rd:220ms">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
+        <div class="hero-actions" data-reveal style="--rd:300ms">
+          <a class="btn btn-primary" href="index-alt.html#kontakt">Privat anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="index-alt.html#kontakt">B2B-Anfrage</a>
+        </div>
+        <p class="cta-note" data-reveal style="--rd:360ms">Noch unsicher? <a href="mailto:info@karmira.de?subject=Muster%20anfragen"><b>Fragen Sie zuerst ein Muster an.</b></a></p>
+        <p class="mail">E-Mail: <span>info@karmira.de</span></p>
+      </div>
+
+      <footer class="footer">
+        <div class="footer-brand"><a class="brand" href="#top"><img src="logo-k.png" alt="">KARMIRA</a><p>Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.</p></div>
+        <div class="footer-cols">
+          <div><h4>Sortiment</h4><a href="sortiment.html?k=akkugarten">Akku-Gartengeräte</a><a href="sortiment.html?k=zubehoer">Gartenzubehör</a><a href="sortiment.html?k=wasser">Bewässerung</a><a href="sortiment.html?k=grill">Outdoorküchen</a></div>
+          <div><h4>Service</h4><a href="#vorteile">B2B &amp; B2C</a><a href="#ablauf">Ablauf</a><a href="index-alt.html#kontakt">Kontakt</a></div>
+          <div><h4>Rechtliches</h4><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+        </div>
+      </footer>
+      <p class="copyright">© <span id="yr"></span> KARMIRA · karmira.de</p>
+    </div>
+  </section>
+</div>
+
+<script src="products.js?v=153ba717"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datamaps@0.5.9/dist/datamaps.world.min.js"></script>
+<script>
+document.documentElement.classList.add('js');
+document.getElementById('yr').textContent=new Date().getFullYear();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= SPRACHE (wie bisher: DE/EN direkt, alle anderen über Google Translate) ================= */
+const EN={
+"Rundgang":"Tour","Einmal ums Haus":"Once around the house","Vom Vorgarten über die Terrasse bis in den Schuppen. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.":"From the front garden across the terrace into the shed. Every gold dot hides a product from our range.","KI-Visualisierung":"AI visualisation",
+"Gartengeräte, Outdoorküchen und Zubehör direkt vom Hersteller. Wir kümmern uns um Prüfung, Versand und Zoll. Sie senden nur die Anfrage.":"Garden tools, outdoor kitchens and accessories straight from the manufacturer. We handle inspection, shipping and customs. All you send is the enquiry.",
+"Kostenlos anfragen":"Free enquiry",
+"Unverbindlich · Antwort meist in 24 h · Muster auf Wunsch":"No obligation · Reply usually within 24 h · Samples on request",
+"Ihr Aufwand ist eine Nachricht. Den Rest übernehmen wir.":"All it takes from you is one message. We handle the rest.",
+"Produkt, Menge und Lieferziel, über das Formular, die Merkliste oder per E-Mail. Kostenlos und unverbindlich.":"Product, quantity and destination, via the form, your watch list or by email. Free and without obligation.",
+"Noch unsicher?":"Not sure yet?",
+"Fragen Sie zuerst ein Muster an.":"Ask for a sample first.",
+"Neu im Sortiment":"New in our range",
+"Die Outdoorküche für Ihren Garten":"The outdoor kitchen for your garden",
+"Modular aus Edelstahl 304":"Modular, 304 stainless steel",
+"Gasgrill, Kühlschrank und Spüle in einer Zeile":"Gas grill, fridge and sink in one line",
+"Wählen Sie Länge, Farbe und Module. Wir liefern sie direkt ab Werk.":"Choose length, colour and modules. We deliver straight from the factory.",
+"Ein Ansprechpartner":"One contact",
+"Vom Akku-Gerät bis zur Bindeschnur":"From cordless tools to garden twine",
+"Direkt ab Werk.":"Straight from the factory.",
+"Bis zu Ihnen.":"All the way to you.",
+"Prüfung, Versand und Zoll übernehmen wir. Sie senden nur die Anfrage.":"We handle inspection, shipping and customs. All you send is the enquiry.",
+"Outdoorküchen ansehen":"View outdoor kitchens",
+"Scrollen":"Scroll",
+"Sortiment":"Range",
+"Outdoorküchen":"Outdoor kitchens",
+"Kamerafahrt durch das Sortiment":"Camera flight through our range",
+'Garten & Hof':'Garden & yard','Sortiment':'Range','Ablauf':'Process','B2B & B2C':'B2B & B2C','Kontakt':'Contact',
+'Anfrage stellen':'Send enquiry','Garten · Outdoor · Landtechnik':'Garden · Outdoor · Farm machinery',
+'Für Garten, Hof':'For garden, yard','und Feld':'and field',
+'Gartengeräte, Gewächshäuser, Hochbeete und Outdoor-Möbel für Ihren Garten, direkt vom Hersteller. Und für Landwirte: Kleintraktoren, Beregnungsanlagen und Anbaugeräte.':'Garden tools, greenhouses, raised beds and outdoor furniture for your garden, straight from the manufacturer. And for farmers: compact tractors, irrigation systems and implements.',
+'Sortiment ansehen':'View range','Lieferziel':'Destination','Globus drehen':'Rotate globe',
+'Wir beliefern':'We supply','Privatgärten':'Home gardens','Gartencenter':'Garden centres','Landhandel':'Farm supply stores','Gartenbau':'Horticulture','Lohnunternehmen':'Agricultural contractors','Landwirtschaft':'Agriculture',
+'Ein Ansprechpartner für alles':'One contact for everything','Vom Werk in China bis zu Ihrem Hof':'From the factory in China to your yard',
+'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture, and we take care of inspection, shipping and customs.',
+'Direkt ab Werk':'Direct from the factory','Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.':'No middlemen. You buy where it is made, at fair prices.',
+'Muster & Prüfung':'Samples & inspection','Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.':'On request you get a sample before ordering. Quality is inspected.',
+'Zoll & Lieferung':'Customs & delivery','Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.':'Logistics, customs and import from a single source, right to your door or yard.',
+'Beratung auf Deutsch':'Advice in German','Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.':'One dedicated contact supports you from the first message to delivery.',
+'Private Label':'Private label','Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.':'Custom products under your name, for retailers, garden centres and farm supply stores.',
+'Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.':'Whether your own garden or a farm: sourcing and delivery adapt to your needs.',
+'Unser Sortiment':'Our range','Neu im Sortiment':'New in our range','Neue Geräte von SHENGYAO':'New tools from SHENGYAO','Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.':'Pruning shears, chainsaws, leaf blowers, trimmers and more on the 21 V system. Hover to pause or click a product.','Ganzes Sortiment ansehen':'View the full range','Herkunft':'Origin','Kontakt':'Contact','Alle Artikel':'All items','Über 260 Artikel sind bereits online':'Over 260 items are already online',
+'Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.':'From cordless tools to binding twine. Beyond that, we source almost any product from China. Just ask.',
+'Artikel online · nach Kategorie':'Items online · by category','Live':'Live','Auf Anfrage':'On request',
+'Outdoor-Möbel':'Outdoor furniture','Pavillon & Sonnenschutz':'Gazebos & sun protection','Grill & Outdoor-Küche':'Grills & outdoor kitchens','Landtechnik':'Farm machinery',
+'Gartenzubehör':'Garden accessories','Akku-Gartengeräte':'Cordless garden tools','Akku-Werkzeug':'Cordless power tools','Bewässerung':'Irrigation','Gewächshaus & Anzucht':'Greenhouse & propagation',
+'Artikel online':'Items online','Produktionsstandorte in China':'Production sites in China','Tage Lieferzeit':'Days delivery time','Antwort auf Ihre Anfrage':'Reply to your enquiry',
+'So einfach bestellen Sie':'How to order','Drei Schritte bis zur Lieferung':'Three steps to delivery',
+'SCHRITT 1':'STEP 1','SCHRITT 2':'STEP 2','SCHRITT 3':'STEP 3','Anfrage senden':'Send enquiry',
+'Produkt, Menge und Lieferziel, über das Formular oder per E-Mail.':'Product, quantity and destination, via the form or by email.',
+'Angebot & Muster':'Quote & sample','Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.':'You receive a quote from suitable manufacturers, with a sample on request.',
+'Lieferung':'Delivery','Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.':'We organise inspection, shipping and customs, all the way to you.',
+'Jetzt anfragen':'Enquire now','Ihr nächstes Produkt kommt direkt ab Werk':'Your next product comes straight from the factory',
+'In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.':'Your enquiry in just a few steps. We usually reply within 24 hours.',
+'Privat anfragen':'Private enquiry','B2B-Anfrage':'B2B enquiry','E-Mail:':'Email:',
+'Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.':'Garden, outdoor and farm machinery straight from China’s industrial centres.',
+'Service':'Service','Rechtliches':'Legal','Impressum':'Legal notice','Datenschutz':'Privacy',
+'Stadt oder Land suchen …':'Search city or country …','Sprache wählen':'Choose language','KARMIRA Monogramm':'KARMIRA monogram',
+'Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search',
+'KARMIRA – Garten, Outdoor & Landtechnik direkt aus China':'KARMIRA – Garden, outdoor & farm machinery direct from China'
+};
+let LANG='de';
+const LANGS_TOP=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['iw','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
+const GT_ALL='af sq am ar hy as ay az bm eu be bn bho bs bg ca ceb ny zh-CN zh-TW co hr cs da dv doi nl en eo et ee tl fi fr fy gl ka de el gn gu ht ha haw iw hi hmn hu is ig ilo id ga it ja jw kn kk km rw gom ko kri ku ckb ky lo la lv ln lt lg lb mk mai mg ms ml mt mi mr mni-Mtei lus mn my ne no or om ps fa pl pt pa qu ro ru sm sa gd nso sr st sn sd si sk sl so es su sw sv tg ta tt te th ti ts tr tk ak uk ur ug uz vi cy xh yi yo zu'.split(' ');
+const ISO={iw:'he',jw:'jv','mni-Mtei':'mni',tl:'fil'};
+const natName=c=>{const iso=ISO[c]||c;try{const n=new Intl.DisplayNames([iso],{type:'language'}).of(iso);return n&&n!==iso?n.charAt(0).toUpperCase()+n.slice(1):c}catch(e){return c}};
+const LANGS=[...LANGS_TOP,...GT_ALL.filter(c=>!LANGS_TOP.some(x=>x[0]===c)).map(c=>[c,natName(c)]).sort((a,b)=>a[1].localeCompare(b[1]))];
+const langIn=(c,l)=>{const iso=ISO[c]||c;try{return new Intl.DisplayNames([l],{type:'language'}).of(iso)||''}catch(e){return ''}};
+const RTL=['ar','fa','he','iw','ur','ps','sd','ug','yi','ckb','dv'];
+const nrm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss');
+function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(/^zh-(tw|hk|mo|hant)/.test(b))return 'zh-TW';if(b.startsWith('zh'))return 'zh-CN';if(b.startsWith('he'))return 'iw';if(b.startsWith('jv'))return 'jw';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
+let UI_LANG='de',LANG_AUTO=true;
+try{const l=localStorage.getItem('k-lang');if(l&&LANGS.some(x=>x[0]===l)){UI_LANG=l;LANG_AUTO=false}else UI_LANG=detectLang()}catch(e){UI_LANG=detectLang()}
+LANG=UI_LANG==='de'?'de':'en';
+function gtCookie(v){const h=location.hostname,parts=h.split('.'),doms=['',h,'.'+h];if(parts.length>2)doms.push('.'+parts.slice(-2).join('.'));
+  doms.forEach(d=>{try{document.cookie='googtrans='+(v||'')+';path=/'+(d?';domain='+d:'')+(v?'':';expires=Thu, 01 Jan 1970 00:00:00 GMT')}catch(e){}})}
+const GT_ACTIVE=UI_LANG!=='de'&&UI_LANG!=='en';
+if(GT_ACTIVE){gtCookie('/en/'+UI_LANG);window.gtInit=()=>{try{new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'gt_el')}catch(e){}};
+  const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=gtInit';sc.async=true;document.head.appendChild(sc);
+  if(RTL.includes(UI_LANG))document.documentElement.dir='rtl'}
+else{try{if(/googtrans=/.test(document.cookie))gtCookie('')}catch(e){}}
+const t=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
+let I18N=null;
+function applyLang(){
+  if(!I18N){I18N=[];const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+    while(n=w.nextNode()){if(n.parentElement.closest('script,style,#dlist,#llist'))continue;const tr=n.nodeValue.trim();if(tr&&EN[tr]!==undefined)I18N.push([n,n.nodeValue,tr])}
+    document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(e=>['placeholder','aria-label','alt'].forEach(a=>{const v=e.getAttribute(a);if(v&&EN[v]!==undefined)I18N.push([e,v,v,a])}));
+    I18N.title=document.title}
+  I18N.forEach(([n,orig,tr,attr])=>{const v=LANG==='en'?orig.replace(tr,EN[tr]):orig;attr?n.setAttribute(attr,v):n.nodeValue=v});
+  document.title=LANG==='en'&&EN[I18N.title]?EN[I18N.title]:I18N.title;
+  document.documentElement.lang=LANG;
+  document.getElementById('lcur').textContent=UI_LANG.split('-')[0].toUpperCase();renderLangs();
+  dispatchEvent(new Event('langchange'));
+}
+const llist=document.getElementById('llist');
+function renderLangs(){const de=LANG==='de',top=LANGS_TOP.length;
+  llist.innerHTML=`<li class="ls"><input id="lfind" placeholder="${de?'Sprache suchen …':'Search language …'}" autocomplete="off"></li><li class="hd">${de?'Häufig':'Popular'}</li>`+
+  LANGS.map(([c,n],k)=>(k===top?`<li class="hd">${de?'Alle Sprachen':'All languages'} (Google Translate)</li>`:'')+`<li data-l="${c}" data-n="${(n+' '+c+' '+langIn(c,'de')+' '+langIn(c,'en')).toLowerCase()}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
+  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`;
+  const f=document.getElementById('lfind');f.addEventListener('click',e=>e.stopPropagation());
+  f.addEventListener('input',()=>{const q=nrm(f.value.trim());llist.querySelectorAll('li[data-l]:not(.auto)').forEach(li=>li.style.display=!q||nrm(li.dataset.n).includes(q)?'':'none');
+    llist.querySelectorAll('li.hd').forEach(h=>h.style.display=q?'none':'')})}
+function setUiLang(code){const auto=code==='auto';if(auto)code=detectLang();
+  try{auto?localStorage.removeItem('k-lang'):localStorage.setItem('k-lang',code)}catch(e){}
+  const was=GT_ACTIVE,need=code!=='de'&&code!=='en';LANG_AUTO=auto;
+  if(!was&&!need){UI_LANG=code;LANG=code;llist.classList.remove('open');applyLang();return}
+  gtCookie(need?'/en/'+code:'');location.reload()}
+document.getElementById('lbtn').addEventListener('click',e=>{e.stopPropagation();llist.classList.toggle('open');if(llist.classList.contains('open'))setTimeout(()=>{const f=document.getElementById('lfind');f&&f.focus()},50)});
+llist.addEventListener('click',e=>{const li=e.target.closest('li[data-l]');if(li)setUiLang(li.dataset.l)});
+document.addEventListener('click',e=>{if(!e.target.closest('#lsel'))llist.classList.remove('open')});
+addEventListener('keydown',e=>{if(e.key==='Escape')llist.classList.remove('open')});
+
+/* ================= Sortiment-Balken (Artikelzahlen von karmira.de) ================= */
+const KPd=window.KP||[],KCd=window.KC||[];
+const cats=KCd.map(c=>[c[1],KPd.filter(p=>p.k===c[0]).length]).filter(c=>c[1]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+const cmax=Math.max(1,...cats.map(c=>c[1]));
+document.getElementById('bars').innerHTML=cats.map(([n,v],i)=>`<div class="dash-bar" style="--h:${(v/cmax*100).toFixed(1)}%;--i:${i}"><b>${v}</b></div>`).join('');
+const tot=KPd.length,totR=Math.floor(tot/10)*10;
+const fixTotals=()=>document.querySelectorAll('[data-total]').forEach(el=>{el.textContent=el.textContent.replace(/260/g,totR)});
+addEventListener('langchange',fixTotals);
+document.getElementById('barlabels').innerHTML=cats.map(([n])=>`<span>${n.replace('&','&amp;')}</span>`).join('');
+
+/* ================= Reveal ================= */
+const els=document.querySelectorAll('[data-reveal]');
+if(reduce||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'))}
+else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.18,rootMargin:'0px 0px -8% 0px'});els.forEach(e=>io.observe(e))}
+
+/* ================= Lieferziele (Daten wie auf karmira.de) ================= */
+const ORIGIN=[114.06,22.54];
+const DEST=[
+ {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
+ {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
+ {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
+ {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
+ {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
+];
+const TIMES={EU:{rail:'19–24',air:'7–11'},ME:{air:'7–9'},NA:{air:'8–11'},SA:{air:'9–14'},AF:{air:'8–12'},AS:{air:'6–8'},OC:{air:'7–10'},CA:{rail:'16–22',air:'7–10'}};
+const CITY_RAW={
+DE:'Berlin,52.52,13.40;Hamburg,53.55,9.99;München,48.14,11.58;Köln,50.94,6.96;Frankfurt am Main,50.11,8.68;Stuttgart,48.78,9.18;Düsseldorf,51.23,6.78;Leipzig,51.34,12.37;Dresden,51.05,13.74;Hannover,52.37,9.73;Nürnberg,49.45,11.08;Bremen,53.08,8.80',
+AT:'Wien,48.21,16.37;Graz,47.07,15.44;Linz,48.31,14.29;Salzburg,47.81,13.04;Innsbruck,47.27,11.40',
+CH:'Zürich,47.38,8.54;Genf,46.20,6.14;Basel,47.56,7.59;Bern,46.95,7.45;Lausanne,46.52,6.63',
+FR:'Paris,48.86,2.35;Marseille,43.30,5.37;Lyon,45.76,4.84;Toulouse,43.60,1.44;Nizza,43.70,7.27;Bordeaux,44.84,-0.58;Lille,50.63,3.06;Straßburg,48.57,7.75;Nantes,47.22,-1.55',
+GB:'London,51.51,-0.13;Manchester,53.48,-2.24;Birmingham,52.49,-1.89;Glasgow,55.86,-4.25;Liverpool,53.41,-2.98;Edinburgh,55.95,-3.19;Leeds,53.80,-1.55;Bristol,51.45,-2.59',
+IE:'Dublin,53.35,-6.26;Cork,51.90,-8.47',
+NL:'Amsterdam,52.37,4.90;Rotterdam,51.92,4.48;Den Haag,52.07,4.30;Utrecht,52.09,5.12;Eindhoven,51.44,5.47',
+BE:'Brüssel,50.85,4.35;Antwerpen,51.22,4.40;Gent,51.05,3.72;Lüttich,50.63,5.57',
+LU:'Luxemburg,49.61,6.13',
+ES:'Madrid,40.42,-3.70;Barcelona,41.39,2.17;Valencia,39.47,-0.38;Sevilla,37.39,-5.98;Málaga,36.72,-4.42;Bilbao,43.26,-2.93;Saragossa,41.65,-0.89;Palma,39.57,2.65',
+PT:'Lissabon,38.72,-9.14;Porto,41.15,-8.61;Faro,37.02,-7.93',
+IT:'Rom,41.90,12.50;Mailand,45.46,9.19;Neapel,40.85,14.27;Turin,45.07,7.69;Florenz,43.77,11.26;Bologna,44.49,11.34;Venedig,45.44,12.32;Palermo,38.12,13.36;Genua,44.41,8.93',
+GR:'Athen,37.98,23.73;Thessaloniki,40.64,22.94',
+PL:'Warschau,52.23,21.01;Krakau,50.06,19.94;Breslau,51.11,17.04;Danzig,54.35,18.65;Posen,52.41,16.93;Łódź,51.76,19.46',
+CZ:'Prag,50.08,14.44;Brünn,49.20,16.61;Ostrava,49.82,18.26',
+SK:'Bratislava,48.15,17.11;Košice,48.72,21.26',
+HU:'Budapest,47.50,19.04;Debrecen,47.53,21.63',
+RO:'Bukarest,44.43,26.10;Cluj-Napoca,46.77,23.60;Timișoara,45.75,21.23;Iași,47.16,27.59',
+BG:'Sofia,42.70,23.32;Plowdiw,42.14,24.75;Warna,43.21,27.91',
+HR:'Zagreb,45.81,15.98;Split,43.51,16.44',SI:'Ljubljana,46.06,14.51',RS:'Belgrad,44.79,20.45;Novi Sad,45.27,19.83',
+BA:'Sarajevo,43.86,18.41',AL:'Tirana,41.33,19.82',MK:'Skopje,42.00,21.43',ME:'Podgorica,42.44,19.26',
+DK:'Kopenhagen,55.68,12.57;Aarhus,56.16,10.20;Odense,55.40,10.39',
+SE:'Stockholm,59.33,18.07;Göteborg,57.71,11.97;Malmö,55.60,13.00;Uppsala,59.86,17.64',
+NO:'Oslo,59.91,10.75;Bergen,60.39,5.32;Trondheim,63.43,10.40;Stavanger,58.97,5.73',
+FI:'Helsinki,60.17,24.94;Tampere,61.50,23.76;Turku,60.45,22.27',IS:'Reykjavík,64.15,-21.94',
+EE:'Tallinn,59.44,24.75',LV:'Riga,56.95,24.11',LT:'Vilnius,54.69,25.28;Kaunas,54.90,23.90',
+UA:'Kyjiw,50.45,30.52;Charkiw,49.99,36.23;Odessa,46.48,30.72;Lwiw,49.84,24.03;Dnipro,48.46,35.05',
+MD:'Chișinău,47.01,28.86',BY:'Minsk,53.90,27.56',
+RU:'Moskau,55.76,37.62;Sankt Petersburg,59.93,30.34;Nowosibirsk,55.03,82.92;Jekaterinburg,56.84,60.61;Kasan,55.79,49.12;Wladiwostok,43.12,131.89',
+TR:'Istanbul,41.01,28.98;Ankara,39.93,32.86;Izmir,38.42,27.14;Antalya,36.90,30.70;Bursa,40.19,29.06',
+CY:'Nikosia,35.17,33.36;Limassol,34.68,33.04',MT:'Valletta,35.90,14.51',
+GE:'Tiflis,41.72,44.79',AM:'Jerewan,40.18,44.51',AZ:'Baku,40.41,49.87',
+KZ:'Almaty,43.24,76.89;Astana,51.17,71.45;Schymkent,42.32,69.60',UZ:'Taschkent,41.30,69.24;Samarkand,39.65,66.96',
+KG:'Bischkek,42.87,74.59',TJ:'Duschanbe,38.56,68.77',TM:'Aşgabat,37.96,58.33',MN:'Ulaanbaatar,47.89,106.91',
+AE:'Dubai,25.20,55.27;Abu Dhabi,24.45,54.38;Sharjah,25.35,55.42',
+SA:'Riad,24.71,46.68;Dschidda,21.49,39.19;Dammam,26.43,50.10;Mekka,21.42,39.83',
+QA:'Doha,25.29,51.53',KW:'Kuwait-Stadt,29.38,47.99',BH:'Manama,26.23,50.59',OM:'Maskat,23.59,58.41',
+IL:'Tel Aviv,32.09,34.78;Jerusalem,31.77,35.21;Haifa,32.79,34.99',JO:'Amman,31.95,35.93',LB:'Beirut,33.89,35.50',
+IQ:'Bagdad,33.31,44.36;Erbil,36.19,44.01',IR:'Teheran,35.69,51.39;Maschhad,36.30,59.60;Isfahan,32.65,51.67',
+EG:'Kairo,30.04,31.24;Alexandria,31.20,29.92;Gizeh,30.01,31.21',
+MA:'Casablanca,33.57,-7.59;Rabat,34.02,-6.84;Marrakesch,31.63,-8.01;Tanger,35.76,-5.83',
+DZ:'Algier,36.75,3.06;Oran,35.70,-0.63',TN:'Tunis,36.81,10.18',LY:'Tripolis,32.89,13.19',
+NG:'Lagos,6.52,3.38;Abuja,9.08,7.40;Kano,12.00,8.52;Ibadan,7.38,3.95;Port Harcourt,4.82,7.03',
+GH:'Accra,5.60,-0.19;Kumasi,6.69,-1.62',CI:'Abidjan,5.36,-4.01',SN:'Dakar,14.72,-17.47',CM:'Douala,4.05,9.77;Yaoundé,3.87,11.52',
+KE:'Nairobi,-1.29,36.82;Mombasa,-4.04,39.67',TZ:'Daressalam,-6.79,39.21;Dodoma,-6.16,35.75',UG:'Kampala,0.35,32.58',RW:'Kigali,-1.95,30.06',
+ET:'Addis Abeba,9.03,38.74',SD:'Khartum,15.50,32.56',CD:'Kinshasa,-4.44,15.27',
+ZA:'Johannesburg,-26.20,28.04;Kapstadt,-33.92,18.42;Durban,-29.86,31.02;Pretoria,-25.75,28.19;Port Elizabeth,-33.96,25.60',
+AO:'Luanda,-8.84,13.23',MZ:'Maputo,-25.97,32.57',ZM:'Lusaka,-15.39,28.32',ZW:'Harare,-17.83,31.05',NA:'Windhoek,-22.56,17.08',BW:'Gaborone,-24.63,25.92',
+MG:'Antananarivo,-18.88,47.51',MU:'Port Louis,-20.16,57.50',
+IN:'Mumbai,19.08,72.88;Delhi,28.61,77.21;Bangalore,12.97,77.59;Chennai,13.08,80.27;Kolkata,22.57,88.36;Hyderabad,17.39,78.49;Ahmedabad,23.02,72.57;Pune,18.52,73.86',
+PK:'Karatschi,24.86,67.01;Lahore,31.55,74.34;Islamabad,33.68,73.05',BD:'Dhaka,23.81,90.41;Chittagong,22.36,91.78',
+LK:'Colombo,6.93,79.85',NP:'Kathmandu,27.72,85.32',
+CN:'Shanghai,31.23,121.47;Peking,39.90,116.40;Shenzhen,22.54,114.06;Guangzhou,23.13,113.26;Chengdu,30.57,104.07;Chongqing,29.56,106.55;Wuhan,30.59,114.31;Hangzhou,30.27,120.16;Yiwu,29.31,120.07',
+HK:'Hongkong,22.32,114.17',MO:'Macau,22.20,113.54',TW:'Taipeh,25.03,121.57;Kaohsiung,22.63,120.30',
+JP:'Tokio,35.69,139.69;Osaka,34.69,135.50;Yokohama,35.44,139.64;Nagoya,35.18,136.91;Fukuoka,33.59,130.40;Sapporo,43.06,141.35;Kyoto,35.01,135.77',
+KR:'Seoul,37.57,126.98;Busan,35.18,129.08;Incheon,37.46,126.71;Daegu,35.87,128.60',
+TH:'Bangkok,13.76,100.50;Chiang Mai,18.79,98.99;Phuket,7.88,98.39',VN:'Ho-Chi-Minh-Stadt,10.82,106.63;Hanoi,21.03,105.85;Da Nang,16.05,108.22',
+MY:'Kuala Lumpur,3.14,101.69;Penang,5.41,100.33;Johor Bahru,1.49,103.74',SG:'Singapur,1.35,103.82',
+ID:'Jakarta,-6.21,106.85;Surabaya,-7.25,112.75;Bandung,-6.91,107.61;Medan,3.60,98.67;Denpasar,-8.65,115.22',
+PH:'Manila,14.60,120.98;Cebu,10.32,123.89;Davao,7.19,125.46',KH:'Phnom Penh,11.56,104.92',MM:'Rangun,16.87,96.20',LA:'Vientiane,17.97,102.63',
+AU:'Sydney,-33.87,151.21;Melbourne,-37.81,144.96;Brisbane,-27.47,153.03;Perth,-31.95,115.86;Adelaide,-34.93,138.60;Canberra,-35.28,149.13',
+NZ:'Auckland,-36.85,174.76;Wellington,-41.29,174.78;Christchurch,-43.53,172.64',
+US:'New York,40.71,-74.01;Los Angeles,34.05,-118.24;Chicago,41.88,-87.63;Houston,29.76,-95.37;Miami,25.76,-80.19;San Francisco,37.77,-122.42;Seattle,47.61,-122.33;Dallas,32.78,-96.80;Atlanta,33.75,-84.39;Boston,42.36,-71.06;Washington,38.91,-77.04;Las Vegas,36.17,-115.14;Phoenix,33.45,-112.07;Denver,39.74,-104.99',
+CA:'Toronto,43.65,-79.38;Vancouver,49.28,-123.12;Montreal,45.50,-73.57;Calgary,51.05,-114.07;Ottawa,45.42,-75.70;Edmonton,53.55,-113.49',
+MX:'Mexiko-Stadt,19.43,-99.13;Guadalajara,20.66,-103.35;Monterrey,25.69,-100.32;Cancún,21.16,-86.85;Tijuana,32.51,-117.04',
+GT:'Guatemala-Stadt,14.63,-90.51',CR:'San José,9.93,-84.08',PA:'Panama-Stadt,8.98,-79.52',CU:'Havanna,23.11,-82.37',DO:'Santo Domingo,18.49,-69.93',
+JM:'Kingston,17.97,-76.79',PR:'San Juan,18.47,-66.11',HN:'Tegucigalpa,14.07,-87.19',SV:'San Salvador,13.69,-89.22',NI:'Managua,12.11,-86.24',
+BR:'São Paulo,-23.55,-46.63;Rio de Janeiro,-22.91,-43.17;Brasília,-15.79,-47.88;Salvador,-12.97,-38.50;Fortaleza,-3.73,-38.53;Belo Horizonte,-19.92,-43.94;Manaus,-3.12,-60.02;Curitiba,-25.43,-49.27;Porto Alegre,-30.03,-51.23;Recife,-8.05,-34.88',
+AR:'Buenos Aires,-34.60,-58.38;Córdoba,-31.42,-64.18;Rosario,-32.94,-60.65;Mendoza,-32.89,-68.83',
+CL:'Santiago de Chile,-33.45,-70.67;Valparaíso,-33.05,-71.62',CO:'Bogotá,4.71,-74.07;Medellín,6.24,-75.58;Cali,3.45,-76.53;Barranquilla,10.96,-74.80',
+PE:'Lima,-12.05,-77.04;Arequipa,-16.41,-71.54',VE:'Caracas,10.48,-66.90',EC:'Quito,-0.18,-78.47;Guayaquil,-2.17,-79.92',
+BO:'La Paz,-16.50,-68.15;Santa Cruz,-17.81,-63.18',PY:'Asunción,-25.26,-57.58',UY:'Montevideo,-34.90,-56.16'
+};
+const CITIES=[];Object.entries(CITY_RAW).forEach(([cc,s])=>s.split(';').forEach(e=>{const [n,la,lo]=e.split(',');CITIES.push({name:n,cc,c:[+lo,+la]})}));
+const DN={};function cname(cc,l){l=l||LANG;try{DN[l]=DN[l]||new Intl.DisplayNames([l],{type:'region'});return DN[l].of(cc)}catch(e){return cc}}
+const flag=cc=>/^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))):'';
+function regionOf([lon,lat]){
+  if(lon<-30)return lat>=25?'NA':'SA';
+  if(lon>160||(lon>110&&lat<-10))return 'OC';
+  if(lat>=36&&lon>=-25&&lon<45)return 'EU';
+  if(lat>=12&&lat<42&&lon>=34&&lon<63)return 'ME';
+  if(lat<37&&lon>=-20&&lon<52)return 'AF';
+  if((lat>=35&&lon>=45&&lon<90)||(lat>=50&&lon>=90))return 'CA';
+  return 'AS';
+}
+const kmOf=c=>Math.round(d3.geoDistance(ORIGIN,c)*6371/100)*100;
+DEST.forEach(d=>d.km=kmOf(d.c));
+function cityDest(name,cc,c){return {id:cc+':'+name,de:cname(cc,'de'),en:cname(cc,'en'),city:name,c,r:regionOf(c),km:kmOf(c)}}
+const dname=d=>LANG==='en'?d.en:d.de;
+const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
+const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
+function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
+  const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
+
+/* ================= Globus ================= */
+const HUBS=[['Weifang',119.16,36.71],['Changzhou',119.97,31.81],['Anji',119.68,30.64],['Ningbo',121.55,29.87],['Yongkang',120.04,28.89],['Foshan',113.12,23.02]];
+const cv=document.getElementById('globe'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1;
+function size(){DPR=Math.min(devicePixelRatio||1,2);W=document.documentElement.clientWidth||innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+size();addEventListener('resize',size);
+
+let land=null,borders=null;
+try{const topo=Datamap.prototype.worldTopo,key=Object.keys(topo.objects)[0];
+  land=topojson.merge(topo,topo.objects[key].geometries);borders=topojson.mesh(topo,topo.objects[key],(a,b)=>a!==b)}
+catch(e){console.warn('Kartendaten fehlen',e)}
+
+const proj=d3.geoOrthographic().clipAngle(90).precision(.4);
+const path=d3.geoPath(proj,ctx);
+const grat=d3.geoGraticule10();
+let rot=[-62,-30],target=null,spinning=!reduce,lastTouch=-1e9,hold=0,auto=true;
+const stars=Array.from({length:240},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+.2,p:Math.random()*6.28,s:.4+Math.random()*1.6}));
+
+function routePts(b){const it=d3.geoInterpolate(ORIGIN,b),n=72,pts=[],lift=Math.min(.32,.08+d3.geoDistance(ORIGIN,b)*.09);for(let i=0;i<=n;i++){const k=i/n;pts.push([...it(k),Math.sin(Math.PI*k)*lift])}return pts}
+let ROUTES=DEST.map(d=>routePts(d.c));
+let di=defaultDest();
+
+const inp=document.getElementById('dest'),list=document.getElementById('dlist'),hKm=document.getElementById('hKm');
+const label=d=>`${d.city}, ${d.id.includes(':')?cname(d.id.split(':')[0]):dname(d)}`;
+function aimAt(i){const d=DEST[i],mid=d3.geoInterpolate(ORIGIN,d.c)(.5);target=[-mid[0],-Math.max(-55,Math.min(55,mid[1]))*.85]}
+function setDest(i){di=i;aimAt(i);if(document.activeElement!==inp)inp.value=label(DEST[i]);
+  const d=DEST[i],tm=TIMES[d.r]||{};
+  hKm.textContent=kmTxt(d.km)+' · '+daysTxt(tm.air)+' ✈'+(tm.rail?'  ·  '+daysTxt(tm.rail)+(LANG==='en'?' by rail':' Bahn'):'')}
+function pick(name,cc,c){auto=false;hold=performance.now()+8000;
+  let i=DEST.findIndex(d=>d.city===name&&(d.id===cc||d.id.startsWith(cc)||d.id===cc+':'+name));
+  if(i<0){DEST.push(cityDest(name,cc,c));ROUTES.push(routePts(c));i=DEST.length-1}
+  inp.blur();closeList();setDest(i)}
+
+/* Ortssuche: alle Städte aus der Liste, dazu weltweite Suche über OpenStreetMap */
+let items=[],act=-1,remote=[],rq=0,timer=null;
+const CCS=Object.keys(CITY_RAW);
+function closeList(){list.classList.remove('open');inp.setAttribute('aria-expanded','false');act=-1}
+function render(q){
+  const qn=nrm(q.trim());let html='';items=[];
+  const add=(name,cc,c)=>{items.push({name,cc,c});return `<li data-i="${items.length-1}" role="option">${name}<span>${flag(cc)} ${cname(cc)}</span></li>`};
+  if(!qn){html+=`<li class="hd">${t('Beliebte Ziele')}</li>`;DEST.slice(0,17).forEach(d=>{html+=add(d.city,d.id.split(/[-:]/)[0],d.c)});
+    CCS.forEach(cc=>{html+=`<li class="hd">${t('Städte in')} ${flag(cc)} ${cname(cc)}</li>`;CITIES.filter(x=>x.cc===cc).forEach(x=>html+=add(x.name,x.cc,x.c))})}
+  else{
+    const countries=CCS.filter(cc=>[cname(cc,'de'),cname(cc,'en'),cc].some(n=>nrm(n).startsWith(qn))).slice(0,2);
+    countries.forEach(cc=>{html+=`<li class="hd">${t('Städte in')} ${flag(cc)} ${cname(cc)}</li>`;CITIES.filter(x=>x.cc===cc).forEach(x=>html+=add(x.name,x.cc,x.c))});
+    const local=CITIES.filter(x=>!countries.includes(x.cc)&&nrm(x.name).includes(qn)).sort((a,b)=>nrm(a.name).startsWith(qn)?-1:nrm(b.name).startsWith(qn)?1:0).slice(0,8);
+    if(local.length){html+=`<li class="hd">${t('Städte')}</li>`;local.forEach(x=>html+=add(x.name,x.cc,x.c))}
+    const seen=new Set(items.map(x=>nrm(x.name)+x.cc));
+    const rem=remote.filter(r=>!seen.has(nrm(r.name)+r.cc)).slice(0,8);
+    if(rem.length){html+=`<li class="hd">${t('Weitere Orte')}</li>`;rem.forEach(r=>html+=add(r.name,r.cc,r.c))}
+    if(!items.length)html+=`<li class="empty">${t('Suche läuft …')}</li>`;
+    html+=`<li class="ft">${t('Ortssuche')}: © OpenStreetMap</li>`;
+  }
+  list.innerHTML=html;act=-1;list.classList.add('open');inp.setAttribute('aria-expanded','true')}
+function fetchRemote(q){const id=++rq;
+  fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=12&lang=${LANG}&osm_tag=place`).then(r=>r.json()).then(j=>{
+    if(id!==rq)return;
+    remote=(j.features||[]).filter(f=>['city','town','village','municipality'].includes(f.properties.osm_value)&&f.properties.countrycode)
+      .map(f=>({name:f.properties.name,cc:f.properties.countrycode.toUpperCase(),c:f.geometry.coordinates}));
+    if(document.activeElement===inp)render(inp.value);
+  }).catch(()=>{if(id===rq&&document.activeElement===inp&&!items.length)list.innerHTML=`<li class="empty">${t('Keine Treffer')}</li>`})}
+inp.addEventListener('focus',()=>{auto=false;inp.select();remote=[];render('')});
+inp.addEventListener('input',()=>{remote=[];render(inp.value);clearTimeout(timer);const q=inp.value.trim();if(q.length>=2)timer=setTimeout(()=>fetchRemote(q),280)});
+inp.addEventListener('keydown',e=>{const lis=[...list.querySelectorAll('li[data-i]')];
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!lis.length)return;act=(act+(e.key==='ArrowDown'?1:-1)+lis.length)%lis.length;lis.forEach((l,k)=>l.classList.toggle('act',k===act));lis[act].scrollIntoView({block:'nearest'})}
+  else if(e.key==='Enter'){e.preventDefault();const l=lis[act<0?0:act];if(l){const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)}}
+  else if(e.key==='Escape'){inp.blur()}});
+list.addEventListener('mousedown',e=>{const l=e.target.closest('li[data-i]');if(!l)return;e.preventDefault();const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)});
+inp.addEventListener('blur',()=>{setTimeout(()=>{closeList();inp.value=label(DEST[di])},120)});
+addEventListener('langchange',()=>setDest(di));
+setDest(di);rot=target.slice();
+/* Ziele wechseln automatisch durch, bis jemand selbst eines wählt */
+setInterval(()=>{if(auto&&!reduce&&performance.now()>hold)setDest((di+1)%17)},3500);
+
+const spinBtn=document.getElementById('spin');
+spinBtn.addEventListener('click',()=>{spinning=!spinning;auto=spinning;spinBtn.setAttribute('aria-pressed',spinning)});
+if(reduce)spinBtn.setAttribute('aria-pressed','false');
+
+let drag=null,R=300,CX=0,CY=0;
+cv.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;drag={x:e.clientX,y:e.clientY,r:rot.slice()};target=null;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;const k=70/Math.max(R,200);rot=[drag.r[0]+(e.clientX-drag.x)*k,Math.max(-70,Math.min(70,drag.r[1]-(e.clientY-drag.y)*k))]});
+const end=()=>{if(drag){lastTouch=performance.now();hold=lastTouch+6000}drag=null;cv.classList.remove('drag')};
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+function layout(){
+  const max=Math.max(1,document.documentElement.scrollHeight-H),p=Math.min(1,scrollY/max);
+  const base=Math.min(W,H)*(W<640?0.62:0.44),e=d3.easeCubicInOut(Math.min(1,p*1.6));
+  R=base*(1+0.45*e);CX=W/2+Math.sin(p*Math.PI*1.6)*W*(W<640?0.12:0.24);CY=H*0.56+e*H*0.42;
+}
+function xyz(lon,lat,h){
+  const r=d3.geoRotation(rot)([lon,lat]),l=r[0]*Math.PI/180,f=r[1]*Math.PI/180;
+  const x=Math.cos(f)*Math.sin(l),y=Math.sin(f),z=Math.cos(f)*Math.cos(l),s=1+(h||0);
+  return [CX+R*x*s,CY-R*y*s,z>=0||Math.hypot(x*s,y*s)>1,z];
+}
+function frame(t){
+  layout();
+  if(target&&!drag){rot[0]+=(target[0]-rot[0])*0.045;rot[1]+=(target[1]-rot[1])*0.045;if(Math.abs(target[0]-rot[0])<.05&&Math.abs(target[1]-rot[1])<.05)target=null}
+  else if(spinning&&!drag&&!auto&&t>hold){rot[0]+=0.04}
+  proj.translate([CX,CY]).scale(R).rotate(rot);
+  ctx.clearRect(0,0,W,H);
+  for(const s of stars){const a=reduce?.5:.25+.35*(1+Math.sin(t*.001*s.s+s.p))/2;ctx.fillStyle=`rgba(241,230,204,${a})`;ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,6.283);ctx.fill()}
+  let g=ctx.createRadialGradient(CX,CY,R*.92,CX,CY,R*1.32);
+  g.addColorStop(0,'rgba(207,169,90,.20)');g.addColorStop(.4,'rgba(207,169,90,.06)');g.addColorStop(1,'rgba(207,169,90,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R*1.32,0,6.283);ctx.fill();
+  g=ctx.createRadialGradient(CX-R*.35,CY-R*.45,R*.1,CX,CY,R);g.addColorStop(0,'#1a2114');g.addColorStop(.7,'#0c0f09');g.addColorStop(1,'#070906');
+  ctx.beginPath();path({type:'Sphere'});ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();path(grat);ctx.strokeStyle='rgba(236,226,196,.05)';ctx.lineWidth=.6;ctx.stroke();
+  if(land){ctx.beginPath();path(land);ctx.fillStyle='rgba(38,46,29,.95)';ctx.fill();ctx.strokeStyle='rgba(236,226,196,.16)';ctx.lineWidth=.7;ctx.stroke();
+    ctx.beginPath();path(borders);ctx.strokeStyle='rgba(236,226,196,.06)';ctx.lineWidth=.5;ctx.stroke()}
+  g=ctx.createLinearGradient(CX-R,CY-R,CX+R,CY+R);g.addColorStop(0,'rgba(235,211,155,.55)');g.addColorStop(.5,'rgba(207,169,90,.10)');g.addColorStop(1,'rgba(154,120,56,.35)');
+  ctx.beginPath();path({type:'Sphere'});ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.stroke();
+  // alle Routen
+  ROUTES.forEach((pts,i)=>{const on=i===di;
+    ctx.setLineDash(on?[6,6]:[2,5]);ctx.lineDashOffset=reduce?0:-t*(on?.03:.012);
+    ctx.strokeStyle=on?'rgba(235,211,155,.95)':'rgba(207,169,90,.26)';ctx.lineWidth=on?1.6:.9;
+    ctx.beginPath();let pen=false;
+    for(const p of pts){const q=xyz(p[0],p[1],p[2]);if(q[2]){pen?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);pen=true}else pen=false}
+    ctx.stroke()});
+  ctx.setLineDash([]);
+  if(!reduce){const pts=ROUTES[di],k=(t*0.00022)%1,p=pts[Math.floor(k*(pts.length-1))],q=xyz(p[0],p[1],p[2]);
+    if(q[2]){const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],10);gg.addColorStop(0,'rgba(255,240,200,.95)');gg.addColorStop(1,'rgba(235,211,155,0)');ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],10,0,6.283);ctx.fill()}}
+  // alle Ziele, aktives mit Radar-Ping und Name
+  DEST.forEach((d,i)=>{const q=xyz(d.c[0],d.c[1],0);if(q[3]<0)return;const on=i===di;
+    ctx.fillStyle=on?'#ebd39b':'rgba(241,230,204,.6)';ctx.beginPath();ctx.arc(q[0],q[1],on?3.4:2,0,6.283);ctx.fill();
+    if(on){for(let k=0;k<2;k++){const ph=reduce?.4:((t*.0006+k*.5)%1);ctx.strokeStyle=`rgba(235,211,155,${.7*(1-ph)})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(q[0],q[1],4+ph*22,0,6.283);ctx.stroke()}
+      ctx.font='600 11px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(241,230,204,.92)';ctx.fillText(d.city.toUpperCase(),q[0]+10,q[1]-8)}});
+  HUBS.forEach(h=>{const q=xyz(h[1],h[2],0);if(q[3]<0)return;
+    const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],9);gg.addColorStop(0,'rgba(235,211,155,.6)');gg.addColorStop(1,'rgba(235,211,155,0)');
+    ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],9,0,6.283);ctx.fill();ctx.fillStyle='#f1e6cc';ctx.beginPath();ctx.arc(q[0],q[1],1.9,0,6.283);ctx.fill()});
+  const cn=xyz(104,35,0);if(cn[3]>.15&&W>720){ctx.font='500 10.5px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(207,169,90,.85)';ctx.fillText(LANG==='en'?'CHINA · 6 SITES':'CHINA · 6 STANDORTE',cn[0]-60,cn[1]+4)}
+  g=ctx.createRadialGradient(W*.1,H*1.05,0,W*.1,H*1.05,Math.max(W,H)*.6);g.addColorStop(0,'rgba(154,120,56,.16)');g.addColorStop(1,'rgba(154,120,56,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ================= Herkunft: China-Karte ================= */
+Object.assign(EN,{
+'Herkunft':'Origin','Direkt aus den Industriezentren Chinas':'Straight from China’s industrial centres',
+'Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see which products are made there.',
+'← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production sites in China',
+'6 Produktionsstandorte':'6 production sites','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location',
+'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
+'Produkte aus dieser Region anfragen':'Enquire about products from this region',
+'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden tools','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
+'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Anhänger':'Trailers','Einachsschlepper':'Two-wheel tractors','Motorhacken':'Power tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Gartengeräte':'Garden tools','Export':'Export','Werkzeug':'Tools','Metallwaren':'Metal goods','Lounge':'Lounge','Gartentische':'Garden tables',
+'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.':'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment makers are based around Weifang.',
+'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.':'Changzhou is known for two-wheel tractors, power tillers and small engines for farming and gardening.',
+'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.':'Anji is a centre of chair and furniture production and known for bamboo products.',
+'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.':'Ningbo has one of the world’s largest ports and many makers of garden tools, irrigation and household goods.',
+'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.':'Yongkang is considered China’s hardware capital, with many makers of tools, garden tools and metal goods.',
+'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.':'Foshan, especially the Shunde district, is one of the world’s largest furniture centres, including garden and outdoor furniture.',
+'KI-Symbolbild: Industriegebiet Anji':'AI illustration: Anji industrial area'
+});
+const HUBD=[
+ {id:'weifang',city:'Weifang',o:[10,4],prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
+ {id:'changzhou',city:'Changzhou',o:[-10,-2,1],prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
+ {id:'anji',city:'Anji',o:[-10,10,1],prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
+ {id:'ningbo',city:'Ningbo',o:[10,0],prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
+ {id:'yongkang',city:'Yongkang',o:[10,10],prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
+ {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
+];
+const HUB_PHOTO={
+ weifang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg',page:'https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg',credit:'Foto: Ngguls · CC BY-SA 4.0 · Wikimedia Commons'},
+ changzhou:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg',page:'https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg',credit:'Foto: A Chinese user · CC BY-SA 4.0 · Wikimedia Commons'},
+ anji:{src:'hub-anji.jpg',credit:'KI-Symbolbild: Industriegebiet Anji'},
+ ningbo:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg',page:'https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg',credit:'Foto: Nbfreeh · CC BY-SA 4.0 · Wikimedia Commons'},
+ yongkang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',page:'https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',credit:'Foto: Tyj1982338 · CC BY 2.0 · Wikimedia Commons'},
+ foshan:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',page:'https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',credit:'Foto: Lau Hau Yatyue Tiger · CC0 · Wikimedia Commons'}
+};
+(function(){
+  const g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
+  if(!g.node())return;
+  let proj=null,cur=-1,K=1;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const fmtC=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
+  function renderCard(i){const h=HUBD[i],ph=HUB_PHOTO[h.id];
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${esc(h.city)}" loading="lazy" onerror="this.remove()">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${esc(ph.credit)}</a>`:`<span class="cr">${esc(t(ph.credit))}</span>`}`:''}<div class="fb" style="z-index:-1"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmtC(h.c)}</span></div></div>
+      <div class="hubbody"><div class="loc">${h.prov} · ${esc(t(h.focus))}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${esc(t(h.txt))}</p><div class="tg">${h.tags.map(x=>`<span>${esc(t(x))}</span>`).join('')}</div>
+      <a href="index-alt.html#kontakt" class="btn btn-primary">${esc(t('Produkte aus dieser Region anfragen'))} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>`;
+    card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade')}
+  function renderIntro(){card.innerHTML=`<div class="hubph"><div class="fb"><b>CHINA</b><span>${esc(t('6 Produktionsstandorte'))}</span></div></div><div class="hubbody"><div class="loc">${esc(t('Produktionsregionen'))}</div><h3>${esc(t('Wählen Sie einen Standort'))}</h3><p>${esc(t('Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.'))}</p></div>`}
+  function renderChips(){chips.innerHTML=HUBD.map((h,i)=>`<button type="button" class="${i===cur?'on':''}" data-i="${i}">${h.city}</button>`).join('')}
+  function zoomTo(i){cur=i;renderChips();g.selectAll('.hub').classed('on',(d,k)=>k===i);
+    if(!proj){i<0?renderIntro():renderCard(i);return}
+    let tr;if(i<0){K=1;tr=d3.zoomIdentity;map.classList.remove('zoomed');renderIntro()}
+    else{const [x,y]=proj(HUBD[i].c);K=4.2;tr=d3.zoomIdentity.translate(300-x*K,250-y*K).scale(K);map.classList.add('zoomed');renderCard(i);if(innerWidth<900)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),1150)}
+    const dur=reduce?0:1100;
+    g.transition().duration(dur).ease(d3.easeCubicInOut).attr('transform',tr.toString());
+    g.selectAll('.hub circle.d').transition().duration(dur).attr('r',d=>(HUBD.indexOf(d)===i?6:4.5)/K);
+    g.selectAll('.hub circle.p').transition().duration(dur).attr('r',9/K);
+    g.selectAll('.hub text').transition().duration(dur).attr('font-size',13/K).attr('x',d=>d.o[0]/K).attr('y',d=>d.o[1]/K)}
+  chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)zoomTo(+b.dataset.i===cur?-1:+b.dataset.i)});
+  document.getElementById('hubBack').onclick=()=>zoomTo(-1);
+  renderChips();renderIntro();
+  addEventListener('langchange',()=>cur<0?renderIntro():renderCard(cur));
+  function draw(cn){
+    proj=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
+    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
+    const hub=g.selectAll('g.hub').data(HUBD).join('g').attr('class','hub').attr('transform',d=>`translate(${proj(d.c)})`).on('click',(e,d)=>{const i=HUBD.indexOf(d);zoomTo(i===cur?-1:i)});
+    hub.append('circle').attr('class','p').attr('r',9);
+    hub.append('circle').attr('class','d').attr('r',4.5);
+    hub.append('text').attr('x',d=>d.o[0]).attr('y',d=>d.o[1]).attr('text-anchor',d=>d.o[2]?'end':'start').attr('font-size',13).text(d=>d.city);
+  }
+  function fallback(){try{const tp=Datamap.prototype.worldTopo,key=Object.keys(tp.objects)[0];const f=topojson.feature(tp,tp.objects[key]).features.find(f=>f.id==='CHN');if(f)draw(f)}catch(e){}}
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then(r=>r.json()).then(tp=>{
+    const f=topojson.feature(tp,tp.objects.countries).features.find(f=>f.id==='156');f?draw(f):fallback()}).catch(fallback);
+})();
+
+
+/* ================= Produkt-Laufband ================= */
+(function(){
+  const P=window.KP||[];if(!P.length)return;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const fresh=P.filter(p=>p.b==='SHENGYAO');
+  const pick=(arr,n)=>{const st=Math.max(1,Math.floor(arr.length/n));return arr.filter((_,i)=>i%st===0).slice(0,n)};
+  const r1=pick(fresh,16);
+  const r2=[...pick(P.filter(p=>p.b==='TNYAN'),6),...pick(P.filter(p=>p.b==='SCHENG'),5),...pick(P.filter(p=>p.k==='zubehoer'),5),...pick(P.filter(p=>p.k==='wasser'||p.k==='anzucht'),3)];
+  const nm=x=>(LANG==='en'&&window.KEN&&KEN[x])||x;
+  const tile=p=>`<a class="mq-tile" href="sortiment.html?p=${encodeURIComponent(p.i)}" data-vt><span class="ti"><img src="${p.im}" alt="" loading="lazy" decoding="async"></span><span class="tc"><small class="notranslate" translate="no">${esc(p.b||'')} · ${esc(p.i)}</small><b>${esc(nm(p.n))}</b></span></a>`;
+  const fill=(id,arr,dur)=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=arr.map(tile).join('')+arr.map(tile).join('').replace(/<a /g,'<a tabindex="-1" aria-hidden="true" ');el.style.setProperty('--dur',dur+'s')};
+  fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);
+  const ttl=document.getElementById('mqTitle');if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO');
+  addEventListener('langchange',()=>{fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO')});
+})();
+applyLang();fixTotals();
+</script>
+<script>
+(function(){
+  const P=window.KP||[],C=window.KC||[],box=document.getElementById('kmegain'),mega=document.getElementById('kmega');
+  if(!box)return;
+  const IMG={akkugarten:'pi/sy-13.webp',werkzeug:'pi/ex21.webp',zubehoer:'pi/csz1001.webp',anzucht:'pi/ycs07.webp',wasser:'pi/sy-44.webp'};
+  const FEAT='JD-4001';
+  const n=(k,s)=>P.filter(p=>p.k===k&&(!s||p.s===s)).length;
+  const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
+  const f=P.find(p=>p.i===FEAT)||P[P.length-1];
+  const nm=x=>(typeof LANG!=='undefined'&&LANG==='en'&&window.KEN&&KEN[x])||x;
+  const EN2={'Ganzes Sortiment':'Full range','Herkunft':'Origin','Ablauf':'Process','Kontakt & Anfrage':'Contact & enquiry','Neu im Sortiment':'New in our range','Auf Anfrage':'On request','Alle':'All','Artikel':'items'};
+  const L=x=>(typeof LANG!=='undefined'&&LANG==='en'&&EN2[x])||x;
+  function build(){box.innerHTML=
+    `<div class="kmob"><a href="sortiment.html">${L('Ganzes Sortiment')}</a><a href="index.html#herkunft">${L('Herkunft')}</a><a href="index.html#ablauf">${L('Ablauf')}</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">${L('Kontakt & Anfrage')}</a></div>`+
+    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${nm(name)}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${nm(s[1])}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
+    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>${L('Neu im Sortiment')}</small><b>${nm(f.n)}</b></span></a>`:''}<div class="kreq"><p>${L('Auf Anfrage')}</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${nm(c[1])}</a>`).join('')}</div><a class="kall" href="sortiment.html">${L('Alle')} ${P.length} ${L('Artikel')}</a></div>`;
+  }
+  build();addEventListener('langchange',build);
+  const btns=[document.getElementById('kmb'),document.getElementById('kbg')].filter(Boolean);
+  let t=null;
+  function set(open){mega.classList.toggle('open',open);btns.forEach(b=>b.setAttribute('aria-expanded',open))}
+  btns.forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();set(!mega.classList.contains('open'))}));
+  const mb=document.getElementById('kmb');
+  if(mb&&matchMedia('(hover:hover)').matches){
+    const enter=()=>{clearTimeout(t);t=setTimeout(()=>set(true),120)},leave=()=>{clearTimeout(t);t=setTimeout(()=>set(false),220)};
+    mb.addEventListener('mouseenter',enter);mb.addEventListener('mouseleave',leave);mega.addEventListener('mouseenter',()=>clearTimeout(t));mega.addEventListener('mouseleave',leave);
+  }
+  document.addEventListener('click',e=>{if(!e.target.closest('#knav'))set(false)});
+  addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  /* Seitenübergang: Produktbild fliegt in die Detailansicht */
+  document.addEventListener('click',e=>{const a=e.target.closest('a[data-vt]');if(!a)return;const im=a.querySelector('img');if(im)im.style.viewTransitionName='prod';},true);
+  addEventListener('pageshow',()=>document.querySelectorAll('a[data-vt] img').forEach(i=>i.style.viewTransitionName=''));
+})();
+</script>
+<script type="module">
+/* KARMIRA Drohnen-Tour: Haus und Garten als Echtzeit-3D, die Kamera fliegt zwischen Standpunkten. */
+import * as THREE from 'three';
+import {Sky} from 'three/addons/objects/Sky.js';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {GTAOPass} from 'three/addons/postprocessing/GTAOPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+
+const stage=document.getElementById('dstage');
+if(stage)init();
+
+function init(){
+const cv=document.getElementById('dcv'),hsBox=document.getElementById('dhs'),card=document.getElementById('dcard'),
+      nav=document.getElementById('dnav'),title=document.getElementById('dtitle'),stepEl=document.getElementById('dstep'),
+      hint=document.getElementById('dhint'),load=document.getElementById('dload');
+const P=window.KP||[],byId=Object.fromEntries(P.map(p=>[p.i,p]));
+const EN=()=>typeof LANG!=='undefined'&&LANG==='en';
+const nm=x=>(EN()&&window.KEN&&KEN[x])||x;
+const TX={'Drohnenblick':'Drone view','Vorgarten':'Front garden','Terrasse':'Terrace','Garten':'Garden','Schuppen':'Shed','Gewächshaus':'Greenhouse',
+  'Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved','Outdoor-Möbel':'Outdoor furniture','Auf Anfrage':'On request','Alle anzeigen':'Show all',
+  'Nach oben':'Fly up','Klicken Sie auf einen Ort, die Drohne fliegt hin.':'Click a place and the drone flies there.','Hierhin fliegen':'Fly here'};
+const T=x=>EN()&&TX[x]||x;
+
+/* ---------- Renderer & Szene ---------- */
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
+R.outputColorSpace=THREE.SRGBColorSpace;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=.66;
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+const S=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(42,1,.1,1500);
+const SUN=new THREE.Vector3().setFromSphericalCoords(1,THREE.MathUtils.degToRad(73),THREE.MathUtils.degToRad(-125));
+
+const sky=new Sky();sky.scale.setScalar(5000);
+const u=sky.material.uniforms;u.turbidity.value=6;u.rayleigh.value=1.6;u.mieCoefficient.value=.006;u.mieDirectionalG.value=.86;u.sunPosition.value.copy(SUN);
+S.add(sky);
+const pm=new THREE.PMREMGenerator(R);const envS=new THREE.Scene();const sky2=new Sky();sky2.scale.setScalar(5000);
+Object.assign(sky2.material.uniforms.sunPosition.value,SUN);for(const k of['turbidity','rayleigh','mieCoefficient','mieDirectionalG'])sky2.material.uniforms[k].value=u[k].value;
+envS.add(sky2);S.environment=pm.fromScene(envS,.02).texture;
+S.fog=new THREE.Fog(0xd8ae86,90,380);
+
+const sun=new THREE.DirectionalLight(0xffd2a6,4.2);sun.position.copy(SUN).multiplyScalar(80);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-42,right:42,top:42,bottom:-42,near:1,far:200});sun.shadow.bias=-.0004;sun.shadow.normalBias=.03;
+S.add(sun);S.add(new THREE.HemisphereLight(0xc9dcff,0x6b5a35,.55));
+
+/* ---------- Texturen (prozedural) ---------- */
+function tex(w,h,draw,rep=[1,1],srgb=true){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g,w,h);
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(...rep);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t}
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function noise(g,w,h,n,cols,sz=[1,3],al=[.2,.6]){for(let i=0;i<n;i++){g.globalAlpha=rnd(...al);g.fillStyle=cols[i%cols.length];const s=rnd(...sz);g.fillRect(rnd(0,w),rnd(0,h),s,s)}g.globalAlpha=1}
+const T_grass=tex(512,512,(g,w,h)=>{g.fillStyle='#62873a';g.fillRect(0,0,w,h);noise(g,w,h,26000,['#6b9136','#3f5f20','#7da443','#4b6c25','#8a9c3c'],[1,3],[.25,.7]);
+  for(let i=0;i<40;i++){g.globalAlpha=.06;g.fillStyle=Math.random()<.5?'#2f4a16':'#a3b356';g.beginPath();g.arc(rnd(0,w),rnd(0,h),rnd(20,70),0,7);g.fill()}g.globalAlpha=1},[60,60]);
+const T_pave=tex(512,512,(g,w,h)=>{g.fillStyle='#8d8a84';g.fillRect(0,0,w,h);const bw=64,bh=32;for(let y=0;y<h;y+=bh)for(let x=-(y/bh%2)*bw/2;x<w;x+=bw){const v=rnd(-14,14)|0;g.fillStyle=`rgb(${168+v},${163+v},${155+v})`;g.fillRect(x+2,y+2,bw-4,bh-4)}noise(g,w,h,9000,['#6f6c66','#c8c4bb'],[1,2],[.15,.4])},[6,6]);
+const T_tile=tex(512,512,(g,w,h)=>{g.fillStyle='#7f7d78';g.fillRect(0,0,w,h);const s=128;for(let y=0;y<h;y+=s)for(let x=0;x<w;x+=s){const v=rnd(-8,8)|0;g.fillStyle=`rgb(${190+v},${188+v},${182+v})`;g.fillRect(x+1.5,y+1.5,s-3,s-3)}noise(g,w,h,6000,['#a9a69f','#d6d3cc'],[1,2],[.15,.35])},[3,3]);
+const T_wood=tex(256,512,(g,w,h)=>{const pl=32;for(let x=0;x<w;x+=pl){const v=rnd(-18,18)|0;g.fillStyle=`rgb(${150+v},${98+v},${58+v})`;g.fillRect(x,0,pl,h);
+  for(let i=0;i<30;i++){g.strokeStyle=`rgba(80,45,20,${rnd(.05,.2)})`;g.beginPath();const xx=x+rnd(2,pl-2);g.moveTo(xx,0);g.bezierCurveTo(xx+rnd(-4,4),h/3,xx+rnd(-4,4),h*2/3,xx,h);g.stroke()}
+  g.fillStyle='rgba(40,22,10,.55)';g.fillRect(x,0,1.5,h)}},[1,1]);
+const T_woodH=tex(512,256,(g,w,h)=>{const pl=24;for(let y=0;y<h;y+=pl){const v=rnd(-16,16)|0;g.fillStyle=`rgb(${176+v},${122+v},${74+v})`;g.fillRect(0,y,w,pl);
+  for(let i=0;i<24;i++){g.strokeStyle=`rgba(90,50,22,${rnd(.05,.18)})`;g.beginPath();const yy=y+rnd(2,pl-2);g.moveTo(0,yy);g.bezierCurveTo(w/3,yy+rnd(-3,3),w*2/3,yy+rnd(-3,3),w,yy);g.stroke()}
+  g.fillStyle='rgba(50,28,12,.6)';g.fillRect(0,y,w,1.5)}},[1,1]);
+const T_plaster=tex(512,512,(g,w,h)=>{g.fillStyle='#ddd5c8';g.fillRect(0,0,w,h);noise(g,w,h,30000,['#cfc6b7','#e8e2d8','#c6bcac'],[1,2],[.15,.45])},[3,3]);
+const T_roof=tex(256,256,(g,w,h)=>{g.fillStyle='#2a2c2e';g.fillRect(0,0,w,h);const rh=16,tw=24;for(let y=0;y<h;y+=rh)for(let x=-(y/rh%2)*tw/2;x<w;x+=tw){const v=rnd(-6,6)|0;const gr=g.createLinearGradient(0,y,0,y+rh);gr.addColorStop(0,`rgb(${62+v},${64+v},${68+v})`);gr.addColorStop(1,`rgb(${34+v},${35+v},${38+v})`);g.fillStyle=gr;g.fillRect(x+1,y,tw-2,rh-1)}},[6,6]);
+const T_soil=tex(256,256,(g,w,h)=>{g.fillStyle='#3b2a1d';g.fillRect(0,0,w,h);noise(g,w,h,9000,['#2a1d13','#5a4330','#4a3626'],[1,3],[.3,.8])},[2,2]);
+const T_asph=tex(256,256,(g,w,h)=>{g.fillStyle='#3d3d3f';g.fillRect(0,0,w,h);noise(g,w,h,12000,['#2c2c2e','#555558','#48484a'],[1,2],[.3,.7])},[20,2]);
+const T_peg=tex(256,256,(g,w,h)=>{g.fillStyle='#c9965e';g.fillRect(0,0,w,h);g.fillStyle='rgba(50,30,15,.7)';for(let y=8;y<h;y+=16)for(let x=8;x<w;x+=16){g.beginPath();g.arc(x,y,2.2,0,7);g.fill()}},[3,2]);
+const T_glow=tex(64,64,(g,w,h)=>{const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,230,170,1)');gr.addColorStop(.25,'rgba(255,200,120,.55)');gr.addColorStop(1,'rgba(255,180,90,0)');g.fillStyle=gr;g.fillRect(0,0,64,64)});
+
+/* ---------- Materialien ---------- */
+const M=(o)=>new THREE.MeshStandardMaterial(o);
+const mat={grass:M({map:T_grass,roughness:.95}),pave:M({map:T_pave,roughness:.9}),tile:M({map:T_tile,roughness:.75}),
+  plaster:M({map:T_plaster,roughness:.92}),wood:M({map:T_woodH,roughness:.8}),woodV:M({map:T_wood,roughness:.8}),roof:M({map:T_roof,roughness:.7,metalness:.1}),
+  frame:M({color:0x2b2e31,roughness:.5,metalness:.3}),glass:M({color:0x1a2228,roughness:.05,metalness:.9,envMapIntensity:1.4}),
+  warm:M({color:0x5a3e24,emissive:0xff9a40,emissiveIntensity:.75,roughness:1}),soil:M({map:T_soil,roughness:1}),asph:M({map:T_asph,roughness:.95}),
+  black:M({color:0x1c1d1f,roughness:.45,metalness:.35}),granite:M({color:0x151617,roughness:.28,metalness:.1}),steel:M({color:0xd9dcdf,roughness:.22,metalness:1}),
+  fabric:M({color:0xb9b2a6,roughness:.95}),fabric2:M({color:0xd8d0c2,roughness:.95}),teak:M({map:T_wood,color:0xb07a4c,roughness:.7}),
+  leaf:M({color:0x3d6a26,roughness:.85}),leaf2:M({color:0x2c4f1d,roughness:.85}),hedge:M({color:0x35592a,roughness:.9}),bark:M({color:0x4a3a2a,roughness:.95}),
+  green:M({color:0x5aa534,roughness:.5,metalness:.1}),cer:M({color:0x101112,roughness:.25,metalness:.2}),bamboo:M({color:0xc9ad6b,roughness:.7}),
+  red:M({color:0xc8261c,roughness:.4}),zinc:M({color:0xb7bcbf,roughness:.35,metalness:.9}),alu:M({color:0x3a3d40,roughness:.4,metalness:.7}),
+  gh:new THREE.MeshStandardMaterial({color:0xffffff,roughness:.05,metalness:.2,transparent:true,opacity:.14,depthWrite:false}),
+  plast:M({color:0x161616,roughness:.6}),white:M({color:0xf2f2ee,roughness:.5}),coir:M({color:0x7a5536,roughness:1}),peg:M({map:T_peg,roughness:.8}),
+  bloomW:M({color:0xf3f0e6,roughness:.8}),bloomP:M({color:0xb48ad0,roughness:.8}),bloomY:M({color:0xd9b85a,roughness:.8})};
+
+const G=new THREE.Group();S.add(G);
+const winGlass=new THREE.MeshStandardMaterial({color:0x1d272d,roughness:.06,metalness:.3,transparent:true,opacity:.5,envMapIntensity:.5});
+function box(w,h,d,m,x,y,z,o={}){const g=o.r?new RoundedBoxGeometry(w,h,d,3,o.r):new THREE.BoxGeometry(w,h,d);const me=new THREE.Mesh(g,m);me.position.set(x,y,z);
+  if(o.ry)me.rotation.y=o.ry;me.castShadow=o.cs!==false;me.receiveShadow=true;(o.p||G).add(me);return me}
+function cyl(rt,rb,h,m,x,y,z,o={}){const me=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,o.seg||16,1,false,0,o.th||Math.PI*2),m);me.position.set(x,y,z);
+  if(o.rx)me.rotation.x=o.rx;if(o.rz)me.rotation.z=o.rz;if(o.ry)me.rotation.y=o.ry;me.castShadow=true;me.receiveShadow=true;(o.p||G).add(me);return me}
+function texRep(m,rx,ry){const c=m.clone();if(c.map){c.map=c.map.clone();c.map.needsUpdate=true;c.map.repeat.set(rx,ry)}return c}
+
+/* ---------- Boden ---------- */
+const T_stripe=tex(64,512,(g,w,h)=>{for(let y=0;y<h;y+=64){g.fillStyle=(y/64)%2?'#ffffff':'#d9e3c6';g.fillRect(0,y,w,64)}},[1,1]);
+mat.grass.onBeforeCompile=sh=>{sh.uniforms.uStr={value:T_stripe};sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWp;').replace('#include <worldpos_vertex>','#include <worldpos_vertex>\nvWp=(modelMatrix*vec4(transformed,1.0)).xyz;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vWp;uniform sampler2D uStr;').replace('#include <map_fragment>','#include <map_fragment>\nif(abs(vWp.x)<17.0&&vWp.z<26.0&&vWp.z>-29.0){diffuseColor.rgb*=mix(.92,1.06,step(.5,fract(vWp.x/2.4)));}else{diffuseColor.rgb*=vec3(.93,.95,.86);}')};
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(700,700),mat.grass);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;S.add(ground);
+const flat=(w,d,m,x,z,y=.02,ry=0)=>{const me=new THREE.Mesh(new THREE.PlaneGeometry(w,d),m);me.rotation.x=-Math.PI/2;me.rotation.z=ry;me.position.set(x,y,z);me.receiveShadow=true;G.add(me);return me};
+flat(400,9,mat.asph,0,33);flat(400,2.2,texRep(mat.pave,60,1),0,27.6,.04);
+flat(3.4,30,texRep(mat.pave,1.2,10),8.2,13,.04);            // Einfahrt / Weg ums Haus
+flat(1.4,5,texRep(mat.pave,.5,2),1.2,14,.035);             // Zugang Haustür
+flat(13,7.5,texRep(mat.tile,4,2.5),0,-3.2,.05);            // Terrasse
+box(13.2,.12,7.7,texRep(mat.tile,4,2.5),0,.03,-3.2,{cs:false}).visible=false;
+flat(2.2,10,texRep(mat.pave,.8,3.5),-9.5,-14,.035,.0);     // Trittweg zum Gewächshaus
+
+/* ---------- Haus ---------- */
+const H=new THREE.Group();G.add(H);
+const HW=11,HD=10,WH=5.6,HZ=6;           // Breite, Tiefe, Traufhöhe, Mitte z
+box(HW,WH,HD,texRep(mat.plaster,3,2),0,WH/2,HZ,{p:H});
+box(HW+.3,.35,HD+.3,mat.frame,0,.17,HZ,{p:H});
+// Giebel vorne/hinten (Satteldach, First entlang z)
+const pitch=THREE.MathUtils.degToRad(40),rh=Math.tan(pitch)*HW/2;
+const gab=new THREE.Shape();gab.moveTo(-HW/2,0);gab.lineTo(HW/2,0);gab.lineTo(0,rh);gab.closePath();
+for(const zz of[HZ+HD/2,HZ-HD/2]){const gm=new THREE.Mesh(new THREE.ShapeGeometry(gab),texRep(mat.plaster,3,1));gm.position.set(0,WH,zz+(zz>HZ?.001:-.001));if(zz<HZ)gm.rotation.y=Math.PI;gm.receiveShadow=true;H.add(gm)}
+// Holzverkleidung im Giebel vorne
+const clad=new THREE.Shape();clad.moveTo(-2.2,0);clad.lineTo(2.2,0);clad.lineTo(2.2,rh-2.2*Math.tan(pitch)+.02);clad.lineTo(0,rh-.05);clad.lineTo(-2.2,rh-2.2*Math.tan(pitch)+.02);clad.closePath();
+const cg=new THREE.ShapeGeometry(clad);const cm=new THREE.Mesh(cg,mat.wood);mat.wood.map.repeat.set(.25,.25);cm.position.set(0,WH-.6,HZ+HD/2+.03);H.add(cm);
+// Dachflächen
+const slope=Math.hypot(HW/2,rh)+.7,rl=HD+1.2;
+for(const s of[-1,1]){const rf=box(slope,.22,rl,texRep(mat.roof,4,4),0,0,HZ,{p:H});rf.rotation.z=-s*pitch;rf.position.set(s*(HW/4-.05+.25*Math.cos(pitch)),WH+rh/2+.12,HZ)}
+box(.35,.3,rl,mat.frame,0,WH+rh+.12,HZ,{p:H});
+box(.8,2.2,.8,mat.frame,2.6,WH+rh-.2,HZ-1.6,{p:H});
+// Fenster
+function win(x,y,z,w,h,face){const g=new THREE.Group();H.add(g);g.position.set(x,y,z);g.rotation.y=face;const f=.07;
+  box(w+f*2,f,.12,mat.frame,0,h/2+f/2,0,{p:g,cs:false});box(w+f*2,f,.12,mat.frame,0,-h/2-f/2,0,{p:g,cs:false});
+  box(f,h,.12,mat.frame,-w/2-f/2,0,0,{p:g,cs:false});box(f,h,.12,mat.frame,w/2+f/2,0,0,{p:g,cs:false});
+  box(w,h,.02,mat.warm,0,0,-.22,{p:g,cs:false});box(w*.8,h*.25,.02,M({color:0x6b4a2e,roughness:1}),0,-h*.32,-.2,{p:g,cs:false});
+  const gl=new THREE.Mesh(new THREE.PlaneGeometry(w,h),winGlass);gl.position.z=.02;g.add(gl);
+  if(w>1.4)box(.06,h,.06,mat.frame,0,0,.02,{p:g,cs:false});box(w+.3,.05,.22,M({color:0x9a9a96,roughness:.6}),0,-h/2-.1,.08,{p:g,cs:false});}
+const FZ=HZ+HD/2+.05,BZ=HZ-HD/2-.05;
+win(-2.6,1.55,FZ,2.6,1.7,0);win(3.2,4.1,FZ,1.3,1.4,0);win(-1.0,7.0,FZ+.01,2.4,1.5,0);win(-2.6,4.1,FZ,1.3,1.4,0);
+box(1.15,2.25,.1,mat.frame,1.3,1.2,FZ,{p:H});box(2.4,.12,1.3,mat.frame,1.3,2.65,FZ+.6,{p:H});    // Tür + Vordach
+box(.12,.2,.1,mat.warm,2.3,2.05,FZ+.05,{p:H,cs:false});
+win(-3.3,1.4,BZ,4.4,2.5,Math.PI);win(2.6,1.4,BZ,2.2,2.5,Math.PI);win(0,4.2,BZ,1.4,1.4,Math.PI);win(-3.2,4.2,BZ,1.4,1.4,Math.PI);win(3.2,4.2,BZ,1.4,1.4,Math.PI);
+win(HW/2+.05,1.5,HZ+1.5,1.4,1.4,Math.PI/2);win(HW/2+.05,4.2,HZ-1.5,1.4,1.4,Math.PI/2);win(-HW/2-.05,1.5,HZ,1.4,1.4,-Math.PI/2);
+cyl(.06,.06,WH,mat.frame,HW/2+.15,WH/2,HZ+HD/2-.2);
+
+/* ---------- Pflanzen: Bäume, Hecken, Stauden ---------- */
+const ico=new THREE.IcosahedronGeometry(1,1);
+function blob(geo,amt){const p=geo.attributes.position,v=new THREE.Vector3();for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);v.multiplyScalar(1+(Math.sin(v.x*5.1)+Math.cos(v.y*4.3+v.z*3.7))*amt);p.setXYZ(i,v.x,v.y,v.z)}geo.computeVertexNormals();return geo}
+const crown=blob(new THREE.IcosahedronGeometry(1,2),.09);
+const leafMats=[0x3f6b27,0x4c7a2c,0x34591f,0x587f30,0x6a7f2d].map(c=>M({color:c,roughness:.85}));
+function tree(x,z,s=1,kind=0){const g=new THREE.Group();g.position.set(x,0,z);G.add(g);const h=(kind?5:3.2)*s;
+  cyl(.12*s,.2*s,h,mat.bark,0,h/2,0,{p:g});const n=kind?14:9;const lm=leafMats[(Math.random()*leafMats.length)|0];
+  for(let i=0;i<n;i++){const m=new THREE.Mesh(crown,lm);const r=(kind?1.1:.85)*s*rnd(.65,1.05);m.scale.set(r,r*rnd(.8,1.1),r);
+    m.position.set(rnd(-1,1)*s*.9,h+rnd(-.3,1.4)*s*(kind?1.4:1),rnd(-1,1)*s*.9);m.rotation.set(rnd(0,3),rnd(0,3),0);m.castShadow=true;m.receiveShadow=true;g.add(m)}
+  return g}
+function conifer(x,z,s=1){const g=new THREE.Group();g.position.set(x,0,z);G.add(g);cyl(.15*s,.22*s,1.5*s,mat.bark,0,.75*s,0,{p:g});
+  for(let i=0;i<4;i++){const c=new THREE.Mesh(new THREE.ConeGeometry((2.2-i*.45)*s,2.6*s,10),mat.leaf2);c.position.y=(1.8+i*1.3)*s;c.castShadow=true;g.add(c)}}
+// Hecke aus vielen Blattkugeln
+const hedgeParts=[];
+function hedge(x0,z0,x1,z1,h=1.4,w=.9){const len=Math.hypot(x1-x0,z1-z0),n=Math.ceil(len*70),dir=new THREE.Vector2(x1-x0,z1-z0).normalize();
+  const core=box(len,h*.9,w*.8,mat.hedge,(x0+x1)/2,h*.45,(z0+z1)/2,{ry:-Math.atan2(z1-z0,x1-x0)});
+  for(let i=0;i<n;i++){const t=Math.random();hedgeParts.push([x0+(x1-x0)*t+(-dir.y)*rnd(-w/2,w/2),rnd(.15,h),z0+(z1-z0)*t+dir.x*rnd(-w/2,w/2),rnd(.1,.19)])}}
+hedge(-17,26.2,4.8,26.2,1.25,1);hedge(-17,26,-17,-29,2.2,1.1);hedge(17.5,26,17.5,-29,2.4,1.2);hedge(-17,-29.5,17.5,-29.5,2.2,1.1);
+hedge(-6.5,12.2,-1.2,12.2,.7,.6);
+const blossom=[];
+function bed(x,z,w,d,n,cols){for(let i=0;i<n*4;i++){const c=cols[i%cols.length];blossom.push([x+rnd(-w/2,w/2),c===3?rnd(.1,.45):rnd(.3,.7),z+rnd(-d/2,d/2),c===3?rnd(.1,.18):rnd(.05,.09),c])}}
+bed(-3.5,15.5,6,2.4,90,[0,1,0,3]);bed(3.6,12.2,1.4,1.2,24,[0,3]);bed(-12,10,4,3,50,[1,3,2]);bed(9.5,-6,1.8,4,40,[0,1,3]);bed(-8,-6.5,2,3,40,[3,1,0]);bed(5,-12.4,6,.8,30,[3,3,1]);
+(function(){const all=hedgeParts;const im=new THREE.InstancedMesh(ico,leafMats[2],all.length);const o=new THREE.Object3D();all.forEach((p,i)=>{o.position.set(p[0],p[1],p[2]);o.scale.setScalar(p[3]);o.rotation.set(rnd(0,3),rnd(0,3),0);o.updateMatrix();im.setMatrixAt(i,o.matrix);im.setColorAt(i,new THREE.Color().setHSL(.27+rnd(-.03,.03),.45,rnd(.17,.27)))});im.castShadow=true;im.receiveShadow=true;G.add(im);
+  const cols=[mat.bloomW,mat.bloomP,mat.bloomY,mat.leaf];cols.forEach((m,ci)=>{const sel=blossom.filter(b=>b[4]===ci);if(!sel.length)return;const im2=new THREE.InstancedMesh(ico,m,sel.length);sel.forEach((p,i)=>{o.position.set(p[0],p[1],p[2]);o.scale.setScalar(p[3]);o.updateMatrix();im2.setMatrixAt(i,o.matrix)});im2.castShadow=true;G.add(im2)})})();
+tree(-5.5,18.5,1.1);tree(13,-20,1.3,1);tree(-14,-26,1.2,1);tree(14,20,1.1);tree(-15,3,1.3,1);tree(4,-26,1.4,1);
+for(let i=0;i<26;i++){const a=i/26*Math.PI*2,r=rnd(55,85);(i%3?tree:conifer)(Math.cos(a)*r,Math.sin(a)*r-10,rnd(1.4,2.2),1)}
+for(let i=0;i<10;i++)tree(rnd(-60,60),rnd(-55,-35),rnd(1.5,2.3),1);
+
+/* Rasenhalme in der Nähe der Standpunkte */
+(function(){const n=34000,geo=new THREE.PlaneGeometry(.02,.13,1,2);geo.translate(0,.065,0);
+  const mt=M({color:0x5b8a2e,roughness:.9,side:THREE.DoubleSide});mt.onBeforeCompile=sh=>{sh.uniforms.uT={value:0};mt.userData.sh=sh;
+    sh.vertexShader='uniform float uT;\n'+sh.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nfloat ph=instanceMatrix[3].x*.7+instanceMatrix[3].z*.5;transformed.x+=sin(uT*1.6+ph)*.03*position.y*4.0;')};
+  const im=new THREE.InstancedMesh(geo,mt,n),o=new THREE.Object3D();let k=0;
+  const zones=[[-5,-8,10,8],[ 2,-22,12,10],[-12,-18,6,8],[-3,19,9,5],[-13,16,4,6]];
+  while(k<n){const zz=zones[k%zones.length],x=zz[0]+rnd(-zz[2]/2,zz[2]/2),z=zz[1]+rnd(-zz[3]/2,zz[3]/2);
+    if(x>-6.8&&x<6.8&&z>-7.2&&z<.8)continue;if(x>-12.8&&x<-9.2&&z>-23.3&&z<-18.7)continue;if(x>-14.2&&x<-10.8&&z>13.6&&z<16.4)continue;if(x>-6&&x<6&&z>0&&z<11.2)continue;
+    o.position.set(x,0,z);o.rotation.set(0,rnd(0,3),rnd(-.2,.2));o.scale.set(1,rnd(.6,1.4),1);o.updateMatrix();im.setMatrixAt(k,o.matrix);im.setColorAt(k,new THREE.Color().setHSL(.24+rnd(-.03,.04),.5,rnd(.22,.36)));k++}
+  im.receiveShadow=true;G.add(im);window.__grass=mt})();
+
+/* ---------- Terrasse & Outdoorküche ---------- */
+const K=new THREE.Group();K.position.set(4.6,0,-6.4);K.rotation.y=Math.PI;G.add(K);
+const kmod=[[1.0,'sink'],[1.15,'grill'],[.55,'fridge'],[.9,'kamado']];let kx=0;const ANCH={};
+for(const [w,type] of kmod){const cx=kx+w/2;box(w-.01,.86,.66,mat.black,cx,.5,0,{p:K});box(w,.04,.7,mat.granite,cx,.95,0,{p:K});
+  box(w-.08,.02,.01,mat.steel,cx,.78,.335,{p:K,cs:false});
+  if(type==='sink'){cyl(.025,.025,.38,mat.steel,cx,1.15,-.18,{p:K});const arc=new THREE.Mesh(new THREE.TorusGeometry(.12,.02,8,16,Math.PI),mat.steel);arc.position.set(cx,1.34,-.06);arc.rotation.y=Math.PI/2;K.add(arc);ANCH.sink=[cx,1.2,0]}
+  if(type==='grill'){box(w-.1,.5,.12,mat.steel,cx,.5,.3,{p:K});for(let i=0;i<6;i++)cyl(.03,.03,.04,mat.black,cx-.42+i*.17,.82,.36,{p:K,rx:Math.PI/2});
+    const hood=cyl(.28,.28,w-.12,mat.steel,cx,1.0,-.02,{p:K,rz:Math.PI/2,seg:28});hood.scale.set(1,1,.75);
+    cyl(.02,.02,w-.3,mat.steel,cx,1.18,.29,{p:K,rz:Math.PI/2});ANCH.grill=[cx,1.15,0]}
+  if(type==='fridge'){box(w-.1,.72,.02,M({color:0x223038,roughness:.05,metalness:.6,transparent:true,opacity:.7}),cx,.5,.335,{p:K,cs:false});
+    box(w-.14,.66,.02,M({color:0xbfe0ff,emissive:0x7fb8ff,emissiveIntensity:.5}),cx,.5,.3,{p:K,cs:false});
+    for(let r=0;r<3;r++)for(let c=0;c<3;c++)cyl(.03,.03,.17,[mat.green,mat.red,mat.zinc][(r+c)%3],cx-.14+c*.14,.25+r*.22,.22,{p:K});ANCH.fridge=[cx,.6,.3]}
+  if(type==='kamado'){const egg=new THREE.Mesh(new THREE.SphereGeometry(.33,32,20),mat.cer);egg.scale.set(1,1.15,1);egg.position.set(cx,1.33,0);egg.castShadow=true;K.add(egg);
+    const band=new THREE.Mesh(new THREE.TorusGeometry(.335,.015,8,40),mat.steel);band.rotation.x=Math.PI/2;band.position.set(cx,1.36,0);K.add(band);cyl(.05,.05,.08,mat.steel,cx,1.72,0,{p:K});ANCH.kamado=[cx,1.4,0]}
+  kx+=w}
+// Lounge
+const L=new THREE.Group();L.position.set(-3.8,0,-3.2);L.rotation.y=Math.PI;G.add(L);
+box(3.2,.42,.95,mat.fabric,0,.21,0,{p:L,r:.08});box(3.2,.5,.25,mat.fabric,0,.6,-.38,{p:L,r:.08});box(.95,.42,2.2,mat.fabric,-1.6,.21,.6,{p:L,r:.08});box(.25,.5,2.2,mat.fabric,-1.98,.6,.6,{p:L,r:.08});
+for(let i=0;i<4;i++)box(.55,.42,.16,mat.fabric2,-1.1+i*.75,.68,-.22,{p:L,r:.06,ry:rnd(-.1,.1)});
+box(1.4,.06,.8,mat.teak,.2,.42,1.3,{p:L});for(const sx of[-.6,1])for(const sz of[-.35,.35])box(.05,.4,.05,mat.frame,.2+sx*.6,.2,1.3+sz,{p:L});
+const lantern=cyl(.08,.08,.18,M({color:0xfff1d0,emissive:0xffb35c,emissiveIntensity:2}),.3,.54,1.3,{p:L});
+// Esstisch an der Glasfront
+box(2.2,.06,1,mat.teak,2.3,.75,-1.6);for(let i=0;i<4;i++)box(.45,.85,.45,mat.frame,1.5+(i%2)*1.6,.43,-2.4+((i/2)|0)*1.6,{r:.04});
+// Pflanzkübel
+for(const [x,z] of[[-6,-6.6],[6.4,-1],[2.2,11.9],[-6.2,-.3]]){box(.6,.7,.6,mat.frame,x,.35,z,{r:.03});for(let i=0;i<9;i++){const m=new THREE.Mesh(ico,mat.leaf);m.scale.setScalar(rnd(.14,.24));m.position.set(x+rnd(-.2,.2),.8+rnd(0,.5),z+rnd(-.2,.2));m.castShadow=true;G.add(m)}}
+// Lichterkette
+const glowMat=new THREE.SpriteMaterial({map:T_glow,color:0xffd29a,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
+const bulbs=[];
+function lights(a,b,n){const sag=.6;for(let i=0;i<=n;i++){const t=i/n,p=new THREE.Vector3().lerpVectors(a,b,t);p.y-=Math.sin(Math.PI*t)*sag;
+  const bulb=new THREE.Mesh(new THREE.SphereGeometry(.035,8,6),M({color:0xffe2b0,emissive:0xffb44d,emissiveIntensity:3}));bulb.position.copy(p);G.add(bulb);
+  const sp=new THREE.Sprite(glowMat);sp.scale.setScalar(.55);sp.position.copy(p);G.add(sp);bulbs.push(sp)}
+  const curve=new THREE.CatmullRomCurve3([a,new THREE.Vector3().lerpVectors(a,b,.5).add(new THREE.Vector3(0,-sag,0)),b]);
+  const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,20,.006,4),mat.frame);G.add(tube)}
+for(const x of[-6.2,6.6])cyl(.04,.05,3,mat.frame,x,1.5,-7);
+lights(new THREE.Vector3(-6.2,2.95,-7),new THREE.Vector3(6.6,2.95,-7),18);lights(new THREE.Vector3(-6.2,2.95,-7),new THREE.Vector3(-5.4,2.9,1),8);lights(new THREE.Vector3(6.6,2.95,-7),new THREE.Vector3(5.4,2.9,1),8);
+
+/* ---------- Garten: Hochbeete, Werkzeug ---------- */
+const beds=[[3,-15,3.2,1.2],[3,-18.4,3.2,1.2],[7.6,-15,1.2,3.2]];
+for(const [x,z,w,d] of beds){box(w,.7,d,texRep(mat.wood,w/2,.5),x,.35,z,{r:.02});box(w-.12,.05,d-.12,mat.soil,x,.68,z,{cs:false});
+  const n=Math.round(w*d*12);for(let i=0;i<n;i++){const m=new THREE.Mesh(ico,i%5?mat.leaf:leafMats[3]);m.scale.setScalar(rnd(.08,.17));m.position.set(x+rnd(-w/2+.15,w/2-.15),.78+rnd(0,.15),z+rnd(-d/2+.15,d/2-.15));m.castShadow=true;G.add(m)}}
+function tepee(x,z){for(let i=0;i<3;i++){const a=i/3*Math.PI*2;const st=cyl(.012,.012,1.9,mat.bamboo,x+Math.cos(a)*.18,1.6,z+Math.sin(a)*.18,{});st.rotation.z=Math.cos(a)*.1;st.rotation.x=-Math.sin(a)*.1}
+  for(let i=0;i<22;i++){const m=new THREE.Mesh(ico,mat.leaf);m.scale.setScalar(rnd(.07,.13));m.position.set(x+rnd(-.22,.22),.8+rnd(0,1.2),z+rnd(-.22,.22));m.castShadow=true;G.add(m)}
+  for(let i=0;i<9;i++){const t=new THREE.Mesh(new THREE.SphereGeometry(.045,10,8),mat.red);t.position.set(x+rnd(-.2,.2),1+rnd(0,.9),z+rnd(-.2,.2));G.add(t)}
+  cyl(.205,.205,.03,mat.green,x,2.15,z,{});}
+tepee(2,-15);tepee(3.2,-15);tepee(4.3,-15);
+box(.02,.12,.08,mat.woodV,3.6,.82,-18.2,{cs:false});box(.025,.25,.025,mat.woodV,3.6,.77,-18.2);   // Pflanzschild
+cyl(.02,.02,.25,mat.frame,2.5,.82,-18.5,{});box(.06,.08,.03,mat.black,2.5,.97,-18.5);             // Feuchtemesser
+// Gießkanne
+(function(){const g=new THREE.Group();g.position.set(1.0,0,-12.4);G.add(g);cyl(.13,.15,.32,mat.zinc,0,.16,0,{p:g});const sp=cyl(.015,.03,.42,mat.zinc,.22,.3,0,{p:g});sp.rotation.z=-1;
+  const hd=new THREE.Mesh(new THREE.TorusGeometry(.12,.012,6,16,Math.PI),mat.zinc);hd.position.set(0,.33,0);hd.rotation.y=Math.PI/2;g.add(hd)})();
+// Laubbläser und Rasentrimmer auf dem Rasen
+(function(){const g=new THREE.Group();g.position.set(-1.4,0,-11.6);g.rotation.y=.5;G.add(g);box(.32,.2,.14,mat.green,0,.1,0,{p:g,r:.05});box(.18,.14,.12,mat.black,-.06,.24,0,{p:g,r:.04});
+  cyl(.04,.06,.65,mat.black,.45,.08,0,{p:g,rz:Math.PI/2});ANCH.blower=[-1.4,.3,-11.6];
+  const t=new THREE.Group();t.position.set(-.3,0,-13.2);t.rotation.y=-.6;G.add(t);cyl(.018,.018,1.5,mat.black,0,.05,0,{p:t,rz:Math.PI/2});box(.22,.14,.12,mat.green,-.75,.08,0,{p:t,r:.04});
+  cyl(.1,.1,.06,mat.black,.78,.05,0,{p:t});box(.04,.18,.25,mat.black,-.2,.12,0,{p:t});ANCH.trimmer=[-.3,.2,-13.2];
+  const hs=new THREE.Group();hs.position.set(16.7,0,-16);G.add(hs);const bl=box(.06,1.2,.02,mat.steel,0,1.0,0,{p:hs});box(.12,.4,.16,mat.green,0,.25,0,{p:hs,r:.03});hs.rotation.z=.18;ANCH.htrim=[16.6,.9,-16]})();
+
+/* ---------- Gewächshaus ---------- */
+const GH=new THREE.Group();GH.position.set(-11,0,-21);G.add(GH);
+{const w=3,d=4,h=2.1,rh=.8;box(w+.1,.1,d+.1,mat.alu,0,.05,0,{p:GH});
+  for(const sx of[-1,1])for(const sz of[-1,0,1])box(.05,h,.05,mat.alu,sx*w/2,h/2,sz*d/2,{p:GH});
+  for(const sz of[-1,-.5,0,.5,1]){for(const sx of[-1,1]){const r=box(Math.hypot(w/2,rh),.05,.05,mat.alu,sx*w/4,h+rh/2,sz*d/2,{p:GH});r.rotation.z=-sx*Math.atan2(rh,w/2)}}
+  box(.05,.05,d,mat.alu,0,h+rh,0,{p:GH});
+  const gl=(gw,gh,x,y,z,ry=0,rz=0)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(gw,gh),mat.gh);m.position.set(x,y,z);m.rotation.y=ry;m.rotation.z=rz;GH.add(m)};
+  gl(w,h,0,h/2,d/2);gl(w,h,0,h/2,-d/2);gl(d,h,w/2,h/2,0,Math.PI/2);gl(d,h,-w/2,h/2,0,Math.PI/2);
+  for(const sx of[-1,1]){const r=box(Math.hypot(w/2,rh),.01,d,mat.gh,sx*w/4,h+rh/2,0,{p:GH,cs:false});r.rotation.z=-sx*Math.atan2(rh,w/2)}
+  // Tür offen
+  box(.02,h-.1,.9,mat.gh,w/2+.4,h/2,1.4,{p:GH,cs:false}).rotation.y=.9;
+  // Pflanztisch innen
+  box(.8,.06,3.4,mat.teak,-.9,.85,0,{p:GH});for(const sz of[-1.5,1.5])for(const sx of[-1.25,-.55])box(.06,.85,.06,mat.teak,sx,.42,sz,{p:GH});
+  box(.5,.06,1.6,mat.plast,-.9,.92,-.8,{p:GH});
+  for(let i=0;i<24;i++){const m=new THREE.Mesh(ico,mat.leaf);m.scale.setScalar(.035);m.position.set(-1.05+(i%4)*.1,.99,-1.4+((i/4)|0)*.22);GH.add(m)}
+  const dome=new THREE.Mesh(new THREE.BoxGeometry(.5,.25,.7),M({color:0xffffff,transparent:true,opacity:.25,roughness:.05}));dome.position.set(-.9,1.02,.4);GH.add(dome);box(.5,.04,.7,mat.plast,-.9,.9,.4,{p:GH});
+  for(let i=0;i<5;i++){cyl(.06,.05,.1,mat.coir,-1.1+(i%3)*.15,.93,1.15+((i/3)|0)*.18,{p:GH});const m=new THREE.Mesh(ico,mat.leaf);m.scale.setScalar(.05);m.position.set(-1.1+(i%3)*.15,1.03,1.15+((i/3)|0)*.18);GH.add(m)}
+  cyl(.04,.04,.2,mat.white,-.65,1,1.3,{p:GH});cyl(.015,.015,.05,mat.green,-.65,1.12,1.3,{p:GH});
+  for(let i=0;i<4;i++)cyl(.09-i*.005,.07,.14,mat.plast,-.95,.12+i*.03,-1.2,{p:GH});
+  box(.012,.12,.03,mat.woodV,-1.0,1.02,1.15,{p:GH,cs:false});
+  for(let i=0;i<6;i++){const m=new THREE.Mesh(ico,mat.leaf);m.scale.setScalar(rnd(.15,.25));m.position.set(.9,.3+i*.25,rnd(-1.5,1.5));m.castShadow=true;GH.add(m)}}
+
+/* ---------- Geräteschuppen ---------- */
+const SH=new THREE.Group();SH.position.set(-12.5,0,15);G.add(SH);
+{const w=3,d=2.4,h=2.2;const wm=texRep(mat.woodV,2,1);
+  box(w,h,.08,wm,0,h/2,-d/2,{p:SH});box(.08,h,d,wm,-w/2,h/2,0,{p:SH});box(.08,h,d,wm,w/2,h/2,0,{p:SH});
+  box(.9,h,.08,wm,-w/2+.45,h/2,d/2,{p:SH});box(.9,h,.08,wm,w/2-.45,h/2,d/2,{p:SH});box(w,.35,.08,wm,0,h-.17,d/2,{p:SH});
+  const rf=box(w+.5,.1,d+.6,mat.roof,0,h+.25,0,{p:SH});rf.rotation.x=-.12;box(w,.04,d,mat.woodV,0,.02,0,{p:SH});
+  const door=new THREE.Group();door.position.set(w/2-.9,0,d/2);door.rotation.y=1.7;SH.add(door);box(1.15,h-.4,.06,wm,-.58,(h-.4)/2,0,{p:door});
+  box(w-.2,1.1,.03,mat.peg,0,1.4,-d/2+.06,{p:SH,cs:false});
+  const tool=(x,y,c,wd=.12,ht=.22)=>{box(wd,ht,.06,c,x,y,-d/2+.12,{p:SH,r:.02})};
+  tool(-1.0,1.6,mat.green);tool(-1.0,1.42,mat.black,.14,.08);tool(-.6,1.6,mat.green);tool(-.6,1.42,mat.black,.14,.08);
+  box(.08,.08,.32,mat.steel,-.2,1.62,-d/2+.2,{p:SH});tool(-.2,1.5,mat.green,.1,.2);
+  tool(.35,1.62,mat.green,.32,.1);box(.42,.05,.02,mat.steel,.7,1.62,-d/2+.12,{p:SH});
+  box(1.1,.04,.04,mat.green,.1,1.2,-d/2+.12,{p:SH});box(.12,.06,.02,mat.steel,.7,1.2,-d/2+.12,{p:SH});
+  for(let i=0;i<3;i++)tool(-.7+i*.4,.98,mat.black,.24,.12);
+  box(w-.3,.08,.6,mat.teak,0,.85,-d/2+.38,{p:SH});for(const sx of[-1.2,1.2])box(.07,.85,.5,mat.teak,sx,.42,-d/2+.38,{p:SH});
+  box(.08,1.8,.5,mat.alu,w/2-.3,.9,-.2,{p:SH});for(let i=0;i<4;i++)box(.5,.03,.5,mat.alu,w/2-.5,.3+i*.45,-.2,{p:SH});
+  cyl(.13,.13,.22,mat.coir,w/2-.5,1.7,-.25,{p:SH});cyl(.11,.11,.2,mat.green,w/2-.5,1.27,-.25,{p:SH});
+  cyl(.15,.13,.45,mat.zinc,w/2-.6,.22,.55,{p:SH});for(let i=0;i<10;i++){const b=cyl(.012,.012,1.6,mat.bamboo,w/2-.6+rnd(-.08,.08),.9,.55+rnd(-.08,.08),{p:SH});b.rotation.z=rnd(-.08,.08)}
+  box(.06,.3,.03,mat.steel,w/2-.12,1.1,.3,{p:SH,ry:Math.PI/2});box(.05,.28,.03,mat.steel,w/2-.12,1.1,.5,{p:SH,ry:Math.PI/2});
+  const pl=new THREE.PointLight(0xffb070,10,7,1.4);pl.position.set(0,1.9,0);SH.add(pl)}
+
+/* ---------- Nachbarschaft ---------- */
+function nhouse(x,z,ry,c){const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=ry;G.add(g);box(9,5,10,M({color:c,roughness:.9}),0,2.5,0,{p:g});
+  const sh=new THREE.Shape();sh.moveTo(-5,0);sh.lineTo(5,0);sh.lineTo(0,3.8);sh.closePath();const rg=new THREE.ExtrudeGeometry(sh,{depth:11,bevelEnabled:false});rg.translate(0,0,-5.5);
+  const rf=new THREE.Mesh(rg,[mat.roof,M({color:c,roughness:.9})]);rf.position.y=5;rf.castShadow=true;rf.receiveShadow=true;g.add(rf);
+  for(const sx of[-2.4,2.4])for(const yy of[1.6,3.8])box(1.2,1.2,.1,mat.warm,sx,yy,5.02,{p:g,cs:false})}
+nhouse(-30,6,0,0xe9e2d6);nhouse(31,4,.1,0xd9cdb8);nhouse(-26,-48,.2,0xe5ddd0);nhouse(28,-46,-.1,0xefe9df);nhouse(-6,52,0,0xe2d9cb);nhouse(14,52,0,0xd7cfc3);
+
+/* ---------- Standpunkte ---------- */
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const SP=[
+  {n:'Drohnenblick',pos:V(30,26,40),look:V(-1,0,-2),hs:[]},
+  {n:'Vorgarten',pos:V(6.5,2.2,25.5),look:V(-.8,2.6,11),hs:[{w:V(-6,1.1,26.2),p:'4CD-45E-Z'},{w:V(-3.6,.6,15.5),p:'CSL2025'},{w:V(2.2,.75,11.9),p:'CSL2016'},{w:V(6.5,.08,16),p:'CSL2032'}]},
+  {n:'Schuppen',pos:V(-12.3,1.65,18.7),look:V(-12.5,1.3,13.8),hs:[{w:V(-13.5,1.6,13.9),p:'EX18'},{w:V(-13.1,1.6,13.9),p:'EX166'},{w:V(-12.7,1.62,13.95),p:'EX125A'},{w:V(-12.15,1.62,13.9),p:'DJ-3003'},{w:V(-12.4,1.2,13.9),p:'EX300'},{w:V(-11.5,1.75,14.75),p:'CSZ1004'},{w:V(-11.1,1.1,15.55),p:'CZM1007'},{w:V(-10.95,1.15,15.3),p:'CSL2002'}]},
+  {n:'Terrasse',pos:V(-2.5,2.6,-15.5),look:V(.5,1.1,-4),hs:[{w:null,a:'grill',p:'SC-2433B-MBS'},{w:null,a:'kamado',p:'SC-2432A-BL'},{w:null,a:'fridge',p:'SC-2434B-MBS'},{w:V(-3.8,.8,-3.4),k:'moebel',t:'Outdoor-Möbel'}]},
+  {n:'Garten',pos:V(9.5,2.3,-9.5),look:V(2.5,.5,-16),hs:[{w:V(3.2,2.1,-15),p:'CZM1007'},{w:V(4.3,2.15,-15),p:'CSZ1002'},{w:V(3.6,.9,-18.2),p:'CZM1013'},{w:V(2.5,1.0,-18.5),p:'CQT1015'},{w:V(1,.35,-12.4),p:'CSL2014'},{w:V(-1.4,.3,-11.6),p:'EX4100'},{w:V(-.3,.2,-13.2),p:'SC-25HZ50-L'},{w:V(16.5,1,-16),p:'4CD-45C-Z'}]},
+  {n:'Gewächshaus',pos:V(-9.4,1.7,-16.4),look:V(-11.4,1.0,-21),hs:[{w:V(-11.9,1.15,-20.6),p:'YCS07'},{w:V(-11.9,1,-21.8),p:'YCS02'},{w:V(-11.65,1.1,-19.7),p:'CSL2012'},{w:V(-12,1.05,-19.85),p:'YCS01'},{w:V(-11.95,.3,-22.2),p:'YCS05'},{w:V(-12,1.1,-19.6),p:'CZM1014'}]}
+];
+/* Ort-Marker im Drohnenblick */
+K.updateMatrixWorld(true);SP[3].hs.forEach(h=>{if(h.a)h.w=K.localToWorld(new THREE.Vector3(...ANCH[h.a]))});
+const PINS=[{w:V(0,9.5,13),s:1},{w:V(-12.5,3.6,15),s:2},{w:V(1,3.6,-5),s:3},{w:V(4,3,-16),s:4},{w:V(-11,4,-21),s:5}];
+
+/* ---------- Kameraflug ---------- */
+let cur=0,fly=null,clock=new THREE.Clock(),tNow=0;
+const look=new THREE.Vector3();cam.position.copy(SP[0].pos);look.copy(SP[0].look);
+function goTo(i){if(i===cur&&!fly)return;closeCard();const a=cam.position.clone(),la=look.clone(),b=SP[i].pos.clone(),lb=SP[i].look.clone();
+  const d=a.distanceTo(b),up=Math.max(a.y,b.y)+Math.min(16,d*.35);
+  const m1=a.clone().lerp(b,.3);m1.y=up;const m2=a.clone().lerp(b,.7);m2.y=Math.max(b.y+2,up*.8);
+  const path=new THREE.CatmullRomCurve3([a,m1,m2,b],false,'centripetal');
+  fly={path,la,lb,t0:tNow,dur:THREE.MathUtils.clamp(2.2+d*.05,2.4,4.6),to:i};cur=i;ui();stage.classList.add('flying')}
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+/* ---------- HTML-Overlay ---------- */
+const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+function ui(){nav.innerHTML=SP.map((s,i)=>`<button type="button" data-s="${i}" class="${i===cur?'on':''}">${T(s.n)}</button>`).join('');
+  title.textContent=T(SP[cur].n);stepEl.textContent=cur?`${cur} / ${SP.length-1}`:'●';
+  const s=SP[cur];hsBox.innerHTML=(cur===0?PINS.map((p,k)=>`<button type="button" class="dpin" data-k="${k}"><b>${T(SP[p.s].n)}</b><small>${T('Hierhin fliegen')}</small></button>`).join('')
+    :s.hs.map((h,k)=>{const p=h.p&&byId[h.p];if(h.p&&!p)return'';const lab=p?nm(p.n):T(h.t);return `<button type="button" class="hs" data-h="${k}" aria-label="${lab}"><i></i><span class="hl">${lab}</span></button>`}).join('')+
+      `<button type="button" class="hs go dup" data-up="1">${ARROW}${T('Nach oben')}</button>`);
+  hint.textContent=T('Klicken Sie auf einen Ort, die Drohne fliegt hin.');hint.style.opacity=cur===0?1:0}
+nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b)goTo(+b.dataset.s)});
+hsBox.addEventListener('click',e=>{const pin=e.target.closest('.dpin');if(pin){goTo(PINS[+pin.dataset.k].s);return}
+  if(e.target.closest('[data-up]')){goTo(0);return}
+  const b=e.target.closest('.hs');if(!b)return;const h=SP[cur].hs[+b.dataset.h];if(b.classList.contains('act'))closeCard();else openCard(h,b)});
+function ml(){try{return JSON.parse(localStorage.getItem('k-ml')||'{}')}catch(e){return {}}}
+function closeCard(){card.hidden=true;hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
+function openCard(h,el){hsBox.querySelectorAll('.act').forEach(x=>x.classList.remove('act'));el.classList.add('act');
+  if(h.k){card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="pi/sy-13.webp" alt="" style="display:none"></div><div class="tb"><small>${T('Auf Anfrage')}</small><h3>${T(h.t)}</h3><p>${EN()?'Lounge sets, tables and loungers, sourced directly from the manufacturer.':'Lounge-Sets, Tische und Liegen, direkt beim Hersteller beschafft.'}</p><div class="tbtn"><a class="btn btn-primary" href="sortiment.html?k=${h.k}">${T('Alle anzeigen')}</a></div></div>`;
+    card.querySelector('.ti').style.background='linear-gradient(135deg,#d8d0c2,#b9b2a6)'}
+  else{const p=byId[h.p],on=!!ml()[p.i];card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="${p.im}" alt="${nm(p.n)}"></div><div class="tb"><small class="notranslate" translate="no">${p.b||''} · ${p.i}</small><h3>${nm(p.n)}</h3>${p.sp?`<p>${p.sp}</p>`:''}<div class="tbtn"><a class="btn btn-primary" href="sortiment.html?p=${encodeURIComponent(p.i)}">${T('Im Shop ansehen')}</a><button type="button" class="btn btn-ghost" data-ml="${p.i}">${on?'✓ '+T('Gemerkt'):'+ '+T('Merken')}</button></div></div>`}
+  card.hidden=false}
+card.addEventListener('click',e=>{if(e.target.closest('.x')){closeCard();return}const m=e.target.closest('[data-ml]');if(m){const o=ml(),i=m.dataset.ml;o[i]?delete o[i]:o[i]=1;try{localStorage.setItem('k-ml',JSON.stringify(o))}catch(x){}m.textContent=o[i]?'✓ '+T('Gemerkt'):'+ '+T('Merken')}});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
+addEventListener('langchange',ui);
+
+/* ---------- Schleife ---------- */
+let W=0,Hh=0,vis=true;
+function size(){W=stage.clientWidth;Hh=stage.clientHeight;R.setPixelRatio(Math.min(devicePixelRatio||1,W<700?1.5:1.75));R.setSize(W,Hh,false);cam.aspect=W/Hh;cam.fov=W<700?58:42;cam.updateProjectionMatrix()}
+let comp=null,gtao=null;
+function mkComp(){if(W<900||/Mobi|Android/i.test(navigator.userAgent))return;comp=new EffectComposer(R);comp.addPass(new RenderPass(S,cam));
+  try{gtao=new GTAOPass(S,cam,W,Hh);gtao.updateGtaoMaterial({radius:.6,distanceExponent:1.5,thickness:1,scale:1.1,samples:12});comp.addPass(gtao)}catch(e){}
+  comp.addPass(new UnrealBloomPass(new THREE.Vector2(W,Hh),.28,.45,.95));comp.addPass(new OutputPass())}
+size();mkComp();new ResizeObserver(()=>{size();if(comp)comp.setSize(W,Hh)}).observe(stage);
+new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)clock.getDelta()}).observe(stage);
+const tmp=new THREE.Vector3();let pointer=[0,0];
+stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();pointer=[(e.clientX-r.left)/r.width-.5,(e.clientY-r.top)/r.height-.5]});
+function place(){const nodes=hsBox.children;if(cur===0&&!fly){[...nodes].forEach((el,k)=>{const p=PINS[k];if(!p)return;tmp.copy(p.w).project(cam);el.style.transform=`translate(${(tmp.x*.5+.5)*W}px,${(-tmp.y*.5+.5)*Hh}px) translate(-50%,-100%)`});return}
+  const s=SP[cur];let k=0;for(const el of nodes){if(el.dataset.up){continue}const h=s.hs[+el.dataset.h];if(!h)continue;tmp.copy(h.w).project(cam);
+    const off=tmp.z>1||Math.abs(tmp.x)>1.05||Math.abs(tmp.y)>1.05;el.style.display=off?'none':'';el.style.transform=`translate(${(tmp.x*.5+.5)*W}px,${(-tmp.y*.5+.5)*Hh}px) translate(-50%,-50%)`}}
+let first=true;
+let last=performance.now();
+function loop(){requestAnimationFrame(loop);const now=performance.now();let dt=(now-last)/1000;last=now;if(!vis&&!first)return;dt=Math.min(dt,fly?.5:.1);tNow+=dt;
+  if(window.__grass&&window.__grass.userData.sh)window.__grass.userData.sh.uniforms.uT.value=tNow;
+  if(fly){let t=(tNow-fly.t0)/fly.dur;if(t>=1){t=1}const e=ease(t);fly.path.getPoint(e,cam.position);look.lerpVectors(fly.la,fly.lb,ease(Math.min(1,t*1.15)));
+    if(t>=1){fly=null;stage.classList.remove('flying');ui()}}
+  else{const s=SP[cur];const bob=Math.sin(tNow*.9)*.05,sway=Math.sin(tNow*.37);
+    if(cur===0){const a=tNow*.04,r=Math.hypot(s.pos.x,s.pos.z+2);cam.position.set(Math.sin(a+.64)*r,s.pos.y+bob*3,Math.cos(a+.64)*r-2)}
+    else{cam.position.lerp(tmp.copy(s.pos).add(new THREE.Vector3(sway*.12+pointer[0]*.35,bob-pointer[1]*.15,0)),.04)}look.lerp(s.look,.05)}
+  cam.lookAt(look);
+  if(fly){const v=fly.path.getTangent(Math.min(.999,ease((tNow-fly.t0)/fly.dur)));cam.rotateZ(THREE.MathUtils.clamp(-v.x*.12,-.08,.08))}
+  comp?comp.render():R.render(S,cam);place();if(first){first=false;load.classList.add('done')}}
+ui();loop();
+}
+
+</script>
+
+</body>
+</html>
