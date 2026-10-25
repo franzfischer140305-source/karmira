@@ -1164,10 +1164,10 @@ applyLang();fixTotals();
   const TOT=t0;
   IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});CLD.src=V+'wolken.webp';
   let lastSeg=null;
-  /* Drohnenflüge als fertige Videos (hochskaliert, Zwischenbilder berechnet, 60 fps): f = vorwärts, b = rückwärts */
+  /* Drohnenflüge als fertige Videos (Veo 3.1 Fast, 1080p, 24 fps): f = vorwärts, b = rückwärts */
   const VD=document.createElement('video');VD.className='tvid';VD.muted=true;VD.defaultMuted=true;VD.playsInline=true;VD.setAttribute('playsinline','');VD.setAttribute('muted','');VD.preload='auto';VD.disablePictureInPicture=true;VD.setAttribute('aria-hidden','true');cv.replaceWith(VD);
   const EXT=VD.canPlayType('video/mp4; codecs="avc1.640020"')?'.mp4':'.webm';
-  const vurl=(dir,k)=>V+'vid/'+(dir>0?'f':'b')+k+EXT+(k>0?'?v=2':'');
+  const vurl=(dir,k)=>V+'vid/'+(dir>0?'f':'b')+k+EXT+(k<4?'?v=3':'?v=2');
   const warmed={};const warmU=u=>{if(warmed[u])return;warmed[u]=1;fetch(u).catch(()=>{warmed[u]=0})};
   let W=0,H=0,DPR=1;
   function size(){W=st.clientWidth;H=st.clientHeight}
@@ -1187,7 +1187,7 @@ applyLang();fixTotals();
     const guard=setTimeout(fin,20000);VD.src=vurl(dir,k);VD.playbackRate=rate;const pr=VD.play();if(pr)pr.catch(fin)})}
   async function goScene(i){i=Math.max(0,Math.min(S.length-1,i));if(busy||i===pos)return;busy=true;closeCard();st.classList.add('busy');land.hidden=true;
     if(pos>=0)setScene(pos,false);hint.classList.add('off');ctl();
-    const dir=i>pos?1:-1,rate=Math.abs(i-pos)>1?1.9:1;
+    const dir=i>pos?1:-1,rate=Math.abs(i-pos)>1?1.3:1;
     while(pos!==i){await hop(pos,dir,rate);pos+=dir}
     showHold(pos);setTimeout(()=>VD.classList.remove('on'),60);busy=false;st.classList.remove('busy');ctl()}
   prevB.addEventListener('click',e=>{e.stopPropagation();goScene(pos-1)});
