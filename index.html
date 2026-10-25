@@ -335,8 +335,8 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 .tpin canvas,.tpin .tst{position:absolute;inset:0;width:100%;height:100%}
 .tpin .tst{object-fit:cover;opacity:0;transition:opacity .25s linear;will-change:opacity}
 .tpin .tst.on{opacity:1}
-.tpin canvas{opacity:0}
-.tpin canvas.on{opacity:1}
+.tvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.tvid.on{opacity:1}
 .tvig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,11,8,.55) 0,rgba(9,11,8,0) 22%,rgba(9,11,8,0) 70%,rgba(9,11,8,.6) 100%)}
 .ths{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s}
 .ths.on{opacity:1;pointer-events:auto}
@@ -1163,53 +1163,38 @@ applyLang();fixTotals();
   S.forEach((s,i)=>{SEG.push({k:'h',i,a:t0,b:t0+HOLD});t0+=HOLD;if(i<S.length-1){SEG.push({k:'t',i,tr:i+1,a:t0,b:t0+TRL[i+1]});t0+=TRL[i+1]}});
   const TOT=t0;
   IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});CLD.src=V+'wolken.webp';
-  const FR=Object.fromEntries(CL.map(c=>[c,new Array(NC)]));const Q=[];
-  for(const step of [8,4,2,1])for(const c of CL)for(let f=0;f<NC;f+=step)if(!Q.some(q=>q[0]===c&&q[1]===f))Q.push([c,f]);
-  let qi=0;const pad=n=>String(n).padStart(3,'0');
-  function loadNext(){if(qi>=Q.length)return;const [c,f]=Q[qi++];const im=new Image();im.decoding='async';
-    im.onload=()=>{FR[c][f]=im;if(lastSeg&&lastSeg.k==='t')req();loadNext()};im.onerror=loadNext;im.src=V+c+'/'+pad(f)+'.webp'}
-  let started=false;const kick=()=>{if(started)return;started=true;for(let n=0;n<5;n++)loadNext()};
-  if('IntersectionObserver' in window){const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){kick();io.disconnect()}},{rootMargin:'200% 0px'});io.observe(track)}else kick();
   let lastSeg=null;
+  /* Drohnenflüge als fertige Videos (hochskaliert, Zwischenbilder berechnet, 60 fps): f = vorwärts, b = rückwärts */
+  const VD=document.createElement('video');VD.className='tvid';VD.muted=true;VD.defaultMuted=true;VD.playsInline=true;VD.setAttribute('playsinline','');VD.setAttribute('muted','');VD.preload='auto';VD.disablePictureInPicture=true;VD.setAttribute('aria-hidden','true');cv.replaceWith(VD);
+  const EXT=VD.canPlayType('video/mp4; codecs="avc1.640020"')?'.mp4':'.webm';
+  const vurl=(dir,k)=>V+'vid/'+(dir>0?'f':'b')+k+EXT;
+  const warmed={};const warmU=u=>{if(warmed[u])return;warmed[u]=1;fetch(u).catch(()=>{warmed[u]=0})};
   let W=0,H=0,DPR=1;
-  function size(){DPR=Math.min(devicePixelRatio||1,1.5);W=st.clientWidth;H=st.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR)}
+  function size(){W=st.clientWidth;H=st.clientHeight}
   function cover(iw,ih,fx){const s=Math.max(W/iw,H/ih),dw=iw*s,dh=ih*s;return {s,dw,dh,ox:(W-dw)*fx/100,oy:(H-dh)/2}}
-  const TN=t=>TRS[t].length*NC;
-  function fr(t,g){const p=TRS[t][Math.floor(g/NC)],l=g%NC;return FR[p[0]][p[1]?NC-1-l:l]}
-  function near(t,f,dir){const N=TN(t);for(let d=0;d<N;d++){const g=f+d*dir;if(g<0||g>=N)break;const im=fr(t,g);if(im)return [im,g]}return null}
-  let cur=-1,lastP=-1,sp=-1;
-  /* Abspielposition statt Scrollposition: jeder Klick fliegt zur nächsten Szene */
-  let pv=0,tw=null;const prevB=document.getElementById('tprev'),nextB=document.getElementById('tnext'),land=document.getElementById('tland');
-  function prog(){return pv}
-  const holdT=i=>{const h=SEG.find(s=>s.k==='h'&&s.i===i);return (h.a+h.b)/2};
+  let cur=-1,lastP=-1,pos=-1,busy=false;
+  const prevB=document.getElementById('tprev'),nextB=document.getElementById('tnext'),land=document.getElementById('tland');
   const ez=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
-  function goScene(i){i=Math.max(0,Math.min(S.length-1,i));const to=holdT(i);if(Math.abs(to-pv)<.01&&!tw)return;closeCard();
-    const d=Math.abs(to-pv);tw={from:pv,to,t0:performance.now(),dur:Math.min(12000,Math.max(2500,d*1350))};st.classList.add('busy');land.hidden=true;anim()}
-  function anim(){if(!tw)return;const k=Math.min(1,(performance.now()-tw.t0)/tw.dur);pv=tw.from+(tw.to-tw.from)*ez(k);draw();
-    if(k<1)requestAnimationFrame(anim);else{tw=null;st.classList.remove('busy');ctl()}}
-  function at(){const s=seg(pv);return s.k==='h'?s.i:-1}
-  function ctl(){const i=at();prevB.disabled=i<=0;nextB.disabled=i<0||i>=S.length-1;land.hidden=!(i<0&&!tw)}
-  prevB.addEventListener('click',e=>{e.stopPropagation();goScene(at()-1)});
-  nextB.addEventListener('click',e=>{e.stopPropagation();goScene(at()+1)});
+  function at(){return busy?-2:pos}
+  function ctl(){prevB.disabled=busy||pos<=0;nextB.disabled=busy||pos<0||pos>=S.length-1;land.hidden=!(pos<0&&!busy)}
+  function warm(i){if(i<S.length-1)warmU(vurl(1,i+1));if(i>0)warmU(vurl(-1,i))}
+  function showHold(i){IM.forEach((im,n)=>im.classList.toggle('on',n===i));CLD.classList.toggle('on',i<0);
+    if(i<0){setScene(0,false,true);hint.classList.add('off')}else{setScene(i,true);hint.textContent=HT();hint.classList.toggle('off',i===S.length-1)}ctl();warm(i)}
+  function hop(from,dir,rate){return new Promise(res=>{const to=from+dir,k=dir>0?to:from;let mid=false,done=false;const fin=()=>{if(done)return;done=true;clearTimeout(guard);res()};
+    VD.ontimeupdate=()=>{if(!mid&&VD.duration&&VD.currentTime>VD.duration*.5){mid=true;setScene(to,false);stepEl.hidden=false}};
+    VD.onplaying=()=>{VD.classList.add('on');setTimeout(()=>{IM.forEach(im=>im.classList.remove('on'));CLD.classList.remove('on')},300)};
+    VD.onended=()=>{IM.forEach((im,n)=>im.classList.toggle('on',n===to));fin()};VD.onerror=fin;
+    const guard=setTimeout(fin,20000);VD.src=vurl(dir,k);VD.playbackRate=rate;const pr=VD.play();if(pr)pr.catch(fin)})}
+  async function goScene(i){i=Math.max(0,Math.min(S.length-1,i));if(busy||i===pos)return;busy=true;closeCard();st.classList.add('busy');land.hidden=true;
+    if(pos>=0)setScene(pos,false);hint.classList.add('off');ctl();
+    const dir=i>pos?1:-1,rate=Math.abs(i-pos)>1?1.9:1;
+    while(pos!==i){await hop(pos,dir,rate);pos+=dir}
+    showHold(pos);setTimeout(()=>VD.classList.remove('on'),60);busy=false;st.classList.remove('busy');ctl()}
+  prevB.addEventListener('click',e=>{e.stopPropagation();goScene(pos-1)});
+  nextB.addEventListener('click',e=>{e.stopPropagation();goScene(pos+1)});
   land.addEventListener('click',e=>{e.stopPropagation();goScene(0)});
-  st.addEventListener('click',e=>{if(tw||e.target.closest('button,a,.tsr,.tour-card,.tstrip,.ttop'))return;if(!card.hidden){closeCard();return}const i=at();if(i<0)goScene(0);else if(i<S.length-1)goScene(i+1)});
-  addEventListener('keydown',e=>{const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;if(e.key==='ArrowRight'){goScene(at()+1)}if(e.key==='ArrowLeft'&&at()>0){goScene(at()-1)}});
-  function seg(p){for(const s of SEG)if(p<=s.b)return s;return SEG[SEG.length-1]}
-  function draw(){
-    const p=prog();lastP=p;const s=seg(p);const ps=lastSeg;lastSeg=s;if(!ps||(ps.i<0)!==(s.i<0))hint.textContent=HT();
-    if(s.k==='h'){
-      IM.forEach((im,i)=>im.classList.toggle('on',i===s.i));cv.classList.remove('on');CLD.classList.remove('on');setScene(s.i,true);
-      hint.classList.toggle('off',s.i===S.length-1||p-s.a>.75);return}
-    const f=(p-s.a)/(s.b-s.a),k=s.i,t=s.tr,to=k+1,fx=k<0?S[0].fx:S[k].fx+(S[to].fx-S[k].fx)*f;
-    if(k<0)setScene(0,false,true);else setScene(f<.5?k:to,false);hint.classList.toggle('off',!(k<0&&f<.08));
-    const fi=f*(TN(t)-1),A=near(t,Math.floor(fi),-1),Bf=near(t,Math.ceil(fi),1);
-    if(A){const c=cover(FW,FH,fx);ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.drawImage(A[0],c.ox,c.oy,c.dw,c.dh);
-      const w=Bf&&Bf[1]>A[1]?(fi-A[1])/(Bf[1]-A[1]):0;
-      if(w>.02){ctx.globalAlpha=w;ctx.drawImage(Bf[0],c.ox,c.oy,c.dw,c.dh);ctx.globalAlpha=1}
-      cv.classList.add('on');CLD.classList.remove('on');
-      IM.forEach((im,i)=>im.classList.toggle('on',(i===k&&f<.03)||(i===to&&f>.97)))}
-    else{cv.classList.remove('on');CLD.classList.toggle('on',k<0&&f<.5);IM.forEach((im,i)=>im.classList.toggle('on',k<0?(i===0&&f>=.5):i===(f<.5?k:to)))}
-  }
+  st.addEventListener('click',e=>{if(busy||e.target.closest('button,a,.tsr,.tour-card,.tstrip,.ttop'))return;if(!card.hidden){closeCard();return}if(pos<0)goScene(0);else if(pos<S.length-1)goScene(pos+1)});
+  addEventListener('keydown',e=>{const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight||busy)return;if(e.key==='ArrowRight')goScene(pos+1);if(e.key==='ArrowLeft'&&pos>0)goScene(pos-1)});
   function place(){const s=S[cur];if(!s)return;const c=cover(IW,IH,s.fx);
     hsBox.querySelectorAll('.hs').forEach(b=>{const h=s.h[+b.dataset.h],x=c.ox+h[0]/100*c.dw,y=c.oy+h[1]/100*c.dh;
       b.style.left=x+'px';b.style.top=y+'px';b.hidden=x<12||x>W-12||y<(W<760?64:76)||y>H-(W<760?150:128)})}
@@ -1237,13 +1222,13 @@ applyLang();fixTotals();
   addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
   function pan(n){const h=S[cur].h[n],c=cover(IW,IH,50),rg=c.dw-W;if(rg<=4)return;const want=Math.min(100,Math.max(0,(h[0]/100*c.dw-W/2)/rg*100));
     const f0=S[cur].fx,t0=performance.now();(function st_(){const k=Math.min(1,(performance.now()-t0)/600);S[cur].fx=f0+(want-f0)*ez(k);IM[cur].style.objectPosition=S[cur].fx+'% 50%';place();if(k<1)requestAnimationFrame(st_)})()}
-  let raf=0;const req=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;draw()})};
+  const req=()=>place();
   addEventListener('resize',()=>{size();place();req()});
   /* einmal automatisch landen, wenn der Rundgang ins Bild kommt */
-  if('IntersectionObserver' in window){const io2=new IntersectionObserver(e=>{if(e.some(x=>x.intersectionRatio>.6)){io2.disconnect();setTimeout(()=>{if(at()<0&&!tw)goScene(0)},700)}},{threshold:[.6]});io2.observe(st)}
+  if('IntersectionObserver' in window){const io2=new IntersectionObserver(e=>{if(e.some(x=>x.intersectionRatio>.6)){io2.disconnect();setTimeout(()=>{if(pos<0&&!busy)goScene(0)},700)}},{threshold:[.6]});io2.observe(st)}
   addEventListener('langchange',()=>{const c=cur;cur=-1;navHTML();if(c>=0)setScene(c,hsBox.classList.contains('on'));hint.textContent=HT()});
   const HT=()=>T(matchMedia('(pointer:coarse)').matches?'Tippen zum Weitergehen':'Klicken zum Weitergehen');
-  size();navHTML();draw();hint.textContent=HT();ctl();
+  size();navHTML();showHold(-1);warmU(vurl(1,0));
   land.textContent='';land.insertAdjacentHTML('beforeend',T('Landen')+' <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>');
   const m=document.getElementById('mcta');
   if(m){const hero=document.getElementById('top'),k=document.getElementById('kontakt');
