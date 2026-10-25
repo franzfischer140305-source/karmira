@@ -335,7 +335,7 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
 .tpin canvas,.tpin .tst{position:absolute;inset:0;width:100%;height:100%}
 .tpin .tst{object-fit:cover;opacity:0;transition:opacity .25s linear;will-change:opacity}
 .tpin .tst.on{opacity:1}
-.tvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.tvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .55s ease;pointer-events:none}
 .tvid.on{opacity:1}
 .tvig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,11,8,.55) 0,rgba(9,11,8,0) 22%,rgba(9,11,8,0) 70%,rgba(9,11,8,.6) 100%)}
 .ths{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s}
@@ -480,7 +480,7 @@ h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(
     <div class="wrap tour-head">
       <p class="eyebrow" data-reveal>Rundgang</p>
       <h2 data-reveal style="--rd:80ms">Einmal ums Haus</h2>
-      <p class="lead" data-reveal style="--rd:160ms">Tippen oder klicken Sie: Die Drohne fliegt aus den Wolken herab und weiter durch Vorgarten, Terrasse, Gemüsegarten, Gewächshaus und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
+      <p class="lead" data-reveal style="--rd:160ms">Tippen oder klicken Sie: Die Drohne fliegt aus den Wolken herab und weiter durch Vorgarten, Terrasse, Gewächshaus, Gemüsegarten und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
     </div>
     <div class="ttrack" id="ttrack">
       <div class="tpin" id="tstage">
@@ -1153,8 +1153,8 @@ applyLang();fixTotals();
   const S=[
     {n:'Vorgarten',img:'s1.webp',fx:50,h:[[15,72,'4CD-45E-Z'],[36,58,'GCJ-5003'],[90,53,'CFJ-2005'],[43,41,'CSL2025'],[51,48,'CSL2026'],[80,41,'CSL2016'],[47,56,'CSL2032'],[60,57,'CSL2030'],[10,16,'CZM2001'],[15,24,'CZM2004'],[31,39,'YCP08'],[96,64,'CFZ5001'],[95,78,'SL1011'],[85,78,'CSL2014'],[22,49,'YCP07'],[27,59,'CSL2005'],[90,20,'CZM1003']]},
     {n:'Terrasse',img:'s2.webp',fx:55,h:[[74,48,'SC-2433B-MBS'],[59,29,'SP-2613B'],[86,60,'CSL2016'],[13,76,'CSL2018'],[14,53,'CSL2033'],[22,60,'CSL2015'],[79.5,34,'CSL2012'],[85,31,'CZM1012'],[90,36,'YCM09'],[84,58,'CSL1004'],[91,77,'CSL1005'],[42,33,'DFS-1002'],[34,64,'EX700'],[92.5,12,'EX1040']]},
-    {n:'Gemüsegarten',img:'s3.webp',fx:50,h:[[14,51,'WGJ-10001'],[87.5,31,'SC-25HZ50-L'],[65,58,'EX4100'],[24,29,'CZM1007'],[8,43,'CSZ1013'],[33,21,'CZM1001'],[78,47,'CSL2028'],[72,46,'CSL2031'],[44,53,'CQT1015'],[36,63,'CSL1003'],[29,50,'YCP01'],[55,42,'YCP14'],[40,57,'CZM1013'],[71,36,'SL1006'],[90,57,'SP-4001'],[82,66,'JD-1008'],[86,83,'DJ-3003'],[37.5,78,'CSL2003'],[43,80,'CSL2001']]},
     {n:'Gewächshaus',img:'s4.webp',fx:50,h:[[12,56,'YCS07'],[27,46,'YCS08'],[27,61,'YCS02'],[19,74,'YCS01'],[68,87,'YCS05'],[34,33,'YCS06'],[71,56,'YCS04'],[30,33,'CSL2012'],[57,69,'CSL2014'],[21,30,'CZM1014'],[8,71,'CSL1001'],[74,66,'SL1001'],[54,33,'CSL1014'],[78.5,42,'CSL2022'],[83,43,'CQT1015'],[44,33,'CSL1017'],[16,14,'CSZ2003'],[92.5,48,'SL1004'],[86,17,'CSL1011']]},
+    {n:'Gemüsegarten',img:'s3.webp',fx:50,h:[[14,51,'WGJ-10001'],[87.5,31,'SC-25HZ50-L'],[65,58,'EX4100'],[24,29,'CZM1007'],[8,43,'CSZ1013'],[33,21,'CZM1001'],[78,47,'CSL2028'],[72,46,'CSL2031'],[44,53,'CQT1015'],[36,63,'CSL1003'],[29,50,'YCP01'],[55,42,'YCP14'],[40,57,'CZM1013'],[71,36,'SL1006'],[90,57,'SP-4001'],[82,66,'JD-1008'],[86,83,'DJ-3003'],[37.5,78,'CSL2003'],[43,80,'CSL2001']]},
     {n:'Werkstatt',img:'s5.webp',fx:50,h:[[24,12,'EX18'],[31,10,'EX166'],[39,13,'EX125A'],[49,12,'EX26'],[59,12,'EX165'],[29,26,'EX8500'],[41,26,'EX321'],[49,26,'EX320'],[37.5,59,'EX5012'],[54,59,'SC-30DSJ50'],[84,40,'EX6012'],[57.5,27,'EX300'],[30,71,'EX1L'],[51,77,'EX508'],[70.5,31,'EX12'],[29,41,'CSZ1004'],[68,12,'CSL2002'],[71.5,12,'CSL2004'],[41,36,'3CXD-700D'],[70,69,'CFJ-1001'],[15,71,'WGJ-10004'],[80,24,'YCM07']]}
   ];
   S.forEach(s=>s.h=s.h.filter(h=>byId[h[2]]));
@@ -1167,7 +1167,7 @@ applyLang();fixTotals();
   /* Drohnenflüge als fertige Videos (hochskaliert, Zwischenbilder berechnet, 60 fps): f = vorwärts, b = rückwärts */
   const VD=document.createElement('video');VD.className='tvid';VD.muted=true;VD.defaultMuted=true;VD.playsInline=true;VD.setAttribute('playsinline','');VD.setAttribute('muted','');VD.preload='auto';VD.disablePictureInPicture=true;VD.setAttribute('aria-hidden','true');cv.replaceWith(VD);
   const EXT=VD.canPlayType('video/mp4; codecs="avc1.640020"')?'.mp4':'.webm';
-  const vurl=(dir,k)=>V+'vid/'+(dir>0?'f':'b')+k+EXT;
+  const vurl=(dir,k)=>V+'vid/'+(dir>0?'f':'b')+k+EXT+(k>0?'?v=2':'');
   const warmed={};const warmU=u=>{if(warmed[u])return;warmed[u]=1;fetch(u).catch(()=>{warmed[u]=0})};
   let W=0,H=0,DPR=1;
   function size(){W=st.clientWidth;H=st.clientHeight}
