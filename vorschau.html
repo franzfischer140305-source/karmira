@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="favicon.png">
+<title>KARMIRA – Garten, Outdoor &amp; Landtechnik direkt aus China</title>
+<meta name="description" content="Gartengeräte, Gewächshäuser, Outdoor-Möbel und Landtechnik direkt vom Hersteller aus China. Für Privatkunden und Betriebe, mit Beratung auf Deutsch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+@view-transition{navigation:auto}
+/* Layout: ein fester Karmira-Globus hinter der ganzen Seite, der beim Scrollen absinkt und
+   seitlich schwingt; darüber Glas-Karten in Gold auf Feld-Schwarz (Aufbau nach "Ascend"). */
+:root{
+  color-scheme:dark;
+  --bg:#090b08; --bg-2:#0e110c;
+  --ink:#f3f1ea; --muted:#a3a593; --muted-2:#76786a;
+  --gold:#cfa95a; --gold-l:#ebd39b; --gold-d:#9a7838; --cream:#f1e6cc; --green:#93b062;
+  --line:rgba(236,226,196,.12); --line-strong:rgba(236,226,196,.22);
+  --glass:rgba(13,16,11,.58); --glass-2:rgba(16,20,13,.74);
+  --gold-wash:rgba(207,169,90,.10); --gold-edge:rgba(207,169,90,.22);
+  --shadow:0 30px 80px -30px rgba(0,0,0,.75);
+  --f-display:"Marcellus","Cormorant Garamond",Georgia,serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --radius:18px; --radius-lg:26px; --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--gold-l);outline-offset:3px;border-radius:8px}
+
+#globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:auto;cursor:grab}
+@media (hover:none),(pointer:coarse){#globe{cursor:default}}
+#globe.drag{cursor:grabbing}
+.page{position:relative;z-index:1;pointer-events:none}
+.page a,.page button,.page select,.page .card,.page .dashboard,.page .stat,.page .cta-card,.page .footer,.page .route,.page .gpill{pointer-events:auto}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+
+/* NAV */
+.nav-band{position:relative;z-index:3;pointer-events:auto;background:linear-gradient(180deg,rgba(9,11,8,.9),rgba(9,11,8,0))}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:20px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:20px;letter-spacing:.24em}
+.brand img{width:34px;height:34px}
+.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font:600 15px var(--f-body);border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+.btn svg{width:16px;height:16px;transition:transform .2s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:rgba(9,11,8,.35);border-color:var(--line-strong);color:var(--ink);backdrop-filter:blur(10px)}
+.btn-ghost:hover{border-color:var(--gold-edge);background:var(--gold-wash)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
+  background:radial-gradient(125% 62% at 50% -10%,rgba(9,11,8,.85) 0%,rgba(9,11,8,.3) 44%,transparent 68%)}
+.hero-inner{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-block:40px 150px}
+.hero-logo{width:clamp(76px,9vw,104px);height:auto;filter:drop-shadow(0 6px 26px rgba(0,0,0,.6))}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.hero .eyebrow{margin-top:18px}
+.hero-title{margin:18px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(40px,6.4vw,82px);line-height:1.02;letter-spacing:-.01em;max-width:13ch;text-wrap:balance;text-shadow:0 2px 50px rgba(0,0,0,.7)}
+.hero-title em{font-style:normal;background:linear-gradient(180deg,var(--gold-l),var(--gold-d));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{margin:22px auto 0;max-width:580px;font-size:clamp(16px,1.9vw,18.5px);color:var(--muted);text-shadow:0 1px 20px rgba(0,0,0,.9)}
+.hero-actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+.route{position:absolute;left:max(24px,env(safe-area-inset-left,0px));top:calc(100svh - 112px);transform:translateY(-100%);width:min(330px,calc(100% - 48px));padding:16px 18px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);backdrop-filter:blur(14px);text-align:left}
+.route label{display:block;font:500 11px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.dsearch{position:relative;margin-top:8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line-strong)}
+.dsearch:focus-within{border-color:var(--gold)}
+.dsearch>svg{width:15px;height:15px;color:var(--gold);flex:none}
+.dsearch input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--ink);font:600 15px var(--f-body);padding:6px 0 8px}
+.dsearch input::placeholder{color:var(--muted-2);font-weight:500}
+#dlist,#llist{position:absolute;margin:0;padding:6px;list-style:none;max-height:300px;overflow-y:auto;background:rgba(14,17,12,.97);border:1px solid var(--line-strong);border-radius:14px;box-shadow:var(--shadow);display:none;z-index:20;backdrop-filter:blur(16px)}
+#dlist{left:-8px;right:-8px;bottom:calc(100% + 10px)}
+#dlist.open,#llist.open{display:block}
+#dlist li,#llist li{padding:8px 10px;border-radius:9px;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#dlist li span{font-size:12px;color:var(--muted);white-space:nowrap}
+#dlist li[data-i]:hover,#dlist li.act,#llist li[data-l]:hover{background:var(--gold-wash)}
+#dlist li.hd,#llist li.hd{cursor:default;font:500 10.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);padding:10px 10px 4px}
+#dlist li.empty,#dlist li.ft{cursor:default;color:var(--muted-2);font-size:12px}
+.route-meta{margin-top:10px;font:500 12.5px var(--f-mono);color:var(--gold-l);font-variant-numeric:tabular-nums}
+
+.nav-right{display:flex;align-items:center;gap:10px}
+.lsel{position:relative}
+.lbtn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;background:rgba(9,11,8,.35);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer}
+.lbtn:hover{border-color:var(--gold-edge)}
+.lbtn svg{width:15px;height:15px;color:var(--gold)}
+.lbtn .chev{width:12px;height:12px;color:var(--muted)}
+#llist{right:0;top:calc(100% + 8px);width:250px;max-height:380px}
+#llist li small{font:500 11px var(--f-mono);color:var(--muted-2);text-transform:uppercase}
+#llist li.on{color:var(--gold-l)}
+#llist li.ls{padding:4px;cursor:default}
+#llist li.ls input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:9px;color:var(--ink);font:500 13.5px var(--f-body);padding:8px 10px;outline:0}
+#llist li.ls input:focus{border-color:var(--gold-edge)}
+#llist li.auto{border-top:1px solid var(--line);border-radius:0 0 9px 9px;margin-top:4px;color:var(--muted);font-size:13px}
+body.translated-ltr,body.translated-rtl{top:0!important}
+.goog-te-banner-frame,.skiptranslate iframe,#goog-gt-tt{display:none!important}
+.gpill{position:absolute;right:max(24px,env(safe-area-inset-right,0px));top:calc(100svh - 112px);transform:translateY(-100%);display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--muted);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px)}
+.gpill:hover,.gpill[aria-pressed="true"]{color:var(--gold-l);border-color:var(--gold-edge)}
+.gpill svg{width:14px;height:14px}
+
+.trust{padding-block:0 clamp(40px,6vw,70px);text-align:center}
+.trust-label{font:500 11.5px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.trust-row{margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px clamp(22px,4vw,48px);font-family:var(--f-display);font-size:18px;color:var(--muted)}
+
+/* SECTIONS */
+.section{padding-block:clamp(80px,11vw,140px)}
+.section-head{max-width:700px;margin:0 auto clamp(40px,6vw,64px);text-align:center}
+h2{margin:14px 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.2vw,50px);line-height:1.08;text-wrap:balance}
+.lead{margin:18px auto 0;max-width:62ch;color:var(--muted);font-size:17px}
+
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{position:relative;padding:30px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 0% 0%,rgba(207,169,90,.09),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{transform:translateY(-4px);border-color:var(--line-strong);background:var(--glass-2)}
+.card:hover::before{opacity:1}
+.card-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--gold-l);background:var(--gold-wash);border:1px solid var(--gold-edge)}
+.card-icon svg{width:22px;height:22px}
+.card h3{margin:20px 0 0;font-size:19px;font-weight:700}
+.card p{margin:8px 0 0;font-size:15px;color:var(--muted)}
+
+.showcase-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,6vw,72px);align-items:center}
+.showcase-copy{min-width:0}
+.showcase-copy .btn{margin-top:30px}
+.dashboard{position:relative;min-width:0;padding:24px;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.dashboard::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(160deg,rgba(207,169,90,.45),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700}
+.dash-live{display:inline-flex;align-items:center;gap:7px;font:500 12px var(--f-mono);color:var(--green)}
+.dash-live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(147,176,98,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(147,176,98,0)}100%{box-shadow:0 0 0 0 rgba(147,176,98,0)}}
+.dash-chart{margin-top:18px;padding:16px 14px 10px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.dash-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:end;height:170px;border-bottom:1px solid var(--line)}
+.dash-bar{position:relative;height:var(--h);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--gold-l),rgba(154,120,56,.25));transform-origin:bottom;animation:grow 1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 90ms)}
+.dash-bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font:500 12px var(--f-mono);color:var(--cream);font-variant-numeric:tabular-nums}
+@keyframes grow{from{transform:scaleY(0)}}
+.dash-labels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));overflow-wrap:anywhere;hyphens:auto;gap:12px;margin-top:8px;font-size:11.5px;line-height:1.3;color:var(--muted);text-align:center}
+.dash-req{margin-top:18px}
+.dash-req p{margin:0;font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+
+.stats{margin-top:clamp(56px,8vw,96px);display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.stat{padding:30px 18px;text-align:center;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.stat-value{font-family:var(--f-display);font-size:clamp(32px,4vw,46px);line-height:1;background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat-label{margin-top:10px;font-size:14px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.step{padding:26px;border-radius:var(--radius);border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);pointer-events:auto}
+.step-n{font:500 12px var(--f-mono);color:var(--gold);letter-spacing:.14em}
+.step h3{margin:12px 0 0;font-size:18px}
+.step p{margin:6px 0 0;font-size:15px;color:var(--muted)}
+
+.cta-card{max-width:780px;margin:0 auto;text-align:center;padding:clamp(48px,7vw,80px) clamp(24px,5vw,64px);border-radius:var(--radius-lg);background:radial-gradient(120% 140% at 50% 0%,rgba(207,169,90,.14),transparent 55%),var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.cta-card .hero-actions{margin-top:30px}
+.mail{margin-top:22px;font:500 14px var(--f-mono);color:var(--muted)}
+.mail span{color:var(--gold-l);user-select:all}
+
+.footer{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;margin-top:clamp(64px,9vw,110px);padding-top:48px;border-top:1px solid var(--line)}
+.footer-brand p{margin:12px 0 0;max-width:30ch;color:var(--muted);font-size:14.5px}
+.footer-cols{display:flex;gap:clamp(32px,6vw,72px);flex-wrap:wrap}
+.footer-cols h4{margin:0 0 12px;font:500 11.5px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
+.footer-cols a{display:block;padding:4px 0;font-size:14.5px;color:var(--muted)}
+.footer-cols a:hover{color:var(--ink)}
+.copyright{margin:56px 0 0;padding-bottom:32px;text-align:center;font-size:13px;color:var(--muted-2)}
+
+/* HERKUNFT: China-Karte mit Produktionsstandorten */
+.hubgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,3vw,32px);align-items:stretch}
+.hubmap{position:relative;min-width:0;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubmap svg{display:block;width:100%;height:auto}
+.hubmap .land{fill:rgba(38,46,29,.95);stroke:rgba(235,211,155,.45);stroke-width:.8;vector-effect:non-scaling-stroke}
+.hubmap .hub{cursor:pointer}
+.hubmap .hub circle.p{fill:rgba(207,169,90,.18);stroke:rgba(235,211,155,.5);stroke-width:1;vector-effect:non-scaling-stroke}
+.hubmap .hub circle.d{fill:var(--gold-l)}
+.hubmap .hub text{fill:var(--cream);font-family:var(--f-mono);font-weight:500;paint-order:stroke;stroke:rgba(9,11,8,.85);stroke-width:3px;stroke-linejoin:round}
+.hubmap .hub:hover circle.p,.hubmap .hub.on circle.p{fill:rgba(207,169,90,.4)}
+.hubmap .hub.on text{fill:var(--gold-l)}
+@media (prefers-reduced-motion:no-preference){.hubmap .hub circle.p{animation:hubping 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes hubping{0%{opacity:1}70%{opacity:.25}100%{opacity:1}}
+.hubback{position:absolute;top:14px;left:14px;height:34px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line-strong);color:var(--ink);font:600 13px var(--f-body);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+.hubmap.zoomed .hubback{opacity:1;pointer-events:auto}
+.hubchips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 16px}
+.hubchips button{height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font:600 13px var(--f-body);cursor:pointer}
+.hubchips button:hover{color:var(--ink);border-color:var(--line-strong)}
+.hubchips button.on{color:#17130b;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));border-color:transparent}
+.hubcard{min-width:0;display:flex;flex-direction:column;border-radius:var(--radius-lg);background:var(--glass-2);border:1px solid var(--line-strong);box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;pointer-events:auto}
+.hubcard.fade{animation:hubfade .5s ease}
+@keyframes hubfade{from{opacity:.3;transform:translateY(8px)}}
+.hubph{position:relative;isolation:isolate;aspect-ratio:16/9;max-width:100%;background:radial-gradient(120% 120% at 30% 20%,rgba(207,169,90,.18),transparent 60%),var(--bg-2);overflow:hidden}
+.hubph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9)}
+.hubph .cr{position:absolute;right:8px;bottom:6px;padding:2px 8px;border-radius:6px;background:rgba(9,11,8,.7);font-size:10.5px;color:var(--muted)}
+.hubph .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.hubph .fb b{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:.2em;color:var(--gold-l)}
+.hubph .fb span{font:500 12px var(--f-mono);letter-spacing:.14em;color:var(--muted)}
+.hubbody{padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1}
+.hubbody .loc{font:500 11.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hubbody h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px}
+.hubbody p{margin:0;color:var(--muted);font-size:15.5px}
+.hubbody .tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.hubbody .tg span{padding:5px 11px;border-radius:999px;font-size:13px;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.hubbody .btn{margin-top:auto;align-self:flex-start}
+@media (max-width:900px){.hubgrid{grid-template-columns:1fr}}
+
+/* Gemeinsame Navigation mit Sortiment-Menü */
+.knav{position:sticky;top:0;z-index:80;background:rgba(9,11,8,.82);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(236,226,196,.08)}
+.knav-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
+.kbrand{display:inline-flex;align-items:center;gap:10px;font-family:"Marcellus",Georgia,serif;font-size:19px;letter-spacing:.24em;color:#f3f1ea}
+.kbrand img{width:34px;height:34px;object-fit:contain}
+.klinks{display:flex;align-items:center;gap:6px;font:500 14px "Manrope",system-ui,sans-serif}
+.klinks a,.kmega-btn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:999px;color:#c3c4b5;transition:color .2s,background .2s}
+.klinks a:hover,.kmega-btn:hover,.kmega-btn[aria-expanded="true"],.klinks a.on{color:#f3f1ea;background:rgba(236,226,196,.07)}
+.kmega-btn svg{width:13px;height:13px;transition:transform .3s}
+.kmega-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.kright{display:flex;align-items:center;gap:10px}
+.kcta{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(236,226,196,.22);font:600 13.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;white-space:nowrap;transition:.2s}
+.kcta:hover{border-color:rgba(207,169,90,.4);background:rgba(207,169,90,.1)}
+.kburger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(236,226,196,.22);place-items:center;color:#f3f1ea}
+.kburger svg{width:18px;height:18px}
+.kmega{position:absolute;left:0;right:0;top:100%;background:#0c0f0a;border-bottom:1px solid rgba(236,226,196,.12);box-shadow:0 40px 80px -30px rgba(0,0,0,.85);visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1),visibility 0s .35s;max-height:calc(100svh - 72px);overflow-y:auto}
+.kmega.open{visibility:visible;opacity:1;transform:none;transition:opacity .28s,transform .35s cubic-bezier(.2,.7,.2,1)}
+.kmega-in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 1.1fr;gap:18px;padding-block:26px 30px}
+.kmob{display:none}
+.kcol{min-width:0}
+.kcol>a.kch{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(236,226,196,.1);background:#10140d;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.kcol>a.kch:hover{transform:translateY(-3px);border-color:rgba(207,169,90,.4)}
+.kch .ki{display:block;aspect-ratio:16/10;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%);position:relative}
+.kch .ki img{position:absolute;inset:5% 10%;width:80%;height:90%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.kch:hover .ki img{transform:scale(1.07)}
+.kch .kt2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px}
+.kch b{font:600 14px "Manrope",system-ui,sans-serif;color:#f3f1ea}
+.kch small{font:500 11px "IBM Plex Mono",monospace;color:#cfa95a}
+.kcol ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:1px}
+.kcol li a{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-radius:8px;font:500 13px "Manrope",system-ui,sans-serif;color:#a3a593;transition:.2s}
+.kcol li a:hover{color:#f3f1ea;background:rgba(236,226,196,.06)}
+.kcol li a span{font:500 11px "IBM Plex Mono",monospace;color:#76786a}
+.kside{display:flex;flex-direction:column;gap:14px}
+.kfeat{display:block;border-radius:16px;overflow:hidden;border:1px solid rgba(207,169,90,.3);background:linear-gradient(160deg,rgba(207,169,90,.14),rgba(16,20,13,1) 55%)}
+.kfeat .ki{display:block;aspect-ratio:4/3;position:relative}
+.kfeat .ki img{position:absolute;inset:4% 12%;width:76%;height:92%;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(0,0,0,.45));transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.kfeat:hover .ki img{transform:scale(1.06) rotate(-2deg)}
+.kfeat .kt2{padding:0 14px 14px;display:flex;flex-direction:column;gap:2px}
+.kfeat small{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;color:#cfa95a;text-transform:uppercase}
+.kfeat b{font:600 14.5px "Manrope",system-ui,sans-serif;color:#f3f1ea;line-height:1.3}
+.kreq{font:500 12.5px "Manrope",system-ui,sans-serif;color:#a3a593}
+.kreq p{font:500 10.5px "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:#76786a;margin-bottom:6px}
+.kreq a{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:999px;border:1px solid rgba(236,226,196,.12);color:#c3c4b5}
+.kreq a:hover{border-color:rgba(207,169,90,.4);color:#f3f1ea}
+.kall{display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:999px;background:linear-gradient(100deg,#9a7838,#ebd39b 50%,#cfa95a);color:#17130b;font:600 14px "Manrope",system-ui,sans-serif}
+@media (max-width:1100px){.kmega-in{grid-template-columns:repeat(3,minmax(0,1fr))}.kside{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}.kside>*{flex:1 1 240px}}
+@media (max-width:900px){
+  .klinks{display:none}.kburger{display:grid}
+  .knav-in{height:64px}
+  .kmega{max-height:calc(100svh - 64px)}
+  .kmob{display:flex;flex-direction:column;gap:2px;grid-column:1/-1;padding-bottom:6px;border-bottom:1px solid rgba(236,226,196,.1)}
+  .kmob a{padding:11px 4px;font:600 16px "Manrope",system-ui,sans-serif;color:#f3f1ea}
+  .kmega-in{grid-template-columns:1fr;gap:8px}
+  .kcol ul{display:none}
+  .kcol>a.kch{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;border-radius:14px}
+  .kch .ki{aspect-ratio:auto;height:64px}
+  .kch .ki img{inset:8%;width:84%;height:84%}
+  .kch .kt2{padding:10px 14px}
+  .kside{flex-direction:column}.kside>*{flex:none}
+  .kfeat{display:none}
+}
+@media (max-width:640px){.kcta{display:none}}
+@media (prefers-reduced-motion:reduce){.kmega,.kmega.open{transition:none}}
+.kmega-btn{background:transparent;border:0;cursor:pointer;font:500 14px "Manrope",system-ui,sans-serif}
+.kburger{background:transparent;cursor:pointer}
+.kcol ul{padding:0;margin-left:0}
+.knav{pointer-events:auto}
+
+/* Produkt-Laufband */
+.mq-sec{padding-bottom:clamp(60px,8vw,110px)}
+.mq{display:flex;flex-direction:column;gap:16px;overflow:hidden;pointer-events:auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;gap:16px;width:max-content;animation:mqmove var(--dur,80s) linear infinite}
+.mq-row.rev .mq-track{animation-direction:reverse}
+.mq:hover .mq-track,.mq:focus-within .mq-track{animation-play-state:paused}
+@keyframes mqmove{to{transform:translateX(-50%)}}
+.mq-tile{flex:none;width:clamp(150px,14vw,200px);border-radius:18px;overflow:hidden;background:var(--glass-2);border:1px solid var(--line);transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .5s}
+.mq-tile:hover{transform:translateY(-6px);border-color:var(--gold-edge);box-shadow:0 30px 50px -30px rgba(0,0,0,.9)}
+.mq-tile .ti{display:block;aspect-ratio:1/1;position:relative;background:radial-gradient(circle at 50% 36%,#f9f7f2 0%,#ece8df 62%,#e2ddd2 100%)}
+.mq-tile .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.mq-tile:hover .ti img{transform:scale(1.08) rotate(-2deg)}
+.mq-tile .tc{display:flex;flex-direction:column;gap:2px;padding:10px 12px 12px}
+.mq-tile small{font:500 10.5px var(--f-mono);letter-spacing:.1em;color:var(--gold)}
+.mq-tile b{font-size:13.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.mq-more{text-align:center;margin-top:30px}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}.mq-row{overflow-x:auto}}
+::view-transition-group(prod){animation-duration:.55s;animation-timing-function:cubic-bezier(.3,.7,.1,1)}
+
+/* Reveal: Inhalt ist immer sichtbar, er gleitet nur leicht nach oben */
+.js [data-reveal]{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s;transition-delay:var(--rd,0ms)}
+.js [data-reveal]:not(.in){transform:translateY(22px);opacity:.55}
+
+@media (max-width:980px){
+  .nav-links{display:none}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+  .showcase-grid{grid-template-columns:1fr}
+  .showcase-copy{text-align:center}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+  .nav .btn{display:none}
+  .feature-grid{grid-template-columns:1fr}
+  .hero-inner{padding-block:24px 210px}
+  .hero-actions .btn{flex:1}
+  .route{left:18px;right:18px;width:auto;top:calc(100svh - 150px)}
+  .gpill{right:auto;left:18px;top:calc(100svh - 96px)}
+  .dash-labels{font-size:10px}
+  .footer{flex-direction:column}
+}
+@media (max-width:380px){.stats{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js [data-reveal]:not(.in){transform:none;opacity:1}
+  .dash-bar,.dash-live i{animation:none}
+}
+/* ===== Rundgang v2: scrollgesteuerte Kamerafahrt (Vorgarten → Terrasse → Garten → Gewächshaus → Schuppen) ===== */
+.tour{position:relative;z-index:1;padding:clamp(70px,9vw,120px) 0 0;pointer-events:auto}
+.tour-head{text-align:center;margin-bottom:clamp(26px,4vw,44px)}
+.tour-head h2{font-family:var(--f-display);font-weight:400;font-size:clamp(32px,4.6vw,56px);line-height:1.08;margin:10px 0 0}
+.tour-head .lead{max-width:640px;margin:14px auto 0;color:var(--muted)}
+.ttrack{position:relative}
+.tpin{position:relative;height:92vh;height:92svh;min-height:520px;overflow:hidden;cursor:pointer;background:#0b0d09;border-block:1px solid var(--line)}
+.tpin canvas,.tpin .tst{position:absolute;inset:0;width:100%;height:100%}
+.tpin .tst{object-fit:cover;opacity:0;transition:opacity .25s linear;will-change:opacity}
+.tpin .tst.on{opacity:1}
+.tvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .55s ease;pointer-events:none}
+.tvid.on{opacity:1}
+.tload{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:3px solid rgba(235,211,155,.25);border-top-color:var(--gold-l);z-index:4;opacity:0;pointer-events:none;transition:opacity .3s;animation:tspin 1s linear infinite}
+.tpin.loading .tload{opacity:1;transition-delay:.35s}
+@keyframes tspin{to{transform:rotate(360deg)}}
+.tvig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,11,8,.55) 0,rgba(9,11,8,0) 22%,rgba(9,11,8,0) 70%,rgba(9,11,8,.6) 100%)}
+.ths{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s}
+.ths.on{opacity:1;pointer-events:auto}
+.hs{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;z-index:4}
+.hs i{display:block;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 26%,var(--gold) 30% 58%,rgba(207,169,90,.25) 62%);box-shadow:0 0 0 2px rgba(9,11,8,.35),0 4px 18px rgba(0,0,0,.5);position:relative}
+.hs i::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(235,211,155,.8);animation:hsp 2.2s ease-out infinite}
+@keyframes hsp{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.hs .hl{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);white-space:nowrap;font:600 12px var(--f-body);padding:6px 11px;border-radius:999px;background:rgba(9,11,8,.85);border:1px solid var(--gold-edge);opacity:0;pointer-events:none;transition:.2s}
+.hs:hover .hl,.hs:focus-visible .hl,.hs.act .hl{opacity:1;transform:translate(-50%,0)}
+.hs.act i{background:radial-gradient(circle,#fff 0 30%,var(--gold-l) 34% 62%,rgba(235,211,155,.3) 66%)}
+.ttop{position:absolute;left:0;right:0;top:calc(84px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));z-index:3;pointer-events:none}
+.tour-top{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(9,11,8,.62);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.tour-top b{font-family:var(--f-display);font-weight:400;font-size:18px}
+.tour-step{font:500 11px var(--f-mono);letter-spacing:.18em;color:var(--gold)}
+.tour-ai{font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,230,204,.8);background:rgba(9,11,8,.5);padding:5px 9px;border-radius:999px}
+.tour-nav{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(9,11,8,.66);border:1px solid var(--line);backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none;min-width:0}
+.tour-nav::-webkit-scrollbar{display:none}
+.tour-nav button{border:0;background:none;color:var(--muted);font:600 12.5px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tour-nav button.on{background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));color:#17130b}
+.thint{position:absolute;left:50%;bottom:calc(170px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:500 11px var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cream);background:rgba(9,11,8,.55);padding:8px 14px;border-radius:999px;z-index:3;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+.thint.off{opacity:0}
+.tstrip{position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:3;display:flex;flex-direction:column-reverse;gap:8px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));transition:opacity .35s,transform .35s}
+.tsh{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.tstrip.off .tsr,.tstrip.off small{opacity:0;transform:translateY(10px);pointer-events:none}
+.tsr,.tstrip small{transition:opacity .35s,transform .35s}
+.tstrip small{font:500 10.5px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.tsr{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.tsr::-webkit-scrollbar{display:none}
+.tsr button{flex:none;display:flex;align-items:center;gap:8px;height:52px;padding:4px 12px 4px 4px;border-radius:14px;background:rgba(9,11,8,.72);border:1px solid var(--line);backdrop-filter:blur(10px);color:var(--ink);font:600 12.5px var(--f-body);cursor:pointer;white-space:nowrap}
+.tsr button:hover,.tsr button.act{border-color:var(--gold-edge);background:rgba(30,26,16,.85)}
+.tsr img{width:44px;height:44px;border-radius:10px;object-fit:contain;background:#efebe2}
+.tour-card{position:absolute;right:max(16px,env(safe-area-inset-right));top:calc(132px + env(safe-area-inset-top,0px));width:min(330px,calc(100% - 32px));border-radius:20px;background:rgba(13,16,11,.92);border:1px solid var(--line-strong);backdrop-filter:blur(16px);box-shadow:var(--shadow);z-index:5;overflow:hidden;animation:tcin .35s ease}
+@keyframes tcin{from{opacity:0;transform:translateY(10px)}}
+.tour-card .ti{background:radial-gradient(120% 100% at 50% 0%,#f6f3ec,#e2ddd1);aspect-ratio:4/3;display:grid;place-items:center}
+.tour-card .ti img{width:78%;height:88%;object-fit:contain}
+.tour-card .tb{padding:16px 18px 18px}
+.tour-card small{font:500 10.5px var(--f-mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.tour-card h3{font-family:var(--f-display);font-weight:400;font-size:21px;line-height:1.2;margin:6px 0 6px}
+.tour-card p{font-size:13px;color:var(--muted);margin:0 0 14px;line-height:1.5}
+.tour-card .tbtn{display:flex;gap:8px}
+.tour-card .btn{height:40px;font-size:13.5px;padding:0 14px;flex:1}
+.tour-card .x{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(9,11,8,.7);color:#fff;font-size:18px;cursor:pointer;line-height:32px}
+.tskip{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:calc(100px + env(safe-area-inset-bottom,0px));z-index:3;font:600 12px var(--f-body);color:var(--muted);background:rgba(9,11,8,.55);border:1px solid var(--line);padding:7px 12px;border-radius:999px;display:none}
+@media (max-width:760px){
+  .tpin{height:100vh;height:100svh;min-height:480px}
+  .ttop{top:calc(74px + env(safe-area-inset-top,0px))}
+  .tour-top b{font-size:16px}
+  .tsh{flex-direction:column;align-items:stretch;gap:6px}
+  .tour-nav{align-self:stretch}
+  .tour-nav button{padding:6px 10px;font-size:12px}
+  .hs i{width:18px;height:18px}
+  .tour-card{left:12px;right:12px;width:auto;top:auto;bottom:calc(150px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:104px 1fr}
+  .tour-card[hidden]{display:none}
+  .tour-card .ti{aspect-ratio:auto;height:100%}
+  .tour-card .tb{padding:12px 14px}
+  .tour-card h3{font-size:16px;margin-right:24px}
+  .tour-card p{display:none}
+  .tour-card .btn{height:36px;font-size:12.5px;padding:0 10px}
+  .thint{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+}
+.tarw{position:absolute;top:50%;z-index:4;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid var(--gold-edge);background:rgba(9,11,8,.6);backdrop-filter:blur(10px);color:var(--gold-l);display:grid;place-items:center;cursor:pointer;transition:background .2s,opacity .3s,transform .2s}
+.tarw:hover{background:rgba(30,26,16,.85);transform:scale(1.06)}
+.tarw svg{width:22px;height:22px}
+.tarw.p{left:max(14px,env(safe-area-inset-left))}.tarw.n{right:max(14px,env(safe-area-inset-right))}
+.tarw[disabled]{opacity:0;pointer-events:none}
+.tland{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:999px;border:0;cursor:pointer;font:600 15px var(--f-body);color:#17130b;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));box-shadow:0 18px 40px -12px rgba(0,0,0,.8);transition:opacity .4s}
+.tland[hidden]{display:none}
+.tpin.busy .tarw,.tpin.busy .tland{opacity:0;pointer-events:none}
+@media (max-width:760px){.tarw{width:44px;height:44px;margin-top:-22px}}
+@media (prefers-reduced-motion:reduce){.hs i::after{animation:none}}
+/* ===== Rundgang v4: Sturzflug beim Scrollen, lebende Szenen, Parallaxe ===== */
+.tour{padding-top:0}
+.tour .tour-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ttrack{height:calc(100vh + 190vh);height:calc(100svh + 190svh)}
+.tpin{position:sticky;top:0;height:100vh;height:100svh;min-height:0;border-block:0}
+.tpin .tst,.tloop,.tvid,.ths{transform:translate3d(var(--px,0px),var(--py,0px),0) scale(1.045);will-change:transform}
+.tloop,.tscrub{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none}
+.tloop{transition:opacity .6s ease}.tloop.on{opacity:1}
+.tscrub{transition:opacity .45s ease}.tscrub.on{opacity:1}
+.tfade{position:absolute;left:0;right:0;top:0;height:46%;background:linear-gradient(180deg,var(--bg) 8%,rgba(9,11,8,.6) 45%,rgba(9,11,8,0));z-index:2;pointer-events:none;opacity:0}
+.tintro{position:absolute;left:0;right:0;top:30%;z-index:3;text-align:center;padding-inline:20px;pointer-events:none;opacity:0;will-change:opacity,transform}
+.tintro .eyebrow{color:var(--gold-l)}
+.tintro h2{font-family:var(--f-display);font-weight:400;font-size:clamp(40px,7.2vw,104px);line-height:1;margin:10px 0 0;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,.55)}
+.tintro h2 em{font-style:italic;background:linear-gradient(100deg,var(--gold-d),var(--gold-l) 50%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tintro p{max-width:560px;margin:18px auto 0;color:rgba(255,255,255,.88);font-size:clamp(15px,1.6vw,18px);text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.tcue{position:absolute;left:50%;bottom:calc(34px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;font:500 11px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--cream);pointer-events:none;opacity:0;transition:opacity .4s}
+.tcue i{width:26px;height:42px;border:1.5px solid rgba(241,230,204,.7);border-radius:14px;position:relative}
+.tcue i::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--gold-l);animation:tcue 1.6s ease-in-out infinite}
+@keyframes tcue{0%{transform:translateY(0);opacity:1}70%{transform:translateY(14px);opacity:0}100%{opacity:0}}
+.thud{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:calc(30px + env(safe-area-inset-bottom,0px));z-index:3;font:500 11px var(--f-mono);letter-spacing:.16em;color:rgba(241,230,204,.85);text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .4s;line-height:1.9;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.thud b{color:var(--gold-l);font-weight:500}
+.thud .rec::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#e5484d;margin-right:8px;vertical-align:1px;animation:trec 1.2s steps(2) infinite}
+@keyframes trec{50%{opacity:.15}}
+.tbar{position:absolute;right:max(18px,env(safe-area-inset-right));top:50%;height:34vh;margin-top:-17vh;width:2px;background:rgba(241,230,204,.18);z-index:3;opacity:0;transition:opacity .4s;pointer-events:none}
+.tbar i{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 14px var(--gold-l);top:0}
+.tpin.dive .tintro,.tpin.dive .tcue,.tpin.dive .thud,.tpin.dive .tbar,.tpin.dive .tfade{opacity:1}
+.tpin.busy .thud{opacity:1}
+.tpin.dive .ttop,.tpin.dive .tstrip,.tpin.dive .tarw,.tpin.dive .thint,.tpin.dive .tland{opacity:0!important;pointer-events:none!important}
+.ttop,.tstrip,.tarw{transition:opacity .5s}
+.tscene{position:absolute;left:0;right:0;top:38%;z-index:3;text-align:center;pointer-events:none;opacity:0}
+.tscene small{display:block;font:500 11px var(--f-mono);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-l);margin-bottom:8px}
+.tscene b{font-family:var(--f-display);font-weight:400;font-size:clamp(44px,7vw,100px);line-height:1;color:#fff;text-shadow:0 10px 50px rgba(0,0,0,.6)}
+.tscene.show{animation:tsc 2.6s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes tsc{0%{opacity:0;transform:translateY(18px) scale(.98);filter:blur(10px)}22%{opacity:1;transform:none;filter:blur(0)}72%{opacity:1}100%{opacity:0;transform:translateY(-14px);filter:blur(6px)}}
+.ths.on .hs i{animation:hspop .6s cubic-bezier(.2,.9,.3,1.35) both;animation-delay:calc(var(--i,0) * 45ms + .35s)}
+@keyframes hspop{from{transform:scale(0);opacity:0}}
+.tsr button{animation:tsrin .5s ease both;animation-delay:calc(var(--i,0) * 35ms + .3s)}
+@keyframes tsrin{from{opacity:0;transform:translateY(12px)}}
+@media (max-width:760px){.tintro{top:24%}.thud{font-size:10px;bottom:auto;top:calc(78px + env(safe-area-inset-top,0px))}.tbar{display:none}}
+@media (prefers-reduced-motion:reduce){.tpin .tst,.tloop,.tvid,.ths{transform:none}.tscene.show{animation:none}}
+
+/* Mobile Anfrage-Leiste (immer erreichbar, hebt sich farblich ab) */
+.mcta{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;display:none;gap:8px;transform:translateY(140%);transition:transform .35s ease}
+.mcta.on{transform:none}
+.mcta .btn{flex:1;height:46px;box-shadow:0 12px 30px -10px rgba(0,0,0,.8)}
+@media (max-width:760px){.mcta{display:flex}}
+.cta-note{margin-top:14px;font:500 12px var(--f-mono);letter-spacing:.06em;color:var(--muted)}
+.cta-note b{color:var(--gold-l);font-weight:500}
+.btn{white-space:nowrap}
+@media (max-width:420px){.hero-actions .btn,.mcta .btn,.cta-card .btn{padding:0 15px;font-size:14px;gap:8px}}
+
+</style>
+</head>
+<body>
+
+
+<canvas id="globe" aria-label="Globus mit Lieferrouten von China nach Europa"></canvas>
+
+<div class="page">
+<header class="knav" id="knav"><div class="knav-in wrap">
+  <a class="kbrand notranslate" translate="no" href="#top"><img src="logo-k.png" alt="">KARMIRA</a>
+  <nav class="klinks" aria-label="Hauptnavigation">
+    <button type="button" class="kmega-btn" id="kmb" aria-expanded="false" aria-controls="kmega">Sortiment<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    <a href="#herkunft">Herkunft</a>
+    <a href="#ablauf">Ablauf</a>
+    <a href="#vorteile">B2B &amp; B2C</a>
+    <a href="index-alt.html#kontakt">Kontakt</a>
+  </nav>
+  <div class="kright">
+    <a class="kcta" href="index-alt.html#kontakt">Anfrage stellen</a>
+    <div class="lsel" id="lsel">
+          <button class="lbtn" id="lbtn" type="button" aria-haspopup="listbox" aria-label="Sprache wählen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span id="lcur">DE</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <ul id="llist" role="listbox"></ul>
+        </div>
+        <div id="gt_el" style="display:none"></div>
+    <button type="button" class="kburger" id="kbg" aria-label="Menü öffnen" aria-expanded="false" aria-controls="kmega"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</div>
+<div class="kmega" id="kmega"><div class="wrap kmega-in" id="kmegain"></div></div>
+</header>
+
+  <header class="hero" id="top">
+    <div class="hero-inner wrap">
+      <img class="hero-logo" src="logo-k.png" alt="KARMIRA Monogramm" data-reveal style="--rd:0ms">
+      <p class="eyebrow" data-reveal style="--rd:60ms">Garten · Outdoor · Landtechnik</p>
+      <h1 class="hero-title" data-reveal style="--rd:120ms">Für Garten, Hof <em>und Feld</em></h1>
+      <p class="hero-sub" data-reveal style="--rd:220ms">Gartengeräte, Outdoorküchen und Zubehör direkt vom Hersteller. Wir kümmern uns um Prüfung, Versand und Zoll. Sie senden nur die Anfrage.</p>
+      <div class="hero-actions" data-reveal style="--rd:320ms">
+        <a class="btn btn-primary" href="index-alt.html#kontakt">Kostenlos anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="sortiment.html">Sortiment ansehen</a>
+      </div>
+      <p class="cta-note" data-reveal style="--rd:380ms">Unverbindlich · Antwort meist in 24 h · Muster auf Wunsch</p>
+    </div>
+
+    <div class="route">
+      <label for="dest">Lieferziel</label>
+      <div class="dsearch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="dest" type="text" autocomplete="off" spellcheck="false" placeholder="Stadt oder Land suchen …" role="combobox" aria-expanded="false" aria-controls="dlist">
+        <ul id="dlist" role="listbox"></ul>
+      </div>
+      <div class="route-meta" aria-live="polite" id="hKm">≈ 9.200 km · ca. 7–11 Tage ✈</div>
+    </div>
+    <button class="gpill" id="spin" type="button" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>Globus drehen</button>
+  </header>
+
+  <div class="trust wrap" data-reveal style="--rd:420ms">
+    <div class="trust-label">Wir beliefern</div>
+    <div class="trust-row"><span>Privatgärten</span><span>Gartencenter</span><span>Landhandel</span><span>Gartenbau</span><span>Lohnunternehmen</span><span>Landwirtschaft</span></div>
+  </div>
+
+  <section class="tour" id="rundgang" aria-label="Rundgang durch Haus und Garten">
+    <div class="wrap tour-head">
+      <p class="eyebrow" data-reveal>Rundgang</p>
+      <h2 data-reveal style="--rd:80ms">Einmal ums Haus</h2>
+      <p class="lead" data-reveal style="--rd:160ms">Tippen oder klicken Sie: Die Drohne fliegt aus den Wolken herab und weiter durch Vorgarten, Terrasse, Gewächshaus, Gemüsegarten und Werkstatt. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p>
+    </div>
+    <div class="ttrack" id="ttrack">
+      <div class="tpin" id="tstage">
+        <img class="tst tcl" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async"><img class="tst" alt="" decoding="async">
+        <video class="tloop" loop aria-hidden="true"></video><video class="tscrub" aria-hidden="true"></video>
+        <canvas id="tcv" aria-hidden="true"></canvas><div class="tload" aria-hidden="true"></div>
+        <div class="tvig"></div>
+        <div class="tfade"></div>
+        <div class="tintro"><p class="eyebrow">Rundgang</p><h2>Einmal ums <em>Haus</em></h2><p>Scrollen Sie: Die Drohne stürzt aus den Wolken herab und landet in unserem Garten. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.</p></div>
+        <div class="tcue"><i></i><span>Scrollen zum Landen</span></div>
+        <div class="thud" aria-hidden="true"></div><div class="tbar" aria-hidden="true"><i></i></div>
+        <div class="tscene" aria-hidden="true"></div>
+        <div class="ths" id="ths"></div>
+        <div class="ttop"><div class="tour-top"><span class="tour-step" id="tstep">1 / 5</span><b id="tname">Vorgarten</b></div><span class="tour-ai">KI-Visualisierung</span></div>
+        <div class="thint" id="thint">Tippen zum Weitergehen</div>
+        <button type="button" class="tarw p" id="tprev" aria-label="Zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="tarw n" id="tnext" aria-label="Weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button type="button" class="tland" id="tland">Landen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
+        <div class="tstrip" id="tstrip"><div class="tsh"><small id="tcount"></small><nav class="tour-nav" id="tnav" aria-label="Bereiche"></nav></div><div class="tsr" id="tsr"></div></div>
+        <aside class="tour-card" id="tcard" aria-live="polite" hidden></aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="mcta" id="mcta"><a class="btn btn-primary" href="index-alt.html#kontakt">Kostenlos anfragen</a><a class="btn btn-ghost" href="sortiment.html">Sortiment</a></div>
+
+  <section class="section" id="vorteile">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Ein Ansprechpartner für alles</p>
+        <h2 data-reveal style="--rd:80ms">Vom Werk in China bis zu Ihrem Hof</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="card" data-reveal style="--rd:0ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V10l6 3V10l6 3V6l6 3v12z"/><path d="M7 17h2M13 17h2"/></svg></div><h3>Direkt ab Werk</h3><p>Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.</p></article>
+        <article class="card" data-reveal style="--rd:90ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg></div><h3>Muster &amp; Prüfung</h3><p>Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.</p></article>
+        <article class="card" data-reveal style="--rd:180ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></div><h3>Zoll &amp; Lieferung</h3><p>Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.</p></article>
+        <article class="card" data-reveal style="--rd:270ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></div><h3>Beratung auf Deutsch</h3><p>Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.</p></article>
+        <article class="card" data-reveal style="--rd:360ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>Private Label</h3><p>Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.</p></article>
+        <article class="card" data-reveal style="--rd:450ms"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21V10M12 10c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6zM12 16c-2.4-.4-3.8-2.2-3.8-4.6 2.4.3 3.8 2.1 3.8 4.6zm0 0c2.4-.4 3.8-2.2 3.8-4.6-2.4.3-3.8 2.1-3.8 4.6z"/></svg></div><h3>B2B &amp; B2C</h3><p>Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ablauf">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>So einfach bestellen Sie</p>
+        <h2 data-reveal style="--rd:80ms">Drei Schritte bis zur Lieferung</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Ihr Aufwand ist eine Nachricht. Den Rest übernehmen wir.</p>
+      </div>
+      <div class="steps">
+        <div class="step" data-reveal style="--rd:0ms"><div class="step-n">SCHRITT 1</div><h3>Anfrage senden</h3><p>Produkt, Menge und Lieferziel, über das Formular, die Merkliste oder per E-Mail. Kostenlos und unverbindlich.</p></div>
+        <div class="step" data-reveal style="--rd:90ms"><div class="step-n">SCHRITT 2</div><h3>Angebot &amp; Muster</h3><p>Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.</p></div>
+        <div class="step" data-reveal style="--rd:180ms"><div class="step-n">SCHRITT 3</div><h3>Lieferung</h3><p>Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sortiment">
+    <div class="wrap">
+      <div class="showcase-grid">
+        <div class="showcase-copy">
+          <p class="eyebrow" data-reveal>Unser Sortiment</p>
+          <h2 data-reveal style="--rd:90ms" data-total>Über 260 Artikel sind bereits online</h2>
+          <p class="lead" style="margin-left:0;--rd:180ms" data-reveal>Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.</p>
+          <a class="btn btn-primary" href="sortiment.html" data-reveal style="--rd:270ms">Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="dashboard" data-reveal style="--rd:160ms">
+          <div class="dash-top"><span>Artikel online · nach Kategorie</span><span class="dash-live"><i></i>Live</span></div>
+          <div class="dash-chart">
+            <div class="dash-bars" id="bars"></div>
+            <div class="dash-labels" id="barlabels"></div>
+          </div>
+          <div class="dash-req">
+            <p>Auf Anfrage</p>
+            <div class="chips"><span class="chip">Pavillon &amp; Sonnenschutz</span><span class="chip">Landtechnik</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat" data-reveal style="--rd:0ms"><div class="stat-value" data-total>260+</div><div class="stat-label">Artikel online</div></div>
+        <div class="stat" data-reveal style="--rd:80ms"><div class="stat-value">6</div><div class="stat-label">Produktionsstandorte in China</div></div>
+        <div class="stat" data-reveal style="--rd:160ms"><div class="stat-value">7–11</div><div class="stat-label">Tage Lieferzeit</div></div>
+        <div class="stat" data-reveal style="--rd:240ms"><div class="stat-value">24 h</div><div class="stat-label">Antwort auf Ihre Anfrage</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mq-sec" id="neu">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Neu im Sortiment</p>
+        <h2 data-reveal style="--rd:80ms" id="mqTitle">Neue Geräte von SHENGYAO</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.</p>
+      </div>
+    </div>
+    <div class="mq" id="mq" aria-label="Produktauswahl">
+      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
+    </div>
+    <div class="wrap mq-more"><a class="btn btn-ghost" href="sortiment.html">Ganzes Sortiment ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </section>
+
+  <section class="section" id="herkunft">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Herkunft</p>
+        <h2 data-reveal style="--rd:80ms">Direkt aus den Industriezentren Chinas</h2>
+        <p class="lead" data-reveal style="--rd:160ms">Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.</p>
+      </div>
+      <div class="hubgrid">
+        <div class="hubmap" data-reveal><svg id="hubsvg" viewBox="0 0 600 500" role="img" aria-label="Karte der Produktionsstandorte in China"><g id="hubg"></g></svg>
+          <button class="hubback" id="hubBack" type="button">← Ganz China</button>
+          <div class="hubchips" id="hubChips"></div></div>
+        <div class="hubcard" id="hubCard" data-reveal style="--rd:120ms"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kontakt" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="cta-card">
+        <p class="eyebrow" data-reveal style="--rd:60ms">Jetzt anfragen</p>
+        <h2 data-reveal style="--rd:140ms">Ihr nächstes Produkt kommt direkt ab Werk</h2>
+        <p class="lead" data-reveal style="--rd:220ms">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
+        <div class="hero-actions" data-reveal style="--rd:300ms">
+          <a class="btn btn-primary" href="index-alt.html#kontakt">Privat anfragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="index-alt.html#kontakt">B2B-Anfrage</a>
+        </div>
+        <p class="cta-note" data-reveal style="--rd:360ms">Noch unsicher? <a href="mailto:info@karmira.de?subject=Muster%20anfragen"><b>Fragen Sie zuerst ein Muster an.</b></a></p>
+        <p class="mail">E-Mail: <span>info@karmira.de</span></p>
+      </div>
+
+      <footer class="footer">
+        <div class="footer-brand"><a class="brand" href="#top"><img src="logo-k.png" alt="">KARMIRA</a><p>Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.</p></div>
+        <div class="footer-cols">
+          <div><h4>Sortiment</h4><a href="sortiment.html?k=akkugarten">Akku-Gartengeräte</a><a href="sortiment.html?k=zubehoer">Gartenzubehör</a><a href="sortiment.html?k=wasser">Bewässerung</a><a href="sortiment.html?k=grill">Outdoorküchen</a></div>
+          <div><h4>Service</h4><a href="#vorteile">B2B &amp; B2C</a><a href="#ablauf">Ablauf</a><a href="index-alt.html#kontakt">Kontakt</a></div>
+          <div><h4>Rechtliches</h4><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+        </div>
+      </footer>
+      <p class="copyright">© <span id="yr"></span> KARMIRA · karmira.de</p>
+    </div>
+  </section>
+</div>
+
+<script src="products.js?v=153ba717"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datamaps@0.5.9/dist/datamaps.world.min.js"></script>
+<script>
+document.documentElement.classList.add('js');
+document.getElementById('yr').textContent=new Date().getFullYear();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= SPRACHE (wie bisher: DE/EN direkt, alle anderen über Google Translate) ================= */
+const EN={
+"Einmal ums":"Once around the",
+"Scrollen Sie: Die Drohne stürzt aus den Wolken herab und landet in unserem Garten. Jeder goldene Punkt ist ein Produkt aus unserem Sortiment.":"Scroll: the drone dives out of the clouds and lands in our garden. Every gold dot is a product from our range.","Scrollen zum Landen":"Scroll to land","Haus":"house",
+"Rundgang":"Tour","Einmal ums Haus":"Once around the house","Vom Vorgarten über die Terrasse bis in den Schuppen. Hinter jedem goldenen Punkt steckt ein Produkt aus unserem Sortiment.":"From the front garden across the terrace into the shed. Every gold dot hides a product from our range.","KI-Visualisierung":"AI visualisation",
+"Gartengeräte, Outdoorküchen und Zubehör direkt vom Hersteller. Wir kümmern uns um Prüfung, Versand und Zoll. Sie senden nur die Anfrage.":"Garden tools, outdoor kitchens and accessories straight from the manufacturer. We handle inspection, shipping and customs. All you send is the enquiry.",
+"Kostenlos anfragen":"Free enquiry",
+"Unverbindlich · Antwort meist in 24 h · Muster auf Wunsch":"No obligation · Reply usually within 24 h · Samples on request",
+"Ihr Aufwand ist eine Nachricht. Den Rest übernehmen wir.":"All it takes from you is one message. We handle the rest.",
+"Produkt, Menge und Lieferziel, über das Formular, die Merkliste oder per E-Mail. Kostenlos und unverbindlich.":"Product, quantity and destination, via the form, your watch list or by email. Free and without obligation.",
+"Noch unsicher?":"Not sure yet?",
+"Fragen Sie zuerst ein Muster an.":"Ask for a sample first.",
+"Neu im Sortiment":"New in our range",
+"Die Outdoorküche für Ihren Garten":"The outdoor kitchen for your garden",
+"Modular aus Edelstahl 304":"Modular, 304 stainless steel",
+"Gasgrill, Kühlschrank und Spüle in einer Zeile":"Gas grill, fridge and sink in one line",
+"Wählen Sie Länge, Farbe und Module. Wir liefern sie direkt ab Werk.":"Choose length, colour and modules. We deliver straight from the factory.",
+"Ein Ansprechpartner":"One contact",
+"Vom Akku-Gerät bis zur Bindeschnur":"From cordless tools to garden twine",
+"Direkt ab Werk.":"Straight from the factory.",
+"Bis zu Ihnen.":"All the way to you.",
+"Prüfung, Versand und Zoll übernehmen wir. Sie senden nur die Anfrage.":"We handle inspection, shipping and customs. All you send is the enquiry.",
+"Outdoorküchen ansehen":"View outdoor kitchens",
+"Scrollen":"Scroll",
+"Sortiment":"Range",
+"Outdoorküchen":"Outdoor kitchens",
+"Kamerafahrt durch das Sortiment":"Camera flight through our range",
+'Garten & Hof':'Garden & yard','Sortiment':'Range','Ablauf':'Process','B2B & B2C':'B2B & B2C','Kontakt':'Contact',
+'Anfrage stellen':'Send enquiry','Garten · Outdoor · Landtechnik':'Garden · Outdoor · Farm machinery',
+'Für Garten, Hof':'For garden, yard','und Feld':'and field',
+'Gartengeräte, Gewächshäuser, Hochbeete und Outdoor-Möbel für Ihren Garten, direkt vom Hersteller. Und für Landwirte: Kleintraktoren, Beregnungsanlagen und Anbaugeräte.':'Garden tools, greenhouses, raised beds and outdoor furniture for your garden, straight from the manufacturer. And for farmers: compact tractors, irrigation systems and implements.',
+'Sortiment ansehen':'View range','Lieferziel':'Destination','Globus drehen':'Rotate globe',
+'Wir beliefern':'We supply','Privatgärten':'Home gardens','Gartencenter':'Garden centres','Landhandel':'Farm supply stores','Gartenbau':'Horticulture','Lohnunternehmen':'Agricultural contractors','Landwirtschaft':'Agriculture',
+'Ein Ansprechpartner für alles':'One contact for everything','Vom Werk in China bis zu Ihrem Hof':'From the factory in China to your yard',
+'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind, und kümmern uns um Prüfung, Versand und Zoll.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture, and we take care of inspection, shipping and customs.',
+'Direkt ab Werk':'Direct from the factory','Ohne Zwischenhändler. Sie kaufen dort, wo produziert wird, zu fairen Preisen.':'No middlemen. You buy where it is made, at fair prices.',
+'Muster & Prüfung':'Samples & inspection','Auf Wunsch erhalten Sie vor der Bestellung ein Muster. Die Qualität wird geprüft.':'On request you get a sample before ordering. Quality is inspected.',
+'Zoll & Lieferung':'Customs & delivery','Logistik, Zoll und Import aus einer Hand, bis an Ihre Haustür oder Ihren Hof.':'Logistics, customs and import from a single source, right to your door or yard.',
+'Beratung auf Deutsch':'Advice in German','Ein fester Ansprechpartner begleitet Sie von der ersten Nachricht bis zur Lieferung.':'One dedicated contact supports you from the first message to delivery.',
+'Private Label':'Private label','Individuelle Produkte mit Ihrem Namen, für Händler, Gartencenter und Landhandel.':'Custom products under your name, for retailers, garden centres and farm supply stores.',
+'Ob eigener Garten oder Landwirtschaftsbetrieb: Beschaffung und Lieferung passen sich Ihrem Bedarf an.':'Whether your own garden or a farm: sourcing and delivery adapt to your needs.',
+'Unser Sortiment':'Our range','Neu im Sortiment':'New in our range','Neue Geräte von SHENGYAO':'New tools from SHENGYAO','Astscheren, Kettensägen, Laubbläser, Trimmer und mehr im 21-V-System. Halten Sie mit der Maus an oder klicken Sie auf ein Produkt.':'Pruning shears, chainsaws, leaf blowers, trimmers and more on the 21 V system. Hover to pause or click a product.','Ganzes Sortiment ansehen':'View the full range','Herkunft':'Origin','Kontakt':'Contact','Alle Artikel':'All items','Über 260 Artikel sind bereits online':'Over 260 items are already online',
+'Vom Akku-Gerät bis zur Bindeschnur. Darüber hinaus beschaffen wir fast jedes Produkt aus China. Fragen Sie einfach an.':'From cordless tools to binding twine. Beyond that, we source almost any product from China. Just ask.',
+'Artikel online · nach Kategorie':'Items online · by category','Live':'Live','Auf Anfrage':'On request',
+'Outdoor-Möbel':'Outdoor furniture','Pavillon & Sonnenschutz':'Gazebos & sun protection','Grill & Outdoor-Küche':'Grills & outdoor kitchens','Landtechnik':'Farm machinery',
+'Gartenzubehör':'Garden accessories','Akku-Gartengeräte':'Cordless garden tools','Akku-Werkzeug':'Cordless power tools','Bewässerung':'Irrigation','Gewächshaus & Anzucht':'Greenhouse & propagation',
+'Artikel online':'Items online','Produktionsstandorte in China':'Production sites in China','Tage Lieferzeit':'Days delivery time','Antwort auf Ihre Anfrage':'Reply to your enquiry',
+'So einfach bestellen Sie':'How to order','Drei Schritte bis zur Lieferung':'Three steps to delivery',
+'SCHRITT 1':'STEP 1','SCHRITT 2':'STEP 2','SCHRITT 3':'STEP 3','Anfrage senden':'Send enquiry',
+'Produkt, Menge und Lieferziel, über das Formular oder per E-Mail.':'Product, quantity and destination, via the form or by email.',
+'Angebot & Muster':'Quote & sample','Sie erhalten ein Angebot passender Hersteller, auf Wunsch mit Muster.':'You receive a quote from suitable manufacturers, with a sample on request.',
+'Lieferung':'Delivery','Wir organisieren Prüfung, Versand und Zoll, bis zu Ihnen.':'We organise inspection, shipping and customs, all the way to you.',
+'Jetzt anfragen':'Enquire now','Ihr nächstes Produkt kommt direkt ab Werk':'Your next product comes straight from the factory',
+'In wenigen Schritten zu Ihrer Anfrage. Wir melden uns in der Regel innerhalb von 24 Stunden.':'Your enquiry in just a few steps. We usually reply within 24 hours.',
+'Privat anfragen':'Private enquiry','B2B-Anfrage':'B2B enquiry','E-Mail:':'Email:',
+'Garten, Outdoor und Landtechnik direkt aus den Industriezentren Chinas.':'Garden, outdoor and farm machinery straight from China’s industrial centres.',
+'Service':'Service','Rechtliches':'Legal','Impressum':'Legal notice','Datenschutz':'Privacy',
+'Stadt oder Land suchen …':'Search city or country …','Sprache wählen':'Choose language','KARMIRA Monogramm':'KARMIRA monogram',
+'Beliebte Ziele':'Popular destinations','Städte in':'Cities in','Städte':'Cities','Weitere Orte':'More places','Suche läuft …':'Searching …','Keine Treffer':'No results','Ortssuche':'Place search',
+'KARMIRA – Garten, Outdoor & Landtechnik direkt aus China':'KARMIRA – Garden, outdoor & farm machinery direct from China'
+};
+let LANG='de';
+const LANGS_TOP=[['de','Deutsch'],['en','English'],['fr','Français'],['es','Español'],['it','Italiano'],['pt','Português'],['nl','Nederlands'],['pl','Polski'],['cs','Čeština'],['ro','Română'],['el','Ελληνικά'],['sv','Svenska'],['tr','Türkçe'],['ru','Русский'],['uk','Українська'],['ar','العربية'],['fa','فارسی'],['hi','हिन्दी'],['zh-CN','中文'],['ja','日本語'],['ko','한국어'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['lt','Lietuvių'],['lv','Latviešu'],['et','Eesti'],['fi','Suomi'],['da','Dansk'],['no','Norsk'],['hu','Magyar'],['sk','Slovenčina'],['sl','Slovenščina'],['hr','Hrvatski'],['sr','Српски'],['bg','Български'],['sq','Shqip'],['iw','עברית'],['ur','اردو'],['bn','বাংলা'],['ms','Bahasa Melayu'],['tl','Filipino'],['sw','Kiswahili']];
+const GT_ALL='af sq am ar hy as ay az bm eu be bn bho bs bg ca ceb ny zh-CN zh-TW co hr cs da dv doi nl en eo et ee tl fi fr fy gl ka de el gn gu ht ha haw iw hi hmn hu is ig ilo id ga it ja jw kn kk km rw gom ko kri ku ckb ky lo la lv ln lt lg lb mk mai mg ms ml mt mi mr mni-Mtei lus mn my ne no or om ps fa pl pt pa qu ro ru sm sa gd nso sr st sn sd si sk sl so es su sw sv tg ta tt te th ti ts tr tk ak uk ur ug uz vi cy xh yi yo zu'.split(' ');
+const ISO={iw:'he',jw:'jv','mni-Mtei':'mni',tl:'fil'};
+const natName=c=>{const iso=ISO[c]||c;try{const n=new Intl.DisplayNames([iso],{type:'language'}).of(iso);return n&&n!==iso?n.charAt(0).toUpperCase()+n.slice(1):c}catch(e){return c}};
+const LANGS=[...LANGS_TOP,...GT_ALL.filter(c=>!LANGS_TOP.some(x=>x[0]===c)).map(c=>[c,natName(c)]).sort((a,b)=>a[1].localeCompare(b[1]))];
+const langIn=(c,l)=>{const iso=ISO[c]||c;try{return new Intl.DisplayNames([l],{type:'language'}).of(iso)||''}catch(e){return ''}};
+const RTL=['ar','fa','he','iw','ur','ps','sd','ug','yi','ckb','dv'];
+const nrm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss');
+function detectLang(){for(const l of (navigator.languages||[navigator.language||'de'])){const b=(l||'').toLowerCase();if(/^zh-(tw|hk|mo|hant)/.test(b))return 'zh-TW';if(b.startsWith('zh'))return 'zh-CN';if(b.startsWith('he'))return 'iw';if(b.startsWith('jv'))return 'jw';if(/^(nb|nn)/.test(b))return 'no';if(b.startsWith('fil'))return 'tl';const m=LANGS.find(x=>x[0]===b.split('-')[0]);if(m)return m[0]}return 'en'}
+let UI_LANG='de',LANG_AUTO=true;
+try{const l=localStorage.getItem('k-lang');if(l&&LANGS.some(x=>x[0]===l)){UI_LANG=l;LANG_AUTO=false}else UI_LANG=detectLang()}catch(e){UI_LANG=detectLang()}
+LANG=UI_LANG==='de'?'de':'en';
+function gtCookie(v){const h=location.hostname,parts=h.split('.'),doms=['',h,'.'+h];if(parts.length>2)doms.push('.'+parts.slice(-2).join('.'));
+  doms.forEach(d=>{try{document.cookie='googtrans='+(v||'')+';path=/'+(d?';domain='+d:'')+(v?'':';expires=Thu, 01 Jan 1970 00:00:00 GMT')}catch(e){}})}
+const GT_ACTIVE=UI_LANG!=='de'&&UI_LANG!=='en';
+if(GT_ACTIVE){gtCookie('/en/'+UI_LANG);window.gtInit=()=>{try{new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'gt_el')}catch(e){}};
+  const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=gtInit';sc.async=true;document.head.appendChild(sc);
+  if(RTL.includes(UI_LANG))document.documentElement.dir='rtl'}
+else{try{if(/googtrans=/.test(document.cookie))gtCookie('')}catch(e){}}
+const t=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
+let I18N=null;
+function applyLang(){
+  if(!I18N){I18N=[];const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+    while(n=w.nextNode()){if(n.parentElement.closest('script,style,#dlist,#llist'))continue;const tr=n.nodeValue.trim();if(tr&&EN[tr]!==undefined)I18N.push([n,n.nodeValue,tr])}
+    document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(e=>['placeholder','aria-label','alt'].forEach(a=>{const v=e.getAttribute(a);if(v&&EN[v]!==undefined)I18N.push([e,v,v,a])}));
+    I18N.title=document.title}
+  I18N.forEach(([n,orig,tr,attr])=>{const v=LANG==='en'?orig.replace(tr,EN[tr]):orig;attr?n.setAttribute(attr,v):n.nodeValue=v});
+  document.title=LANG==='en'&&EN[I18N.title]?EN[I18N.title]:I18N.title;
+  document.documentElement.lang=LANG;
+  document.getElementById('lcur').textContent=UI_LANG.split('-')[0].toUpperCase();renderLangs();
+  dispatchEvent(new Event('langchange'));
+}
+const llist=document.getElementById('llist');
+function renderLangs(){const de=LANG==='de',top=LANGS_TOP.length;
+  llist.innerHTML=`<li class="ls"><input id="lfind" placeholder="${de?'Sprache suchen …':'Search language …'}" autocomplete="off"></li><li class="hd">${de?'Häufig':'Popular'}</li>`+
+  LANGS.map(([c,n],k)=>(k===top?`<li class="hd">${de?'Alle Sprachen':'All languages'} (Google Translate)</li>`:'')+`<li data-l="${c}" data-n="${(n+' '+c+' '+langIn(c,'de')+' '+langIn(c,'en')).toLowerCase()}" class="${c===UI_LANG?'on':''}">${n}<small>${c.split('-')[0]}</small></li>`).join('')+
+  `<li class="auto" data-l="auto">${de?'Automatisch (Gerätesprache)':'Automatic (device language)'}${LANG_AUTO?' ✓':''}</li>`;
+  const f=document.getElementById('lfind');f.addEventListener('click',e=>e.stopPropagation());
+  f.addEventListener('input',()=>{const q=nrm(f.value.trim());llist.querySelectorAll('li[data-l]:not(.auto)').forEach(li=>li.style.display=!q||nrm(li.dataset.n).includes(q)?'':'none');
+    llist.querySelectorAll('li.hd').forEach(h=>h.style.display=q?'none':'')})}
+function setUiLang(code){const auto=code==='auto';if(auto)code=detectLang();
+  try{auto?localStorage.removeItem('k-lang'):localStorage.setItem('k-lang',code)}catch(e){}
+  const was=GT_ACTIVE,need=code!=='de'&&code!=='en';LANG_AUTO=auto;
+  if(!was&&!need){UI_LANG=code;LANG=code;llist.classList.remove('open');applyLang();return}
+  gtCookie(need?'/en/'+code:'');location.reload()}
+document.getElementById('lbtn').addEventListener('click',e=>{e.stopPropagation();llist.classList.toggle('open');if(llist.classList.contains('open'))setTimeout(()=>{const f=document.getElementById('lfind');f&&f.focus()},50)});
+llist.addEventListener('click',e=>{const li=e.target.closest('li[data-l]');if(li)setUiLang(li.dataset.l)});
+document.addEventListener('click',e=>{if(!e.target.closest('#lsel'))llist.classList.remove('open')});
+addEventListener('keydown',e=>{if(e.key==='Escape')llist.classList.remove('open')});
+
+/* ================= Sortiment-Balken (Artikelzahlen von karmira.de) ================= */
+const KPd=window.KP||[],KCd=window.KC||[];
+const cats=KCd.map(c=>[c[1],KPd.filter(p=>p.k===c[0]).length]).filter(c=>c[1]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+const cmax=Math.max(1,...cats.map(c=>c[1]));
+document.getElementById('bars').innerHTML=cats.map(([n,v],i)=>`<div class="dash-bar" style="--h:${(v/cmax*100).toFixed(1)}%;--i:${i}"><b>${v}</b></div>`).join('');
+const tot=KPd.length,totR=Math.floor(tot/10)*10;
+const fixTotals=()=>document.querySelectorAll('[data-total]').forEach(el=>{el.textContent=el.textContent.replace(/260/g,totR)});
+addEventListener('langchange',fixTotals);
+document.getElementById('barlabels').innerHTML=cats.map(([n])=>`<span>${n.replace('&','&amp;')}</span>`).join('');
+
+/* ================= Reveal ================= */
+const els=document.querySelectorAll('[data-reveal]');
+if(reduce||!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'))}
+else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.18,rootMargin:'0px 0px -8% 0px'});els.forEach(e=>io.observe(e))}
+
+/* ================= Lieferziele (Daten wie auf karmira.de) ================= */
+const ORIGIN=[114.06,22.54];
+const DEST=[
+ {id:'DE',de:'Deutschland',en:'Germany',city:'Berlin',c:[13.4,52.52],r:'EU'},
+ {id:'US',de:'USA (Ostküste)',en:'USA (East Coast)',city:'New York',c:[-74.0,40.71],r:'NA'},
+ {id:'AE',de:'VAE',en:'UAE',city:'Dubai',c:[55.27,25.2],r:'ME'},
+ {id:'BR',de:'Brasilien',en:'Brazil',city:'São Paulo',c:[-46.63,-23.55],r:'SA'},
+ {id:'AU',de:'Australien',en:'Australia',city:'Sydney',c:[151.21,-33.87],r:'OC'},
+ {id:'GB',de:'Großbritannien',en:'United Kingdom',city:'London',c:[-0.13,51.5],r:'EU'},
+ {id:'NG',de:'Nigeria',en:'Nigeria',city:'Lagos',c:[3.38,6.52],r:'AF'},
+ {id:'JP',de:'Japan',en:'Japan',city:'Tokyo',c:[139.69,35.69],r:'AS'},
+ {id:'US-W',de:'USA (Westküste)',en:'USA (West Coast)',city:'Los Angeles',c:[-118.24,34.05],r:'NA'},
+ {id:'IN',de:'Indien',en:'India',city:'Mumbai',c:[72.88,19.08],r:'AS'},
+ {id:'ZA',de:'Südafrika',en:'South Africa',city:'Johannesburg',c:[28.04,-26.2],r:'AF'},
+ {id:'CA',de:'Kanada',en:'Canada',city:'Toronto',c:[-79.38,43.65],r:'NA'},
+ {id:'SA',de:'Saudi-Arabien',en:'Saudi Arabia',city:'Riyadh',c:[46.72,24.71],r:'ME'},
+ {id:'FR',de:'Frankreich',en:'France',city:'Paris',c:[2.35,48.86],r:'EU'},
+ {id:'MX',de:'Mexiko',en:'Mexico',city:'Mexico City',c:[-99.13,19.43],r:'SA'},
+ {id:'KE',de:'Kenia',en:'Kenya',city:'Nairobi',c:[36.82,-1.29],r:'AF'},
+ {id:'TR',de:'Türkei',en:'Türkiye',city:'Istanbul',c:[28.98,41.01],r:'EU'}
+];
+const TIMES={EU:{rail:'19–24',air:'7–11'},ME:{air:'7–9'},NA:{air:'8–11'},SA:{air:'9–14'},AF:{air:'8–12'},AS:{air:'6–8'},OC:{air:'7–10'},CA:{rail:'16–22',air:'7–10'}};
+const CITY_RAW={
+DE:'Berlin,52.52,13.40;Hamburg,53.55,9.99;München,48.14,11.58;Köln,50.94,6.96;Frankfurt am Main,50.11,8.68;Stuttgart,48.78,9.18;Düsseldorf,51.23,6.78;Leipzig,51.34,12.37;Dresden,51.05,13.74;Hannover,52.37,9.73;Nürnberg,49.45,11.08;Bremen,53.08,8.80',
+AT:'Wien,48.21,16.37;Graz,47.07,15.44;Linz,48.31,14.29;Salzburg,47.81,13.04;Innsbruck,47.27,11.40',
+CH:'Zürich,47.38,8.54;Genf,46.20,6.14;Basel,47.56,7.59;Bern,46.95,7.45;Lausanne,46.52,6.63',
+FR:'Paris,48.86,2.35;Marseille,43.30,5.37;Lyon,45.76,4.84;Toulouse,43.60,1.44;Nizza,43.70,7.27;Bordeaux,44.84,-0.58;Lille,50.63,3.06;Straßburg,48.57,7.75;Nantes,47.22,-1.55',
+GB:'London,51.51,-0.13;Manchester,53.48,-2.24;Birmingham,52.49,-1.89;Glasgow,55.86,-4.25;Liverpool,53.41,-2.98;Edinburgh,55.95,-3.19;Leeds,53.80,-1.55;Bristol,51.45,-2.59',
+IE:'Dublin,53.35,-6.26;Cork,51.90,-8.47',
+NL:'Amsterdam,52.37,4.90;Rotterdam,51.92,4.48;Den Haag,52.07,4.30;Utrecht,52.09,5.12;Eindhoven,51.44,5.47',
+BE:'Brüssel,50.85,4.35;Antwerpen,51.22,4.40;Gent,51.05,3.72;Lüttich,50.63,5.57',
+LU:'Luxemburg,49.61,6.13',
+ES:'Madrid,40.42,-3.70;Barcelona,41.39,2.17;Valencia,39.47,-0.38;Sevilla,37.39,-5.98;Málaga,36.72,-4.42;Bilbao,43.26,-2.93;Saragossa,41.65,-0.89;Palma,39.57,2.65',
+PT:'Lissabon,38.72,-9.14;Porto,41.15,-8.61;Faro,37.02,-7.93',
+IT:'Rom,41.90,12.50;Mailand,45.46,9.19;Neapel,40.85,14.27;Turin,45.07,7.69;Florenz,43.77,11.26;Bologna,44.49,11.34;Venedig,45.44,12.32;Palermo,38.12,13.36;Genua,44.41,8.93',
+GR:'Athen,37.98,23.73;Thessaloniki,40.64,22.94',
+PL:'Warschau,52.23,21.01;Krakau,50.06,19.94;Breslau,51.11,17.04;Danzig,54.35,18.65;Posen,52.41,16.93;Łódź,51.76,19.46',
+CZ:'Prag,50.08,14.44;Brünn,49.20,16.61;Ostrava,49.82,18.26',
+SK:'Bratislava,48.15,17.11;Košice,48.72,21.26',
+HU:'Budapest,47.50,19.04;Debrecen,47.53,21.63',
+RO:'Bukarest,44.43,26.10;Cluj-Napoca,46.77,23.60;Timișoara,45.75,21.23;Iași,47.16,27.59',
+BG:'Sofia,42.70,23.32;Plowdiw,42.14,24.75;Warna,43.21,27.91',
+HR:'Zagreb,45.81,15.98;Split,43.51,16.44',SI:'Ljubljana,46.06,14.51',RS:'Belgrad,44.79,20.45;Novi Sad,45.27,19.83',
+BA:'Sarajevo,43.86,18.41',AL:'Tirana,41.33,19.82',MK:'Skopje,42.00,21.43',ME:'Podgorica,42.44,19.26',
+DK:'Kopenhagen,55.68,12.57;Aarhus,56.16,10.20;Odense,55.40,10.39',
+SE:'Stockholm,59.33,18.07;Göteborg,57.71,11.97;Malmö,55.60,13.00;Uppsala,59.86,17.64',
+NO:'Oslo,59.91,10.75;Bergen,60.39,5.32;Trondheim,63.43,10.40;Stavanger,58.97,5.73',
+FI:'Helsinki,60.17,24.94;Tampere,61.50,23.76;Turku,60.45,22.27',IS:'Reykjavík,64.15,-21.94',
+EE:'Tallinn,59.44,24.75',LV:'Riga,56.95,24.11',LT:'Vilnius,54.69,25.28;Kaunas,54.90,23.90',
+UA:'Kyjiw,50.45,30.52;Charkiw,49.99,36.23;Odessa,46.48,30.72;Lwiw,49.84,24.03;Dnipro,48.46,35.05',
+MD:'Chișinău,47.01,28.86',BY:'Minsk,53.90,27.56',
+RU:'Moskau,55.76,37.62;Sankt Petersburg,59.93,30.34;Nowosibirsk,55.03,82.92;Jekaterinburg,56.84,60.61;Kasan,55.79,49.12;Wladiwostok,43.12,131.89',
+TR:'Istanbul,41.01,28.98;Ankara,39.93,32.86;Izmir,38.42,27.14;Antalya,36.90,30.70;Bursa,40.19,29.06',
+CY:'Nikosia,35.17,33.36;Limassol,34.68,33.04',MT:'Valletta,35.90,14.51',
+GE:'Tiflis,41.72,44.79',AM:'Jerewan,40.18,44.51',AZ:'Baku,40.41,49.87',
+KZ:'Almaty,43.24,76.89;Astana,51.17,71.45;Schymkent,42.32,69.60',UZ:'Taschkent,41.30,69.24;Samarkand,39.65,66.96',
+KG:'Bischkek,42.87,74.59',TJ:'Duschanbe,38.56,68.77',TM:'Aşgabat,37.96,58.33',MN:'Ulaanbaatar,47.89,106.91',
+AE:'Dubai,25.20,55.27;Abu Dhabi,24.45,54.38;Sharjah,25.35,55.42',
+SA:'Riad,24.71,46.68;Dschidda,21.49,39.19;Dammam,26.43,50.10;Mekka,21.42,39.83',
+QA:'Doha,25.29,51.53',KW:'Kuwait-Stadt,29.38,47.99',BH:'Manama,26.23,50.59',OM:'Maskat,23.59,58.41',
+IL:'Tel Aviv,32.09,34.78;Jerusalem,31.77,35.21;Haifa,32.79,34.99',JO:'Amman,31.95,35.93',LB:'Beirut,33.89,35.50',
+IQ:'Bagdad,33.31,44.36;Erbil,36.19,44.01',IR:'Teheran,35.69,51.39;Maschhad,36.30,59.60;Isfahan,32.65,51.67',
+EG:'Kairo,30.04,31.24;Alexandria,31.20,29.92;Gizeh,30.01,31.21',
+MA:'Casablanca,33.57,-7.59;Rabat,34.02,-6.84;Marrakesch,31.63,-8.01;Tanger,35.76,-5.83',
+DZ:'Algier,36.75,3.06;Oran,35.70,-0.63',TN:'Tunis,36.81,10.18',LY:'Tripolis,32.89,13.19',
+NG:'Lagos,6.52,3.38;Abuja,9.08,7.40;Kano,12.00,8.52;Ibadan,7.38,3.95;Port Harcourt,4.82,7.03',
+GH:'Accra,5.60,-0.19;Kumasi,6.69,-1.62',CI:'Abidjan,5.36,-4.01',SN:'Dakar,14.72,-17.47',CM:'Douala,4.05,9.77;Yaoundé,3.87,11.52',
+KE:'Nairobi,-1.29,36.82;Mombasa,-4.04,39.67',TZ:'Daressalam,-6.79,39.21;Dodoma,-6.16,35.75',UG:'Kampala,0.35,32.58',RW:'Kigali,-1.95,30.06',
+ET:'Addis Abeba,9.03,38.74',SD:'Khartum,15.50,32.56',CD:'Kinshasa,-4.44,15.27',
+ZA:'Johannesburg,-26.20,28.04;Kapstadt,-33.92,18.42;Durban,-29.86,31.02;Pretoria,-25.75,28.19;Port Elizabeth,-33.96,25.60',
+AO:'Luanda,-8.84,13.23',MZ:'Maputo,-25.97,32.57',ZM:'Lusaka,-15.39,28.32',ZW:'Harare,-17.83,31.05',NA:'Windhoek,-22.56,17.08',BW:'Gaborone,-24.63,25.92',
+MG:'Antananarivo,-18.88,47.51',MU:'Port Louis,-20.16,57.50',
+IN:'Mumbai,19.08,72.88;Delhi,28.61,77.21;Bangalore,12.97,77.59;Chennai,13.08,80.27;Kolkata,22.57,88.36;Hyderabad,17.39,78.49;Ahmedabad,23.02,72.57;Pune,18.52,73.86',
+PK:'Karatschi,24.86,67.01;Lahore,31.55,74.34;Islamabad,33.68,73.05',BD:'Dhaka,23.81,90.41;Chittagong,22.36,91.78',
+LK:'Colombo,6.93,79.85',NP:'Kathmandu,27.72,85.32',
+CN:'Shanghai,31.23,121.47;Peking,39.90,116.40;Shenzhen,22.54,114.06;Guangzhou,23.13,113.26;Chengdu,30.57,104.07;Chongqing,29.56,106.55;Wuhan,30.59,114.31;Hangzhou,30.27,120.16;Yiwu,29.31,120.07',
+HK:'Hongkong,22.32,114.17',MO:'Macau,22.20,113.54',TW:'Taipeh,25.03,121.57;Kaohsiung,22.63,120.30',
+JP:'Tokio,35.69,139.69;Osaka,34.69,135.50;Yokohama,35.44,139.64;Nagoya,35.18,136.91;Fukuoka,33.59,130.40;Sapporo,43.06,141.35;Kyoto,35.01,135.77',
+KR:'Seoul,37.57,126.98;Busan,35.18,129.08;Incheon,37.46,126.71;Daegu,35.87,128.60',
+TH:'Bangkok,13.76,100.50;Chiang Mai,18.79,98.99;Phuket,7.88,98.39',VN:'Ho-Chi-Minh-Stadt,10.82,106.63;Hanoi,21.03,105.85;Da Nang,16.05,108.22',
+MY:'Kuala Lumpur,3.14,101.69;Penang,5.41,100.33;Johor Bahru,1.49,103.74',SG:'Singapur,1.35,103.82',
+ID:'Jakarta,-6.21,106.85;Surabaya,-7.25,112.75;Bandung,-6.91,107.61;Medan,3.60,98.67;Denpasar,-8.65,115.22',
+PH:'Manila,14.60,120.98;Cebu,10.32,123.89;Davao,7.19,125.46',KH:'Phnom Penh,11.56,104.92',MM:'Rangun,16.87,96.20',LA:'Vientiane,17.97,102.63',
+AU:'Sydney,-33.87,151.21;Melbourne,-37.81,144.96;Brisbane,-27.47,153.03;Perth,-31.95,115.86;Adelaide,-34.93,138.60;Canberra,-35.28,149.13',
+NZ:'Auckland,-36.85,174.76;Wellington,-41.29,174.78;Christchurch,-43.53,172.64',
+US:'New York,40.71,-74.01;Los Angeles,34.05,-118.24;Chicago,41.88,-87.63;Houston,29.76,-95.37;Miami,25.76,-80.19;San Francisco,37.77,-122.42;Seattle,47.61,-122.33;Dallas,32.78,-96.80;Atlanta,33.75,-84.39;Boston,42.36,-71.06;Washington,38.91,-77.04;Las Vegas,36.17,-115.14;Phoenix,33.45,-112.07;Denver,39.74,-104.99',
+CA:'Toronto,43.65,-79.38;Vancouver,49.28,-123.12;Montreal,45.50,-73.57;Calgary,51.05,-114.07;Ottawa,45.42,-75.70;Edmonton,53.55,-113.49',
+MX:'Mexiko-Stadt,19.43,-99.13;Guadalajara,20.66,-103.35;Monterrey,25.69,-100.32;Cancún,21.16,-86.85;Tijuana,32.51,-117.04',
+GT:'Guatemala-Stadt,14.63,-90.51',CR:'San José,9.93,-84.08',PA:'Panama-Stadt,8.98,-79.52',CU:'Havanna,23.11,-82.37',DO:'Santo Domingo,18.49,-69.93',
+JM:'Kingston,17.97,-76.79',PR:'San Juan,18.47,-66.11',HN:'Tegucigalpa,14.07,-87.19',SV:'San Salvador,13.69,-89.22',NI:'Managua,12.11,-86.24',
+BR:'São Paulo,-23.55,-46.63;Rio de Janeiro,-22.91,-43.17;Brasília,-15.79,-47.88;Salvador,-12.97,-38.50;Fortaleza,-3.73,-38.53;Belo Horizonte,-19.92,-43.94;Manaus,-3.12,-60.02;Curitiba,-25.43,-49.27;Porto Alegre,-30.03,-51.23;Recife,-8.05,-34.88',
+AR:'Buenos Aires,-34.60,-58.38;Córdoba,-31.42,-64.18;Rosario,-32.94,-60.65;Mendoza,-32.89,-68.83',
+CL:'Santiago de Chile,-33.45,-70.67;Valparaíso,-33.05,-71.62',CO:'Bogotá,4.71,-74.07;Medellín,6.24,-75.58;Cali,3.45,-76.53;Barranquilla,10.96,-74.80',
+PE:'Lima,-12.05,-77.04;Arequipa,-16.41,-71.54',VE:'Caracas,10.48,-66.90',EC:'Quito,-0.18,-78.47;Guayaquil,-2.17,-79.92',
+BO:'La Paz,-16.50,-68.15;Santa Cruz,-17.81,-63.18',PY:'Asunción,-25.26,-57.58',UY:'Montevideo,-34.90,-56.16'
+};
+const CITIES=[];Object.entries(CITY_RAW).forEach(([cc,s])=>s.split(';').forEach(e=>{const [n,la,lo]=e.split(',');CITIES.push({name:n,cc,c:[+lo,+la]})}));
+const DN={};function cname(cc,l){l=l||LANG;try{DN[l]=DN[l]||new Intl.DisplayNames([l],{type:'region'});return DN[l].of(cc)}catch(e){return cc}}
+const flag=cc=>/^[A-Z]{2}$/.test(cc)?String.fromCodePoint(...[...cc].map(ch=>127397+ch.charCodeAt(0))):'';
+function regionOf([lon,lat]){
+  if(lon<-30)return lat>=25?'NA':'SA';
+  if(lon>160||(lon>110&&lat<-10))return 'OC';
+  if(lat>=36&&lon>=-25&&lon<45)return 'EU';
+  if(lat>=12&&lat<42&&lon>=34&&lon<63)return 'ME';
+  if(lat<37&&lon>=-20&&lon<52)return 'AF';
+  if((lat>=35&&lon>=45&&lon<90)||(lat>=50&&lon>=90))return 'CA';
+  return 'AS';
+}
+const kmOf=c=>Math.round(d3.geoDistance(ORIGIN,c)*6371/100)*100;
+DEST.forEach(d=>d.km=kmOf(d.c));
+function cityDest(name,cc,c){return {id:cc+':'+name,de:cname(cc,'de'),en:cname(cc,'en'),city:name,c,r:regionOf(c),km:kmOf(c)}}
+const dname=d=>LANG==='en'?d.en:d.de;
+const daysTxt=s=>s?(LANG==='en'?`approx. ${s} days`:`ca. ${s} Tage`):'–';
+const kmTxt=n=>'≈ '+n.toLocaleString(LANG==='en'?'en-US':'de-DE')+' km';
+function defaultDest(){const m=(navigator.language||'').match(/[-_]([a-z]{2})$/i);const cc=m?m[1].toUpperCase():'';
+  const alias={AT:'DE',CH:'DE',NL:'DE',BE:'FR',LU:'FR',IE:'GB'};const i=DEST.findIndex(d=>d.id===(alias[cc]||cc));return i<0?0:i}
+
+/* ================= Globus ================= */
+const HUBS=[['Weifang',119.16,36.71],['Changzhou',119.97,31.81],['Anji',119.68,30.64],['Ningbo',121.55,29.87],['Yongkang',120.04,28.89],['Foshan',113.12,23.02]];
+const cv=document.getElementById('globe'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1;
+function size(){DPR=Math.min(devicePixelRatio||1,2);W=document.documentElement.clientWidth||innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+size();addEventListener('resize',size);
+
+let land=null,borders=null;
+try{const topo=Datamap.prototype.worldTopo,key=Object.keys(topo.objects)[0];
+  land=topojson.merge(topo,topo.objects[key].geometries);borders=topojson.mesh(topo,topo.objects[key],(a,b)=>a!==b)}
+catch(e){console.warn('Kartendaten fehlen',e)}
+
+const proj=d3.geoOrthographic().clipAngle(90).precision(.4);
+const path=d3.geoPath(proj,ctx);
+const grat=d3.geoGraticule10();
+let rot=[-62,-30],target=null,spinning=!reduce,lastTouch=-1e9,hold=0,auto=true;
+const stars=Array.from({length:240},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+.2,p:Math.random()*6.28,s:.4+Math.random()*1.6}));
+
+function routePts(b){const it=d3.geoInterpolate(ORIGIN,b),n=72,pts=[],lift=Math.min(.32,.08+d3.geoDistance(ORIGIN,b)*.09);for(let i=0;i<=n;i++){const k=i/n;pts.push([...it(k),Math.sin(Math.PI*k)*lift])}return pts}
+let ROUTES=DEST.map(d=>routePts(d.c));
+let di=defaultDest();
+
+const inp=document.getElementById('dest'),list=document.getElementById('dlist'),hKm=document.getElementById('hKm');
+const label=d=>`${d.city}, ${d.id.includes(':')?cname(d.id.split(':')[0]):dname(d)}`;
+function aimAt(i){const d=DEST[i],mid=d3.geoInterpolate(ORIGIN,d.c)(.5);target=[-mid[0],-Math.max(-55,Math.min(55,mid[1]))*.85]}
+function setDest(i){di=i;aimAt(i);if(document.activeElement!==inp)inp.value=label(DEST[i]);
+  const d=DEST[i],tm=TIMES[d.r]||{};
+  hKm.textContent=kmTxt(d.km)+' · '+daysTxt(tm.air)+' ✈'+(tm.rail?'  ·  '+daysTxt(tm.rail)+(LANG==='en'?' by rail':' Bahn'):'')}
+function pick(name,cc,c){auto=false;hold=performance.now()+8000;
+  let i=DEST.findIndex(d=>d.city===name&&(d.id===cc||d.id.startsWith(cc)||d.id===cc+':'+name));
+  if(i<0){DEST.push(cityDest(name,cc,c));ROUTES.push(routePts(c));i=DEST.length-1}
+  inp.blur();closeList();setDest(i)}
+
+/* Ortssuche: alle Städte aus der Liste, dazu weltweite Suche über OpenStreetMap */
+let items=[],act=-1,remote=[],rq=0,timer=null;
+const CCS=Object.keys(CITY_RAW);
+function closeList(){list.classList.remove('open');inp.setAttribute('aria-expanded','false');act=-1}
+function render(q){
+  const qn=nrm(q.trim());let html='';items=[];
+  const add=(name,cc,c)=>{items.push({name,cc,c});return `<li data-i="${items.length-1}" role="option">${name}<span>${flag(cc)} ${cname(cc)}</span></li>`};
+  if(!qn){html+=`<li class="hd">${t('Beliebte Ziele')}</li>`;DEST.slice(0,17).forEach(d=>{html+=add(d.city,d.id.split(/[-:]/)[0],d.c)});
+    CCS.forEach(cc=>{html+=`<li class="hd">${t('Städte in')} ${flag(cc)} ${cname(cc)}</li>`;CITIES.filter(x=>x.cc===cc).forEach(x=>html+=add(x.name,x.cc,x.c))})}
+  else{
+    const countries=CCS.filter(cc=>[cname(cc,'de'),cname(cc,'en'),cc].some(n=>nrm(n).startsWith(qn))).slice(0,2);
+    countries.forEach(cc=>{html+=`<li class="hd">${t('Städte in')} ${flag(cc)} ${cname(cc)}</li>`;CITIES.filter(x=>x.cc===cc).forEach(x=>html+=add(x.name,x.cc,x.c))});
+    const local=CITIES.filter(x=>!countries.includes(x.cc)&&nrm(x.name).includes(qn)).sort((a,b)=>nrm(a.name).startsWith(qn)?-1:nrm(b.name).startsWith(qn)?1:0).slice(0,8);
+    if(local.length){html+=`<li class="hd">${t('Städte')}</li>`;local.forEach(x=>html+=add(x.name,x.cc,x.c))}
+    const seen=new Set(items.map(x=>nrm(x.name)+x.cc));
+    const rem=remote.filter(r=>!seen.has(nrm(r.name)+r.cc)).slice(0,8);
+    if(rem.length){html+=`<li class="hd">${t('Weitere Orte')}</li>`;rem.forEach(r=>html+=add(r.name,r.cc,r.c))}
+    if(!items.length)html+=`<li class="empty">${t('Suche läuft …')}</li>`;
+    html+=`<li class="ft">${t('Ortssuche')}: © OpenStreetMap</li>`;
+  }
+  list.innerHTML=html;act=-1;list.classList.add('open');inp.setAttribute('aria-expanded','true')}
+function fetchRemote(q){const id=++rq;
+  fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=12&lang=${LANG}&osm_tag=place`).then(r=>r.json()).then(j=>{
+    if(id!==rq)return;
+    remote=(j.features||[]).filter(f=>['city','town','village','municipality'].includes(f.properties.osm_value)&&f.properties.countrycode)
+      .map(f=>({name:f.properties.name,cc:f.properties.countrycode.toUpperCase(),c:f.geometry.coordinates}));
+    if(document.activeElement===inp)render(inp.value);
+  }).catch(()=>{if(id===rq&&document.activeElement===inp&&!items.length)list.innerHTML=`<li class="empty">${t('Keine Treffer')}</li>`})}
+inp.addEventListener('focus',()=>{auto=false;inp.select();remote=[];render('')});
+inp.addEventListener('input',()=>{remote=[];render(inp.value);clearTimeout(timer);const q=inp.value.trim();if(q.length>=2)timer=setTimeout(()=>fetchRemote(q),280)});
+inp.addEventListener('keydown',e=>{const lis=[...list.querySelectorAll('li[data-i]')];
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!lis.length)return;act=(act+(e.key==='ArrowDown'?1:-1)+lis.length)%lis.length;lis.forEach((l,k)=>l.classList.toggle('act',k===act));lis[act].scrollIntoView({block:'nearest'})}
+  else if(e.key==='Enter'){e.preventDefault();const l=lis[act<0?0:act];if(l){const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)}}
+  else if(e.key==='Escape'){inp.blur()}});
+list.addEventListener('mousedown',e=>{const l=e.target.closest('li[data-i]');if(!l)return;e.preventDefault();const it=items[+l.dataset.i];pick(it.name,it.cc,it.c)});
+inp.addEventListener('blur',()=>{setTimeout(()=>{closeList();inp.value=label(DEST[di])},120)});
+addEventListener('langchange',()=>setDest(di));
+setDest(di);rot=target.slice();
+/* Ziele wechseln automatisch durch, bis jemand selbst eines wählt */
+setInterval(()=>{if(auto&&!reduce&&performance.now()>hold)setDest((di+1)%17)},3500);
+
+const spinBtn=document.getElementById('spin');
+spinBtn.addEventListener('click',()=>{spinning=!spinning;auto=spinning;spinBtn.setAttribute('aria-pressed',spinning)});
+if(reduce)spinBtn.setAttribute('aria-pressed','false');
+
+let drag=null,R=300,CX=0,CY=0;
+cv.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;drag={x:e.clientX,y:e.clientY,r:rot.slice()};target=null;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;const k=70/Math.max(R,200);rot=[drag.r[0]+(e.clientX-drag.x)*k,Math.max(-70,Math.min(70,drag.r[1]-(e.clientY-drag.y)*k))]});
+const end=()=>{if(drag){lastTouch=performance.now();hold=lastTouch+6000}drag=null;cv.classList.remove('drag')};
+cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+function layout(){
+  const max=Math.max(1,document.documentElement.scrollHeight-H),p=Math.min(1,scrollY/max);
+  const base=Math.min(W,H)*(W<640?0.62:0.44),e=d3.easeCubicInOut(Math.min(1,p*1.6));
+  R=base*(1+0.45*e);CX=W/2+Math.sin(p*Math.PI*1.6)*W*(W<640?0.12:0.24);CY=H*0.56+e*H*0.42;
+}
+function xyz(lon,lat,h){
+  const r=d3.geoRotation(rot)([lon,lat]),l=r[0]*Math.PI/180,f=r[1]*Math.PI/180;
+  const x=Math.cos(f)*Math.sin(l),y=Math.sin(f),z=Math.cos(f)*Math.cos(l),s=1+(h||0);
+  return [CX+R*x*s,CY-R*y*s,z>=0||Math.hypot(x*s,y*s)>1,z];
+}
+function frame(t){
+  layout();
+  if(target&&!drag){rot[0]+=(target[0]-rot[0])*0.045;rot[1]+=(target[1]-rot[1])*0.045;if(Math.abs(target[0]-rot[0])<.05&&Math.abs(target[1]-rot[1])<.05)target=null}
+  else if(spinning&&!drag&&!auto&&t>hold){rot[0]+=0.04}
+  proj.translate([CX,CY]).scale(R).rotate(rot);
+  ctx.clearRect(0,0,W,H);
+  for(const s of stars){const a=reduce?.5:.25+.35*(1+Math.sin(t*.001*s.s+s.p))/2;ctx.fillStyle=`rgba(241,230,204,${a})`;ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,6.283);ctx.fill()}
+  let g=ctx.createRadialGradient(CX,CY,R*.92,CX,CY,R*1.32);
+  g.addColorStop(0,'rgba(207,169,90,.20)');g.addColorStop(.4,'rgba(207,169,90,.06)');g.addColorStop(1,'rgba(207,169,90,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(CX,CY,R*1.32,0,6.283);ctx.fill();
+  g=ctx.createRadialGradient(CX-R*.35,CY-R*.45,R*.1,CX,CY,R);g.addColorStop(0,'#1a2114');g.addColorStop(.7,'#0c0f09');g.addColorStop(1,'#070906');
+  ctx.beginPath();path({type:'Sphere'});ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();path(grat);ctx.strokeStyle='rgba(236,226,196,.05)';ctx.lineWidth=.6;ctx.stroke();
+  if(land){ctx.beginPath();path(land);ctx.fillStyle='rgba(38,46,29,.95)';ctx.fill();ctx.strokeStyle='rgba(236,226,196,.16)';ctx.lineWidth=.7;ctx.stroke();
+    ctx.beginPath();path(borders);ctx.strokeStyle='rgba(236,226,196,.06)';ctx.lineWidth=.5;ctx.stroke()}
+  g=ctx.createLinearGradient(CX-R,CY-R,CX+R,CY+R);g.addColorStop(0,'rgba(235,211,155,.55)');g.addColorStop(.5,'rgba(207,169,90,.10)');g.addColorStop(1,'rgba(154,120,56,.35)');
+  ctx.beginPath();path({type:'Sphere'});ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.stroke();
+  // alle Routen
+  ROUTES.forEach((pts,i)=>{const on=i===di;
+    ctx.setLineDash(on?[6,6]:[2,5]);ctx.lineDashOffset=reduce?0:-t*(on?.03:.012);
+    ctx.strokeStyle=on?'rgba(235,211,155,.95)':'rgba(207,169,90,.26)';ctx.lineWidth=on?1.6:.9;
+    ctx.beginPath();let pen=false;
+    for(const p of pts){const q=xyz(p[0],p[1],p[2]);if(q[2]){pen?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);pen=true}else pen=false}
+    ctx.stroke()});
+  ctx.setLineDash([]);
+  if(!reduce){const pts=ROUTES[di],k=(t*0.00022)%1,p=pts[Math.floor(k*(pts.length-1))],q=xyz(p[0],p[1],p[2]);
+    if(q[2]){const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],10);gg.addColorStop(0,'rgba(255,240,200,.95)');gg.addColorStop(1,'rgba(235,211,155,0)');ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],10,0,6.283);ctx.fill()}}
+  // alle Ziele, aktives mit Radar-Ping und Name
+  DEST.forEach((d,i)=>{const q=xyz(d.c[0],d.c[1],0);if(q[3]<0)return;const on=i===di;
+    ctx.fillStyle=on?'#ebd39b':'rgba(241,230,204,.6)';ctx.beginPath();ctx.arc(q[0],q[1],on?3.4:2,0,6.283);ctx.fill();
+    if(on){for(let k=0;k<2;k++){const ph=reduce?.4:((t*.0006+k*.5)%1);ctx.strokeStyle=`rgba(235,211,155,${.7*(1-ph)})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(q[0],q[1],4+ph*22,0,6.283);ctx.stroke()}
+      ctx.font='600 11px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(241,230,204,.92)';ctx.fillText(d.city.toUpperCase(),q[0]+10,q[1]-8)}});
+  HUBS.forEach(h=>{const q=xyz(h[1],h[2],0);if(q[3]<0)return;
+    const gg=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],9);gg.addColorStop(0,'rgba(235,211,155,.6)');gg.addColorStop(1,'rgba(235,211,155,0)');
+    ctx.fillStyle=gg;ctx.beginPath();ctx.arc(q[0],q[1],9,0,6.283);ctx.fill();ctx.fillStyle='#f1e6cc';ctx.beginPath();ctx.arc(q[0],q[1],1.9,0,6.283);ctx.fill()});
+  const cn=xyz(104,35,0);if(cn[3]>.15&&W>720){ctx.font='500 10.5px "IBM Plex Mono",monospace';ctx.fillStyle='rgba(207,169,90,.85)';ctx.fillText(LANG==='en'?'CHINA · 6 SITES':'CHINA · 6 STANDORTE',cn[0]-60,cn[1]+4)}
+  g=ctx.createRadialGradient(W*.1,H*1.05,0,W*.1,H*1.05,Math.max(W,H)*.6);g.addColorStop(0,'rgba(154,120,56,.16)');g.addColorStop(1,'rgba(154,120,56,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ================= Herkunft: China-Karte ================= */
+Object.assign(EN,{
+'Herkunft':'Origin','Direkt aus den Industriezentren Chinas':'Straight from China’s industrial centres',
+'Klicken Sie auf einen Standort: Wir zeigen Ihnen, welche Produkte dort hergestellt werden.':'Click a location to see which products are made there.',
+'← Ganz China':'← All of China','Karte der Produktionsstandorte in China':'Map of production sites in China',
+'6 Produktionsstandorte':'6 production sites','Produktionsregionen':'Production regions','Wählen Sie einen Standort':'Choose a location',
+'Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.':'We work with manufacturers in the regions that specialise in farm machinery, garden tools and furniture.',
+'Produkte aus dieser Region anfragen':'Enquire about products from this region',
+'Motorgeräte':'Powered equipment','Möbel & Bambus':'Furniture & bamboo','Gartengeräte & Hafen':'Garden tools & port','Werkzeug & Gartengeräte':'Tools & garden tools','Möbel & Outdoor-Möbel':'Furniture & outdoor furniture',
+'Traktoren':'Tractors','Agrargeräte':'Farm equipment','Anhänger':'Trailers','Einachsschlepper':'Two-wheel tractors','Motorhacken':'Power tillers','Motoren':'Engines','Stühle':'Chairs','Möbel':'Furniture','Bambus':'Bamboo','Gartengeräte':'Garden tools','Export':'Export','Werkzeug':'Tools','Metallwaren':'Metal goods','Lounge':'Lounge','Gartentische':'Garden tables',
+'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.':'Shandong is one of China’s most important locations for farm machinery. Many tractor and farm equipment makers are based around Weifang.',
+'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.':'Changzhou is known for two-wheel tractors, power tillers and small engines for farming and gardening.',
+'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.':'Anji is a centre of chair and furniture production and known for bamboo products.',
+'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.':'Ningbo has one of the world’s largest ports and many makers of garden tools, irrigation and household goods.',
+'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.':'Yongkang is considered China’s hardware capital, with many makers of tools, garden tools and metal goods.',
+'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.':'Foshan, especially the Shunde district, is one of the world’s largest furniture centres, including garden and outdoor furniture.',
+'KI-Symbolbild: Industriegebiet Anji':'AI illustration: Anji industrial area'
+});
+const HUBD=[
+ {id:'weifang',city:'Weifang',o:[10,4],prov:'Shandong',focus:'Landtechnik',c:[119.16,36.71],txt:'Shandong zählt zu den wichtigsten Standorten für Landmaschinen in China. Rund um Weifang sitzen zahlreiche Hersteller von Traktoren und Agrargeräten.',tags:['Traktoren','Agrargeräte','Anhänger']},
+ {id:'changzhou',city:'Changzhou',o:[-10,-2,1],prov:'Jiangsu',focus:'Motorgeräte',c:[119.97,31.81],txt:'Changzhou ist bekannt für Einachsschlepper, Motorhacken und kleine Motoren für Landwirtschaft und Garten.',tags:['Einachsschlepper','Motorhacken','Motoren']},
+ {id:'anji',city:'Anji',o:[-10,10,1],prov:'Zhejiang',focus:'Möbel & Bambus',c:[119.68,30.64],txt:'Anji ist ein Zentrum der Stuhl- und Möbelproduktion und bekannt für Bambusprodukte.',tags:['Stühle','Möbel','Bambus']},
+ {id:'ningbo',city:'Ningbo',o:[10,0],prov:'Zhejiang',focus:'Gartengeräte & Hafen',c:[121.55,29.87],txt:'Ningbo hat einen der größten Häfen der Welt und viele Hersteller von Gartengeräten, Bewässerung und Haushaltswaren.',tags:['Gartengeräte','Bewässerung','Export']},
+ {id:'yongkang',city:'Yongkang',o:[10,10],prov:'Zhejiang',focus:'Werkzeug & Gartengeräte',c:[120.04,28.89],txt:'Yongkang gilt als Hardware-Hauptstadt Chinas – mit vielen Herstellern von Werkzeug, Gartengeräten und Metallwaren.',tags:['Werkzeug','Gartengeräte','Metallwaren']},
+ {id:'foshan',city:'Foshan',o:[10,4],prov:'Guangdong',focus:'Möbel & Outdoor-Möbel',c:[113.12,23.02],txt:'Foshan, vor allem der Bezirk Shunde, ist eines der größten Möbelzentren der Welt – auch für Garten- und Outdoor-Möbel.',tags:['Outdoor-Möbel','Lounge','Gartentische']}
+];
+const HUB_PHOTO={
+ weifang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Skyline_of_Weifang_2020-11-27_05.jpg/960px-Skyline_of_Weifang_2020-11-27_05.jpg',page:'https://commons.wikimedia.org/wiki/File:Skyline_of_Weifang_2020-11-27_05.jpg',credit:'Foto: Ngguls · CC BY-SA 4.0 · Wikimedia Commons'},
+ changzhou:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Changzhou_Skyline,_Jul_25_2022.jpg/960px-Changzhou_Skyline,_Jul_25_2022.jpg',page:'https://commons.wikimedia.org/wiki/File:Changzhou_Skyline,_Jul_25_2022.jpg',credit:'Foto: A Chinese user · CC BY-SA 4.0 · Wikimedia Commons'},
+ anji:{src:'hub-anji.jpg',credit:'KI-Symbolbild: Industriegebiet Anji'},
+ ningbo:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Beilun_Port_2020-05-02.jpg/960px-Beilun_Port_2020-05-02.jpg',page:'https://commons.wikimedia.org/wiki/File:Beilun_Port_2020-05-02.jpg',credit:'Foto: Nbfreeh · CC BY-SA 4.0 · Wikimedia Commons'},
+ yongkang:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg/960px-%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',page:'https://commons.wikimedia.org/wiki/File:%E6%B0%B8%E5%BA%B7%E4%B8%89%E6%B1%9F%E4%BA%A4%E6%B1%87.jpg',credit:'Foto: Tyj1982338 · CC BY 2.0 · Wikimedia Commons'},
+ foshan:{src:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg/960px-GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',page:'https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E5%BB%A3%E6%9D%B1%E6%97%85%E9%81%8A_Guangdong_Tour_bus_view_1333pm_January_2024_R12S_208.jpg',credit:'Foto: Lau Hau Yatyue Tiger · CC0 · Wikimedia Commons'}
+};
+(function(){
+  const g=d3.select('#hubg'),map=document.querySelector('.hubmap'),card=document.getElementById('hubCard'),chips=document.getElementById('hubChips');
+  if(!g.node())return;
+  let proj=null,cur=-1,K=1;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const fmtC=c=>`${Math.abs(c[1]).toFixed(2)}° N · ${Math.abs(c[0]).toFixed(2)}° E`;
+  function renderCard(i){const h=HUBD[i],ph=HUB_PHOTO[h.id];
+    card.innerHTML=`<div class="hubph">${ph?`<img src="${ph.src}" alt="${esc(h.city)}" loading="lazy" onerror="this.remove()">${ph.page?`<a class="cr notranslate" translate="no" href="${ph.page}" target="_blank" rel="noopener">${esc(ph.credit)}</a>`:`<span class="cr">${esc(t(ph.credit))}</span>`}`:''}<div class="fb" style="z-index:-1"><b class="notranslate" translate="no">${h.city.toUpperCase()}</b><span>${fmtC(h.c)}</span></div></div>
+      <div class="hubbody"><div class="loc">${h.prov} · ${esc(t(h.focus))}</div><h3 class="notranslate" translate="no">${h.city}</h3><p>${esc(t(h.txt))}</p><div class="tg">${h.tags.map(x=>`<span>${esc(t(x))}</span>`).join('')}</div>
+      <a href="index-alt.html#kontakt" class="btn btn-primary">${esc(t('Produkte aus dieser Region anfragen'))} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>`;
+    card.classList.remove('fade');void card.offsetWidth;card.classList.add('fade')}
+  function renderIntro(){card.innerHTML=`<div class="hubph"><div class="fb"><b>CHINA</b><span>${esc(t('6 Produktionsstandorte'))}</span></div></div><div class="hubbody"><div class="loc">${esc(t('Produktionsregionen'))}</div><h3>${esc(t('Wählen Sie einen Standort'))}</h3><p>${esc(t('Wir arbeiten mit Herstellern in den Regionen, die auf Landtechnik, Gartengeräte und Möbel spezialisiert sind.'))}</p></div>`}
+  function renderChips(){chips.innerHTML=HUBD.map((h,i)=>`<button type="button" class="${i===cur?'on':''}" data-i="${i}">${h.city}</button>`).join('')}
+  function zoomTo(i){cur=i;renderChips();g.selectAll('.hub').classed('on',(d,k)=>k===i);
+    if(!proj){i<0?renderIntro():renderCard(i);return}
+    let tr;if(i<0){K=1;tr=d3.zoomIdentity;map.classList.remove('zoomed');renderIntro()}
+    else{const [x,y]=proj(HUBD[i].c);K=4.2;tr=d3.zoomIdentity.translate(300-x*K,250-y*K).scale(K);map.classList.add('zoomed');renderCard(i);if(innerWidth<900)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),1150)}
+    const dur=reduce?0:1100;
+    g.transition().duration(dur).ease(d3.easeCubicInOut).attr('transform',tr.toString());
+    g.selectAll('.hub circle.d').transition().duration(dur).attr('r',d=>(HUBD.indexOf(d)===i?6:4.5)/K);
+    g.selectAll('.hub circle.p').transition().duration(dur).attr('r',9/K);
+    g.selectAll('.hub text').transition().duration(dur).attr('font-size',13/K).attr('x',d=>d.o[0]/K).attr('y',d=>d.o[1]/K)}
+  chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)zoomTo(+b.dataset.i===cur?-1:+b.dataset.i)});
+  document.getElementById('hubBack').onclick=()=>zoomTo(-1);
+  renderChips();renderIntro();
+  addEventListener('langchange',()=>cur<0?renderIntro():renderCard(cur));
+  function draw(cn){
+    proj=d3.geoMercator().fitExtent([[20,20],[580,480]],cn);
+    g.append('path').attr('class','land').attr('d',d3.geoPath(proj)(cn));
+    const hub=g.selectAll('g.hub').data(HUBD).join('g').attr('class','hub').attr('transform',d=>`translate(${proj(d.c)})`).on('click',(e,d)=>{const i=HUBD.indexOf(d);zoomTo(i===cur?-1:i)});
+    hub.append('circle').attr('class','p').attr('r',9);
+    hub.append('circle').attr('class','d').attr('r',4.5);
+    hub.append('text').attr('x',d=>d.o[0]).attr('y',d=>d.o[1]).attr('text-anchor',d=>d.o[2]?'end':'start').attr('font-size',13).text(d=>d.city);
+  }
+  function fallback(){try{const tp=Datamap.prototype.worldTopo,key=Object.keys(tp.objects)[0];const f=topojson.feature(tp,tp.objects[key]).features.find(f=>f.id==='CHN');if(f)draw(f)}catch(e){}}
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then(r=>r.json()).then(tp=>{
+    const f=topojson.feature(tp,tp.objects.countries).features.find(f=>f.id==='156');f?draw(f):fallback()}).catch(fallback);
+})();
+
+
+/* ================= Produkt-Laufband ================= */
+(function(){
+  const P=window.KP||[];if(!P.length)return;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const fresh=P.filter(p=>p.b==='SHENGYAO');
+  const pick=(arr,n)=>{const st=Math.max(1,Math.floor(arr.length/n));return arr.filter((_,i)=>i%st===0).slice(0,n)};
+  const r1=pick(fresh,16);
+  const r2=[...pick(P.filter(p=>p.b==='TNYAN'),6),...pick(P.filter(p=>p.b==='SCHENG'),5),...pick(P.filter(p=>p.k==='zubehoer'),5),...pick(P.filter(p=>p.k==='wasser'||p.k==='anzucht'),3)];
+  const nm=x=>(LANG==='en'&&window.KEN&&KEN[x])||x;
+  const tile=p=>`<a class="mq-tile" href="sortiment.html?p=${encodeURIComponent(p.i)}" data-vt><span class="ti"><img src="${p.im}" alt="" loading="lazy" decoding="async"></span><span class="tc"><small class="notranslate" translate="no">${esc(p.b||'')} · ${esc(p.i)}</small><b>${esc(nm(p.n))}</b></span></a>`;
+  const fill=(id,arr,dur)=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=arr.map(tile).join('')+arr.map(tile).join('').replace(/<a /g,'<a tabindex="-1" aria-hidden="true" ');el.style.setProperty('--dur',dur+'s')};
+  fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);
+  const ttl=document.getElementById('mqTitle');if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO');
+  addEventListener('langchange',()=>{fill('mq1',r1,r1.length*5);fill('mq2',r2,r2.length*5.5);if(ttl)ttl.textContent=(LANG==='en'?fresh.length+' new tools from SHENGYAO':fresh.length+' neue Geräte von SHENGYAO')});
+})();
+applyLang();fixTotals();
+</script>
+<script>
+(function(){
+  const P=window.KP||[],C=window.KC||[],box=document.getElementById('kmegain'),mega=document.getElementById('kmega');
+  if(!box)return;
+  const IMG={akkugarten:'pi/sy-13.webp',werkzeug:'pi/ex21.webp',zubehoer:'pi/csz1001.webp',anzucht:'pi/ycs07.webp',wasser:'pi/sy-44.webp'};
+  const FEAT='JD-4001';
+  const n=(k,s)=>P.filter(p=>p.k===k&&(!s||p.s===s)).length;
+  const on=C.filter(c=>n(c[0])),req=C.filter(c=>!n(c[0]));
+  const f=P.find(p=>p.i===FEAT)||P[P.length-1];
+  const nm=x=>(typeof LANG!=='undefined'&&LANG==='en'&&window.KEN&&KEN[x])||x;
+  const EN2={'Ganzes Sortiment':'Full range','Herkunft':'Origin','Ablauf':'Process','Kontakt & Anfrage':'Contact & enquiry','Neu im Sortiment':'New in our range','Auf Anfrage':'On request','Alle':'All','Artikel':'items'};
+  const L=x=>(typeof LANG!=='undefined'&&LANG==='en'&&EN2[x])||x;
+  function build(){box.innerHTML=
+    `<div class="kmob"><a href="sortiment.html">${L('Ganzes Sortiment')}</a><a href="index.html#herkunft">${L('Herkunft')}</a><a href="index.html#ablauf">${L('Ablauf')}</a><a href="index.html#vorteile">B2B &amp; B2C</a><a href="index-alt.html#kontakt">${L('Kontakt & Anfrage')}</a></div>`+
+    on.map(([k,name,d,subs])=>`<div class="kcol"><a class="kch" href="sortiment.html?k=${k}"><span class="ki"><img src="${IMG[k]||''}" alt="" loading="lazy"></span><span class="kt2"><b>${nm(name)}</b><small>${n(k)}</small></span></a><ul>${subs.filter(s=>n(k,s[0])).map(s=>`<li><a href="sortiment.html?k=${k}&amp;s=${s[0]}">${nm(s[1])}<span>${n(k,s[0])}</span></a></li>`).join('')}</ul></div>`).join('')+
+    `<div class="kside">${f?`<a class="kfeat" href="sortiment.html?p=${encodeURIComponent(f.i)}" data-vt><span class="ki"><img src="${f.im}" alt="" loading="lazy"></span><span class="kt2"><small>${L('Neu im Sortiment')}</small><b>${nm(f.n)}</b></span></a>`:''}<div class="kreq"><p>${L('Auf Anfrage')}</p>${req.map(c=>`<a href="sortiment.html?k=${c[0]}">${nm(c[1])}</a>`).join('')}</div><a class="kall" href="sortiment.html">${L('Alle')} ${P.length} ${L('Artikel')}</a></div>`;
+  }
+  build();addEventListener('langchange',build);
+  const btns=[document.getElementById('kmb'),document.getElementById('kbg')].filter(Boolean);
+  let t=null;
+  function set(open){mega.classList.toggle('open',open);btns.forEach(b=>b.setAttribute('aria-expanded',open))}
+  btns.forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();set(!mega.classList.contains('open'))}));
+  const mb=document.getElementById('kmb');
+  if(mb&&matchMedia('(hover:hover)').matches){
+    const enter=()=>{clearTimeout(t);t=setTimeout(()=>set(true),120)},leave=()=>{clearTimeout(t);t=setTimeout(()=>set(false),220)};
+    mb.addEventListener('mouseenter',enter);mb.addEventListener('mouseleave',leave);mega.addEventListener('mouseenter',()=>clearTimeout(t));mega.addEventListener('mouseleave',leave);
+  }
+  document.addEventListener('click',e=>{if(!e.target.closest('#knav'))set(false)});
+  addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  /* Seitenübergang: Produktbild fliegt in die Detailansicht */
+  document.addEventListener('click',e=>{const a=e.target.closest('a[data-vt]');if(!a)return;const im=a.querySelector('img');if(im)im.style.viewTransitionName='prod';},true);
+  addEventListener('pageshow',()=>document.querySelectorAll('a[data-vt] img').forEach(i=>i.style.viewTransitionName=''));
+})();
+</script>
+<script>
+/* Rundgang v4: Sturzflug aus den Wolken per Scrollen, danach Drohnenflüge zwischen fünf lebenden Szenen */
+(function(){
+  const track=document.getElementById('ttrack');if(!track)return;
+  const st=document.getElementById('tstage'),cv=document.getElementById('tcv'),
+        IM=[...st.querySelectorAll('.tst:not(.tcl)')],CLD=st.querySelector('.tcl'),hsBox=document.getElementById('ths'),card=document.getElementById('tcard'),
+        nav=document.getElementById('tnav'),nameEl=document.getElementById('tname'),stepEl=document.getElementById('tstep'),
+        hint=document.getElementById('thint'),strip=document.getElementById('tstrip'),sr=document.getElementById('tsr'),cnt=document.getElementById('tcount'),
+        LV=st.querySelector('.tloop'),SC=st.querySelector('.tscrub'),intro=st.querySelector('.tintro'),fade=st.querySelector('.tfade'),
+        hud=st.querySelector('.thud'),bar=st.querySelector('.tbar i'),scn=st.querySelector('.tscene');
+  const P=window.KP||[],byId=Object.fromEntries(P.map(p=>[p.i,p]));
+  const EN=()=>typeof LANG!=='undefined'&&LANG==='en';
+  const nm=x=>(EN()&&window.KEN&&KEN[x])||x;
+  const T=x=>EN()?({'Vorgarten':'Front garden','Terrasse':'Terrace','Gemüsegarten':'Kitchen garden','Gewächshaus':'Greenhouse','Werkstatt':'Workshop',
+    'Im Shop ansehen':'View in shop','Merken':'Save','Gemerkt':'Saved','Tippen zum Weitergehen':'Tap to fly on','Klicken zum Weitergehen':'Click to fly on','Landen':'Land','Zurück':'Back','Weiter':'Next','Produkte in dieser Szene':'products in this scene','Anflug':'Approach','Station':'Stop','Höhe':'Altitude','Tempo':'Speed'}[x]||x):x;
+  const B='tour/v2/',V='tour/v3/',IW=1672,IH=941;
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S=[
+    {n:'Vorgarten',img:'s1.webp',fx:50,h:[[15,72,'4CD-45E-Z'],[36,58,'GCJ-5003'],[90,53,'CFJ-2005'],[43,41,'CSL2025'],[51,48,'CSL2026'],[80,41,'CSL2016'],[47,56,'CSL2032'],[60,57,'CSL2030'],[10,16,'CZM2001'],[15,24,'CZM2004'],[31,39,'YCP08'],[96,64,'CFZ5001'],[95,78,'SL1011'],[85,78,'CSL2014'],[22,49,'YCP07'],[27,59,'CSL2005'],[90,20,'CZM1003']]},
+    {n:'Terrasse',img:'s2.webp',fx:55,h:[[74,48,'SC-2433B-MBS'],[59,29,'SP-2613B'],[86,60,'CSL2016'],[13,76,'CSL2018'],[14,53,'CSL2033'],[22,60,'CSL2015'],[79.5,34,'CSL2012'],[85,31,'CZM1012'],[90,36,'YCM09'],[84,58,'CSL1004'],[91,77,'CSL1005'],[42,33,'DFS-1002'],[34,64,'EX700'],[92.5,12,'EX1040']]},
+    {n:'Gewächshaus',img:'s4.webp',fx:50,h:[[12,56,'YCS07'],[27,46,'YCS08'],[27,61,'YCS02'],[19,74,'YCS01'],[68,87,'YCS05'],[34,33,'YCS06'],[71,56,'YCS04'],[30,33,'CSL2012'],[57,69,'CSL2014'],[21,30,'CZM1014'],[8,71,'CSL1001'],[74,66,'SL1001'],[54,33,'CSL1014'],[78.5,42,'CSL2022'],[83,43,'CQT1015'],[44,33,'CSL1017'],[16,14,'CSZ2003'],[92.5,48,'SL1004'],[86,17,'CSL1011']]},
+    {n:'Gemüsegarten',img:'s3.webp',fx:50,h:[[14,51,'WGJ-10001'],[87.5,31,'SC-25HZ50-L'],[65,58,'EX4100'],[24,29,'CZM1007'],[8,43,'CSZ1013'],[33,21,'CZM1001'],[78,47,'CSL2028'],[72,46,'CSL2031'],[44,53,'CQT1015'],[36,63,'CSL1003'],[29,50,'YCP01'],[55,42,'YCP14'],[40,57,'CZM1013'],[71,36,'SL1006'],[90,57,'SP-4001'],[82,66,'JD-1008'],[86,83,'DJ-3003'],[37.5,78,'CSL2003'],[43,80,'CSL2001']]},
+    {n:'Werkstatt',img:'s5.webp',fx:50,h:[[24,12,'EX18'],[31,10,'EX166'],[39,13,'EX125A'],[49,12,'EX26'],[59,12,'EX165'],[29,26,'EX8500'],[41,26,'EX321'],[49,26,'EX320'],[37.5,59,'EX5012'],[54,59,'SC-30DSJ50'],[84,40,'EX6012'],[57.5,27,'EX300'],[30,71,'EX1L'],[51,77,'EX508'],[70.5,31,'EX12'],[29,41,'CSZ1004'],[68,12,'CSL2002'],[71.5,12,'CSL2004'],[41,36,'3CXD-700D'],[70,69,'CFJ-1001'],[15,71,'WGJ-10004'],[80,24,'YCM07']]}
+  ];
+  S.forEach(s=>s.h=s.h.filter(h=>byId[h[2]]));
+  IM.forEach((im,i)=>{im.src=B+S[i].img;im.style.objectPosition=S[i].fx+'% 50%'});CLD.src=V+'wolken.webp';
+  /* Videos: Flüge f/b, lebende Szenen l (Loop, erstes = letztes Bild), Sturzflug s0 (dicht gesetzte Schlüsselbilder zum Scrubben) */
+  const VD=document.createElement('video');VD.className='tvid';
+  [VD,LV,SC].forEach(v=>{v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.disablePictureInPicture=true});
+  VD.preload='auto';VD.setAttribute('aria-hidden','true');cv.replaceWith(VD);
+  const MOB=matchMedia('(max-width:900px),(pointer:coarse)').matches||!!(navigator.connection&&navigator.connection.saveData);
+  const vurl=(dir,k)=>V+'vid/'+(MOB?'m':'')+(dir>0?'f':'b')+k+'.mp4'+(MOB?'?v=4':(k<4?'?v=3':'?v=2'));
+  const LOOPS=window.KLOOPS||[];   /* Szenen-Indizes, für die schon ein Loop existiert */
+  const lurl=i=>V+'vid/'+(MOB?'m':'')+'l'+i+'.mp4?v=1';
+  SC.src=V+'vid/'+(MOB?'m':'')+'s0.mp4?v=1';SC.preload='auto';
+  const warmed={};const warmU=u=>{if(warmed[u])return;warmed[u]=1;fetch(u).catch(()=>{warmed[u]=0})};
+  let W=0,H=0;
+  function size(){W=st.clientWidth;H=st.clientHeight}
+  function cover(iw,ih,fx){const s=Math.max(W/iw,H/ih),dw=iw*s,dh=ih*s;return {s,dw,dh,ox:(W-dw)*fx/100,oy:(H-dh)/2}}
+  let cur=-1,pos=-1,busy=false;
+  const prevB=document.getElementById('tprev'),nextB=document.getElementById('tnext'),land=document.getElementById('tland');
+  const ez=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+  const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+  function ctl(){prevB.disabled=busy||pos<=0;nextB.disabled=busy||pos<0||pos>=S.length-1;land.hidden=true}
+  function warm(i){if(i<S.length-1)warmU(vurl(1,i+1));if(i>0)warmU(vurl(-1,i));[i-1,i+1].forEach(j=>{if(LOOPS.includes(j))warmU(lurl(j))})}
+  /* lebende Szene: Loop über das Standbild legen */
+  function startLoop(i){LV.classList.remove('on');if(!LOOPS.includes(i)||RM){LV.removeAttribute('src');return}
+    const u=lurl(i);if(!LV.src.endsWith(u.slice(u.indexOf('vid/'))))LV.src=u;LV.style.objectPosition=S[i].fx+'% 50%';
+    LV.currentTime=0;LV.onplaying=()=>{if(pos===i&&!busy)LV.classList.add('on')};const pr=LV.play();if(pr)pr.catch(()=>{})}
+  function stopLoop(){LV.classList.remove('on');setTimeout(()=>{if(!LV.classList.contains('on'))LV.pause()},650)}
+  function title(i){scn.innerHTML=`<small>${T('Station')} ${i+1} / ${S.length}</small><b>${T(S[i].n)}</b>`;scn.classList.remove('show');void scn.offsetWidth;scn.classList.add('show')}
+  function showHold(i,announce){IM.forEach((im,n)=>im.classList.toggle('on',n===i));CLD.classList.toggle('on',i<0);
+    if(i<0){setScene(0,false,true);hint.classList.add('off');stopLoop()}else{setScene(i,true);hint.textContent=HT();hint.classList.toggle('off',i===S.length-1);startLoop(i);if(announce)title(i)}ctl();if(i>=0)warm(i)}
+  function hop(from,dir,rate){return new Promise(res=>{const to=from+dir,k=dir>0?to:from;let mid=false,done=false;const fin=()=>{if(done)return;done=true;st.classList.remove('loading');clearTimeout(guard);res()};
+    const fa=S[from].fx,fb=S[to].fx;VD.style.objectPosition=fa+'% 50%';
+    VD.ontimeupdate=()=>{if(!VD.duration)return;const k2=Math.min(1,VD.currentTime/VD.duration);VD.style.objectPosition=(fa+(fb-fa)*k2)+'% 50%';hudSet(null,k2);if(!mid&&k2>.5){mid=true;setScene(to,false)}};
+    VD.onwaiting=()=>st.classList.add('loading');
+    VD.onplaying=()=>{st.classList.remove('loading');VD.classList.add('on');stopLoop();setTimeout(()=>IM.forEach(im=>im.classList.remove('on')),300)};
+    VD.onended=()=>{st.classList.remove('loading');IM.forEach((im,n)=>im.classList.toggle('on',n===to));fin()};VD.onerror=fin;
+    const guard=setTimeout(fin,45000);st.classList.add('loading');VD.src=vurl(dir,k);VD.playbackRate=rate;const pr=VD.play();if(pr)pr.catch(e=>{if(e&&e.name==='NotAllowedError'){done=true;clearTimeout(guard);st.classList.remove('loading');res(false)}else fin()})})}
+  async function goScene(i){i=Math.max(0,Math.min(S.length-1,i));if(busy)return;
+    if(pos<0){landNow(true);if(i===0)return}
+    if(i===pos)return;busy=true;closeCard();st.classList.add('busy');
+    setScene(pos,false);hint.classList.add('off');ctl();
+    const dir=i>pos?1:-1,rate=Math.abs(i-pos)>1?1.3:1;
+    while(pos!==i){const ok=await hop(pos,dir,rate);if(ok===false)break;pos+=dir}
+    showHold(pos,true);setTimeout(()=>VD.classList.remove('on'),60);busy=false;st.classList.remove('busy');ctl()}
+  /* ---------- Sturzflug: Scrollfortschritt steuert das Intro-Video ---------- */
+  let dp=0,tgt=0,curT=0,raf=0,primed=false;
+  const ALT=1250;
+  function hudSet(p,k){if(p!=null){hud.innerHTML=`<span class="rec">KARMIRA · Drohne</span><br>${T('Höhe')} <b>${Math.round(ALT*(1-ez(p))).toLocaleString('de-DE')} m</b> · ${T('Tempo')} <b>${Math.round(18+40*Math.sin(Math.PI*p))} km/h</b>`;bar.style.top=(p*100)+'%'}
+    else hud.innerHTML=`<span class="rec">KARMIRA · Drohne</span><br>${T('Höhe')} <b>${Math.round(2+3*Math.sin(Math.PI*k))} m</b> · ${T('Tempo')} <b>${Math.round(4+10*Math.sin(Math.PI*k))} km/h</b>`}
+  function prog(){const r=track.getBoundingClientRect(),len=track.offsetHeight-st.offsetHeight;return cl(-r.top/Math.max(1,len))}
+  function prime(){if(primed)return;primed=true;const pr=SC.play();if(pr)pr.then(()=>{SC.pause();SC.currentTime=curT}).catch(()=>{})}
+  function loopScrub(){raf=0;if(pos>=0&&!st.classList.contains('dive'))return;
+    const d=SC.duration||11.25;curT+=(tgt*d-curT)*(RM?1:.14);if(Math.abs(tgt*d-curT)<.004)curT=tgt*d;
+    if(SC.readyState>=1&&Math.abs(SC.currentTime-curT)>.03&&!SC.seeking){try{SC.currentTime=Math.min(d-.05,curT)}catch(e){}}
+    if(Math.abs(tgt*d-curT)>.004||Math.abs(SC.currentTime-curT)>.05)raf=requestAnimationFrame(loopScrub)}
+  SC.addEventListener('seeked',kick);SC.addEventListener('loadedmetadata',kick);
+  function kick(){if(!raf)raf=requestAnimationFrame(loopScrub)}
+  function enterDive(){pos=-1;cur=-1;st.classList.add('dive');SC.classList.add('on');showHold(-1);closeCard()}
+  let landing=0;
+  function landNow(scrollToo){if(scrollToo){if(landing)return;const top=scrollY+track.getBoundingClientRect().top+track.offsetHeight-st.offsetHeight;
+      if(top-scrollY>4){landing=setTimeout(()=>{landing=0;if(pos<0)landNow(false)},2600);scrollTo({top,behavior:RM?'auto':'smooth'});return}}
+    clearTimeout(landing);landing=0;pos=0;st.classList.remove('dive');showHold(0,true);setTimeout(()=>{if(pos>=0)SC.classList.remove('on')},500)}
+  function onScroll(){dp=prog();
+    intro.style.opacity=cl(1-dp*3.2);intro.style.transform=`translateY(${-dp*120}px) scale(${1+dp*.25})`;
+    fade.style.opacity=cl(1-dp*5);st.querySelector('.tcue').style.opacity=dp<.08?1:0;
+    if(busy)return;
+    if(pos<0){tgt=dp;hudSet(dp);kick();if(dp>.5)prime();if(dp>=.985)landNow(false)}
+    else if(pos===0&&dp<.93&&!landing){enterDive();tgt=dp;curT=dp*(SC.duration||11.25);kick()}}
+  addEventListener('scroll',onScroll,{passive:true});
+  ['touchstart','pointerdown'].forEach(ev=>addEventListener(ev,prime,{once:true,passive:true}));
+  /* ---------- Parallaxe: Maus bzw. Neigung des Handys bewegt die Szene leicht ---------- */
+  let mx=0,my=0,px=0,py=0,pr2=0;
+  function par(){pr2=0;const k=(pos>=0&&!busy)?1:0,M=Math.min(W,H)*.022;px+=(mx*M*k-px)*.07;py+=(my*M*k-py)*.07;
+    st.style.setProperty('--px',px.toFixed(2)+'px');st.style.setProperty('--py',py.toFixed(2)+'px');
+    if(Math.abs(mx*M*k-px)>.05||Math.abs(my*M*k-py)>.05)pr2=requestAnimationFrame(par)}
+  const pk=()=>{if(!pr2&&!RM)pr2=requestAnimationFrame(par)};
+  st.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=st.getBoundingClientRect();mx=-((e.clientX-r.left)/r.width-.5)*2;my=-((e.clientY-r.top)/r.height-.5)*2;pk()});
+  st.addEventListener('pointerleave',()=>{mx=my=0;pk()});
+  let oriOn=false;function ori(e){if(e.gamma==null)return;mx=-cl(e.gamma/25,-1,1);my=-cl((e.beta-45)/25,-1,1);pk()}
+  function askOri(){if(oriOn)return;oriOn=true;const D=window.DeviceOrientationEvent;if(!D)return;
+    if(typeof D.requestPermission==='function')D.requestPermission().then(s=>{if(s==='granted')addEventListener('deviceorientation',ori)}).catch(()=>{});else addEventListener('deviceorientation',ori)}
+  /* ---------- Bedienung ---------- */
+  prevB.addEventListener('click',e=>{e.stopPropagation();goScene(pos-1)});
+  nextB.addEventListener('click',e=>{e.stopPropagation();goScene(pos+1)});
+  land.addEventListener('click',e=>{e.stopPropagation();landNow(true)});
+  st.addEventListener('click',e=>{if(MOB)askOri();if(busy||e.target.closest('button,a,.tsr,.tour-card,.tstrip,.ttop'))return;if(!card.hidden){closeCard();return}if(pos<0){landNow(true);return}if(pos<S.length-1)goScene(pos+1)});
+  addEventListener('keydown',e=>{const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight||busy||pos<0)return;if(e.key==='ArrowRight')goScene(pos+1);if(e.key==='ArrowLeft'&&pos>0)goScene(pos-1)});
+  function place(){const s=S[cur];if(!s)return;const c=cover(IW,IH,s.fx);
+    hsBox.querySelectorAll('.hs').forEach(b=>{const h=s.h[+b.dataset.h],x=c.ox+h[0]/100*c.dw,y=c.oy+h[1]/100*c.dh;
+      b.style.left=x+'px';b.style.top=y+'px';b.hidden=x<12||x>W-12||y<(W<760?64:76)||y>H-(W<760?150:128)})}
+  function setScene(i,hold,isIntro){
+    stepEl.hidden=!!isIntro;if(isIntro)nameEl.textContent=T('Anflug');
+    if(i!==cur){cur=i;closeCard();const s=S[i];
+      hsBox.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" class="hs" data-h="${n}" style="--i:${n}" aria-label="${nm(p.n)}"><i></i><span class="hl">${nm(p.n)}</span></button>`}).join('');
+      sr.innerHTML=s.h.map((h,n)=>{const p=byId[h[2]];return `<button type="button" data-h="${n}" style="--i:${Math.min(n,10)}"><img src="${p.im}" alt="" loading="lazy">${nm(p.n)}</button>`}).join('');
+      cnt.textContent=s.h.length+' '+(EN()?T('Produkte in dieser Szene'):'Produkte in dieser Szene');
+      stepEl.textContent=`${i+1} / ${S.length}`;
+      nav.querySelectorAll('button').forEach((b,n)=>b.classList.toggle('on',n===i));place()}
+    if(!isIntro)nameEl.textContent=T(S[i].n);
+    if(hold&&!hsBox.classList.contains('on')){hsBox.classList.add('on');sr.querySelectorAll('button').forEach(b=>{b.style.animation='none';void b.offsetWidth;b.style.animation=''})}
+    else if(!hold)hsBox.classList.remove('on');
+    strip.classList.toggle('off',!hold);if(!hold)closeCard()}
+  function navHTML(){nav.innerHTML=S.map((s,i)=>`<button type="button" data-s="${i}" class="${i===cur?'on':''}">${T(s.n)}</button>`).join('')}
+  function ml(){try{return JSON.parse(localStorage.getItem('k-ml')||'{}')}catch(e){return {}}}
+  function closeCard(){card.hidden=true;st.querySelectorAll('.act').forEach(x=>x.classList.remove('act'))}
+  function openCard(n){const h=S[cur].h[n],p=byId[h[2]],on=!!ml()[p.i];closeCard();
+    hsBox.querySelector(`[data-h="${n}"]`)?.classList.add('act');const sb=sr.querySelector(`[data-h="${n}"]`);if(sb){sb.classList.add('act');sb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'})}
+    card.innerHTML=`<button class="x" type="button" aria-label="Schließen">×</button><div class="ti"><img src="${p.im}" alt="${nm(p.n)}"></div><div class="tb"><small class="notranslate" translate="no">${p.b||''} · ${p.i}</small><h3>${nm(p.n)}</h3>${p.sp?`<p>${p.sp}</p>`:''}<div class="tbtn"><a class="btn btn-primary" href="sortiment.html?p=${encodeURIComponent(p.i)}">${T('Im Shop ansehen')}</a><button type="button" class="btn btn-ghost" data-ml="${p.i}">${on?'✓ '+T('Gemerkt'):'+ '+T('Merken')}</button></div></div>`;
+    card.hidden=false}
+  hsBox.addEventListener('click',e=>{const b=e.target.closest('.hs');if(!b)return;b.classList.contains('act')?closeCard():openCard(+b.dataset.h)});
+  sr.addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(b){const n=+b.dataset.h;const hb=hsBox.querySelector(`[data-h="${n}"]`);if(hb&&hb.hidden)pan(n);openCard(n)}});
+  card.addEventListener('click',e=>{if(e.target.closest('.x')){closeCard();return}
+    const m=e.target.closest('[data-ml]');if(m){const o=ml(),i=m.dataset.ml;o[i]?delete o[i]:o[i]=1;try{localStorage.setItem('k-ml',JSON.stringify(o))}catch(x){}m.textContent=o[i]?'✓ '+T('Gemerkt'):'+ '+T('Merken')}});
+  nav.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b){e.stopPropagation();goScene(+b.dataset.s)}});
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
+  function pan(n){const h=S[cur].h[n],c=cover(IW,IH,50),rg=c.dw-W;if(rg<=4)return;const want=Math.min(100,Math.max(0,(h[0]/100*c.dw-W/2)/rg*100));
+    const f0=S[cur].fx,t0=performance.now();(function st_(){const k=Math.min(1,(performance.now()-t0)/600);S[cur].fx=f0+(want-f0)*ez(k);IM[cur].style.objectPosition=LV.style.objectPosition=S[cur].fx+'% 50%';place();if(k<1)requestAnimationFrame(st_)})()}
+  addEventListener('resize',()=>{size();place()});
+  addEventListener('langchange',()=>{const c=cur;cur=-1;navHTML();if(c>=0)setScene(c,hsBox.classList.contains('on'));hint.textContent=HT();onScroll()});
+  const HT=()=>T(matchMedia('(pointer:coarse)').matches?'Tippen zum Weitergehen':'Klicken zum Weitergehen');
+  size();navHTML();enterDive();onScroll();
+  land.textContent='';land.insertAdjacentHTML('beforeend',T('Landen')+' <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>');
+  const m=document.getElementById('mcta');
+  if(m){const hero=document.getElementById('top'),k=document.getElementById('kontakt');
+    const upd=()=>{const past=hero.getBoundingClientRect().bottom<0,end=k.getBoundingClientRect().top<innerHeight*.9;
+      const r=track.getBoundingClientRect(),inT=r.top<innerHeight*.9&&r.bottom>innerHeight*.1;m.classList.toggle('on',past&&!end&&!inT)};
+    addEventListener('scroll',upd,{passive:true});upd()}
+})();
+</script>
+
+
+</body>
+</html>
